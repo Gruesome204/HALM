@@ -1,2 +1,0 @@
-# HALM
- Bachelor Projekt
