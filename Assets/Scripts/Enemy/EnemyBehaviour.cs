@@ -1,8 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBehaviour : MonoBehaviour, IDamagable
 {
     [SerializeField]private EnemyBaseStats baseStats;
+    public Slider healthBarSlider;
+
+    public GameObject target;
+    private Rigidbody2D rb; 
 
     [Header("Level")]
     public int currentLevel = 1;
@@ -46,7 +51,76 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     private void Awake()
     {
         InitalizeEnemyStats();
+
+        rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D component not found on " + gameObject.name + ". Enemy movement will not work.");
+        }
+        if (target == null)
+        {
+            // You might want to implement a way to find the target (e.g., the player) here.
+            // For example, by tag:
+            // target = GameObject.FindGameObjectWithTag("Player")?.transform;
+            Debug.LogWarning("Target not assigned for " + gameObject.name + ". Enemy will not move.");
+        }
     }
+
+    private void FixedUpdate() // Using FixedUpdate for physics-based movement
+    {
+        MoveGlobal();
+
+    }
+
+    public void MoveInRange()
+    {
+        if (target != null)
+        {
+            float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
+
+            if (distanceToTarget <= pursueRange)
+            {
+                // Calculate the direction to the target
+                Vector2 direction = (target.transform.position - transform.position).normalized;
+
+                // Move the enemy towards the target
+                rb.linearVelocity = direction * currentMovementSpeed;
+            }
+            else
+            {
+                // Stop moving if the target is out of pursue range
+                rb.linearVelocity = Vector2.zero;
+            }
+        }
+        else
+        {
+            // If no target is assigned, stop moving
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    public void MoveGlobal()
+    {
+        if (target != null)
+        {
+            float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
+
+            // Calculate the direction to the target
+            Vector2 direction = (target.transform.position - transform.position).normalized;
+
+            // Move the enemy towards the target
+            rb.linearVelocity = direction * currentMovementSpeed;
+        }
+        else
+        {
+            // Stop moving if the target is out of pursue range
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+
+
+
 
     public void InitalizeEnemyStats()
     {
@@ -91,11 +165,20 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     {
         currentHealth -= CalculateTakenDamage_PercentageLinear(damageData.amount, currentArmor);
         Debug.Log($"{this.gameObject.name} received {damageData.amount} {damageData.type} Damage from {damageData.source.name}");
+        UpdateHealthBar();
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+    void UpdateHealthBar()
+    {
+        if (healthBarSlider != null)
+        {
+            healthBarSlider.value = currentHealth / currentMaxHealth; // Update the Slider value
+        }
+    }   
+
     public float CalculateTakenDamage_PercentageLinear(float incomingDamage, float armor)
     {
         float damageReductionPercentage = armor / 100f; // Assuming 1 armor point = 1% reduction
