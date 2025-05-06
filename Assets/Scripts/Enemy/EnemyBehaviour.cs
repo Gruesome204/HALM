@@ -87,8 +87,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     public void OnDamageTaken(float amount)
     {
     }
-
-
     public void TakeDamage(DamageData damageData)
     {
         currentHealth -= CalculateTakenDamage_PercentageLinear(damageData.amount, currentArmor);

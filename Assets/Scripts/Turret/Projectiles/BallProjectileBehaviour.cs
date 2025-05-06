@@ -4,7 +4,8 @@ public class BallProjectileBehaviour : MonoBehaviour
 {
     public float damageAmount = 10f;
     public GameObject sourceOfDamage;
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         // Try to get the IDamagable interface from the collided object
         IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
@@ -14,9 +15,9 @@ public class BallProjectileBehaviour : MonoBehaviour
         {
             DamageData damageData = new DamageData
             {
-                 amount = damageAmount,
-                 source = sourceOfDamage,
-                 type = DamageData.DamageType.Physical // Or whatever damage type is appropriate
+                amount = damageAmount,
+                source = sourceOfDamage,
+                type = DamageData.DamageType.Physical // Or whatever damage type is appropriate
             };
             damagable.TakeDamage(damageData);
 
@@ -30,18 +31,17 @@ public class BallProjectileBehaviour : MonoBehaviour
             // For example, you might still want to destroy the projectile.
             // Or you might want it to bounce or stick.
             // Example:
-            // Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // This is similar to OnCollisionEnter, but for trigger colliders (no physics collision)
+        // This is similar to OnCollisionEnter2D, but for trigger colliders (no physics collision)
         IDamagable damagable = other.GetComponent<IDamagable>();
 
         if (damagable != null)
         {
-
             DamageData damageData = new DamageData
             {
                 amount = damageAmount,
@@ -54,7 +54,7 @@ public class BallProjectileBehaviour : MonoBehaviour
         else
         {
             // Handle collisions with non-damagable objects if needed
-            // Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

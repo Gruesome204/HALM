@@ -50,34 +50,32 @@ public class TurretAttack : MonoBehaviour
 
     void FindTarget()
     {
-        Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, currentAttackRange);
-        Transform bestTarget = null;
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, currentAttackRange);
+        Transform targetEnemy = null;
         float shortestDistance = Mathf.Infinity;
 
-        foreach (Collider enemyCollider in enemiesInRange)
+        foreach (Collider2D enemyCollider in enemiesInRange)
         {
             EnemyBehaviour enemy = enemyCollider.GetComponent<EnemyBehaviour>();
             if (enemy != null)
             {
-                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
                 if (distanceToEnemy < shortestDistance)
                 {
                     shortestDistance = distanceToEnemy;
-                    bestTarget = enemy.transform;
+                    targetEnemy = enemy.transform;
                 }
             }
         }
 
-        targetEnemy = bestTarget;
+        this.targetEnemy = targetEnemy;
     }
-
     void Shoot()
     {
         if (projectilePrefab != null && firePoint != null && targetEnemy != null)
         {
             // Instantiate the projectile
             GameObject projectileObject = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-            projectileObject.GetComponent<BallProjectileBehaviour>().sourceOfDamage = this.gameObject;
             projectileObject.GetComponent<BallProjectileBehaviour>().sourceOfDamage = this.gameObject;
 
             // Get the Rigidbody component of the projectile (assuming it has one)
@@ -91,7 +89,7 @@ public class TurretAttack : MonoBehaviour
                 projectileRb.linearVelocity = directionToTarget * currentProjectileSpeed;
 
                 // Optionally, you can add code here to make the projectile clean up after some time
-                Destroy(projectileObject, 1f); // Example: Destroy after 5 seconds
+                Destroy(projectileObject, 5f); // Example: Destroy after 5 seconds
             }
             else
             {

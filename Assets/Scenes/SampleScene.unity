@@ -732,7 +732,7 @@ PrefabInstance:
     - target: {fileID: -6688064516444452537, guid: 464a0537dbcbaf943851878e19e0480c, type: 3}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 1928212444719205738, guid: 57367ec2914117f4183d97198c92920f, type: 3}
+      objectReference: {fileID: 1759283730849935406, guid: 35da1b0dcddb8ae4aba1d2ccafe97370, type: 3}
     - target: {fileID: 4775935544841688724, guid: 464a0537dbcbaf943851878e19e0480c, type: 3}
       propertyPath: m_Name
       value: OrdinaryTurretPrefab
