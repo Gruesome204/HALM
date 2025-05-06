@@ -81,7 +81,7 @@ public class TurretAttack : MonoBehaviour
             projectileObject.GetComponent<BallProjectileBehaviour>().sourceOfDamage = this.gameObject;
 
             // Get the Rigidbody component of the projectile (assuming it has one)
-            Rigidbody projectileRb = projectileObject.GetComponent<Rigidbody>();
+            Rigidbody2D projectileRb = projectileObject.GetComponent<Rigidbody2D>();
             if (projectileRb != null)
             {
                 // Calculate the direction to the target

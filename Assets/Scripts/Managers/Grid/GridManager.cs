@@ -9,7 +9,7 @@ public class GridManager : MonoBehaviour
 
     public static GridManager Instance { get; private set; } // Singleton pattern
 
-    private Vector3 gridOffset; // To store the offset for centering
+    private Vector2 gridOffset; // To store the offset for centering
 
     void Awake()
     {
@@ -19,9 +19,8 @@ public class GridManager : MonoBehaviour
             gridData = new GameObject[width, height];
 
             // Calculate the offset to center the grid at the origin (0, 0, 0)
-            gridOffset = new Vector3(
+            gridOffset = new Vector2(
                 -((float)width * cellSize) / 2f + cellSize / 2f,
-                0f,
                 -((float)height * cellSize) / 2f + cellSize / 2f
             );
         }
@@ -31,40 +30,40 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Vector3 WorldToGrid(Vector3 worldPosition)
+    public Vector2 WorldToGrid(Vector3 worldPosition)
     {
-        Vector3 localPosition = worldPosition - gridOffset;
+        Vector2 localPosition = worldPosition - (Vector3)gridOffset; // Cast to Vector3 for subtraction
         int gridX = Mathf.FloorToInt(localPosition.x / cellSize);
-        int gridZ = Mathf.FloorToInt(localPosition.z / cellSize); // Using Z for the grid's depth
-        return new Vector3(gridX, 0f, gridZ);
+        int gridY = Mathf.FloorToInt(localPosition.y / cellSize); // Using Y for the grid's height in 2D
+        return new Vector2(gridX, gridY);
     }
 
-    public Vector3 GridToWorld(int gridX, int gridZ)
+    public Vector3 GridToWorld(int gridX, int gridY)
     {
         float worldX = gridX * cellSize + cellSize / 2f + gridOffset.x;
-        float worldZ = gridZ * cellSize + cellSize / 2f + gridOffset.z;
-        return new Vector3(worldX, 0f, worldZ); // Assuming Y=0 for the ground plane
+        float worldY = gridY * cellSize + cellSize / 2f + gridOffset.y;
+        return new Vector3(worldX, worldY, 0f); // Assuming Z=0 for the 2D plane
     }
 
-    public bool IsWithinBounds(int gridX, int gridZ)
+    public bool IsWithinBounds(int gridX, int gridY)
     {
-        return gridX >= 0 && gridX < width && gridZ >= 0 && gridZ < height;
+        return gridX >= 0 && gridX < width && gridY >= 0 && gridY < height;
     }
 
-    public GameObject GetCellContent(int gridX, int gridZ)
+    public GameObject GetCellContent(int gridX, int gridY)
     {
-        if (IsWithinBounds(gridX, gridZ))
+        if (IsWithinBounds(gridX, gridY))
         {
-            return gridData[gridX, gridZ];
+            return gridData[gridX, gridY];
         }
         return null;
     }
 
-    public void SetCellContent(int gridX, int gridZ, GameObject content)
+    public void SetCellContent(int gridX, int gridY, GameObject content)
     {
-        if (IsWithinBounds(gridX, gridZ))
+        if (IsWithinBounds(gridX, gridY))
         {
-            gridData[gridX, gridZ] = content;
+            gridData[gridX, gridY] = content;
         }
     }
 
@@ -76,10 +75,10 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                for (int z = 0; z < height; z++)
+                for (int y = 0; y < height; y++)
                 {
-                    Vector3 cellCenter = GridToWorld(x, z);
-                    Gizmos.DrawWireCube(cellCenter, new Vector3(cellSize, 0.1f, cellSize));
+                    Vector3 cellCenter = GridToWorld(x, y);
+                    Gizmos.DrawWireCube(cellCenter, new Vector3(cellSize, cellSize, 0.1f)); // Draw a square for 2D
                 }
             }
         }
