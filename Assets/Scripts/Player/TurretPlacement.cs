@@ -6,7 +6,7 @@ public class TurretPlacement : MonoBehaviour
     public List<TurretBlueprint> TurretBlueprintList = new List<TurretBlueprint>();
     public LayerMask groundLayer; // Assign the layer of your ground in the Inspector
 
-    public TurretBlueprint currentBlueprint; 
+    public TurretBlueprint currentBlueprint;
     public GameObject placementPreviewPrefab; // Optional: Prefab for placement preview
     private GameObject currentPreview;
 
@@ -14,37 +14,20 @@ public class TurretPlacement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && currentBlueprint != null) // Left mouse button click
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            Debug.Log("Test Click");
+            Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(worldPosition, Vector2.zero, Mathf.Infinity, groundLayer);
+            Vector2 placementPosition = hit.point;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
-            {
-                Vector3 placementPosition = hit.point;
-                Vector3 gridPosition = GridManager.Instance.WorldToGrid(placementPosition);
-                int gridX = Mathf.RoundToInt(gridPosition.x);
-                int gridZ = Mathf.RoundToInt(gridPosition.z);
+            GameObject newTurret = Instantiate(currentBlueprint.turretPrefab, worldPosition, Quaternion.identity);
 
-                if (GridManager.Instance.IsWithinBounds(gridX, gridZ) &&
-                    GridManager.Instance.GetCellContent(gridX, gridZ) == null)
+                TurretAttack turretAttack = newTurret.GetComponent<TurretAttack>();
+                if (turretAttack != null)
                 {
-                    Vector3 worldPosition = GridManager.Instance.GridToWorld(gridX, gridZ);
-                    GameObject newTurret = Instantiate(currentBlueprint.turretPrefab, worldPosition, Quaternion.identity);
-
-                    TurretAttack turretAttack = newTurret.GetComponent<TurretAttack>();
-                    if (turretAttack != null)
-                    {
-                        turretAttack.turretBlueprint = currentBlueprint;
-                        turretAttack.InitializeFromBlueprint(); // Optional initialization method
-                    }
-                    GridManager.Instance.SetCellContent(gridX, gridZ, newTurret);
-                    //selectedTurretBlueprint = null; // Deselect after placing
-                    Debug.Log("Turret placed at grid: " + new Vector3Int(gridX, 0, gridZ));
+                    turretAttack.turretBlueprint = currentBlueprint;
+                    turretAttack.InitializeFromBlueprint(); // Optional initialization method
+                    
                 }
-                else
-                {
-                    Debug.Log("Cannot place turret here.");
-                }
-            }
         }
     }
 }
