@@ -668,6 +668,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  turretLayer:
+    serializedVersion: 2
+    m_Bits: 128
   currentBlueprint: {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
   placementPreviewPrefab: {fileID: 4775935544841688724, guid: 464a0537dbcbaf943851878e19e0480c, type: 3}
 --- !u!1 &693721768
