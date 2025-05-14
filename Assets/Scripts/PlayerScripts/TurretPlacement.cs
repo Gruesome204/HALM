@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TurretPlacement : MonoBehaviour
 {
-    public List<TurretBlueprint> TurretBlueprintList = new List<TurretBlueprint>();
+    public List<TurretBlueprint> turretBlueprintList = new List<TurretBlueprint>();
     public LayerMask groundLayer; // Assign the layer of your ground in the Inspector
     public LayerMask turretLayer;
     public TurretBlueprint currentBlueprint;
@@ -12,6 +12,18 @@ public class TurretPlacement : MonoBehaviour
 
     void Update()
     {
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            currentBlueprint = turretBlueprintList[0];
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            currentBlueprint = turretBlueprintList[1];
+
+        }
+
         if (Input.GetMouseButtonDown(0) && currentBlueprint != null) // Left mouse button click
         {
             Debug.Log("Test Click");

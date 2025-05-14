@@ -3,6 +3,7 @@ using UnityEngine;
 public class BallProjectileBehaviour : MonoBehaviour
 {
     public float damageAmount = 10f;
+    public float knockbackRate;
     public GameObject sourceOfDamage;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -19,7 +20,10 @@ public class BallProjectileBehaviour : MonoBehaviour
                 source = sourceOfDamage,
                 type = DamageData.DamageType.Physical // Or whatever damage type is appropriate
             };
-            damagable.TakeDamage(damageData);
+
+            Vector2 knockbackDirection = this.gameObject.GetComponent<Rigidbody2D>().linearVelocity.normalized;
+            damagable.TakeDamage(damageData, knockbackDirection);
+
 
             // Optionally handle what happens to the projectile after hitting something damagable
             Destroy(gameObject); // Destroy the projectile upon impact
@@ -48,7 +52,8 @@ public class BallProjectileBehaviour : MonoBehaviour
                 source = sourceOfDamage,
                 type = DamageData.DamageType.Physical // Or whatever damage type is appropriate
             };
-            damagable.TakeDamage(damageData);
+            Vector2 knockbackDirection = this.gameObject.GetComponent<Rigidbody2D>().linearVelocity.normalized;
+            damagable.TakeDamage(damageData, knockbackDirection);
             Destroy(gameObject);
         }
         else

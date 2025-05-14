@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +9,11 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     public Slider healthBarSlider;
 
     public GameObject target;
-    private Rigidbody2D rb; 
+    private Rigidbody2D rb;
+
+    public float knockbackForce = 10f;
+    public float knockbackDuration = 0.5f;
+    private bool isKnockedBack = false;
 
     [Header("Level")]
     public int currentLevel = 1;
@@ -161,8 +167,12 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     public void OnDamageTaken(float amount)
     {
     }
-    public void TakeDamage(DamageData damageData)
+    public void TakeDamage(DamageData damageData, Vector2 hitDirection)
     {
+        if (isKnockedBack) return; // Prevent multiple knockbacks at once
+
+        StartCoroutine(KnockbackRoutine(hitDirection));
+
         currentHealth -= CalculateTakenDamage_PercentageLinear(damageData.amount, currentArmor);
         Debug.Log($"{this.gameObject.name} received {damageData.amount} {damageData.type} Damage from {damageData.source.name}");
         UpdateHealthBar();
@@ -190,4 +200,19 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     {
         Destroy(gameObject);
     }
+
+    private IEnumerator KnockbackRoutine(Vector2 direction)
+    {
+        Debug.Log("Start Knockback");
+        isKnockedBack = true;
+        rb.linearVelocity = Vector2.zero; // Optional: Reset velocity before applying new force
+        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(knockbackDuration);
+
+        rb.linearVelocity = Vector2.zero; // Optional: Stop the enemy after knockback
+        isKnockedBack = false;
+        // Re-enable enemy AI/movement here if it was disabled
+    }
+
 }

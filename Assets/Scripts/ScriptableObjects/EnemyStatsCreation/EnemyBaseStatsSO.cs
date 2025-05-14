@@ -29,7 +29,7 @@ public class EnemyBaseStats : ScriptableObject
     [Header("Detection")]
     public float baseDetectionRange = 2f;
     public float baseVisionRange = 2f;
-    public float basehearingRange = 2f;
+    public float baseHearingRange = 2f;
     public float pursueRange = 2f;
 
     [Header("Progression")]

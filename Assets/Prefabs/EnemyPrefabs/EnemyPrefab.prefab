@@ -106,6 +106,8 @@ MonoBehaviour:
   baseStats: {fileID: 11400000, guid: 44d30920b39db314fa7ac40f4935d856, type: 2}
   healthBarSlider: {fileID: 2813460744261295979}
   target: {fileID: 0}
+  knockbackForce: 5
+  knockbackDuration: 0.2
   currentLevel: 1
   currentMaxHealth: 300
   currentHealth: 300
@@ -174,7 +176,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0

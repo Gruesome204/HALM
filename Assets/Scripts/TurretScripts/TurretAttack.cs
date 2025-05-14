@@ -11,6 +11,7 @@ public class TurretAttack : MonoBehaviour
     private float currentAttackRange;
     private float currentFireRate;
     private float currentProjectileSpeed;
+    private float currentKnockbackRate;
 
     private Transform targetEnemy;
     void Start()
@@ -26,6 +27,7 @@ public class TurretAttack : MonoBehaviour
         currentAttackRange = turretBlueprint.attackRange;
         currentFireRate = turretBlueprint.fireRate;
         currentProjectileSpeed = turretBlueprint.projectileSpeed;
+        currentKnockbackRate = turretBlueprint.knockbackRate;
     }
 
 
@@ -48,6 +50,7 @@ public class TurretAttack : MonoBehaviour
         }
     }
 
+    //TODO: Add different Shooting Patterns
     void FindTarget()
     {
         Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, currentAttackRange);
@@ -77,6 +80,7 @@ public class TurretAttack : MonoBehaviour
             // Instantiate the projectile
             GameObject projectileObject = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
             projectileObject.GetComponent<BallProjectileBehaviour>().sourceOfDamage = this.gameObject;
+            projectileObject.GetComponent<BallProjectileBehaviour>().knockbackRate = currentKnockbackRate;
 
             // Get the Rigidbody component of the projectile (assuming it has one)
             Rigidbody2D projectileRb = projectileObject.GetComponent<Rigidbody2D>();
