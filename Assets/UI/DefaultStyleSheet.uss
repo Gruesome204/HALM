@@ -1,0 +1,72 @@
+.mainMenuBtnClass {
+    width: 30%;
+    height: 50px;
+    font-size: 20px;
+    cursor: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=3506167780502562645&guid=6ba10d6ccddd3e946ad88dcd84cd88e3&type=3#console.erroricon@2x");
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-width: 0;
+    border-right-width: 4px;
+    border-bottom-width: 6px;
+    border-left-width: 4px;
+    border-left-color: rgba(0, 0, 0, 0.39);
+    border-right-color: rgba(0, 0, 0, 0.39);
+    border-top-color: rgba(0, 0, 0, 0.39);
+    border-bottom-color: rgba(0, 0, 0, 0.39);
+    background-color: rgb(128, 128, 128);
+}
+
+.mainMenuBtnClass:hover {
+    border-color: rgba(0, 0, 0, 0);
+    background-color: rgb(188, 188, 188);
+    border-left-color: rgba(0, 0, 0, 0.39);
+    border-right-color: rgba(0, 0, 0, 0.39);
+    border-top-color: rgba(0, 0, 0, 0.39);
+    border-bottom-color: rgba(0, 0, 0, 0.39);
+}
+
+.mainMenuBtnClass:active {
+    border-color: rgba(0, 0, 0, 0);
+    background-color: rgb(188, 188, 188);
+    border-right-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 2px;
+    border-left-color: rgba(0, 0, 0, 0.59);
+    border-right-color: rgba(0, 0, 0, 0.59);
+    border-top-color: rgba(0, 0, 0, 0.59);
+    border-bottom-color: rgba(0, 0, 0, 0.59);
+}
+
+.headline {
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+}
+
+.sub-headline {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 30px;
+}
+
+.settingsButtons {
+    width: 50%;
+    left: 15%;
+    margin-top: 10px;
+}
+
+.settingsButtons {
+    width: 50%;
+    left: 15%;
+    margin-top: 10px;
+}
+
+.backBtnClass {
+    top: 5%;
+    left: 5%;
+    width: 10%;
+    position: absolute;
+}

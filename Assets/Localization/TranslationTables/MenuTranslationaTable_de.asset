@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: MenuTranslationaTable_de
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: 6a812b1621131fe49afe6cc2d70b16b3, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 104960192512
+    m_Localized: "Was soll hier stehen? Das ist die Developer \xDCbersetzung hier
+      wird wohl kaum was koherentes stehen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143518429184
+    m_Localized: Zahnrad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200900702208
+    m_Localized: "Das ist die T\xFCr"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 226032971776
+    m_Localized: "H\xF6lle betreten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9497130921984
+    m_Localized: Verehrungen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22446000140288
+    m_Localized: "Zahnr\xE4der"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22550140514304
+    m_Localized: "F\xFCr die Unmultilingualen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22732009730048
+    m_Localized: The common Tongue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22863392108544
+    m_Localized: The peasants Tongue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22966500683776
+    m_Localized: The one true tongue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29026900865024
+    m_Localized: Retreat Coward
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
