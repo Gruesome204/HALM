@@ -104,6 +104,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 10
   sourceOfDamage: {fileID: 0}
+  knockbackStrength: 100
+  knockbackDuration: 0.1
+  direction: {x: 0, y: 0}
 --- !u!50 &5522442266733711567
 Rigidbody2D:
   serializedVersion: 5

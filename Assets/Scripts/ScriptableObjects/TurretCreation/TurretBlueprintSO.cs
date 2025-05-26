@@ -14,7 +14,8 @@ public class TurretBlueprint : ScriptableObject
     public float projectileSpeed = 10f;
     public float attackRange = 5f;
     public float damage = 10f;
-    public float knockbackRate = 1f;
+    public float knockbackStrength = 1f;
+    public float knockbackDuration = 0.5f;
 
     [Header("Cost")]
     public int buildingCost;

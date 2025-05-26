@@ -16,8 +16,11 @@ MonoBehaviour:
   description: Test Description
   fireRate: 3
   fireCountdown: 0
+  shootingSalve: 1
   projectileSpeed: 10
   attackRange: 5
   damage: 10
+  knockbackStrength: 50
+  knockbackDuration: 0.5
   buildingCost: 0
   turretPrefab: {fileID: 4775935544841688724, guid: 464a0537dbcbaf943851878e19e0480c, type: 3}

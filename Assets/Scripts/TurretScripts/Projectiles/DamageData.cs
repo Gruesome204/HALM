@@ -1,19 +1,14 @@
 using UnityEngine;
-public struct DamageData
+public struct KnockbackData
 {
-    public float amount;
-    public GameObject source;
-    public DamageType type;
+    public float knockbackStrength;
+    public float knockbackDuration;
+    public Vector2 direction;
 
-    public DamageData(float amount, GameObject source, DamageType type)
+    public KnockbackData(float knockbackStrength, float knockbackDuration, Vector2 direction)
     {
-        this.amount = amount;
-        this.source = source;
-        this.type = type;
-    }
-    public enum DamageType
-    {
-        Physical,
-        Magical,
+        this.knockbackStrength = knockbackStrength;
+        this.knockbackDuration = knockbackDuration;
+        this.direction = direction;
     }
 }
