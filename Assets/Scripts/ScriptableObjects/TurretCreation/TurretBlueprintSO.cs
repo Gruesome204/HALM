@@ -10,7 +10,6 @@ public class TurretBlueprint : ScriptableObject
     [Header("Values")]
     public float fireRate = 1f;
     public float fireCountdown = 0f;
-    public int shootingSalve = 1;
     public float projectileSpeed = 10f;
     public float attackRange = 5f;
     public float damage = 10f;
