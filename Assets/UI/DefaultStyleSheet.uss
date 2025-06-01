@@ -2,7 +2,7 @@
     width: 30%;
     height: 50px;
     font-size: 20px;
-    cursor: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=3506167780502562645&guid=6ba10d6ccddd3e946ad88dcd84cd88e3&type=3#console.erroricon@2x");
+    cursor: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=7433338533053954386&guid=6ba10d6ccddd3e946ad88dcd84cd88e3&type=3#check@2x");
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
