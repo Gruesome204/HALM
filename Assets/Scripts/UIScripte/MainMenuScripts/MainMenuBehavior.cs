@@ -43,7 +43,7 @@ public class MainMenuBehavior : MonoBehaviour
 
     void OnPlayBtnClicked(ClickEvent clicked)
     {
-        SceneManager.LoadScene("");
+        SceneManager.LoadScene("GameScene");
     }
     void OnSettingsBtnClicked(ClickEvent clicked)
     {
