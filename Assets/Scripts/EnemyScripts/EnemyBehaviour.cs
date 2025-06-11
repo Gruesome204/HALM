@@ -74,7 +74,10 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
 
     private void FixedUpdate() // Using FixedUpdate for physics-based movement
     {
-        MoveGlobal();
+        if (!isKnockedBack) // ONLY move if not currently knocked back
+        {
+            MoveGlobal(); // Or MoveInRange(), whichever is active
+        }
 
     }
 
@@ -124,10 +127,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
         }
     }
 
-
-
-
-
     public void InitalizeEnemyStats()
     {
         if (baseStats != null)
@@ -167,14 +166,14 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     public void OnDamageTaken(float amount)
     {
     }
-    public void TakeDamage(DamageData damageData, Vector2 hitDirection)
+    public void TakeDamage(DamageData damageData,KnockbackData knockbackData)
     {
         if (isKnockedBack) return; // Prevent multiple knockbacks at once
 
-        StartCoroutine(KnockbackRoutine(hitDirection));
-
         currentHealth -= CalculateTakenDamage_PercentageLinear(damageData.amount, currentArmor);
         Debug.Log($"{this.gameObject.name} received {damageData.amount} {damageData.type} Damage from {damageData.source.name}");
+        //Add Knockback to this enemy
+        StartCoroutine(KnockbackRoutine(knockbackData.direction));
         UpdateHealthBar();
         if (currentHealth <= 0)
         {

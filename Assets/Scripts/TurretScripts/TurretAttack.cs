@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class TurretAttack : MonoBehaviour
@@ -11,9 +12,22 @@ public class TurretAttack : MonoBehaviour
     private float currentAttackRange;
     private float currentFireRate;
     private float currentProjectileSpeed;
-    private float currentKnockbackRate;
+    private float currentKnockbackStrength;
+    private float currentKnockbackDuration;
 
     private Transform targetEnemy;
+
+    public enum FiringPattern
+    {
+        SingleShot,
+        FireSalve
+    }
+    public FiringPattern currentFiringPattern = FiringPattern.SingleShot;
+
+    [Header("Fire Salve Settings")]
+    public int projectilesPerSalve = 2; // Number of projectiles in a salve
+    public float delayBetweenSalveProjectiles = 0.5f; // Delay between each projectile in a salve
+
     void Start()
     {
         if (turretBlueprint != null)
@@ -27,7 +41,8 @@ public class TurretAttack : MonoBehaviour
         currentAttackRange = turretBlueprint.attackRange;
         currentFireRate = turretBlueprint.fireRate;
         currentProjectileSpeed = turretBlueprint.projectileSpeed;
-        currentKnockbackRate = turretBlueprint.knockbackRate;
+        currentKnockbackStrength = turretBlueprint.knockbackStrength;
+        currentKnockbackDuration = turretBlueprint.knockbackDuration;
     }
 
 
@@ -39,7 +54,16 @@ public class TurretAttack : MonoBehaviour
         {
             if (currentfireCountdown <= 0f)
             {
-                Shoot();
+                // Call the appropriate shooting pattern
+                switch (currentFiringPattern)
+                {
+                    case FiringPattern.SingleShot:
+                        ShootSingleProjectile();
+                        break;
+                    case FiringPattern.FireSalve:
+                        StartCoroutine(ShootFireSalve());
+                        break;
+                }
                 currentfireCountdown = 1f / currentFireRate;
             }
             currentfireCountdown -= Time.deltaTime;
@@ -73,32 +97,41 @@ public class TurretAttack : MonoBehaviour
 
         this.targetEnemy = targetEnemy;
     }
-    void Shoot()
+    void ShootSingleProjectile()
     {
         if (projectilePrefab != null && firePoint != null && targetEnemy != null)
         {
-            // Instantiate the projectile
             GameObject projectileObject = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
             projectileObject.GetComponent<BallProjectileBehaviour>().sourceOfDamage = this.gameObject;
-            projectileObject.GetComponent<BallProjectileBehaviour>().knockbackRate = currentKnockbackRate;
+            projectileObject.GetComponent<BallProjectileBehaviour>().knockbackStrength = currentKnockbackStrength;
+            projectileObject.GetComponent<BallProjectileBehaviour>().knockbackDuration = currentKnockbackDuration;
 
-            // Get the Rigidbody component of the projectile (assuming it has one)
             Rigidbody2D projectileRb = projectileObject.GetComponent<Rigidbody2D>();
             if (projectileRb != null)
             {
-                // Calculate the direction to the target
                 Vector3 directionToTarget = (targetEnemy.position - firePoint.position).normalized;
-
-                // Apply force to the projectile to move it towards the target
                 projectileRb.linearVelocity = directionToTarget * currentProjectileSpeed;
-
-                // Optionally, you can add code here to make the projectile clean up after some time
-                Destroy(projectileObject, 5f); // Example: Destroy after 5 seconds
+                Destroy(projectileObject, 5f);
             }
             else
             {
                 Debug.LogWarning("Projectile prefab does not have a Rigidbody component. It won't move.");
-                Destroy(projectileObject); // Destroy immediately if no Rigidbody
+                Destroy(projectileObject);
+            }
+        }
+    }
+    // Coroutine for shooting a fire salve
+    IEnumerator ShootFireSalve()
+    {
+        for (int i = 0; i < projectilesPerSalve; i++)
+        {
+            ShootSingleProjectile(); // Reuse the single projectile shooting logic
+            yield return new WaitForSeconds(delayBetweenSalveProjectiles);
+            currentfireCountdown = 0f;
+            // If the target is lost during a salve, stop firing
+            if (targetEnemy == null)
+            {
+                yield break;
             }
         }
     }

@@ -1,47 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallProjectileBehaviour : MonoBehaviour
 {
     public float damageAmount = 10f;
-    public float knockbackRate;
     public GameObject sourceOfDamage;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Try to get the IDamagable interface from the collided object
-        IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+    public float knockbackStrength = 100f;
+    public float knockbackDuration = 0.1f;
+    public Vector2 direction;
 
-        // If the collided object implements IDamagable, call its TakeDamage method
-        if (damagable != null)
-        {
-            DamageData damageData = new DamageData
-            {
-                amount = damageAmount,
-                source = sourceOfDamage,
-                type = DamageData.DamageType.Physical // Or whatever damage type is appropriate
-            };
-
-            Vector2 knockbackDirection = this.gameObject.GetComponent<Rigidbody2D>().linearVelocity.normalized;
-            damagable.TakeDamage(damageData, knockbackDirection);
-
-
-            // Optionally handle what happens to the projectile after hitting something damagable
-            Destroy(gameObject); // Destroy the projectile upon impact
-        }
-        else
-        {
-            // The collided object does not implement IDamagable.
-            // You might want to handle collisions with non-damagable objects differently.
-            // For example, you might still want to destroy the projectile.
-            // Or you might want it to bounce or stick.
-            // Example:
-            Destroy(gameObject);
-        }
-    }
+    public int piercingHitsRemaining = 2;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // This is similar to OnCollisionEnter2D, but for trigger colliders (no physics collision)
+        // Try to get the IDamagable interface from the collided object
         IDamagable damagable = other.GetComponent<IDamagable>();
 
         if (damagable != null)
@@ -52,9 +25,32 @@ public class BallProjectileBehaviour : MonoBehaviour
                 source = sourceOfDamage,
                 type = DamageData.DamageType.Physical // Or whatever damage type is appropriate
             };
-            Vector2 knockbackDirection = this.gameObject.GetComponent<Rigidbody2D>().linearVelocity.normalized;
-            damagable.TakeDamage(damageData, knockbackDirection);
-            Destroy(gameObject);
+
+            Rigidbody2D targetRb = other.GetComponent<Rigidbody2D>();
+            if (targetRb != null)
+            {
+                direction = (targetRb.transform.position - transform.position).normalized;
+            }
+
+            KnockbackData knockbackData = new KnockbackData
+            {
+                knockbackStrength = knockbackStrength,
+                knockbackDuration = knockbackDuration,
+                direction = direction,
+            };
+
+            damagable.TakeDamage(damageData, knockbackData);
+            // Reduce piercing hits remaining
+            if (piercingHitsRemaining > 0) // Only decrement if not infinite piercing
+            {
+                piercingHitsRemaining--;
+            }
+
+            // Destroy the projectile if it has no more piercing hits remaining
+            if (piercingHitsRemaining == 0)
+            {
+                Destroy(gameObject);
+            }
         }
         else
         {
