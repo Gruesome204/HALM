@@ -10,6 +10,8 @@ public class BallProjectileBehaviour : MonoBehaviour
     public float knockbackDuration = 0.1f;
     public Vector2 direction;
 
+    public int piercingHitsRemaining = 2;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Try to get the IDamagable interface from the collided object
@@ -38,7 +40,17 @@ public class BallProjectileBehaviour : MonoBehaviour
             };
 
             damagable.TakeDamage(damageData, knockbackData);
-            Destroy(gameObject);
+            // Reduce piercing hits remaining
+            if (piercingHitsRemaining > 0) // Only decrement if not infinite piercing
+            {
+                piercingHitsRemaining--;
+            }
+
+            // Destroy the projectile if it has no more piercing hits remaining
+            if (piercingHitsRemaining == 0)
+            {
+                Destroy(gameObject);
+            }
         }
         else
         {
