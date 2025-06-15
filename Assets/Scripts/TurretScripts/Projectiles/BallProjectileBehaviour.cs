@@ -14,6 +14,8 @@ public class BallProjectileBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+
+
         // Try to get the IDamagable interface from the collided object
         IDamagable damagable = other.GetComponent<IDamagable>();
 
