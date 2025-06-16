@@ -22,6 +22,18 @@ MonoBehaviour:
     - Locale-de-DE
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97c90257fea56ba4dae0a9abc6a22a6f
+    m_Address: StatsMenuTranslationTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e98350fe4ebd0a546986e62d05dfc69a
+    m_Address: PauseMenuTranslationTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: c3a1b10086242734ab0443a68a3d7575, type: 2}
   m_SchemaSet:

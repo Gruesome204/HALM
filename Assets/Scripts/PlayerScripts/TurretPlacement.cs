@@ -34,7 +34,7 @@ public class TurretPlacement : MonoBehaviour
         }
     }
 
-        public HashSet<TurretBlueprint> GetInstantiatedTurretList()
+    public HashSet<TurretBlueprint> GetInstantiatedTurretList()
     {
         return InstantiatedTurretList;
     }
