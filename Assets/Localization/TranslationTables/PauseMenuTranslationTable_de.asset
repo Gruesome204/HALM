@@ -22,6 +22,18 @@ MonoBehaviour:
     m_Localized: "M\xFCde? Was ein Schw\xE4chling..."
     m_Metadata:
       m_Items: []
+  - m_Id: 1427683558649856
+    m_Localized: Might as well use the one below
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1427618970562560
+    m_Localized: You gonna admit weakness?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1427587681054720
+    m_Localized: Na? Fertig ausgeruht?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

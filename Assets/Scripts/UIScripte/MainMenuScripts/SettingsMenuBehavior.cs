@@ -54,7 +54,20 @@ public class SettingsMenuBehavior : MonoBehaviour
 
     void OnBackBtnClicked(ClickEvent clicked)
     {
-        menuManager.EnterMainMenu();
+        /*
+        if (menuManager == true)
+        {
+            menuManager.EnterMainMenu();
+        }
+        else
+        {
+            var gameMenuManager = FindObjectOfType<InGameMenuManager>();
+            gameMenuManager.CloseAllMenus();
+            gameMenuManager.OpenOneInGameMenu(1);
+        }
+        */
+
+        this.gameObject.SetActive(false);
     }
 
     void OnLanguageEnglishBtnClicked(ClickEvent clicked)

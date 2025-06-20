@@ -19,6 +19,18 @@ MonoBehaviour:
     m_Key: pauseMenuHeadline
     m_Metadata:
       m_Items: []
+  - m_Id: 1427587681054720
+    m_Key: resumeButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1427618970562560
+    m_Key: cancelRunButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1427683558649856
+    m_Key: mainMenuButton
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

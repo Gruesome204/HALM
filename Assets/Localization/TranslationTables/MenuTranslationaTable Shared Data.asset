@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 143518429184
-    m_Key: settingsBtn
+    m_Key: settingsButton
     m_Metadata:
       m_Items: []
   - m_Id: 9497130921984
@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 200900702208
-    m_Key: exitBtn
+    m_Key: exitButton
     m_Metadata:
       m_Items: []
   - m_Id: 29026900865024

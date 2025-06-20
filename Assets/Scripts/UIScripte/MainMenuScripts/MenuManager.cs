@@ -26,12 +26,10 @@ public class MenuManager : MonoBehaviour
     }
     public void EnterSettingsMenu()
     {
-        TurnOffAll();
         settingsMenu.SetActive(true);
     }
     public void EnterCreditsMenu()
     {
-        TurnOffAll();
         creditsMenu.SetActive(true);
     }
 }

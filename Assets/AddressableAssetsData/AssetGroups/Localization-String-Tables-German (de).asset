@@ -28,6 +28,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-de
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e79707219cc96c46b00cbc283e0b9cb
+    m_Address: ActionRowTranslationTable_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af535b7f9aa964143812944b70e3e43e
     m_Address: PauseMenuTranslationTable_de
     m_ReadOnly: 1

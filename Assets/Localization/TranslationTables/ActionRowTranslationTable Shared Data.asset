@@ -10,35 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: StatsMenuTranslationTable Shared Data
+  m_Name: ActionRowTranslationTable Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: StatsMenuTranslationTable
-  m_TableCollectionNameGuidString: ed55aba6ff1d81c4f9b0c5a79153ff66
+  m_TableCollectionName: ActionRowTranslationTable
+  m_TableCollectionNameGuidString: 2ed0f8161ef71db459e2eba42c502ebf
   m_Entries:
-  - m_Id: 4665995264
-    m_Key: statsMenuHeadline
+  - m_Id: 5777485824
+    m_Key: pauseMenuButton
     m_Metadata:
       m_Items: []
-  - m_Id: 1455849035624448
-    m_Key: charackterButton
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1455887765827584
-    m_Key: relicsButton
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1455922867957760
-    m_Key: towerButton
+  - m_Id: 39101231104
+    m_Key: statsMenuButton
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 4024201917408739329
+    rid: 4024202003077398621
   references:
     version: 2
     RefIds:
-    - rid: 4024201917408739329
+    - rid: 4024202003077398621
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1750003350489
+        m_CustomEpoch: 1750334983823

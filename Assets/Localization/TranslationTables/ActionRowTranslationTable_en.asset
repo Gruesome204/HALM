@@ -10,28 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: StatsMenuTranslationTable_de-DE
+  m_Name: ActionRowTranslationTable_en
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: de-DE
-  m_SharedData: {fileID: 11400000, guid: ed55aba6ff1d81c4f9b0c5a79153ff66, type: 2}
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 2ed0f8161ef71db459e2eba42c502ebf, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 4665995264
-    m_Localized: "Werte Men\xFC"
+  - m_Id: 5777485824
+    m_Localized: Pause
     m_Metadata:
       m_Items: []
-  - m_Id: 1455849035624448
-    m_Localized: Charakter
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1455887765827584
-    m_Localized: Relikte
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1455922867957760
-    m_Localized: "T\xFCrme"
+  - m_Id: 39101231104
+    m_Localized: Stats
     m_Metadata:
       m_Items: []
   references:

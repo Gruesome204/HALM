@@ -22,6 +22,18 @@ MonoBehaviour:
     m_Localized: Stats Menu
     m_Metadata:
       m_Items: []
+  - m_Id: 1455849035624448
+    m_Localized: Charackter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1455887765827584
+    m_Localized: Relics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1455922867957760
+    m_Localized: Towers
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

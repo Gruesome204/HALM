@@ -28,7 +28,7 @@ public class MainMenuBehavior : MonoBehaviour
         playBtn.RegisterCallback<ClickEvent>(OnPlayBtnClicked);
 
         settingsBtn = root.Q<Button>("settingsBtn");
-        settingsBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "settingsBtn"));
+        settingsBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "settingsButton"));
         settingsBtn.RegisterCallback<ClickEvent>(OnSettingsBtnClicked);
 
         creditsBtn = root.Q<Button>("creditsBtn");
@@ -36,7 +36,7 @@ public class MainMenuBehavior : MonoBehaviour
         creditsBtn.RegisterCallback<ClickEvent>(OnCreditsBtnClicked);
 
         exitBtn = root.Q<Button>("exitBtn");
-        exitBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "exitBtn"));
+        exitBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "exitButton"));
         exitBtn.RegisterCallback<ClickEvent>(OnExitBtnClicked);
     }
 

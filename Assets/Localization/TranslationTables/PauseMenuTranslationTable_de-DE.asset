@@ -22,6 +22,18 @@ MonoBehaviour:
     m_Localized: "Pause Men\xFC"
     m_Metadata:
       m_Items: []
+  - m_Id: 1427587681054720
+    m_Localized: Fortsetzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1427618970562560
+    m_Localized: Runde abbrechen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1427683558649856
+    m_Localized: "Hauptmen\xFC"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
