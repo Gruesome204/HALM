@@ -19,8 +19,8 @@ public class ActionRow : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
         gameMenuManager = FindObjectOfType<InGameMenuManager>();
 
-        turretsInGame = TurretPlacement.Instance.GetTurretBlueprintList();
-        turretsCurrentlyPlaced = TurretPlacement.Instance.GetInstantiatedTurretList();
+        turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
+        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetInstantiatedTurretList();
 
         pauseMenuButton = root.Q<Button>("pauseMenuButton");
         pauseMenuButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "pauseMenuButton"));
