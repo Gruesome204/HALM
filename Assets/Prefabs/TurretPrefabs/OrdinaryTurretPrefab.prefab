@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2156289921321794095}
   - component: {fileID: 3167907251624422604}
   - component: {fileID: -6688064516444452537}
+  - component: {fileID: -2405534622925964801}
   m_Layer: 7
   m_Name: OrdinaryTurretPrefab
   m_TagString: Untagged
@@ -128,6 +129,20 @@ MonoBehaviour:
   currentFiringPattern: 1
   projectilesPerSalve: 2
   delayBetweenSalveProjectiles: 1
+--- !u!114 &-2405534622925964801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775935544841688724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd9bc04dbd075b4088b4efb84664eb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sizeInCells: {x: 1, y: 1}
+  currentGridCoordinates: {x: 0, y: 0}
 --- !u!1 &4975998330747021140
 GameObject:
   m_ObjectHideFlags: 0
