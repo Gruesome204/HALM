@@ -109,8 +109,8 @@ MonoBehaviour:
   knockbackForce: 5
   knockbackDuration: 0.2
   currentLevel: 1
-  currentMaxHealth: 300
-  currentHealth: 300
+  currentMaxHealth: 50
+  currentHealth: 50
   currentDamage: 0
   currentArmor: 0
   currentAttackSpeed: 0
