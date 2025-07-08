@@ -2,16 +2,19 @@
     <Style src="project://database/Assets/UI/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <ui:VisualElement name="mainContainer" class="mainContainerClass">
         <ui:VisualElement name="sideContainer" style="flex-shrink: 0; width: 40%; height: 100%; background-color: rgba(3, 0, 60, 0.47); align-items: center; justify-content: flex-start;">
-            <ui:Label text="Label" name="statsMenuHeadline" class="sub-headline" style="margin-top: 4%;" />
-            <ui:VisualElement name="upperButtonContainer" style="width: 100%; height: 50%; align-items: center; justify-content: flex-end;">
+            <ui:Label text="Label" name="statsMenuHeadline" class="sub-headline" style="margin-top: 4%; position: absolute; white-space: normal;" />
+            <ui:VisualElement name="upperButtonContainer" style="width: 100%; height: 55%; align-items: center; justify-content: flex-end;">
                 <ui:Button text="Button" name="resumeButton" class="mainMenuBtnClass" style="width: 40%;" />
                 <ui:Button text="Button" name="charackterButton" class="mainMenuBtnClass" style="width: 40%;" />
                 <ui:Button text="Button" name="relicsButton" class="mainMenuBtnClass" style="width: 40%;" />
                 <ui:Button text="Button" name="towerButton" class="mainMenuBtnClass" style="width: 40%;" />
                 <ui:VisualElement style="height: 2px; width: 90%; background-color: rgb(3, 0, 60);" />
             </ui:VisualElement>
-            <ui:VisualElement name="lowerButtonContainer" style="width: 100%; height: 50%;" />
+            <ui:VisualElement name="lowerButtonContainer" style="width: 80%; height: 45%; -unity-text-align: upper-center; align-items: center; justify-content: center;">
+                <ui:ScrollView />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="nullspace" style="height: 100%; width: 3%;" />
+        <ui:VisualElement name="statsContainer" style="width: 35%; height: 80%; align-self: center; max-width: 35%; max-height: 80%; flex-shrink: 0; flex-grow: 1;" />
     </ui:VisualElement>
 </ui:UXML>

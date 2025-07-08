@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: 77e159cd53431c449a4dcf77dd9b39ae
   m_SerializeEntries:
+  - m_GUID: 25989c0697f8a4f46bd74ed5a0f3ba69
+    m_Address: Assets/Localization/TranslationTables/ClassTranslationCommon Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2ed0f8161ef71db459e2eba42c502ebf
     m_Address: Assets/Localization/TranslationTables/ActionRowTranslationTable Shared
       Data.asset
@@ -33,9 +39,27 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89ed0337a0f9f05408f7d5799d299334
+    m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretTranslationOrdinaryTurret
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90ca13a0f67bb494ebb46e945e8dd23a
+    m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretTranslationFastTurret
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ed55aba6ff1d81c4f9b0c5a79153ff66
     m_Address: Assets/Localization/TranslationTables/StatsMenuTranslationTable Shared
       Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f54ef236fc66be84cbbc728f2dda48fd
+    m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretTranslationCommon
+      Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

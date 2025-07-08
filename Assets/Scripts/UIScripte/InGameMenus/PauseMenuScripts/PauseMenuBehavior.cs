@@ -7,6 +7,7 @@ public class PauseMenuBehavior : MonoBehaviour
 {
     private Button backButton;
 
+    private Label pauseMenuHeadline;
     private Button resumeButton;
     private Button settingsButton;
     private Button cancelRunButton;
@@ -20,6 +21,11 @@ public class PauseMenuBehavior : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
         gameMenuManager = FindObjectOfType<InGameMenuManager>();
 
+        //Connecting and Setting Pause Menu Headline
+        pauseMenuHeadline = root.Q<Label>("pauseMenuHeadline");
+        pauseMenuHeadline.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "pauseMenuHeadline"));
+
+        //Connecting all Buttons, Settings their texts and their functions
         backButton = root.Q<Button>("backButton");
         backButton.SetBinding("text", new LocalizedString("MenuTranslationaTable", "backBtnText"));
         backButton.RegisterCallback<ClickEvent>(OnBackBtnCicked);

@@ -15,11 +15,38 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-English (en)
   m_GUID: 5900b9890ab5a4e40a0d0b5094d247fb
   m_SerializeEntries:
+  - m_GUID: 3d0fce8b16c4d7e4dba38d0923a95ca9
+    m_Address: ClassTranslationCommon_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4036df4cfd39395498a9fb6f9c5298f8
     m_Address: StatsMenuTranslationTable_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58e70a0be6ac5d1439d6af1a7a15f786
+    m_Address: TurretTranslationOrdinaryTurret_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61cc508e0ead5c04f9ebb4ee7159ec62
+    m_Address: TurretTranslationCommon_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b8b5e921fdaa8949893f42c364dfc97
+    m_Address: TurretTranslationFastTurret_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 796d8a2a774c6f44dbe931f43121fca2
     m_Address: PauseMenuTranslationTable_en

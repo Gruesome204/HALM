@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: TurretTranslationCommon_de-DE
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de-DE
+  m_SharedData: {fileID: 11400000, guid: f54ef236fc66be84cbbc728f2dda48fd, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 11481739264
+    m_Localized: 'Feuerrate: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64886077747200
+    m_Localized: "Feuer Abz\xE4hlung: "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64904218112000
+    m_Localized: 'Geschoss Geschwindigkeit: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64917459529728
+    m_Localized: 'Reichweite: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64935855747072
+    m_Localized: 'Schaden: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64953949974528
+    m_Localized: "R\xFCckschlag St\xE4rke: "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64970135793664
+    m_Localized: "R\xFCckschlag Dauer: "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1157554652409856
+    m_Localized: 'Kosten: '
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

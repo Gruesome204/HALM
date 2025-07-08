@@ -45,6 +45,7 @@
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     -unity-text-align: upper-center;
+    white-space: normal;
 }
 
 .sub-headline {

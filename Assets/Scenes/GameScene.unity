@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1706a925414a4cb49b75e7295348dc38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionRowElementAsset: {fileID: 9197481963319205126, guid: 5916de780a3544940be1967023788fce, type: 3}
 --- !u!114 &90814633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 415030905}
   - component: {fileID: 415030906}
+  - component: {fileID: 415030907}
   m_Layer: 0
   m_Name: -StatsMenuDoc-
   m_TagString: Untagged
@@ -556,6 +558,21 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &415030907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415030904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2862bf5ea98c34bbb2cc0c62a41c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listElementAsset: {fileID: 9197481963319205126, guid: a028c66d72758d648b906cf8a6847953, type: 3}
+  turretDetailsAsset: {fileID: 9197481963319205126, guid: e922ef6cfc128ff4d80b6196b13b981f, type: 3}
+  charackterDetailsAsset: {fileID: 9197481963319205126, guid: 50ce1698f8830634691260d6471ebe72, type: 3}
 --- !u!1 &427538119
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,54 +951,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1416964079
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1416964080}
-  - component: {fileID: 1416964081}
-  m_Layer: 0
-  m_Name: -InGameMenuManager-
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1416964080
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416964079}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.49351418, y: -0.5014979, z: 0.01277514}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1512055815}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1416964081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416964079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e819c7b32f84f234487e425e49c07175, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 2051609381}
-  statsMenu: {fileID: 415030904}
-  actionRow: {fileID: 90814630}
-  settingsMenu: {fileID: 1573890351}
 --- !u!1 &1512055814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,7 +988,6 @@ Transform:
   - {fileID: 427538120}
   - {fileID: 747619962}
   - {fileID: 595509536}
-  - {fileID: 1416964080}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1520240905
@@ -1031,6 +999,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1520240906}
+  - component: {fileID: 1520240907}
   m_Layer: 0
   m_Name: -UIManager-
   m_TagString: Untagged
@@ -1053,6 +1022,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1512055815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1520240907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520240905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e819c7b32f84f234487e425e49c07175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 2051609381}
+  statsMenu: {fileID: 415030904}
+  actionRow: {fileID: 90814630}
+  settingsMenu: {fileID: 1573890351}
 --- !u!1 &1573890351
 GameObject:
   m_ObjectHideFlags: 0

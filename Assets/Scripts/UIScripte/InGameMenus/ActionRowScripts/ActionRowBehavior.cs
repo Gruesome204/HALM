@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
 
-public class ActionRow : MonoBehaviour
+public class ActionRowBehavior : MonoBehaviour
 {
     private InGameMenuManager gameMenuManager;
 
@@ -11,6 +11,9 @@ public class ActionRow : MonoBehaviour
     private Button pauseMenuButton;
     private Button statsMenuButton;
 
+    public VisualTreeAsset actionRowElementAsset;
+
+    private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
     private HashSet<TurretBlueprint> turretsCurrentlyPlaced = new HashSet<TurretBlueprint>();
 
@@ -32,13 +35,23 @@ public class ActionRow : MonoBehaviour
 
         FillActionRow();
     }
-
+    private void Update()
+    {
+        foreach (var btn in turretBtnList)
+        {
+            btn.ChangeColor();
+        }
+    }
     void FillActionRow()
     {
+        turretBtnList.Clear();
 
         foreach (var turret in turretsInGame)
         {
-            Debug.Log($"{turret.turretName}");
+            Debug.Log("whyyyy");
+            AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret);
+            GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("turrentButtonContainer").Add(aR_Element.turretBorder);
+            turretBtnList.Add(aR_Element);
         }
     }
 
@@ -52,5 +65,10 @@ public class ActionRow : MonoBehaviour
     {
         gameMenuManager.CloseAllMenus();
         gameMenuManager.OpenOneInGameMenu(2);
+    }
+
+    void SetCurrentTurret(int clickedBtn)
+    {
+        FindObjectOfType<TurretPlacement>().currentBlueprint = turretsInGame[clickedBtn];
     }
 }

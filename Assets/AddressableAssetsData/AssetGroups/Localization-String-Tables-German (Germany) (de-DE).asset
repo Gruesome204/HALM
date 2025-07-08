@@ -15,6 +15,13 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-German (Germany) (de-DE)
   m_GUID: 9a8477400ee2cab4f91e957647a45b61
   m_SerializeEntries:
+  - m_GUID: 32bc9e972c2fea9409014c3553e41bbe
+    m_Address: TurretTranslationCommon_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 460bf22d12523084f8a3ba3cd27558de
     m_Address: MenuTranslationaTable_de-DE
     m_ReadOnly: 1
@@ -28,8 +35,28 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-de-DE
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72d7664fe7aa4d14fb31a3e813438f97
+    m_Address: TurretTranslationFastTurret_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 97c90257fea56ba4dae0a9abc6a22a6f
     m_Address: StatsMenuTranslationTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8bf015d5f9a9704d93ef7895b8286ac
+    m_Address: TurretTranslationOrdinaryTurret_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d786469831c98034885982b97143f355
+    m_Address: ClassTranslationCommon_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE
