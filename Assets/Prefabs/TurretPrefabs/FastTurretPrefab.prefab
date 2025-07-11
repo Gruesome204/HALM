@@ -126,9 +126,9 @@ MonoBehaviour:
   turretBlueprint: {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
   projectilePrefab: {fileID: 1759283730849935406, guid: 35da1b0dcddb8ae4aba1d2ccafe97370, type: 3}
   firePoint: {fileID: 3617515960331805413}
-  currentFiringPattern: 1
+  currentFiringPattern: 0
   projectilesPerSalve: 3
-  delayBetweenSalveProjectiles: 0.1
+  delayBetweenSalveProjectiles: 2
 --- !u!114 &435405628729520829
 MonoBehaviour:
   m_ObjectHideFlags: 0
