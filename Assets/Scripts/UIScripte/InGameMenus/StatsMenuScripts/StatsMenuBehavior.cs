@@ -32,8 +32,8 @@ public class StatsMenuBehavior : MonoBehaviour
         statsMenuHeadline.SetBinding("text", new LocalizedString("StatsMenuTranslationTable", "statsMenuHeadline"));
 
         //Filling The List for Turrets curently placed
-        turretsInGame = TurretPlacement.Instance.GetTurretBlueprintList();
-        turretsCurrentlyPlaced = TurretPlacement.Instance.GetInstantiatedTurretList();
+        turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
+        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetInstantiatedTurretList();
 
         //Connecting al Buttons and settig their Texts and Functions
         resumeButton = uIDocument.rootVisualElement.Q<Button>("resumeButton");

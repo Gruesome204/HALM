@@ -69,6 +69,6 @@ public class ActionRowBehavior : MonoBehaviour
 
     void SetCurrentTurret(int clickedBtn)
     {
-        FindObjectOfType<TurretPlacement>().currentBlueprint = turretsInGame[clickedBtn];
+        FindObjectOfType<TurretPlacementController>().currentBlueprint = turretsInGame[clickedBtn];
     }
 }
