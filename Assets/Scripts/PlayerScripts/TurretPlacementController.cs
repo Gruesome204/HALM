@@ -222,6 +222,7 @@ public class TurretPlacementController : MonoBehaviour
             if (GridManager.Instance.CanPlaceObject(gridCoords, blueprintPlacableObject.sizeInCells))
             {
                 GameObject newTurret = Instantiate(currentBlueprint.turretPrefab);
+               
                 PlacableObject placedPlacableObject = newTurret.GetComponent<PlacableObject>();
                 placedPlacableObject.currentGridCoordinates = gridCoords;
 
