@@ -26,7 +26,7 @@ public class AR_ElementBehavior
 
     public void ChangeColor()
     {
-        if (TurretPlacementController.Instance.currentBlueprint == representedTurret)
+        if (TurretPlacementController.Instance.currentSelectedBlueprint == representedTurret)
         {
             turretButton.style.backgroundColor = Color.red;
         }
@@ -38,6 +38,6 @@ public class AR_ElementBehavior
 
     void OnTurretButtonClicked(ClickEvent evt)
     {
-        TurretPlacementController.Instance.currentBlueprint = representedTurret;
+        TurretPlacementController.Instance.currentSelectedBlueprint = representedTurret;
     }
 }
