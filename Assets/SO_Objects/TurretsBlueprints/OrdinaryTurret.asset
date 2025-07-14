@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretName: OrdinaryTurret
   description: Test Description
-  fireRate: 3
-  fireCountdown: 0
-  shootingSalve: 1
+  fireRate: 5
+  fireCountdown: 1
   projectileSpeed: 10
-  attackRange: 5
+  attackRange: 10
   damage: 10
   knockbackStrength: 50
   knockbackDuration: 0.5

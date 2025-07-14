@@ -4,7 +4,7 @@ using UnityEngine;
 public class TurretPlacementController : MonoBehaviour
 {
     public List<TurretBlueprint> turretBlueprintList = new List<TurretBlueprint>();
-    public TurretBlueprint currentBlueprint;
+    public TurretBlueprint currentSelectedBlueprint;
 
     public LayerMask groundLayer; // Assign the layer of your ground in the Inspector
     public LayerMask turretLayer;
@@ -59,10 +59,11 @@ public class TurretPlacementController : MonoBehaviour
         // Add more keybinds or UI selection as needed
 
         // --- Handle Placement Preview ---
-        if (currentBlueprint != null)
-        {
-            HandlePlacementPreview();
-        }
+        //if (currentSelectedBlueprint != null)
+        //{
+        //    HandlePlacementPreview();
+        //}
+
         else
         {
             // If no blueprint is selected, ensure preview is destroyed
@@ -75,7 +76,7 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         // --- Handle Actual Placement on Mouse Click ---
-        if (Input.GetMouseButtonDown(0) && currentBlueprint != null) // Left mouse button click
+        if (Input.GetMouseButtonDown(0) && currentSelectedBlueprint != null) // Left mouse button click
         {
             TryPlaceTurret();
         }
@@ -90,10 +91,10 @@ public class TurretPlacementController : MonoBehaviour
     // Call this method when a new turret blueprint is selected (e.g., from UI button)
     public void SelectTurretBlueprint(TurretBlueprint blueprint)
     {
-        if (currentBlueprint == blueprint) return; // Already selected this one
+        if (currentSelectedBlueprint == blueprint) return; // Already selected this one
 
-        currentBlueprint = blueprint;
-        Debug.Log("Selected Blueprint: " + (currentBlueprint != null ? currentBlueprint.name : "None"));
+        currentSelectedBlueprint = blueprint;
+        Debug.Log("Selected Blueprint: " + (currentSelectedBlueprint != null ? currentSelectedBlueprint.name : "None"));
 
         // Immediately create or update the preview object when a blueprint is selected
         CreateOrUpdatePreviewObject();
@@ -101,7 +102,7 @@ public class TurretPlacementController : MonoBehaviour
 
     public void DeselectTurretBlueprint()
     {
-        currentBlueprint = null;
+        currentSelectedBlueprint = null;
         if (previewObject != null)
         {
             Destroy(previewObject);
@@ -119,17 +120,17 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         // Instantiate the actual turret prefab for the preview to ensure correct size/model
-        if (currentBlueprint != null && currentBlueprint.turretPrefab != null)
+        if (currentSelectedBlueprint != null && currentSelectedBlueprint.turretPrefab != null)
         {
-            previewObject = Instantiate(currentBlueprint.turretPrefab); // Use the actual turret prefab
+            previewObject = Instantiate(currentSelectedBlueprint.turretPrefab); // Use the actual turret prefab
             previewPlacableObject = previewObject.GetComponent<PlacableObject>();
 
             if (previewPlacableObject == null)
             {
-                Debug.LogError("Turret Prefab '" + currentBlueprint.turretPrefab.name + "' is missing a PlacableObject component!");
+                Debug.LogError("Turret Prefab '" + currentSelectedBlueprint.turretPrefab.name + "' is missing a PlacableObject component!");
                 Destroy(previewObject);
                 previewObject = null;
-                currentBlueprint = null; // Deselect to prevent further errors
+                currentSelectedBlueprint = null; // Deselect to prevent further errors
                 return;
             }
 
@@ -212,16 +213,17 @@ public class TurretPlacementController : MonoBehaviour
             Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
 
             // Use the size from the selected blueprint's prefab for actual placement
-            PlacableObject blueprintPlacableObject = currentBlueprint.turretPrefab.GetComponent<PlacableObject>();
+            PlacableObject blueprintPlacableObject = currentSelectedBlueprint.turretPrefab.GetComponent<PlacableObject>();
             if (blueprintPlacableObject == null)
             {
-                Debug.LogError("Turret Prefab '" + currentBlueprint.turretPrefab.name + "' is missing a PlacableObject component!");
+                Debug.LogError("Turret Prefab '" + currentSelectedBlueprint.turretPrefab.name + "' is missing a PlacableObject component!");
                 return;
             }
 
             if (GridManager.Instance.CanPlaceObject(gridCoords, blueprintPlacableObject.sizeInCells))
             {
-                GameObject newTurret = Instantiate(currentBlueprint.turretPrefab);
+                GameObject newTurret = Instantiate(currentSelectedBlueprint.turretPrefab);
+               
                 PlacableObject placedPlacableObject = newTurret.GetComponent<PlacableObject>();
                 placedPlacableObject.currentGridCoordinates = gridCoords;
 
@@ -239,9 +241,9 @@ public class TurretPlacementController : MonoBehaviour
                 TurretAttack turretAttack = newTurret.GetComponent<TurretAttack>();
                 if (turretAttack != null)
                 {
-                    turretAttack.turretBlueprint = currentBlueprint;
+                    turretAttack.turretBlueprint = currentSelectedBlueprint;
                     turretAttack.InitializeFromBlueprint(); // Optional initialization method
-                    InstantiatedTurretList.Add(currentBlueprint); // Add blueprint to tracking list
+                    InstantiatedTurretList.Add(currentSelectedBlueprint); // Add blueprint to tracking list
                 }
 
                 lastPlacementTime = Time.time;
