@@ -62,6 +62,10 @@ MonoBehaviour:
     m_Localized: "Zur\xFCck"
     m_Metadata:
       m_Items: []
+  - m_Id: 23246205716623360
+    m_Localized: "Lautst\xE4rke"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

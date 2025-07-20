@@ -63,6 +63,10 @@ MonoBehaviour:
     m_Localized: Retreat Coward
     m_Metadata:
       m_Items: []
+  - m_Id: 23246205716623360
+    m_Localized: Wie Taub bist du?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

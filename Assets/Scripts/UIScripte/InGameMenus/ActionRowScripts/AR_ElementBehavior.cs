@@ -32,7 +32,7 @@ public class AR_ElementBehavior
         }
         else
         {
-            turretButton.style.color = Color.white;
+            turretButton.style.backgroundColor = Color.white;
         }
     }
 
