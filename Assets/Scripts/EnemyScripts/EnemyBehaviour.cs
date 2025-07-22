@@ -11,8 +11,10 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     public GameObject target;
     private Rigidbody2D rb;
 
+    [Header("Knockback")]
     public float knockbackForce = 10f;
     public float knockbackDuration = 0.5f;
+    public float knockbackReduction;
     private bool isKnockedBack = false;
 
     [Header("Level")]
