@@ -2,12 +2,18 @@
     <Style src="project://database/Assets/UI/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <ui:VisualElement name="MainContainer" style="width: 100%; height: 100%; align-items: center; background-color: rgb(19, 0, 0);">
         <ui:Label text="Label" name="headline" class="headline" style="margin-top: 15px; margin-right: 0; margin-bottom: 30px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
-        <ui:ScrollView style="width: 60%; height: 100%; align-items: flex-start; border-top-width: 3px; border-right-width: 0; border-bottom-width: 3px; border-left-width: 0; border-left-color: rgb(70, 0, 0); border-right-color: rgb(70, 0, 0); border-top-color: rgb(70, 0, 0); border-bottom-color: rgb(70, 0, 0);">
-            <ui:VisualElement name="LanguageSettings" style="width: 100%; height: 100%; align-items: flex-start;">
+        <ui:ScrollView style="width: 60%; height: auto; align-items: flex-start; border-top-width: 3px; border-right-width: 0; border-bottom-width: 3px; border-left-width: 0; border-left-color: rgb(70, 0, 0); border-right-color: rgb(70, 0, 0); border-top-color: rgb(70, 0, 0); border-bottom-color: rgb(70, 0, 0);">
+            <ui:VisualElement name="LanguageSettings" style="width: 100%; height: 250px; align-items: flex-start;">
                 <ui:Label text="Label" name="languageSettingsHeadline" class="sub-headline" />
                 <ui:Button text="Button" name="englishBtn" class="mainMenuBtnClass settingsButtons" />
                 <ui:Button text="Button" name="germanBtn" class="mainMenuBtnClass settingsButtons" />
                 <ui:Button text="Button" name="developerBtn" class="mainMenuBtnClass settingsButtons" />
+            </ui:VisualElement>
+            <ui:VisualElement name="SoundSettings" style="width: 100%; height: 100px;">
+                <ui:Label text="Label" name="soundSettingsHeadline" class="sub-headline" />
+                <ui:Slider label="Music Volume" value="50" high-value="1" name="musicVolumeSlider" style="color: rgb(255, 255, 255); font-size: 16px; margin-top: 10px; margin-right: 5%; margin-bottom: 0; margin-left: 0;" />
+                <ui:Slider label="Sound Volume" value="50" high-value="1" name="soundVolumeSlider" fill="false" style="color: rgb(255, 255, 255); font-size: 16px; margin-top: 10px; margin-right: 5%; margin-bottom: 0; margin-left: 0;" />
+                <ui:SliderInt label="Music Track" value="42" high-value="8" name="musicTrackSlider" low-value="1" fill="false" style="font-size: 16px; color: rgb(255, 255, 255);" />
             </ui:VisualElement>
         </ui:ScrollView>
     </ui:VisualElement>
