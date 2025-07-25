@@ -14,11 +14,13 @@ public class EnemyBaseStats : ScriptableObject
     public float baseMovementSpeed = 2f;
 
     [Header("Defensive Stats")]
-    public float baseMaxHealth = 300f;
-    public float baseHealth = 300f;
+    public float baseMaxHealth = 100f;
+    public float baseHealth = 100f;
     public float baseArmor;
     public float baseMagicResistance;
     public float baseKnockbackReduction;
+    public float baseknockbackForce;
+    public float baseknockbackDuration;
 
 
     [Header("Offensive Stats")]

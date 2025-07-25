@@ -15,5 +15,6 @@ public struct DamageData
     {
         Physical,
         Magical,
+        True
     }
 }

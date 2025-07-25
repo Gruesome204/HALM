@@ -1,7 +1,8 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static DamageData;
 
 public class EnemyBehaviour : MonoBehaviour, IDamagable
 {
@@ -11,34 +12,37 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     public GameObject target;
     private Rigidbody2D rb;
 
-    [Header("Knockback")]
-    public float knockbackForce = 10f;
-    public float knockbackDuration = 0.5f;
-    public float knockbackReduction;
     private bool isKnockedBack = false;
+
+    public bool IsInvulnerable { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+
+    [Header("Info")]
+    public string enemyName;
+    public string enemyDescription;
 
     [Header("Level")]
     public int currentLevel = 1;
 
-    [Header("Base Stats")]
-    public float currentMaxHealth;
-    public float currentHealth;
-    public float currentDamage;
-    public float currentArmor;
-    public float currentAttackSpeed;
-
-    [Header("Crit")]
-    public float currentCritChance;
-    public float currentCritHitMultiplier;
-
-    [Header("Resistances")]
-    public float currentMagicResistance;
-
-    [Header("Ranges")]
-    public float currentAttackRange;
-
     [Header("Movement")]
     public float currentMovementSpeed;
+
+    [Header("Defensive Stats")]
+    public float currentMaxHealth;
+    public float currentHealth;
+    public float currentArmor;
+    public float currentMagicResistance;
+
+    public float currentKnockbackReduction;
+    public float currentKnockbackForce = 10f;
+    public float currentKnockbackDuration = 0.5f;
+
+    [Header("Offensive Stats")]
+    public float currentDamage;
+    public float currentAttackSpeed;
+    public float currentCritChance;
+    public float currentCritHitMultiplier;
+    public float currentAttackRange;
 
     [Header("Detection")]
     public float currentDetectionRange;
@@ -139,12 +143,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
             currentDamage = baseStats.baseDamage * GetLevelScalingFactor(damageScaleFactor);
             currentArmor = baseStats.baseArmor * GetLevelScalingFactor(armorScaleFactor);
             currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScalingFactor(speedScaleFactor);
+            currentKnockbackReduction = Mathf.Clamp01(currentKnockbackReduction);
         }
         else
         {
             Debug.LogError("EnemyBaseStats component not found on " + gameObject.name);
-            currentMaxHealth = 300f;
-            currentHealth = 300f;
+            currentMaxHealth = 100f;
+            currentHealth = currentMaxHealth;
             currentDamage = 10f;
             currentArmor = 0f;
             currentMovementSpeed = 2f;
@@ -162,18 +167,18 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
         return factor;
     }
 
-    public bool IsInvulnerable { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
     //Effect/visual/audio effect upon taking dmg
     public void OnDamageTaken(float amount)
     {
     }
+
     public void TakeDamage(DamageData damageData,KnockbackData knockbackData)
     {
         if (isKnockedBack) return; // Prevent multiple knockbacks at once
 
-        currentHealth -= CalculateTakenDamage_PercentageLinear(damageData.amount, currentArmor);
-        Debug.Log($"{this.gameObject.name} received {damageData.amount} {damageData.type} Damage from {damageData.source.name}");
+        float finalDamage = CalculateTakenDamage(damageData);
+        currentHealth -= finalDamage;
+        Debug.Log($"{this.gameObject.name} received {finalDamage} {damageData.type} Damage from {damageData.source.name}");
         //Add Knockback to this enemy
         StartCoroutine(KnockbackRoutine(knockbackData.direction));
         UpdateHealthBar();
@@ -188,15 +193,31 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
         {
             healthBarSlider.value = currentHealth / currentMaxHealth; // Update the Slider value
         }
-    }   
-
-    public float CalculateTakenDamage_PercentageLinear(float incomingDamage, float armor)
-    {
-        float damageReductionPercentage = armor / 100f; // Assuming 1 armor point = 1% reduction
-        float takenDamage = incomingDamage * (1f - Mathf.Clamp01(damageReductionPercentage));
-        return takenDamage;
     }
 
+    public float CalculateTakenDamage(DamageData damageData)
+    {
+        float takenDamage = damageData.amount;
+
+        switch (damageData.type)
+        {
+            case DamageData.DamageType.Physical:
+                takenDamage -= currentArmor; // Flat reduction
+                takenDamage = Mathf.Max(takenDamage, 0f);
+                break;
+
+            case DamageData.DamageType.Magical:
+                float magicReductionPercent = currentMagicResistance / 100f;
+                takenDamage *= (1f - Mathf.Clamp01(magicReductionPercent));
+                break;
+
+            // Add more types if needed
+            default:
+                break;
+        }
+
+        return takenDamage;
+    }
     protected virtual void Die()
     {
         Destroy(gameObject);
@@ -207,13 +228,15 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
         Debug.Log("Start Knockback");
         isKnockedBack = true;
         rb.linearVelocity = Vector2.zero; // Optional: Reset velocity before applying new force
-        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
-        yield return new WaitForSeconds(knockbackDuration);
+        // Apply knockback reduction
+        float adjustedKnockbackForce = currentKnockbackForce * (1f - Mathf.Clamp01(currentKnockbackReduction));
+        rb.AddForce(direction.normalized * adjustedKnockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(currentKnockbackDuration);
 
         rb.linearVelocity = Vector2.zero; // Optional: Stop the enemy after knockback
         isKnockedBack = false;
-        // Re-enable enemy AI/movement here if it was disabled
     }
 
 }
