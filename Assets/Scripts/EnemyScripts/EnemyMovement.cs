@@ -13,6 +13,24 @@ public class EnemyMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Update()
+    {
+        if (target == null)
+        {
+            LookForTarget();
+        }
+    }
+
+    public void LookForTarget()
+    {
+        GameObject found = GameObject.FindGameObjectWithTag("Player");
+        if (found != null)
+        {
+            target = found;
+            Debug.Log($"{gameObject.name} found target: {target.name}");
+        }
+    }
+
     public void MoveTowardTarget()
     {
         if (target == null || stats == null) return;
