@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionRowElementAsset: {fileID: 9197481963319205126, guid: 5916de780a3544940be1967023788fce, type: 3}
+  resourceElementAsset: {fileID: 9197481963319205126, guid: 4bd58734194a10b4688b9fb12f1f84e8, type: 3}
 --- !u!114 &90814633
 MonoBehaviour:
   m_ObjectHideFlags: 0

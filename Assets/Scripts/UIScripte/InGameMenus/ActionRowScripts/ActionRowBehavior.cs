@@ -7,11 +7,13 @@ public class ActionRowBehavior : MonoBehaviour
 {
     private InGameMenuManager gameMenuManager;
 
-    private VisualElement turretBTNContainer;
+    private VisualElement turrentButtonContainer;
+    private VisualElement resourceContainer;
     private Button pauseMenuButton;
     private Button statsMenuButton;
 
     public VisualTreeAsset actionRowElementAsset;
+    public VisualTreeAsset resourceElementAsset;
 
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
@@ -25,6 +27,10 @@ public class ActionRowBehavior : MonoBehaviour
         turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
         turretsCurrentlyPlaced = TurretPlacementController.Instance.GetInstantiatedTurretList();
 
+        turrentButtonContainer = root.Q<VisualElement>("turrentButtonContainer");
+
+        resourceContainer = root.Q<VisualElement>("resourceContainer");
+
         pauseMenuButton = root.Q<Button>("pauseMenuButton");
         pauseMenuButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "pauseMenuButton"));
         pauseMenuButton.RegisterCallback<ClickEvent>(PauseBtnClicked);
@@ -34,6 +40,7 @@ public class ActionRowBehavior : MonoBehaviour
         statsMenuButton.RegisterCallback<ClickEvent>(StatsBtnClicked);
 
         FillActionRow();
+        FillResourceRow();
     }
     private void Update()
     {
@@ -45,13 +52,24 @@ public class ActionRowBehavior : MonoBehaviour
     void FillActionRow()
     {
         turretBtnList.Clear();
-
+        var turretNumber = new int();
+        turretNumber = 1;
         foreach (var turret in turretsInGame)
         {
-            Debug.Log("whyyyy");
-            AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret);
-            GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("turrentButtonContainer").Add(aR_Element.turretBorder);
+            AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret, turretNumber);
+            turrentButtonContainer.Add(aR_Element.turretBorder);
             turretBtnList.Add(aR_Element);
+
+            turretNumber++;
+        }
+    }
+
+    void FillResourceRow()
+    {
+        for (int i = 0; i < Random.Range(1,6); i++)
+        {
+            AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, Random.Range(5,50));
+            resourceContainer.Add(aR_Resource.border);
         }
     }
 

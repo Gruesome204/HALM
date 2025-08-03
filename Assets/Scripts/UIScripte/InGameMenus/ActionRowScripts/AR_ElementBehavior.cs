@@ -7,16 +7,20 @@ public class AR_ElementBehavior
 
     public VisualElement turretBorder;
     public VisualElement turretIcon;
+    public Label turretNumber;
     public Button turretButton;
-    public int placementTurretNumber;
 
-    public AR_ElementBehavior(VisualTreeAsset asset, TurretBlueprint _turret)
+
+    public AR_ElementBehavior(VisualTreeAsset asset, TurretBlueprint _turret, int _turretNumber)
     {
         TemplateContainer rowElement = asset.Instantiate();
 
         turretBorder = rowElement.Q<VisualElement>("border");
 
         turretIcon = rowElement.Q<VisualElement>("icon");
+
+        turretNumber = rowElement.Q<Label>("turretNumber");
+        turretNumber.text = $"{_turretNumber}";
 
         turretButton = rowElement.Q<Button>("button");
         turretButton.RegisterCallback<ClickEvent>(OnTurretButtonClicked);
