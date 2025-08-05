@@ -19,6 +19,8 @@ public class TurretPlacementController : MonoBehaviour
     public float placementCooldown = 1.0f; // Cooldown duration in seconds
     private float lastPlacementTime; // Time when the last turret was placed
 
+    private int buildLimitCount;
+    private int currentbuiltCount;
     public static TurretPlacementController Instance { get; private set; }
 
     private void Awake()
