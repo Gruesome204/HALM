@@ -11,4 +11,7 @@ public class GameDataSO : ScriptableObject
     }
     [SerializeField] private Class currentClass;
 
+
+    public int buildLimitCount;
+
 }
