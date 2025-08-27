@@ -13,7 +13,7 @@ public class TurretPlacementController : MonoBehaviour
     private PlacableObject previewPlacableObject;
 
     //Instantiated turretList
-    [SerializeField]private HashSet<TurretBlueprint> InstantiatedTurretList = new HashSet<TurretBlueprint>();
+    [SerializeField]private List<TurretBlueprint> InstantiatedTurretList = new List<TurretBlueprint>();
 
     [Header("Placement Cooldown")] // Organize variables in the Inspector
     public float placementCooldown = 1.0f; // Cooldown duration in seconds
@@ -36,7 +36,7 @@ public class TurretPlacementController : MonoBehaviour
         }
     }
 
-    public HashSet<TurretBlueprint> GetInstantiatedTurretList()
+    public List<TurretBlueprint> GetInstantiatedTurretList()
     {
         return InstantiatedTurretList;
     }

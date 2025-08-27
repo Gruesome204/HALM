@@ -17,7 +17,7 @@ public class ActionRowBehavior : MonoBehaviour
 
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
-    private HashSet<TurretBlueprint> turretsCurrentlyPlaced = new HashSet<TurretBlueprint>();
+    private List<TurretBlueprint> turretsCurrentlyPlaced = new List<TurretBlueprint>();
 
     void OnEnable()
     {

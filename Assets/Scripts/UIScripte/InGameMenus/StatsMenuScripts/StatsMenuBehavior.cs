@@ -19,7 +19,7 @@ public class StatsMenuBehavior : MonoBehaviour
     public VisualTreeAsset turretDetailsAsset;
     public VisualTreeAsset charackterDetailsAsset;
 
-    private HashSet<TurretBlueprint> turretsCurrentlyPlaced = new HashSet<TurretBlueprint>();
+    private List<TurretBlueprint> turretsCurrentlyPlaced = new List<TurretBlueprint>();
     private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
 
     void OnEnable()
