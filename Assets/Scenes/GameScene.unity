@@ -552,6 +552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 368292586}
   - component: {fileID: 368292587}
+  - component: {fileID: 368292588}
   m_Layer: 0
   m_Name: -TurretManager-
   m_TagString: Untagged
@@ -597,7 +598,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   previewObject: {fileID: 0}
+  InstantiatedTurretList: []
   placementCooldown: 1
+--- !u!114 &368292588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368292585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098d5dcc528e96c4398b615d9773efed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turretLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  toggleDestructionKey: 120
 --- !u!1 &406684503
 GameObject:
   m_ObjectHideFlags: 0
