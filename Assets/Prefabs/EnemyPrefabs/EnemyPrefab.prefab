@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8681205700299939639}
   - component: {fileID: 5361971606197496698}
   - component: {fileID: 7339260930082218373}
+  - component: {fileID: 2443457996428829973}
   m_Layer: 8
   m_Name: EnemyPrefab
   m_TagString: Enemy
@@ -182,8 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac598652674b42040bca541d3de1303d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  healthBar: {fileID: 0}
+  stats: {fileID: 7339260930082218373}
+  healthBar: {fileID: 2813460744261295979}
 --- !u!114 &8681205700299939639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1ad1b6d5e584147a958693d00b9287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 7339260930082218373}
   knockbackForce: 10
   knockbackDuration: 0.5
 --- !u!114 &5361971606197496698
@@ -211,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342e9317690cce140924112eda674539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 7339260930082218373}
   target: {fileID: 0}
   pursueRange: 5
 --- !u!114 &7339260930082218373
@@ -226,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c63b6cc1eba7c24195124605f0e8d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStats: {fileID: 0}
+  baseStats: {fileID: 11400000, guid: 44d30920b39db314fa7ac40f4935d856, type: 2}
   currentLevel: 1
   currentHealth: 0
   currentMaxHealth: 0
@@ -239,6 +240,20 @@ MonoBehaviour:
   damageScaleFactor: 1.1
   speedScaleFactor: 1.05
   armorScaleFactor: 1.1
+--- !u!114 &2443457996428829973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4040261046768777757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e87815e6b4e8fbc48b5c2334ac77c188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilities: []
+  target: {fileID: 0}
 --- !u!1001 &2257114052561782404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -376,6 +391,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
+--- !u!114 &2813460744261295979 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4060429260896049647, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
+  m_PrefabInstance: {fileID: 2257114052561782404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4204318691049205265 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2669047809251551381, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
