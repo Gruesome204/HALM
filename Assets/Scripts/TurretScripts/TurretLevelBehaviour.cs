@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class TurretLevelBehaviour : MonoBehaviour
 {
+    [Header("Turret Level Stats")]
     public int currentLevel = 1;
     public int maxLevel = 10;
     public float currentXP = 0;
     public float xpToNextLevel = 50f;
     public float xpGrowthMultiplier = 1.5f;
 
-    public float levelDamage = 10f;
+    [Header("Turret Level Values")]
+    public float levelDamage = 1f;
     public float levelFireRate = 1f;
-    public float levelRange = 5f;
+    public float levelRange = 1.5f;
     public void AddXP(float amount)
     {
         if (currentLevel >= maxLevel) return;
