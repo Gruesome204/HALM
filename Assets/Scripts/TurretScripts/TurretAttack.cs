@@ -48,7 +48,6 @@ public class TurretAttack : MonoBehaviour
         currentKnockbackDuration = turretBlueprint.knockbackDuration;
     }
 
-
     void Update()
     {
         FindTarget();
