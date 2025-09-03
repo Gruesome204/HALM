@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
@@ -6,6 +7,7 @@ public class EnemyBehaviour : MonoBehaviour
     private EnemyHealth health;
     private EnemyMovement movement;
     private EnemyKnockback knockback;
+
 
     private void Awake()
     {
@@ -25,8 +27,14 @@ public class EnemyBehaviour : MonoBehaviour
         movement.MoveTowardTarget();
     }
 
-    private void Die()
+    private void Die(EnemyHealth enemy, DamageData damageData)
     {
+        // Give XP to the turret that killed it
+        TurretLevelBehaviour turret = damageData.source.GetComponent<TurretLevelBehaviour>();
+        if (turret != null)
+        {
+            turret.AddXP(stats.currentExperienceYield);
+        }
         Destroy(gameObject);
     }
 }
