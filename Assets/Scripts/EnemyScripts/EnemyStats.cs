@@ -40,7 +40,6 @@ public class EnemyStats : MonoBehaviour
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
         currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
         currentKnockbackReduction = Mathf.Clamp01(currentKnockbackReduction);
-
         currentExperienceYield = Mathf.RoundToInt(baseStats.experienceYield * GetLevelScaling(1.1f));
     }
 

@@ -19,6 +19,9 @@ public class TurretPlacementController : MonoBehaviour
     public float placementCooldown = 1.0f; // Cooldown duration in seconds
     private float lastPlacementTime; // Time when the last turret was placed
 
+    [Header("Hierarchy Organization")]
+    [SerializeField] private Transform turretContainer;
+
     public static TurretPlacementController Instance { get; private set; }
 
     private void Awake()
@@ -224,12 +227,13 @@ public class TurretPlacementController : MonoBehaviour
 
             if (GridManager.Instance.CanPlaceObject(gridCoords, blueprintPlacableObject.sizeInCells))
             {
-                GameObject newTurret = Instantiate(currentSelectedBlueprint.turretPrefab);
-               
-                PlacableObject placedPlacableObject = newTurret.GetComponent<PlacableObject>();
-                placedPlacableObject.currentGridCoordinates = gridCoords;
-
-                GridManager.Instance.PlaceObject(newTurret, gridCoords, placedPlacableObject.sizeInCells);
+                    GameObject newTurret = Instantiate(
+                    currentSelectedBlueprint.turretPrefab,
+                    GridManager.Instance.GetWorldPosition(gridCoords), // Position
+                    Quaternion.identity, // Rotation
+                    turretContainer // Parent in hierarchy
+             );
+                newTurret.transform.position = GridManager.Instance.GetWorldPosition(gridCoords);
 
                 // Destroy the active preview object
                 if (previewObject != null)

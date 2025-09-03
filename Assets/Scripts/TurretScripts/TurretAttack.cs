@@ -22,6 +22,7 @@ public class TurretAttack : MonoBehaviour
     [Header("Targeting Settings")] // Optional: for better organization in Inspector
     public LayerMask enemyLayer; // New variable to select the enemy layer
 
+
     public enum FiringPattern
     {
         SingleShot,

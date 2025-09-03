@@ -600,6 +600,7 @@ MonoBehaviour:
   previewObject: {fileID: 0}
   InstantiatedTurretList: []
   placementCooldown: 1
+  turretContainer: {fileID: 278887215}
 --- !u!114 &368292588
 MonoBehaviour:
   m_ObjectHideFlags: 0
