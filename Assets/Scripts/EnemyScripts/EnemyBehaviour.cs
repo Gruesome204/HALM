@@ -30,10 +30,10 @@ public class EnemyBehaviour : MonoBehaviour
     private void Die(EnemyHealth enemy, DamageData damageData)
     {
         // Give XP to the turret that killed it
-        TurretLevelBehaviour turret = damageData.source.GetComponent<TurretLevelBehaviour>();
+        var turret = damageData.attacker?.GetComponent<TurretBehaviour>();
         if (turret != null)
         {
-            turret.AddXP(stats.currentExperienceYield);
+            turret.AwardXP(stats.BaseStats.experienceYield);
         }
         Destroy(gameObject);
     }

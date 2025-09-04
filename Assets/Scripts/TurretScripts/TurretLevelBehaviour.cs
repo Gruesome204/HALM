@@ -1,40 +1,45 @@
 using UnityEngine;
+using static TurretLevelManager;
 
 public class TurretLevelBehaviour : MonoBehaviour
 {
-    [Header("Turret Level Stats")]
-    public int currentLevel = 1;
-    public int maxLevel = 10;
-    public float currentXP = 0;
-    public float xpToNextLevel = 50f;
-    public float xpGrowthMultiplier = 1.5f;
-
-    [Header("Turret Level Values")]
-    public float levelDamage = 1f;
-    public float levelFireRate = 1f;
-    public float levelRange = 1.5f;
-    public void AddXP(float amount)
+    public TurretType turretType;
+    private void Start()
     {
-        if (currentLevel >= maxLevel) return;
+        // Subscribe to global events
+        TurretLevelManager.Instance.OnLevelUp += HandleLevelUp;
 
-        currentXP += amount;
+        // Apply current level upgrades
+        int currentLevel = TurretLevelManager.Instance.GetLevel(turretType);
+        ApplyUpgrades(currentLevel);
+    }
 
-        if (currentXP >= xpToNextLevel)
+    private void OnDestroy()
+    {
+        if (TurretLevelManager.Instance != null)
+            TurretLevelManager.Instance.OnLevelUp -= HandleLevelUp;
+    }
+
+    private void HandleLevelUp(TurretType type, int newLevel)
+    {
+        if (type == turretType)
         {
-            LevelUp();
+            ApplyUpgrades(newLevel);
         }
     }
-    private void LevelUp()
+
+    private void ApplyUpgrades(int level)
     {
-        currentLevel++;
-        currentXP = 0;
-        xpToNextLevel *= xpGrowthMultiplier;
+        // Reset to base and scale
+        //damage = baseDamage * Mathf.Pow(1.2f, level - 1);
+        //fireRate = baseFireRate * Mathf.Pow(0.95f, level - 1);
+        //range = baseRange + 0.5f * (level - 1);
 
-        // Upgrade stats on level up
-        levelDamage *= 1.2f;    // +20% damage
-        levelFireRate *= 0.9f;  // Faster fire rate
-        levelRange += 0.5f;     // Slightly bigger range
+        //Debug.Log($"{turretType} turret upgraded! Level {level} | Damage={damage}, FireRate={fireRate}, Range={range}");
+    }
 
-        Debug.Log($"Turret leveled up to {currentLevel}! Damage: {levelDamage}, FireRate: {levelFireRate}, Range: {levelRange}");
+    public void AwardXP(float amount)
+    {
+        TurretLevelManager.Instance.AddXP(turretType, amount);
     }
 }

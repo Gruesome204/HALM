@@ -49,8 +49,8 @@ public class TurretAttack : MonoBehaviour
     public void InitializeFromBlueprint()
     {
         currentfireCountdown = turretBlueprint.fireCountdown;
-        currentAttackRange = turretBlueprint.attackRange + levelBehaviour.levelRange;
-        currentFireRate = turretBlueprint.fireRate + levelBehaviour.levelFireRate;
+        currentAttackRange = turretBlueprint.attackRange;
+        currentFireRate = turretBlueprint.fireRate;
         currentProjectileSpeed = turretBlueprint.projectileSpeed;
         currentKnockbackStrength = turretBlueprint.knockbackStrength;
         currentKnockbackDuration = turretBlueprint.knockbackDuration;
