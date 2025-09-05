@@ -69,8 +69,4 @@ public class TurretLevelManager : MonoBehaviour
         return turretProgressDict[type].currentLevel;
     }
 
-    internal void AddXP()
-    {
-        throw new NotImplementedException();
-    }
 }
