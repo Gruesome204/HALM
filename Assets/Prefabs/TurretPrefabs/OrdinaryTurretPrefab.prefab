@@ -184,14 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70bc1a31c981814d8d8890bf295a7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 1
-  maxLevel: 10
-  currentXP: 0
-  xpToNextLevel: 50
-  xpGrowthMultiplier: 1.5
-  levelDamage: 10
-  levelFireRate: 1
-  levelRange: 5
+  blueprint: {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
 --- !u!1 &4975998330747021140
 GameObject:
   m_ObjectHideFlags: 0
