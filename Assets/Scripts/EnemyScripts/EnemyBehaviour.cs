@@ -8,7 +8,6 @@ public class EnemyBehaviour : MonoBehaviour
     private EnemyMovement movement;
     private EnemyKnockback knockback;
 
-
     private void Awake()
     {
         stats = GetComponent<EnemyStats>();
@@ -33,7 +32,10 @@ public class EnemyBehaviour : MonoBehaviour
         var turret = damageData.source?.GetComponent<TurretLevelBehaviour>();
         if (turret != null)
         {
-            TurretLevelManager.Instance.AddXP(TurretLevelManager.TurretType.Basic, stats.currentExperienceYield);
+            TurretLevelManager.Instance.AddXP(
+            turret.blueprint.turretType, 
+            stats.currentExperienceYield
+     );
         }
         Destroy(gameObject);
     }

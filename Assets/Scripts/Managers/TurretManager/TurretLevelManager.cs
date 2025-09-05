@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class TurretLevelManager : MonoBehaviour
 {
-    public enum TurretType
-    {
-        Basic,
-        Sniper,
-        Cannon,
-        Flamethrower
-    }
     public static TurretLevelManager Instance { get; private set; }
 
     [System.Serializable]
@@ -21,13 +14,13 @@ public class TurretLevelManager : MonoBehaviour
         public float xpToNextLevel = 50f;
     }
 
-    private Dictionary<TurretType, TurretProgress> turretProgressDict = new();
+    private Dictionary<TurretTypeData.TurretType, TurretProgress> turretProgressDict = new();
 
     [Header("Level Settings")]
     public int maxLevel = 10;
     public float xpGrowthMultiplier = 1.5f;
 
-    public delegate void LevelUpEvent(TurretType type, int newLevel);
+    public delegate void LevelUpEvent(TurretTypeData type, int newLevel);
     public event LevelUpEvent OnLevelUp;
 
     private void Awake()
@@ -46,7 +39,7 @@ public class TurretLevelManager : MonoBehaviour
         }
     }
 
-    public void AddXP(TurretType type, float amount)
+    public void AddXP(TurretTypeData.TurretType type, float amount)
     {
         var progress = turretProgressDict[type];
         if (progress.currentLevel >= maxLevel) return;
@@ -59,7 +52,7 @@ public class TurretLevelManager : MonoBehaviour
         }
     }
 
-    private void LevelUp(TurretType type)
+    private void LevelUp(TurretTypeData.TurretType type)
     {
         var progress = turretProgressDict[type];
         progress.currentLevel++;
@@ -71,7 +64,7 @@ public class TurretLevelManager : MonoBehaviour
         OnLevelUp?.Invoke(type, progress.currentLevel);
     }
 
-    public int GetLevel(TurretType type)
+    public int GetLevel(TurretTypeData.TurretType type)
     {
         return turretProgressDict[type].currentLevel;
     }

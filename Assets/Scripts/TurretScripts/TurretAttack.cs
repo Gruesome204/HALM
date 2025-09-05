@@ -132,6 +132,7 @@ public class TurretAttack : MonoBehaviour
         if (projectilePrefab != null && firePoint != null && targetEnemy != null)
         {
             GameObject projectileObject = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+            //SetOwner of the bullet(Turret)
             projectileObject.GetComponent<BallProjectileBehaviour>().SetOwner(projectileObject, turretBlueprint.attackDamage);
 
             projectileObject.GetComponent<BallProjectileBehaviour>().knockbackStrength = currentKnockbackStrength;

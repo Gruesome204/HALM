@@ -6,15 +6,9 @@ public class TurretBlueprint : ScriptableObject
     [Header("Info")]
     public string turretName;
     [TextArea(3, 10)] public string description;
-    public enum TurretType
-    {
-        Basic,
-        Sniper,
-        Cannon,
-        Flamethrower
-    }
+
     [Header("TurretType")]
-    public TurretType turretType;
+    public TurretTypeData turretType;
 
     [Header("Values")]
     public float fireRate = 1f;

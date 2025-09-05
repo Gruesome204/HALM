@@ -3,14 +3,14 @@ using static TurretLevelManager;
 
 public class TurretLevelBehaviour : MonoBehaviour
 {
-    public TurretType turretType;
+    public TurretBlueprint blueprint;
     private void Start()
     {
         // Subscribe to global events
         TurretLevelManager.Instance.OnLevelUp += HandleLevelUp;
 
         // Apply current level upgrades
-        int currentLevel = TurretLevelManager.Instance.GetLevel(turretType);
+        int currentLevel = TurretLevelManager.Instance.GetLevel(blueprint.turretType);
         ApplyUpgrades(currentLevel);
     }
 
@@ -20,9 +20,9 @@ public class TurretLevelBehaviour : MonoBehaviour
             TurretLevelManager.Instance.OnLevelUp -= HandleLevelUp;
     }
 
-    private void HandleLevelUp(TurretType type, int newLevel)
+    private void HandleLevelUp(TurretTypeData type, int newLevel)
     {
-        if (type == turretType)
+        if (type == blueprint.turretType)
         {
             ApplyUpgrades(newLevel);
         }
@@ -40,6 +40,6 @@ public class TurretLevelBehaviour : MonoBehaviour
 
     public void AwardXP(float amount)
     {
-        TurretLevelManager.Instance.AddXP(turretType, amount);
+        TurretLevelManager.Instance.AddXP(blueprint.turretType, amount);
     }
 }
