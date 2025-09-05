@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,5 +74,10 @@ public class TurretLevelManager : MonoBehaviour
     public int GetLevel(TurretType type)
     {
         return turretProgressDict[type].currentLevel;
+    }
+
+    internal void AddXP()
+    {
+        throw new NotImplementedException();
     }
 }

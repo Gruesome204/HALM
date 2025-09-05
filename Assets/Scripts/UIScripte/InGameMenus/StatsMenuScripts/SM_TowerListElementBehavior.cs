@@ -30,7 +30,7 @@ public class SM_TowerListElementBehavior
         FillDetailValue("fireCountdown", turret.fireCountdown);
         FillDetailValue("projectileSpeed", turret.projectileSpeed);
         FillDetailValue("attackRange", turret.attackRange);
-        FillDetailValue("damage", turret.damage);
+        FillDetailValue("damage", turret.attackDamage);
         FillDetailValue("knockbackStrenght", turret.knockbackStrength);
         FillDetailValue("knockbackDuration", turret.knockbackDuration);
 

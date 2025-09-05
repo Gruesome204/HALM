@@ -3,14 +3,19 @@ using UnityEngine.UI;
 
 public class BallProjectileBehaviour : MonoBehaviour
 {
-    public float damageAmount = 10f;
-    public GameObject sourceOfDamage;
+    public DamageData damageData;
 
     public float knockbackStrength = 100f;
     public float knockbackDuration = 0.1f;
     public Vector2 direction;
 
     public int piercingHitsRemaining = 2;
+
+    public void SetOwner(GameObject turret, float damageAmount)
+    {
+        damageData.source = turret;
+        damageData.amount = damageAmount;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -22,8 +27,6 @@ public class BallProjectileBehaviour : MonoBehaviour
         {
             DamageData damageData = new DamageData
             {
-                amount = damageAmount,
-                source = sourceOfDamage,
                 type = DamageData.DamageType.Physical // Or whatever damage type is appropriate
             };
 
