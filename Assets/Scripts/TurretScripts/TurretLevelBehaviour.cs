@@ -20,7 +20,7 @@ public class TurretLevelBehaviour : MonoBehaviour
             TurretLevelManager.Instance.OnLevelUp -= HandleLevelUp;
     }
 
-    private void HandleLevelUp(TurretTypeData type, int newLevel)
+    private void HandleLevelUp(TurretType type, int newLevel)
     {
         if (type == blueprint.turretType)
         {

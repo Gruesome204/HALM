@@ -8,7 +8,7 @@ public class TurretBlueprint : ScriptableObject
     [TextArea(3, 10)] public string description;
 
     [Header("TurretType")]
-    public TurretTypeData turretType;
+    public TurretType turretType;
 
     [Header("Values")]
     public float fireRate = 1f;
