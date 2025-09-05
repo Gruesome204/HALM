@@ -11,5 +11,4 @@ public enum TurretType
     Basic,
     Sniper,
     Cannon,
-    Flamethrower
 }

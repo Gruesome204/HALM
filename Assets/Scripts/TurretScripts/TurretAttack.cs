@@ -2,11 +2,9 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(TurretLevelBehaviour))]
 public class TurretAttack : MonoBehaviour
 {
     public TurretBlueprint turretBlueprint;
-    private TurretLevelBehaviour levelBehaviour;
     public GameObject projectilePrefab;
     public Transform firePoint; // A point on the turret where projectiles spawn
 
@@ -35,10 +33,6 @@ public class TurretAttack : MonoBehaviour
     public float delayBetweenSalveProjectiles = 0.5f; // Delay between each projectile in a salve
 
 
-    private void Awake()
-    {
-        levelBehaviour = GetComponent<TurretLevelBehaviour>();
-    }
     void Start()
     {
         if (turretBlueprint != null)
