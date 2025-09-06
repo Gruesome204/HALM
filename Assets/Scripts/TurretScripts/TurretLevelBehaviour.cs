@@ -4,6 +4,7 @@ using static TurretLevelManager;
 public class TurretLevelBehaviour : MonoBehaviour
 {
     public TurretBlueprint blueprint;
+    public TurretAttack turret;
     private void Start()
     {
         if (TurretLevelManager.Instance == null)
@@ -22,8 +23,7 @@ public class TurretLevelBehaviour : MonoBehaviour
         TurretLevelManager.Instance.OnLevelUp += HandleLevelUp;
 
         // Sync upgrades with current level
-        int currentLevel = TurretLevelManager.Instance.GetLevel(blueprint.turretType);
-        ApplyUpgrades(currentLevel);
+        SyncWithCurrentLevel();
     }
 
 
@@ -31,6 +31,12 @@ public class TurretLevelBehaviour : MonoBehaviour
     {
         if (TurretLevelManager.Instance != null)
             TurretLevelManager.Instance.OnLevelUp -= HandleLevelUp;
+    }
+
+    private void SyncWithCurrentLevel()
+    {
+        int currentLevel = TurretLevelManager.Instance.GetLevel(blueprint.turretType);
+        ApplyUpgrades(currentLevel);
     }
 
     private void HandleLevelUp(TurretType type, int newLevel)

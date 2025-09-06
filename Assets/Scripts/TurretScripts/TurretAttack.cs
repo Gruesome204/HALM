@@ -6,6 +6,7 @@ public class TurretAttack : MonoBehaviour
 {
     public TurretBlueprint turretBlueprint;
     public GameObject projectilePrefab;
+
     public Transform firePoint; // A point on the turret where projectiles spawn
 
     private float currentfireCountdown = 0f;
