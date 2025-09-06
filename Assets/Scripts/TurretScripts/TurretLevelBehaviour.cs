@@ -6,11 +6,6 @@ public class TurretLevelBehaviour : MonoBehaviour
     public TurretBlueprint blueprint;
     public TurretBehaviour turretBehaviour;
 
-    [Header("Per-Level Growth")]
-    [SerializeField] private float damagePerLevelPct = 0.20f; // +20% damage per level
-    [SerializeField] private float fireRatePerLevelPct = 0.05f; // +5% shots/sec per level
-    [SerializeField] private float rangePerLevelFlat = 0.5f;  // +0.5 range per level
-
     private void Start()
     {
         turretBehaviour = GetComponent<TurretBehaviour>();
@@ -55,20 +50,26 @@ public class TurretLevelBehaviour : MonoBehaviour
 
     private void ApplyUpgrades(int level)
     {
-        float scaledDamage = blueprint.attackDamage * Mathf.Pow(1.2f, level - 1);
-        float scaledFireRate = blueprint.fireRate * Mathf.Pow(0.95f, level - 1);
-        float scaledRange = blueprint.attackRange + 0.5f * (level - 1);
+        // --- base scaling using blueprint growth values ---
+        float scaledDamage = blueprint.attackDamage * Mathf.Pow(blueprint.damageGrowthFactor, level - 1);
+        float scaledFireRate = blueprint.fireRate * Mathf.Pow(blueprint.fireRateGrowthFactor, level - 1);
+        float scaledRange = blueprint.attackRange + blueprint.rangeGrowthFlat * (level - 1);
 
+        // --- apply meta upgrades from UpgradeManager ---
         float dmgMult = UpgradeManager.Instance.GetDamageMultiplier(blueprint.turretType);
         float rateMult = UpgradeManager.Instance.GetFireRateMultiplier(blueprint.turretType);
         float rangeBonus = UpgradeManager.Instance.GetRangeBonus(blueprint.turretType);
 
-        turretBehaviour.currentAttackDamage = scaledDamage + dmgMult;
-        turretBehaviour.currentFireRate = scaledFireRate + rateMult;
+        turretBehaviour.currentAttackDamage = scaledDamage * dmgMult;
+        turretBehaviour.currentFireRate = scaledFireRate * rateMult;
         turretBehaviour.currentAttackRange = scaledRange + rangeBonus;
 
-        Debug.Log($"{blueprint.turretType} turret upgraded! Level {level} | Damage={turretBehaviour.currentAttackDamage}, FireRate={turretBehaviour.currentFireRate}, Range={turretBehaviour.currentAttackRange}");
+        Debug.Log($"{blueprint.turretType} turret upgraded! Level {level} | " +
+                  $"Damage={turretBehaviour.currentAttackDamage}, " +
+                  $"FireRate={turretBehaviour.currentFireRate}, " +
+                  $"Range={turretBehaviour.currentAttackRange}");
     }
+
     public void AwardXP(float amount)
     {
         if (blueprint == null || TurretLevelManager.Instance == null) return;

@@ -9,9 +9,9 @@ public class TurretLevelManager : MonoBehaviour
     [System.Serializable]
     public class TurretProgress
     {
-        public int currentLevel = 1;
-        public float currentXP = 0;
-        public float xpToNextLevel = 50f;
+     [SerializeField] public int currentLevel = 1;
+     [SerializeField] public float currentXP = 0;
+     [SerializeField] public float xpToNextLevel = 50f;
     }
 
     private Dictionary<TurretType, TurretProgress> turretProgressDict = new();
