@@ -1340,8 +1340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 406dd65aad94a38479f8036f0a07a5ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allUpgradeTrees:
-  - {fileID: 11400000, guid: c4352ae25cc0d4949b185b83f88107c6, type: 2}
+  upgradeChoices:
+  - {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

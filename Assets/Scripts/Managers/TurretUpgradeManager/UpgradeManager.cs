@@ -1,12 +1,12 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
 {
     public static UpgradeManager Instance { get; private set; }
 
-    [SerializeField] private List<TurretUpgradeTree> allUpgradeTrees;
-    private Dictionary<TurretType, TurretUpgradeTree> upgradeDict;
+    [SerializeField] private List<TurretUpgradeChoice> upgradeChoices;
+    private Dictionary<(TurretType, int), TurretUpgradeChoice.UpgradeOption> chosenUpgrades;
 
     private void Awake()
     {
@@ -17,57 +17,57 @@ public class UpgradeManager : MonoBehaviour
         }
         Instance = this;
 
-        upgradeDict = new Dictionary<TurretType, TurretUpgradeTree>();
-        foreach (var tree in allUpgradeTrees)
-        {
-            upgradeDict[tree.turretType] = tree;
-        }
+        chosenUpgrades = new Dictionary<(TurretType, int), TurretUpgradeChoice.UpgradeOption>();
     }
 
-    public TurretUpgradeTree GetTree(TurretType type)
+    public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoice.UpgradeOption option)
     {
-        return upgradeDict[type];
+        chosenUpgrades[(type, level)] = option;
+        Debug.Log($"{type} turret: Player chose {option.name} at level {level}");
     }
 
-    public bool UnlockUpgrade(TurretType type, int index, int playerCurrency)
+    public TurretUpgradeChoice.UpgradeOption GetChosenUpgrade(TurretType type, int level)
     {
-        var tree = upgradeDict[type];
-        var node = tree.upgrades[index];
-
-        if (node.unlocked) return false;
-        if (playerCurrency < node.cost) return false;
-
-        node.unlocked = true;
-        return true;
+        chosenUpgrades.TryGetValue((type, level), out var option);
+        return option;
     }
 
     public float GetDamageMultiplier(TurretType type)
     {
-        float total = 1f;
-        foreach (var node in upgradeDict[type].upgrades)
+        float multiplier = 1f;
+        foreach (var kvp in chosenUpgrades)
         {
-            if (node.unlocked) total *= node.damageMultiplier;
+            if (kvp.Key.Item1 == type)
+            {
+                multiplier *= kvp.Value.damageMultiplier;
+            }
         }
-        return total;
+        return multiplier;
     }
 
     public float GetFireRateMultiplier(TurretType type)
     {
-        float total = 1f;
-        foreach (var node in upgradeDict[type].upgrades)
+        float multiplier = 1f;
+        foreach (var kvp in chosenUpgrades)
         {
-            if (node.unlocked) total *= node.fireRateMultiplier;
+            if (kvp.Key.Item1 == type)
+            {
+                multiplier *= kvp.Value.fireRateMultiplier;
+            }
         }
-        return total;
+        return multiplier;
     }
 
     public float GetRangeBonus(TurretType type)
     {
-        float total = 0f;
-        foreach (var node in upgradeDict[type].upgrades)
+        float bonus = 0f;
+        foreach (var kvp in chosenUpgrades)
         {
-            if (node.unlocked) total += node.rangeBonus;
+            if (kvp.Key.Item1 == type)
+            {
+                bonus += kvp.Value.rangeBonus;
+            }
         }
-        return total;
+        return bonus;
     }
 }

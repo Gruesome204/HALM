@@ -1,22 +1,22 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "TurretUpgradeTree", menuName = "Game/Turret/Upgrade Tree")]
-public class TurretUpgradeTree : ScriptableObject
+[CreateAssetMenu(fileName = "TurretUpgradeChoice", menuName = "Game/Turret/Upgrade Choice")]
+public class TurretUpgradeChoice : ScriptableObject
 {
     public TurretType turretType;
-    public List<UpgradeNode> upgrades;
+    public int triggerLevel = 10; // level at which choice appears
+
+    public List<UpgradeOption> options;
 
     [System.Serializable]
-    public class UpgradeNode
+    public class UpgradeOption
     {
         public string name;
         public string description;
-        public int cost; // meta currency cost
         public float damageMultiplier = 1f;
         public float fireRateMultiplier = 1f;
         public float rangeBonus = 0f;
-
-        [HideInInspector] public bool unlocked;
+        public Sprite icon; // for UI
     }
 }
