@@ -9,6 +9,5 @@ public class TurretTypeData : MonoBehaviour
 public enum TurretType
 {
     Basic,
-    Sniper,
-    Cannon,
+    Fast
 }

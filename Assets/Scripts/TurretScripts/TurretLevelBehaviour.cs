@@ -1,5 +1,4 @@
 using UnityEngine;
-using static TurretLevelManager;
 
 public class TurretLevelBehaviour : MonoBehaviour
 {
@@ -54,15 +53,24 @@ public class TurretLevelBehaviour : MonoBehaviour
     private void ApplyUpgrades(int level)
     {
         // Example upgrade logic (scale values based on level)
-        float damage = blueprint.attackDamage * Mathf.Pow(1.2f, level - 1);
-        float fireRate = blueprint.fireRate * Mathf.Pow(0.95f, level - 1);
-        float range = blueprint.attackRange + 0.5f * (level - 1);
+        float scaledDamage = blueprint.attackDamage * Mathf.Pow(1.2f, level - 1);
+        float scaledFireRate = blueprint.fireRate * Mathf.Pow(0.95f, level - 1);
+        float scaledRange = blueprint.attackRange + 0.5f * (level - 1);
 
-        turretBehaviour.currentAttackDamage = damage;
-        turretBehaviour.currentFireRate = fireRate;
-        turretBehaviour.currentAttackRange = range;
+        float dmgMult = UpgradeManager.Instance.GetDamageMultiplier(blueprint.turretType);
+        float rateMult = UpgradeManager.Instance.GetFireRateMultiplier(blueprint.turretType);
+        float rangeBonus = UpgradeManager.Instance.GetRangeBonus(blueprint.turretType);
 
-        Debug.Log($"{blueprint.turretType} turret upgraded! Level {level} | Damage={damage}, FireRate={fireRate}, Range={range}");
+        float finalDamage = scaledDamage * dmgMult;
+        float finalFireRate = scaledFireRate * rateMult;
+        float finalRange = scaledRange + rangeBonus;
+
+        turretBehaviour.currentAttackDamage = finalDamage;
+        turretBehaviour.currentFireRate = finalFireRate;
+        turretBehaviour.currentAttackRange = finalRange;
+
+
+        Debug.Log($"{blueprint.turretType} turret upgraded! Level {level} | Damage={finalDamage}, FireRate={finalFireRate}, Range={finalRange}");
     }
     public void AwardXP(float amount)
     {
