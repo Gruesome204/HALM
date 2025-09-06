@@ -3,15 +3,19 @@ using static TurretLevelManager;
 
 public class TurretLevelBehaviour : MonoBehaviour
 {
+    [Header("References")]
     public TurretBlueprint blueprint;
     public TurretBehaviour turretBehaviour;
+
     private void Start()
     {
-        if (TurretLevelManager.Instance == null)
+        turretBehaviour = GetComponent<TurretBehaviour>();
+        if (turretBehaviour == null)
         {
-            Debug.LogError("TurretLevelManager is missing from the scene!");
+            Debug.LogError($"{name} has no TurretShooter attached!");
             return;
         }
+
 
         if (blueprint == null)
         {
@@ -53,6 +57,10 @@ public class TurretLevelBehaviour : MonoBehaviour
         float damage = blueprint.attackDamage * Mathf.Pow(1.2f, level - 1);
         float fireRate = blueprint.fireRate * Mathf.Pow(0.95f, level - 1);
         float range = blueprint.attackRange + 0.5f * (level - 1);
+
+        turretBehaviour.currentAttackDamage = damage;
+        turretBehaviour.currentFireRate = fireRate;
+        turretBehaviour.currentAttackRange = range;
 
         Debug.Log($"{blueprint.turretType} turret upgraded! Level {level} | Damage={damage}, FireRate={fireRate}, Range={range}");
     }

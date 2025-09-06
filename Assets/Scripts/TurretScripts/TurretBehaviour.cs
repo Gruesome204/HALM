@@ -9,18 +9,19 @@ public class TurretBehaviour : MonoBehaviour
 
     public Transform firePoint; // A point on the turret where projectiles spawn
 
-    private float currentfireCountdown = 0f;
-    private float currentAttackRange;
-    private float currentFireRate;
-    private float currentProjectileSpeed;
-    private float currentKnockbackStrength;
-    private float currentKnockbackDuration;
+    [Header("Values")]
+    public float currentFireRate;
+    public float currentFireCountdown = 0f;
+    public float currentProjectileSpeed;
+    public float currentAttackRange;
+    public float currentAttackDamage;
+    public float currentKnockbackStrength;
+    public float currentKnockbackDuration;
 
     private Transform targetEnemy;
 
     [Header("Targeting Settings")] // Optional: for better organization in Inspector
     public LayerMask enemyLayer; // New variable to select the enemy layer
-
 
     public enum FiringPattern
     {
@@ -43,7 +44,7 @@ public class TurretBehaviour : MonoBehaviour
     }
     public void InitializeFromBlueprint()
     {
-        currentfireCountdown = turretBlueprint.fireCountdown;
+        currentFireCountdown = turretBlueprint.fireCountdown;
         currentAttackRange = turretBlueprint.attackRange;
         currentFireRate = turretBlueprint.fireRate;
         currentProjectileSpeed = turretBlueprint.projectileSpeed;
@@ -71,7 +72,7 @@ public class TurretBehaviour : MonoBehaviour
             // you might need to add an offset: Quaternion.Euler(0, 0, angle - 90f);
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-            if (currentfireCountdown <= 0f)
+            if (currentFireCountdown <= 0f)
             {
                 // Call the appropriate shooting pattern
                 switch (currentFiringPattern)
@@ -83,9 +84,9 @@ public class TurretBehaviour : MonoBehaviour
                         StartCoroutine(ShootFireSalve());
                         break;
                 }
-                currentfireCountdown = 1f / currentFireRate;
+                currentFireCountdown = 1f / currentFireRate;
             }
-            currentfireCountdown -= Time.deltaTime;
+            currentFireCountdown -= Time.deltaTime;
         }
         else
         {
@@ -128,7 +129,7 @@ public class TurretBehaviour : MonoBehaviour
         {
             GameObject projectileObject = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
             //SetOwner of the bullet(Turret)
-            projectileObject.GetComponent<BallProjectileBehaviour>().SetOwner(projectileObject, turretBlueprint.attackDamage);
+            projectileObject.GetComponent<BallProjectileBehaviour>().SetOwner(projectileObject, currentAttackDamage);
 
             projectileObject.GetComponent<BallProjectileBehaviour>().knockbackStrength = currentKnockbackStrength;
             projectileObject.GetComponent<BallProjectileBehaviour>().knockbackDuration = currentKnockbackDuration;
@@ -155,7 +156,7 @@ public class TurretBehaviour : MonoBehaviour
         {
             ShootSingleProjectile(); // Reuse the single projectile shooting logic
             yield return new WaitForSeconds(delayBetweenSalveProjectiles);
-            currentfireCountdown = 0f;
+            currentFireCountdown = 0f;
             // If the target is lost during a salve, stop firing
             if (targetEnemy == null)
             {
