@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class TurretAttack : MonoBehaviour
+public class TurretBehaviour : MonoBehaviour
 {
     public TurretBlueprint turretBlueprint;
     public GameObject projectilePrefab;

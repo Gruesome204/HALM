@@ -4,7 +4,7 @@ using static TurretLevelManager;
 public class TurretLevelBehaviour : MonoBehaviour
 {
     public TurretBlueprint blueprint;
-    public TurretAttack turret;
+    public TurretBehaviour turretBehaviour;
     private void Start()
     {
         if (TurretLevelManager.Instance == null)

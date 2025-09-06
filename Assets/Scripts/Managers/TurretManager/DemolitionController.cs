@@ -70,10 +70,10 @@ public class DemolitionController : MonoBehaviour
             }
 
             // Remove from InstantiatedTurretList
-            TurretAttack turretAttack = turret.GetComponent<TurretAttack>();
-            if (turretAttack != null && turretAttack.turretBlueprint != null)
+            TurretBehaviour turretBehaviour = turret.GetComponent<TurretBehaviour>();
+            if (turretBehaviour != null && turretBehaviour.turretBlueprint != null)
             {
-                TurretPlacementController.Instance.GetInstantiatedTurretList().Remove(turretAttack.turretBlueprint);
+                TurretPlacementController.Instance.GetInstantiatedTurretList().Remove(turretBehaviour.turretBlueprint);
             }
 
             Destroy(turret);

@@ -244,11 +244,11 @@ public class TurretPlacementController : MonoBehaviour
                 }
 
                 // Initialize TurretAttack component
-                TurretAttack turretAttack = newTurret.GetComponent<TurretAttack>();
-                if (turretAttack != null)
+                TurretBehaviour turretBehaviour = newTurret.GetComponent<TurretBehaviour>();
+                if (turretBehaviour != null)
                 {
-                    turretAttack.turretBlueprint = currentSelectedBlueprint;
-                    turretAttack.InitializeFromBlueprint(); // Optional initialization method
+                    turretBehaviour.turretBlueprint = currentSelectedBlueprint;
+                    turretBehaviour.InitializeFromBlueprint(); // Optional initialization method
                     InstantiatedTurretList.Add(currentSelectedBlueprint); // Add blueprint to tracking list
                 }
 
