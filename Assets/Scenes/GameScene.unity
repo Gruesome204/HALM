@@ -2757,13 +2757,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth:
-    baseValue: 0
+    baseValue: 100
   attackDamage:
     baseValue: 0
   defense:
     baseValue: 0
   moveSpeed:
-    baseValue: 0
+    baseValue: 1
   currentHealth: 0
 --- !u!1 &2140789119
 GameObject:

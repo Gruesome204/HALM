@@ -1,16 +1,28 @@
+using Unity.Collections;
 using UnityEngine;
+
+public enum StatType
+{
+    Health,
+    Damage,
+    Defense,
+    Speed
+}
 
 [System.Serializable]
 public class Stat
 {
     [SerializeField] private float baseValue;
-    private float modifier = 0f;
+    [SerializeField, ReadOnly] private float modifier = 0f; // custom attribute or ignore in inspector
 
     public float Value => baseValue + modifier;
 
     public void SetBase(float value) => baseValue = value;
     public void AddModifier(float value) => modifier += value;
     public void RemoveModifier(float value) => modifier -= value;
+    public void ResetModifiers() => modifier = 0f;
+
+    public override string ToString() => $"Base: {baseValue}, Mod: {modifier}, Total: {Value}";
 }
 
 public class PlayerStats : MonoBehaviour
@@ -21,22 +33,49 @@ public class PlayerStats : MonoBehaviour
     public Stat defense = new Stat();
     public Stat moveSpeed = new Stat();
 
-    [Header("Runtime Values")]
-    [SerializeField] private float currentHealth;
+    [Header("Runtime")]
+    [SerializeField, ReadOnly] private float currentHealth;
 
     private void Awake()
     {
         currentHealth = maxHealth.Value;
     }
 
-    #region Health Methods
+    #region Public Access
+    public float GetStatValue(StatType type)
+    {
+        return type switch
+        {
+            StatType.Health => maxHealth.Value,
+            StatType.Damage => attackDamage.Value,
+            StatType.Defense => defense.Value,
+            StatType.Speed => moveSpeed.Value,
+            _ => 0f
+        };
+    }
+
+    public void ModifyStat(StatType type, float amount)
+    {
+        switch (type)
+        {
+            case StatType.Health: maxHealth.AddModifier(amount); break;
+            case StatType.Damage: attackDamage.AddModifier(amount); break;
+            case StatType.Defense: defense.AddModifier(amount); break;
+            case StatType.Speed: moveSpeed.AddModifier(amount); break;
+        }
+
+        Debug.Log($"[Stats] {type} modified by {amount}. Now {GetStatValue(type)}");
+    }
+    #endregion
+
+    #region Health
     public void TakeDamage(float amount)
     {
         float damageTaken = Mathf.Max(0, amount - defense.Value);
         currentHealth -= damageTaken;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth.Value);
 
-        Debug.Log($"Player took {damageTaken} damage. HP: {currentHealth}/{maxHealth.Value}");
+        Debug.Log($"[Stats] Took {damageTaken} damage. HP: {currentHealth}/{maxHealth.Value}");
 
         if (currentHealth <= 0)
             Die();
@@ -46,29 +85,13 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth.Value);
-        Debug.Log($"Player healed {amount}. HP: {currentHealth}/{maxHealth.Value}");
+        Debug.Log($"[Stats] Healed {amount}. HP: {currentHealth}/{maxHealth.Value}");
     }
 
     private void Die()
     {
-        Debug.Log("Player has died!");
-        // TODO: Trigger respawn, game over, etc.
-    }
-    #endregion
-
-    #region Upgrade Methods
-    public void ApplyUpgrade(string statName, float value)
-    {
-        switch (statName)
-        {
-            case "Health": maxHealth.AddModifier(value); break;
-            case "Damage": attackDamage.AddModifier(value); break;
-            case "Defense": defense.AddModifier(value); break;
-            case "Speed": moveSpeed.AddModifier(value); break;
-            default: Debug.LogWarning("Unknown stat upgrade: " + statName); break;
-        }
-
-        Debug.Log($"Applied upgrade: {statName} +{value}");
+        Debug.Log("[Stats] Player has died!");
+        // TODO: respawn / game over
     }
     #endregion
 }
