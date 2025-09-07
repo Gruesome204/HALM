@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeManager : MonoBehaviour
+public class TurretUpgradeManager : MonoBehaviour
 {
-    public static UpgradeManager Instance { get; private set; }
+    public static TurretUpgradeManager Instance { get; private set; }
 
-    [SerializeField] private List<TurretUpgradeChoice> upgradeChoices;
-    private Dictionary<(TurretType, int), TurretUpgradeChoice.UpgradeOption> chosenUpgrades;
+    [SerializeField] private List<TurretUpgradeChoiceSO> upgradeChoices;
+    private Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption> chosenUpgrades;
 
     private void Awake()
     {
@@ -17,16 +17,21 @@ public class UpgradeManager : MonoBehaviour
         }
         Instance = this;
 
-        chosenUpgrades = new Dictionary<(TurretType, int), TurretUpgradeChoice.UpgradeOption>();
+        chosenUpgrades = new Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption>();
     }
 
-    public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoice.UpgradeOption option)
+    public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoiceSO.UpgradeOption option)
     {
+      
+        if (chosenUpgrades.ContainsKey((type, level)))
+        {
+            Debug.LogWarning($"{type} turret already has an upgrade for level {level}. Overwriting.");
+        }
+
         chosenUpgrades[(type, level)] = option;
-        Debug.Log($"{type} turret: Player chose {option.name} at level {level}");
     }
 
-    public TurretUpgradeChoice.UpgradeOption GetChosenUpgrade(TurretType type, int level)
+    public TurretUpgradeChoiceSO.UpgradeOption GetChosenUpgrade(TurretType type, int level)
     {
         chosenUpgrades.TryGetValue((type, level), out var option);
         return option;
@@ -69,5 +74,14 @@ public class UpgradeManager : MonoBehaviour
             }
         }
         return bonus;
+    }
+
+    public IEnumerable<TurretUpgradeChoiceSO> GetUpgradeChoices(TurretType type)
+    {
+        foreach (var choice in upgradeChoices)
+        {
+            if (choice.turretType == type)
+                yield return choice;
+        }
     }
 }

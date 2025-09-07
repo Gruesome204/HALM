@@ -6,6 +6,8 @@ public class TurretLevelManager : MonoBehaviour
 {
     public static TurretLevelManager Instance { get; private set; }
 
+    public event System.Action<TurretType, int> OnMilestoneReached;
+
     [System.Serializable]
     public class TurretProgress
     {
@@ -46,8 +48,9 @@ public class TurretLevelManager : MonoBehaviour
 
         progress.currentXP += amount;
 
-        if (progress.currentXP >= progress.xpToNextLevel)
+        while (progress.currentXP >= progress.xpToNextLevel && progress.currentLevel < maxLevel)
         {
+            progress.currentXP -= progress.xpToNextLevel;
             LevelUp(type);
         }
     }
@@ -62,11 +65,22 @@ public class TurretLevelManager : MonoBehaviour
         Debug.Log($"[Manager] {type} Turrets leveled up to {progress.currentLevel}");
 
         OnLevelUp?.Invoke(type, progress.currentLevel);
+
+        foreach (var choice in TurretUpgradeManager.Instance.GetUpgradeChoices(type))
+        {
+            if (choice.triggerLevel == progress.currentLevel)
+            {
+                OnMilestoneReached?.Invoke(type, progress.currentLevel);
+                break;
+            }
+        }
     }
 
     public int GetLevel(TurretType type)
     {
         return turretProgressDict[type].currentLevel;
     }
+
+
 
 }

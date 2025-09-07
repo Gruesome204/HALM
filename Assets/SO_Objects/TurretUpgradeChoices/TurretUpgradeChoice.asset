@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: TurretUpgradeChoice
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevel: 10
+  triggerLevel: 2
   options:
-  - name: Upgrade
-    description: 10
-    damageMultiplier: 1
+  - name: 2
+    description: 2
+    damageMultiplier: 2
     fireRateMultiplier: 1
     rangeBonus: 1
     icon: {fileID: 0}
