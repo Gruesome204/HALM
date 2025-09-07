@@ -1,9 +1,10 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BallProjectileBehaviour : MonoBehaviour
 {
-    public DamageData damageData;
+    private DamageData damageData;
 
     public float knockbackStrength = 100f;
     public float knockbackDuration = 0.1f;
@@ -13,8 +14,12 @@ public class BallProjectileBehaviour : MonoBehaviour
 
     public void SetOwner(GameObject turret, float damageAmount)
     {
-        damageData.source = turret;
-        damageData.amount = damageAmount;
+        damageData = new DamageData
+        {
+            source = turret,
+            amount = damageAmount,
+            type = DamageData.DamageType.Physical
+        };
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,11 +30,6 @@ public class BallProjectileBehaviour : MonoBehaviour
 
         if (damagable != null)
         {
-            DamageData damageData = new DamageData
-            {
-                type = DamageData.DamageType.Physical // Or whatever damage type is appropriate
-            };
-
             Rigidbody2D targetRb = other.GetComponent<Rigidbody2D>();
             if (targetRb != null)
             {

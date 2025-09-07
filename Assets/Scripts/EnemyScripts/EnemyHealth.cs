@@ -14,13 +14,14 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
+
         if (IsInvulnerable || stats == null) return;
 
         float damage = CalculateTakenDamage(damageData);
         stats.currentHealth -= damage;
         healthBar?.SetValueWithoutNotify(stats.currentHealth / stats.currentMaxHealth);
         Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage.");
-
+        Debug.Log($"Health after damage: {stats.currentHealth}");
         if (stats.currentHealth <= 0)
         {
             Die(damageData);
@@ -29,13 +30,8 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 
     public void Die(DamageData damageData)
     {
-        Debug.Log($"{gameObject.name} died.");
-
         // Notify listeners
         OnDeath?.Invoke(this, damageData);
-
-        // Default death behavior
-        Destroy(gameObject);
     }
 
     private float CalculateTakenDamage(DamageData data)

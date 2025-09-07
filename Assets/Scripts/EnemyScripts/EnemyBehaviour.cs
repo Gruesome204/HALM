@@ -16,7 +16,7 @@ public class EnemyBehaviour : MonoBehaviour
         knockback = GetComponent<EnemyKnockback>();
 
         stats.Initialize();
-        health.OnDeath += Die;
+        health.OnDeath += HandleDeath;
     }
 
     private void FixedUpdate()
@@ -26,8 +26,9 @@ public class EnemyBehaviour : MonoBehaviour
         movement.MoveTowardTarget();
     }
 
-    private void Die(EnemyHealth enemy, DamageData damageData)
+    private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {
+        Debug.Log($"Enemy {enemyHealth.gameObject.name} died from {damageData.type} damage.");
         // Give XP to the turret that killed it
         var turret = damageData.source?.GetComponent<TurretLevelBehaviour>();
         if (turret != null)
@@ -35,7 +36,12 @@ public class EnemyBehaviour : MonoBehaviour
             TurretLevelManager.Instance.AddXP(
             turret.blueprint.turretType, 
             stats.currentExperienceYield
-     );
+            );
+            Debug.Log($"{stats.currentExperienceYield} EXP Awarded to {turret.blueprint.turretType} ");
+        }
+        else
+        {
+            Debug.Log("No turret source");
         }
         Destroy(gameObject);
     }

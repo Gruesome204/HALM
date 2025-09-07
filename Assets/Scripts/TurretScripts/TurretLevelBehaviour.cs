@@ -4,7 +4,7 @@ public class TurretLevelBehaviour : MonoBehaviour
 {
     [Header("References")]
     public TurretBlueprint blueprint;
-    public TurretBehaviour turretBehaviour;
+    private TurretBehaviour turretBehaviour;
 
     private void Start()
     {
@@ -70,9 +70,9 @@ public class TurretLevelBehaviour : MonoBehaviour
                   $"Range={turretBehaviour.currentAttackRange}");
     }
 
-    public void AwardXP(float amount)
-    {
-        if (blueprint == null || TurretLevelManager.Instance == null) return;
-        TurretLevelManager.Instance.AddXP(blueprint.turretType, amount);    
-    }
+    //public void AwardXP(float amount)
+    //{
+    //    if (blueprint == null || TurretLevelManager.Instance == null) return;
+    //    TurretLevelManager.Instance.AddXP(blueprint.turretType, amount);    
+    //}
 }
