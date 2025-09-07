@@ -1,7 +1,11 @@
 using UnityEngine;
 
-public class TurretTest : MonoBehaviour
+public class TurretUpgradeTest : MonoBehaviour
 {
+    private void Start()
+    {
+        Debug.Log("Load test script");
+    }
     private void OnEnable()
     {
         if (TurretLevelManager.Instance != null)

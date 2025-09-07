@@ -27,15 +27,16 @@ public class TurretLevelManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
-        // Init dictionary
-        foreach (TurretType type in System.Enum.GetValues(typeof(TurretType)))
+        if (TurretUpgradeChoiceManager.Instance == null)
+        {
+            Debug.LogError("[LevelManager] TurretUpgradeChoiceManager not found in scene!");
+        }
+
+        // Initialize turretProgressDict
+        foreach (TurretType type in Enum.GetValues(typeof(TurretType)))
         {
             turretProgressDict[type] = new TurretProgress();
         }

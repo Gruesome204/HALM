@@ -9,6 +9,8 @@ public class TurretLevelBehaviour : MonoBehaviour
     {
         if (blueprint != null && TurretLevelManager.Instance != null)
             SyncWithCurrentLevel();
+
+
     }
 
     private void Awake()
@@ -19,8 +21,6 @@ public class TurretLevelBehaviour : MonoBehaviour
             Debug.LogError($"{name} has no TurretBehaviour attached!");
             return;
         }
-
-
     }
 
     private void Start()

@@ -1012,6 +1012,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1512055815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &669984658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 669984660}
+  - component: {fileID: 669984659}
+  m_Layer: 0
+  m_Name: -TEST-SCRIPTS-
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &669984659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669984658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e15e41239a21f3489df74b1f1c0fd03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &669984660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669984658}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 469.36472, y: 377.48703, z: -3.2555215}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &711555122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,7 +1145,6 @@ GameObject:
   m_Component:
   - component: {fileID: 726615953}
   - component: {fileID: 726615954}
-  - component: {fileID: 726615955}
   m_Layer: 0
   m_Name: -TurretLevelManager-
   m_TagString: Untagged
@@ -1138,18 +1181,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLevel: 10
   xpGrowthMultiplier: 1.5
---- !u!114 &726615955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726615952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e15e41239a21f3489df74b1f1c0fd03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &747619961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,8 +2047,8 @@ Transform:
   - {fileID: 2019150953}
   - {fileID: 2121741342}
   - {fileID: 368292586}
-  - {fileID: 726615953}
   - {fileID: 825843165}
+  - {fileID: 726615953}
   - {fileID: 1520240906}
   - {fileID: 427538120}
   - {fileID: 747619962}
@@ -2966,3 +2997,4 @@ SceneRoots:
   - {fileID: 503136056}
   - {fileID: 711555125}
   - {fileID: 1733619017}
+  - {fileID: 669984660}
