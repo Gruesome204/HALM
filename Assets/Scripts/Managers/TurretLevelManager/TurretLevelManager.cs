@@ -67,14 +67,24 @@ public class TurretLevelManager : MonoBehaviour
 
         OnLevelUp?.Invoke(type, progress.currentLevel);
 
+        bool milestoneFound = false;
         foreach (var choice in TurretUpgradeChoiceManager.Instance.GetUpgradeChoices(type))
         {
             if (choice.triggerLevel == progress.currentLevel)
             {
+                milestoneFound = true;
                 OnMilestoneReached?.Invoke(type, progress.currentLevel);
+
+                Debug.Log($"[Manager] Milestone reached for {type} turret at level {progress.currentLevel}! Upgrade choice available.");
                 break;
             }
         }
+
+        if (!milestoneFound)
+        {
+            Debug.Log($"[Manager] No upgrade choice for {type} turret at level {progress.currentLevel}.");
+        }
+
     }
 
     public int GetLevel(TurretType type)
