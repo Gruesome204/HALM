@@ -66,7 +66,7 @@ public class TurretLevelManager : MonoBehaviour
 
         OnLevelUp?.Invoke(type, progress.currentLevel);
 
-        foreach (var choice in TurretUpgradeManager.Instance.GetUpgradeChoices(type))
+        foreach (var choice in TurretUpgradeChoiceManager.Instance.GetUpgradeChoices(type))
         {
             if (choice.triggerLevel == progress.currentLevel)
             {

@@ -69,7 +69,7 @@ public class TurretLevelBehaviour : MonoBehaviour
             Debug.LogError($"{name} has no TurretBehaviour!");
             return;
         }
-        if (TurretUpgradeManager.Instance == null)
+        if (TurretUpgradeChoiceManager.Instance == null)
         {
             Debug.LogError("No TurretUpgradeManager found in scene!");
             return;
@@ -80,9 +80,9 @@ public class TurretLevelBehaviour : MonoBehaviour
         float scaledRange = blueprint.attackRange + blueprint.rangeGrowthFlat * (level - 1);
 
         // --- apply meta upgrades from UpgradeManager ---
-        float dmgMult = TurretUpgradeManager.Instance.GetDamageMultiplier(blueprint.turretType);
-        float rateMult = TurretUpgradeManager.Instance.GetFireRateMultiplier(blueprint.turretType);
-        float rangeBonus = TurretUpgradeManager.Instance.GetRangeBonus(blueprint.turretType);
+        float dmgMult = TurretUpgradeChoiceManager.Instance.GetDamageMultiplier(blueprint.turretType);
+        float rateMult = TurretUpgradeChoiceManager.Instance.GetFireRateMultiplier(blueprint.turretType);
+        float rangeBonus = TurretUpgradeChoiceManager.Instance.GetRangeBonus(blueprint.turretType);
 
         turretBehaviour.currentAttackDamage = scaledDamage * dmgMult;
         turretBehaviour.currentFireRate = scaledFireRate * rateMult;

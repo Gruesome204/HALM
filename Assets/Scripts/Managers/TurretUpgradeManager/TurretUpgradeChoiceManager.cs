@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretUpgradeManager : MonoBehaviour
+public class TurretUpgradeChoiceManager : MonoBehaviour
 {
-    public static TurretUpgradeManager Instance { get; private set; }
+    public static TurretUpgradeChoiceManager Instance { get; private set; }
 
     [SerializeField] private List<TurretUpgradeChoiceSO> upgradeChoices;
     private Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption> chosenUpgrades;
@@ -18,6 +18,15 @@ public class TurretUpgradeManager : MonoBehaviour
         Instance = this;
 
         chosenUpgrades = new Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption>();
+    }
+
+    public IEnumerable<TurretUpgradeChoiceSO> GetUpgradeChoices(TurretType type)
+    {
+        foreach (var choice in upgradeChoices)
+        {
+            if (choice != null && choice.turretType == type)
+                yield return choice;
+        }
     }
 
     public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoiceSO.UpgradeOption option)
@@ -76,12 +85,4 @@ public class TurretUpgradeManager : MonoBehaviour
         return bonus;
     }
 
-    public IEnumerable<TurretUpgradeChoiceSO> GetUpgradeChoices(TurretType type)
-    {
-        foreach (var choice in upgradeChoices)
-        {
-            if (choice.turretType == type)
-                yield return choice;
-        }
-    }
 }

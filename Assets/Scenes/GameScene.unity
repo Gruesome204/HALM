@@ -553,7 +553,6 @@ GameObject:
   - component: {fileID: 368292586}
   - component: {fileID: 368292587}
   - component: {fileID: 368292588}
-  - component: {fileID: 368292589}
   m_Layer: 0
   m_Name: -TurretManager-
   m_TagString: Untagged
@@ -618,20 +617,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   toggleDestructionKey: 120
---- !u!114 &368292589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368292585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 018647224259d8241854d38b8376ce11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxLevel: 10
-  xpGrowthMultiplier: 1.5
 --- !u!1 &406684503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,6 +1091,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &726615952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 726615953}
+  - component: {fileID: 726615954}
+  - component: {fileID: 726615955}
+  m_Layer: 0
+  m_Name: -TurretLevelManager-
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &726615953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726615952}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1512055815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &726615954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726615952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018647224259d8241854d38b8376ce11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLevel: 10
+  xpGrowthMultiplier: 1.5
+--- !u!114 &726615955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726615952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e15e41239a21f3489df74b1f1c0fd03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &747619961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,7 +1351,7 @@ GameObject:
   - component: {fileID: 825843165}
   - component: {fileID: 825843166}
   m_Layer: 0
-  m_Name: -TurretUpgradeManager
+  m_Name: -TurretUpgradeChoiceManager-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1342,6 +1386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeChoices:
   - {fileID: 11400000, guid: d42d1f34012e1e94d90f549cb645df4a, type: 2}
+  - {fileID: 11400000, guid: 2b3b5ad6b10ad55428f6b67f54c21008, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,6 +2016,7 @@ Transform:
   - {fileID: 2019150953}
   - {fileID: 2121741342}
   - {fileID: 368292586}
+  - {fileID: 726615953}
   - {fileID: 825843165}
   - {fileID: 1520240906}
   - {fileID: 427538120}
