@@ -16,8 +16,8 @@ MonoBehaviour:
   baseDescription: 
   baseLevel: 1
   baseMovementSpeed: 2
-  baseMaxHealth: 300
-  baseHealth: 300
+  baseMaxHealth: 100
+  baseHealth: 100
   baseArmor: 0
   baseMagicResistance: 0
   baseKnockbackReduction: 0

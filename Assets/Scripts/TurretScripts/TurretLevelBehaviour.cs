@@ -94,11 +94,6 @@ public class TurretLevelBehaviour : MonoBehaviour
                   $"Range={turretBehaviour.currentAttackRange}");
     }
 
-    //public void AwardXP(float amount)
-    //{
-    //    if (blueprint == null || TurretLevelManager.Instance == null) return;
-    //    TurretLevelManager.Instance.AddXP(blueprint.turretType, amount);    
-    //}
 
 #if UNITY_EDITOR
     [ContextMenu("Give XP Test")]
