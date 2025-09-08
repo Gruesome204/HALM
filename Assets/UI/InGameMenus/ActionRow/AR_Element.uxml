@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
-    <ui:VisualElement name="border" style="width: 100px; height: 120px; justify-content: center; align-self: flex-start;">
+    <ui:VisualElement name="border" style="width: 65px; height: 85px; justify-content: center; align-self: center; flex-shrink: 0;">
         <ui:Button text="&#10;" name="button" class="mainMenuBtnClass" style="width: 80%; height: 65%; margin-top: 7px; margin-right: 7px; margin-bottom: 7px; margin-left: 7px; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px;">
             <ui:VisualElement name="icon" style="flex-grow: 1; flex-shrink: 0; width: 100%; height: 100%;" />
         </ui:Button>
