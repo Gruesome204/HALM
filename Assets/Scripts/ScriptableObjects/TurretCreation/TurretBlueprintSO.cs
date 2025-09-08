@@ -7,14 +7,27 @@ public class TurretBlueprint : ScriptableObject
     public string turretName;
     [TextArea(3, 10)] public string description;
 
-    [Header("Values")]
+    [Header("TurretType")]
+    public TurretType turretType;
+
+    [Header("Base Values")]
     public float fireRate = 1f;
     public float fireCountdown = 0f;
     public float projectileSpeed = 10f;
     public float attackRange = 5f;
-    public float damage = 10f;
+    public float attackDamage = 10f;
     public float knockbackStrength = 1f;
     public float knockbackDuration = 0.5f;
+
+    [Header("Per-Level Growth")]
+    [Tooltip("Damage scaling per level (1.2 = +20% per level)")]
+    public float damageGrowthFactor = 1.2f;
+
+    [Tooltip("Fire rate scaling per level (0.95 = 5% faster per level)")]
+    public float fireRateGrowthFactor = 0.95f;
+
+    [Tooltip("Flat range increase per level")]
+    public float rangeGrowthFlat = 0.5f;
 
     [Header("Cost")]
     public int buildingCost;

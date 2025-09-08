@@ -12,19 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4be238d9b295624192c160bdbfda97a, type: 3}
   m_Name: TestEnemy
   m_EditorClassIdentifier: 
+  baseName: 
+  baseDescription: 
   baseLevel: 1
-  baseMaxHealth: 300
-  baseHealth: 300
-  baseDamage: 0
+  baseMovementSpeed: 2
+  baseMaxHealth: 100
+  baseHealth: 100
   baseArmor: 0
+  baseMagicResistance: 0
+  baseKnockbackReduction: 0
+  baseknockbackForce: 0
+  baseknockbackDuration: 0
+  baseDamage: 0
   baseAttackSpeed: 0
   baseCritChance: 0
   baseCritHitMultiplier: 0
-  baseMagicResistance: 0
   baseAttackRange: 0
-  baseMovementSpeed: 2
   baseDetectionRange: 2
   baseVisionRange: 2
-  basehearingRange: 2
+  baseHearingRange: 2
   pursueRange: 2
-  experienceYield: 2
+  experienceYield: 100
+  baseHealthScaleFactor: 0
+  baseDamageScaleFactor: 0
+  baseSpeedScaleFactor: 0
+  baseArmorScaleFactor: 0

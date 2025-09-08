@@ -4,6 +4,7 @@ public class EnemyStats : MonoBehaviour
 {
     [SerializeField] private EnemyBaseStats baseStats;
 
+
     [Header("Level")]
     public int currentLevel = 1;
 
@@ -22,6 +23,9 @@ public class EnemyStats : MonoBehaviour
     public float speedScaleFactor = 1.05f;
     public float armorScaleFactor = 1.1f;
 
+    [Header("Experience Yield")]
+    public float currentExperienceYield;
+
     public void Initialize()
     {
         if (baseStats == null)
@@ -36,6 +40,7 @@ public class EnemyStats : MonoBehaviour
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
         currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
         currentKnockbackReduction = Mathf.Clamp01(currentKnockbackReduction);
+        currentExperienceYield = Mathf.RoundToInt(baseStats.experienceYield * GetLevelScaling(1.1f));
     }
 
     private float GetLevelScaling(float factor)

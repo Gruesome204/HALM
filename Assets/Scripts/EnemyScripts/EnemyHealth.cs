@@ -1,28 +1,37 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyHealth : MonoBehaviour, IDamagable
 {
     public EnemyStats stats;
     public Slider healthBar;
-    public event Action OnDeath;
+    public event Action<EnemyHealth, DamageData> OnDeath;
 
     public bool IsInvulnerable { get; set; }
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
+
         if (IsInvulnerable || stats == null) return;
 
         float damage = CalculateTakenDamage(damageData);
         stats.currentHealth -= damage;
         healthBar?.SetValueWithoutNotify(stats.currentHealth / stats.currentMaxHealth);
         Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage.");
-
+        Debug.Log($"Health after damage: {stats.currentHealth}");
         if (stats.currentHealth <= 0)
         {
-            OnDeath?.Invoke();
+            Die(damageData);
         }
+    }
+
+    public void Die(DamageData damageData)
+    {
+        // Notify listeners
+        OnDeath?.Invoke(this, damageData);
     }
 
     private float CalculateTakenDamage(DamageData data)
