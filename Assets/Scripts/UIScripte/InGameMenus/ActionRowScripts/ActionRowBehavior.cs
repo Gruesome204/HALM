@@ -46,7 +46,7 @@ public class ActionRowBehavior : MonoBehaviour
 
         FillActionRow();
         FillResourceRow();
-        FillTowerLimitBar(7);
+        FillTowerLimitBar(10);
     }
 
     private void FixedUpdate()
@@ -83,6 +83,8 @@ public class ActionRowBehavior : MonoBehaviour
 
     void PauseBtnClicked(ClickEvent evt)
     {
+        UpdateTowerLimitBar(5);
+
         gameMenuManager.CloseAllMenus();
         gameMenuManager.OpenOneInGameMenu(1);
 
@@ -96,7 +98,7 @@ public class ActionRowBehavior : MonoBehaviour
 
     void FillTowerLimitBar(int towerLimit)
     {
-        for (int i = 0; i < towerLimit; i++)
+        for (int i = 1; i < towerLimit; i++)
         {
             AR_TowerLimitElementBehavior aR_TowerLimitElement = new AR_TowerLimitElementBehavior(towerLimitElement, i);
             towerLimitContainer.Add(aR_TowerLimitElement.border);
