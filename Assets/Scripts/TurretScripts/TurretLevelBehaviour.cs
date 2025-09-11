@@ -9,8 +9,6 @@ public class TurretLevelBehaviour : MonoBehaviour
     {
         if (blueprint != null && TurretLevelManager.Instance != null)
             SyncWithCurrentLevel();
-
-
     }
 
     private void Awake()
@@ -38,7 +36,7 @@ public class TurretLevelBehaviour : MonoBehaviour
         SyncWithCurrentLevel();
 
     }
-
+        
     private void OnDestroy()
     {
         if (TurretLevelManager.Instance != null)

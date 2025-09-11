@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TurretLevelManager : MonoBehaviour
 {
     public static TurretLevelManager Instance { get; private set; }
-
-    public event System.Action<TurretType, int> OnMilestoneReached;
 
     [System.Serializable]
     public class TurretProgress
@@ -22,8 +21,13 @@ public class TurretLevelManager : MonoBehaviour
     public int maxLevel = 10;
     public float xpGrowthMultiplier = 1.5f;
 
+    // Level-up event
     public delegate void LevelUpEvent(TurretType type, int newLevel);
     public event LevelUpEvent OnLevelUp;
+
+    // Milestone event
+    public delegate void MilestoneEvent(TurretType type, int level);
+    public event MilestoneEvent OnMilestoneReached;
 
     private void Awake()
     {
@@ -63,35 +67,30 @@ public class TurretLevelManager : MonoBehaviour
         progress.currentXP = 0;
         progress.xpToNextLevel *= xpGrowthMultiplier;
 
-        Debug.Log($"[Manager] {type} Turrets leveled up to {progress.currentLevel}");
+        Debug.Log($"[LevelUpManager] {type} Turrets leveled up to {progress.currentLevel}");
 
         OnLevelUp?.Invoke(type, progress.currentLevel);
 
-        bool milestoneFound = false;
-        foreach (var choice in TurretUpgradeChoiceManager.Instance.GetUpgradeChoices(type))
-        {
-            if (choice.triggerLevel == progress.currentLevel)
-            {
-                milestoneFound = true;
-                OnMilestoneReached?.Invoke(type, progress.currentLevel);
+        var options = TurretUpgradeChoiceManager.Instance.GetAllOptionsForLevel(type, progress.currentLevel);
+        bool milestoneTriggered = false;
 
-                Debug.Log($"[Manager] Milestone reached for {type} turret at level {progress.currentLevel}! Upgrade choice available.");
-                break;
-            }
+        foreach (var option in options)
+        {
+            Debug.Log($"Option: {option.name} | Damage x{option.damageMultiplier} | " +
+                      $"FireRate x{option.fireRateMultiplier} | Range +{option.rangeBonus}");
+            milestoneTriggered = true;
         }
 
-        if (!milestoneFound)
+        // Trigger milestone event only if there is at least one upgrade option
+        if (milestoneTriggered)
         {
-            Debug.Log($"[Manager] No upgrade choice for {type} turret at level {progress.currentLevel}.");
+            Debug.Log($"[LevelUpManager] Call milestone event!");
+            OnMilestoneReached?.Invoke(type, progress.currentLevel);
         }
-
     }
-
     public int GetLevel(TurretType type)
     {
         return turretProgressDict[type].currentLevel;
     }
-
-
 
 }

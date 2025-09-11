@@ -5,7 +5,9 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
 {
     public static TurretUpgradeChoiceManager Instance { get; private set; }
 
+    //List of possible Upgrades(Added in Inspector as Scriptable Objects)
     [SerializeField] private List<TurretUpgradeChoiceSO> upgradeChoices;
+    //Dictionary that saves all picked upgrades
     private Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption> chosenUpgrades;
 
     private void Awake()
@@ -20,15 +22,30 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         chosenUpgrades = new Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption>();
     }
 
+    //Loops over all Choices and gives all of the given turret Type
     public IEnumerable<TurretUpgradeChoiceSO> GetUpgradeChoices(TurretType type)
     {
         foreach (var choice in upgradeChoices)
         {
+            //Debug.Log($"Checking choice: {choice.name} for turret type {choice.turretType}");
             if (choice != null && choice.turretType == type)
                 yield return choice;
         }
     }
 
+    public IEnumerable<TurretUpgradeChoiceSO.UpgradeOption> GetAllOptionsForLevel(TurretType type, int level)
+    {
+        foreach (var choice in upgradeChoices)
+        {
+            if (choice != null && choice.turretType == type && choice.triggerLevel == level)
+            {
+                foreach (var option in choice.options)
+                    yield return option;
+            }
+        }
+    }
+
+    //Player Selects and upgrade and this method saves the choice
     public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoiceSO.UpgradeOption option)
     {
       
@@ -83,6 +100,24 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
             }
         }
         return bonus;
+    }
+
+    [System.Serializable]
+    public struct UpgradeSaveData
+    {
+        public TurretType type;
+        public int level;
+        public string optionId; // unique ID from UpgradeOption
+    }
+
+    //Method to show all choosen upgrades
+    public IEnumerable<TurretUpgradeChoiceSO.UpgradeOption> GetAllChosenUpgrades(TurretType type)
+    {
+        foreach (var kvp in chosenUpgrades)
+        {
+            if (kvp.Key.Item1 == type)
+                yield return kvp.Value;
+        }
     }
 
 }
