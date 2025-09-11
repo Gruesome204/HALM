@@ -102,7 +102,7 @@ public class ActionRowBehavior : MonoBehaviour
             towerLimitContainer.Add(aR_TowerLimitElement.border);
             towerLimitElementList.Add(aR_TowerLimitElement);
 
-            UpdateTowerLimitBar(3);
+            UpdateTowerLimitBar(TurretPlacementController.Instance.GetNumActiveTurrets());
         }
     }
 
