@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
+    <ui:VisualElement name="mainContainer" class="mainContainerClass" style="flex-grow: 0; flex-shrink: 0; flex-direction: column; align-content: auto; justify-content: flex-start; align-items: center;">
+        <ui:VisualElement name="turretIcon" style="flex-grow: 0; align-self: auto; width: 40%; height: 10%; flex-shrink: 0; background-color: rgb(153, 60, 60);" />
+        <ui:Label text="Label" name="turretName" style="align-self: auto; width: auto; height: 10%;" />
+        <ui:VisualElement name="turretUpgradeChoices" style="flex-grow: 0; align-self: center; align-content: auto; flex-shrink: 0; width: 40%; height: 80%; background-color: rgba(8, 0, 61, 0.25);" />
+    </ui:VisualElement>
+</ui:UXML>
