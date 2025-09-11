@@ -23,8 +23,11 @@ public class TurretPlacementController : MonoBehaviour
     [Header("Hierarchy Organization")]
     [SerializeField] private Transform turretContainer;
 
+    [Header("Active Turrets")]
     public int activeTurretCount;
 
+    [Header("Max Turret Number")]
+    public int maxTurretNumber = 10;
     public static TurretPlacementController Instance { get; private set; }
 
     private void Awake()

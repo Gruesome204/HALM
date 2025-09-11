@@ -46,7 +46,7 @@ public class ActionRowBehavior : MonoBehaviour
 
         FillActionRow();
         FillResourceRow();
-        FillTowerLimitBar(7);
+        FillTowerLimitBar(TurretPlacementController.Instance.maxTurretNumber);
     }
 
     private void FixedUpdate()
