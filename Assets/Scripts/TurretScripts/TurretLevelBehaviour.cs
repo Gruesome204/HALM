@@ -9,8 +9,6 @@ public class TurretLevelBehaviour : MonoBehaviour
     {
         if (blueprint != null && TurretLevelManager.Instance != null)
             SyncWithCurrentLevel();
-
-
     }
 
     private void Awake()

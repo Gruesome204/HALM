@@ -1,16 +1,23 @@
+using System;
 using UnityEngine;
 
 public class TurretUpgradeTest : MonoBehaviour
 {
+
     private void Start()
     {
         Debug.Log("Load test script");
     }
     private void OnEnable()
     {
-        if (TurretLevelManager.Instance != null)
-            TurretLevelManager.Instance.OnMilestoneReached += ShowUpgradeOptions;
+        if (TurretLevelManager.Instance == null)
+        {
+            Debug.Log("[Test] Waiting for TurretLevelManager...");
+            return;
+        }
+        TurretLevelManager.Instance.OnMilestoneReached += ShowUpgradeOptions;
     }
+
 
     private void OnDisable()
     {
@@ -20,7 +27,7 @@ public class TurretUpgradeTest : MonoBehaviour
 
     private void ShowUpgradeOptions(TurretType type, int level)
     {
-        Debug.Log($"=== Upgrade Options for {type} Turret at Level {level} ===");
+        Debug.Log($"=== Test Upgrade Options for {type} Turret at Level {level} ===");
 
         foreach (var choice in TurretUpgradeChoiceManager.Instance.GetUpgradeChoices(type))
         {
@@ -35,6 +42,5 @@ public class TurretUpgradeTest : MonoBehaviour
                           $"Description: {option.description}");
             }
         }
-    
-}
+    }
 }

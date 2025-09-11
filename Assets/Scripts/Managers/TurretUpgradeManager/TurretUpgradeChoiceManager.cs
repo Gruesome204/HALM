@@ -27,8 +27,21 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
     {
         foreach (var choice in upgradeChoices)
         {
+            //Debug.Log($"Checking choice: {choice.name} for turret type {choice.turretType}");
             if (choice != null && choice.turretType == type)
                 yield return choice;
+        }
+    }
+
+    public IEnumerable<TurretUpgradeChoiceSO.UpgradeOption> GetAllOptionsForLevel(TurretType type, int level)
+    {
+        foreach (var choice in upgradeChoices)
+        {
+            if (choice != null && choice.turretType == type && choice.triggerLevel == level)
+            {
+                foreach (var option in choice.options)
+                    yield return option;
+            }
         }
     }
 
