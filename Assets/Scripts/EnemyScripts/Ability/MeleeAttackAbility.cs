@@ -5,9 +5,11 @@ public class MeleeAttackAbility : EnemyAbility
 {
     public int damage;
 
+    private void OnEnable() => targetType = AbilityTargetType.SingleTarget;
+
     protected override void Activate(GameObject user, GameObject target)
     {
-        Debug.Log($"{user.name} attacks {target.name} for {damage} damage!");
-        // Add animation, hit detection, apply damage logic here
+        Debug.Log($"{user.name} slashes {target.name} for {damage} damage!");
+        // target.GetComponent<Health>()?.TakeDamage(damage);
     }
 }
