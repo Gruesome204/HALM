@@ -6,13 +6,13 @@ public class TU_ChoiceElementBehavior
     public VisualElement border;
     private Button button;
 
-    private TurretUpgradeChoiceSO choice;
+    private TurretUpgradeChoiceSO.UpgradeOption option;
 
-    public TU_ChoiceElementBehavior(VisualTreeAsset asset, TurretUpgradeChoiceSO _choice)
+    public TU_ChoiceElementBehavior(VisualTreeAsset asset, TurretUpgradeChoiceSO.UpgradeOption _option)
     {
         TemplateContainer choiceElement = asset.Instantiate();
 
-        choice = _choice;
+        option = _option;
 
         border = choiceElement.Q<VisualElement>();
         button = choiceElement.Q<Button>();

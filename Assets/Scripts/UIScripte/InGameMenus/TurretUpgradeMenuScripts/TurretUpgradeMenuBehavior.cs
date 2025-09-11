@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -25,13 +26,14 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour
             Debug.LogError("No UIDocument found!");
             return;
         }
+    }
 
-        TurretLevelManager.Instance.OnMilestoneReached += CreateListEntry;
-
-        TurretLevelManager.Instance.OnMilestoneReached += (type, level) =>
+    private void Start()
+    {
+        if (TurretLevelManager.Instance != null)
         {
-            Debug.Log($"UI Milestone triggered for {type} at level {level}");
-        };
+            TurretLevelManager.Instance.OnMilestoneReached += CreateListEntry;
+        }
     }
 
     private void OnDisable()
@@ -43,16 +45,17 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour
     {
         Debug.Log("Test");
         turretUpgradeChoices.Clear();
-        foreach (var choice in TurretUpgradeChoiceManager.Instance.GetUpgradeChoices(type))
-        {
-            if (choice.triggerLevel == level)
-            {
 
-                Debug.Log($"Test UI");
-                TU_ChoiceElementBehavior tu_ChoiceElementBehavior = new TU_ChoiceElementBehavior(choiceListElement, choice);
-                turretUpgradeChoices.Add(tu_ChoiceElementBehavior.border);
-                break;
-            }
+
+        var options = TurretUpgradeChoiceManager.Instance.GetAllOptionsForLevel(type, level);
+
+        foreach (var option in options)
+        {
+            Debug.Log($"Test UI");
+            TU_ChoiceElementBehavior tu_ChoiceElementBehavior = new TU_ChoiceElementBehavior(choiceListElement, option);
+            turretUpgradeChoices.Add(tu_ChoiceElementBehavior.border);
+
         }
+
     }
 }

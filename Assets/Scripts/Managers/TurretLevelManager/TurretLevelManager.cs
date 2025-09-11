@@ -45,10 +45,6 @@ public class TurretLevelManager : MonoBehaviour
             turretProgressDict[type] = new TurretProgress();
         }
     }
-    private void Start()
-    {
-        OnMilestoneReached += (type, level) => Debug.Log($"[Test] Milestone triggered for {type} at level {level}");
-    }
 
     public void AddXP(TurretType type, float amount)
     {
@@ -75,10 +71,21 @@ public class TurretLevelManager : MonoBehaviour
 
         OnLevelUp?.Invoke(type, progress.currentLevel);
 
-        foreach (var option in TurretUpgradeChoiceManager.Instance.GetAllOptionsForLevel(type, progress.currentLevel))
+        var options = TurretUpgradeChoiceManager.Instance.GetAllOptionsForLevel(type, progress.currentLevel);
+        bool milestoneTriggered = false;
+
+        foreach (var option in options)
         {
             Debug.Log($"Option: {option.name} | Damage x{option.damageMultiplier} | " +
                       $"FireRate x{option.fireRateMultiplier} | Range +{option.rangeBonus}");
+            milestoneTriggered = true;
+        }
+
+        // Trigger milestone event only if there is at least one upgrade option
+        if (milestoneTriggered)
+        {
+            Debug.Log($"[LevelUpManager] Call milestone event!");
+            OnMilestoneReached?.Invoke(type, progress.currentLevel);
         }
     }
     public int GetLevel(TurretType type)

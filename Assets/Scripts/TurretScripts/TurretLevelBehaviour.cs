@@ -36,7 +36,7 @@ public class TurretLevelBehaviour : MonoBehaviour
         SyncWithCurrentLevel();
 
     }
-
+        
     private void OnDestroy()
     {
         if (TurretLevelManager.Instance != null)
