@@ -63,6 +63,10 @@ MonoBehaviour:
     m_Key: soundSettingsHeadline
     m_Metadata:
       m_Items: []
+  - m_Id: 42399922118070272
+    m_Key: creditsHeadline
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

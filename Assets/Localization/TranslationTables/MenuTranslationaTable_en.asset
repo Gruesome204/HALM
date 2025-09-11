@@ -66,6 +66,10 @@ MonoBehaviour:
     m_Localized: Volume
     m_Metadata:
       m_Items: []
+  - m_Id: 42399922118070272
+    m_Localized: Hello, here are the Credits!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

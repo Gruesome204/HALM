@@ -87,6 +87,11 @@ public class SettingsMenuBehavior : MonoBehaviour
     private void Update()
     {
         SettingVolume();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     void OnBackBtnClicked(ClickEvent clicked)
