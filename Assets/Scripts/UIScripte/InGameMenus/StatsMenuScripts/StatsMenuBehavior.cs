@@ -19,7 +19,7 @@ public class StatsMenuBehavior : MonoBehaviour
     public VisualTreeAsset turretDetailsAsset;
     public VisualTreeAsset charackterDetailsAsset;
 
-    private List<TurretBlueprint> turretsCurrentlyPlaced = new List<TurretBlueprint>();
+    private List<GameObject> turretsCurrentlyPlaced = new List<GameObject>();
     private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
 
     void OnEnable()
@@ -33,7 +33,7 @@ public class StatsMenuBehavior : MonoBehaviour
 
         //Filling The List for Turrets curently placed
         turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
-        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetInstantiatedTurretList();
+        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetActiveTurrets();
 
         //Connecting al Buttons and settig their Texts and Functions
         resumeButton = uIDocument.rootVisualElement.Q<Button>("resumeButton");
@@ -88,9 +88,9 @@ public class StatsMenuBehavior : MonoBehaviour
 
         //Creating List Elements for each Turretkind currently placed, giving them the turret they represent and a reference to the turret Detail Menu,
         //and adding the created Button to the scroll List
-        foreach (var turrets in turretsCurrentlyPlaced)
+        foreach (var turret in turretsCurrentlyPlaced)
         {
-            SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turrets, listElementAsset, ref turretDetails);
+            SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret.GetComponent<TurretBlueprint>(), listElementAsset, ref turretDetails);
             uIDocument.rootVisualElement.Q("unity-content-container").Add(towerElement.listButton);
         }
     }

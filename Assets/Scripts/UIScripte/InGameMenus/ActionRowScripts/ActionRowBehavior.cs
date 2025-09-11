@@ -19,7 +19,7 @@ public class ActionRowBehavior : MonoBehaviour
 
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
-    private List<TurretBlueprint> turretsCurrentlyPlaced = new List<TurretBlueprint>();
+    private List<GameObject> turretsCurrentlyPlaced = new List<GameObject>();
     private List<AR_TowerLimitElementBehavior> towerLimitElementList = new List<AR_TowerLimitElementBehavior>();
 
     void OnEnable()
@@ -28,7 +28,7 @@ public class ActionRowBehavior : MonoBehaviour
         gameMenuManager = FindObjectOfType<InGameMenuManager>();
 
         turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
-        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetInstantiatedTurretList();
+        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetActiveTurrets();
 
         turrentButtonContainer = root.Q<VisualElement>("turrentButtonContainer");
 

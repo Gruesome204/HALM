@@ -12,8 +12,9 @@ public class TurretPlacementController : MonoBehaviour
     public GameObject previewObject; // Optional: Prefab for placement preview
     private PlacableObject previewPlacableObject;
 
-    //Instantiated turretList
-    [SerializeField]private List<TurretBlueprint> InstantiatedTurretList = new List<TurretBlueprint>();
+    
+    //Currently Active Turrets
+    [SerializeField] private List<GameObject> activeTurrets = new List<GameObject>();
 
     [Header("Placement Cooldown")] // Organize variables in the Inspector
     public float placementCooldown = 1.0f; // Cooldown duration in seconds
@@ -39,9 +40,9 @@ public class TurretPlacementController : MonoBehaviour
         }
     }
 
-    public List<TurretBlueprint> GetInstantiatedTurretList()
+    public List<GameObject> GetActiveTurrets()
     {
-        return InstantiatedTurretList;
+        return activeTurrets;
     }
     public List<TurretBlueprint> GetTurretBlueprintList()
     {
@@ -249,7 +250,7 @@ public class TurretPlacementController : MonoBehaviour
                 {
                     turretBehaviour.turretBlueprint = currentSelectedBlueprint;
                     turretBehaviour.InitializeFromBlueprint(); // Optional initialization method
-                    InstantiatedTurretList.Add(currentSelectedBlueprint); // Add blueprint to tracking list
+                    activeTurrets.Add(newTurret);
                 }
 
                 lastPlacementTime = Time.time;
