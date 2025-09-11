@@ -19,7 +19,7 @@ public class ActionRowBehavior : MonoBehaviour
 
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
-    private List<TurretBlueprint> turretsCurrentlyPlaced = new List<TurretBlueprint>();
+    private List<GameObject> turretsCurrentlyPlaced = new List<GameObject>();
     private List<AR_TowerLimitElementBehavior> towerLimitElementList = new List<AR_TowerLimitElementBehavior>();
 
     void OnEnable()
@@ -28,7 +28,7 @@ public class ActionRowBehavior : MonoBehaviour
         gameMenuManager = FindObjectOfType<InGameMenuManager>();
 
         turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
-        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetInstantiatedTurretList();
+        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetActiveTurrets();
 
         turrentButtonContainer = root.Q<VisualElement>("turrentButtonContainer");
 
@@ -46,7 +46,7 @@ public class ActionRowBehavior : MonoBehaviour
 
         FillActionRow();
         FillResourceRow();
-        FillTowerLimitBar(10);
+        FillTowerLimitBar(TurretPlacementController.Instance.maxTurretNumber);
     }
 
     private void FixedUpdate()
@@ -83,8 +83,6 @@ public class ActionRowBehavior : MonoBehaviour
 
     void PauseBtnClicked(ClickEvent evt)
     {
-        UpdateTowerLimitBar(5);
-
         gameMenuManager.CloseAllMenus();
         gameMenuManager.OpenOneInGameMenu(1);
 
@@ -98,13 +96,13 @@ public class ActionRowBehavior : MonoBehaviour
 
     void FillTowerLimitBar(int towerLimit)
     {
-        for (int i = 1; i < towerLimit; i++)
+        for (int i = 0; i < towerLimit; i++)
         {
             AR_TowerLimitElementBehavior aR_TowerLimitElement = new AR_TowerLimitElementBehavior(towerLimitElement, i);
             towerLimitContainer.Add(aR_TowerLimitElement.border);
             towerLimitElementList.Add(aR_TowerLimitElement);
 
-            UpdateTowerLimitBar(3);
+            UpdateTowerLimitBar(TurretPlacementController.Instance.GetNumActiveTurrets());
         }
     }
 
