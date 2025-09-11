@@ -599,9 +599,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   previewObject: {fileID: 0}
-  InstantiatedTurretList: []
   placementCooldown: 1
   turretContainer: {fileID: 278887215}
+  activeTurretCount: 0
+  maxTurretNumber: 10
 --- !u!114 &368292588
 MonoBehaviour:
   m_ObjectHideFlags: 0

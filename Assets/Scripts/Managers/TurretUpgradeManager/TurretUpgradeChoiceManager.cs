@@ -5,7 +5,9 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
 {
     public static TurretUpgradeChoiceManager Instance { get; private set; }
 
+    //List of possible Upgrades(Added in Inspector as Scriptable Objects)
     [SerializeField] private List<TurretUpgradeChoiceSO> upgradeChoices;
+    //Dictionary that saves all picked upgrades
     private Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption> chosenUpgrades;
 
     private void Awake()
@@ -20,6 +22,7 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         chosenUpgrades = new Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption>();
     }
 
+    //Loops over all Choices and gives all of the given turret Type
     public IEnumerable<TurretUpgradeChoiceSO> GetUpgradeChoices(TurretType type)
     {
         foreach (var choice in upgradeChoices)
@@ -29,6 +32,7 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         }
     }
 
+    //Player Selects and upgrade and this method saves the choice
     public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoiceSO.UpgradeOption option)
     {
       
@@ -83,6 +87,24 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
             }
         }
         return bonus;
+    }
+
+    [System.Serializable]
+    public struct UpgradeSaveData
+    {
+        public TurretType type;
+        public int level;
+        public string optionId; // unique ID from UpgradeOption
+    }
+
+    //Method to show all choosen upgrades
+    public IEnumerable<TurretUpgradeChoiceSO.UpgradeOption> GetAllChosenUpgrades(TurretType type)
+    {
+        foreach (var kvp in chosenUpgrades)
+        {
+            if (kvp.Key.Item1 == type)
+                yield return kvp.Value;
+        }
     }
 
 }
