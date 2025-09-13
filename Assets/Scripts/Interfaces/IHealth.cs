@@ -1,16 +1,10 @@
+using System;
 using UnityEngine;
 
-public class IHealth : MonoBehaviour
+public interface IHealth
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    internal void ReceiveHealing(int healAmount)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        throw new NotImplementedException();
     }
 }
