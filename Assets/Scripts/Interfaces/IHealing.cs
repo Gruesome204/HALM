@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public interface IHealth
+public interface IHealing
 {
     internal void ReceiveHealing(int healAmount)
     {
