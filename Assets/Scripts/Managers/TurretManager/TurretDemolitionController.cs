@@ -61,7 +61,7 @@ public class TurretDemolitionController : MonoBehaviour
         Debug.Log(hit);
         if (hit.collider != null)
         {
-            GameObject turret = hit.collider.transform.root.gameObject;
+            GameObject turret = hit.collider.transform.gameObject;
             // Remove from GridManager
             PlacableObject placableObject = turret.GetComponent<PlacableObject>();
             if (placableObject != null)
