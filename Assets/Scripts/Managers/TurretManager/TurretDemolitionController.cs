@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class DemolitionController : MonoBehaviour
+public class TurretDemolitionController : MonoBehaviour
 {
-    public static DemolitionController Instance { get; private set; }
+    public static TurretDemolitionController Instance { get; private set; }
 
     public LayerMask turretLayer; // Assign the turret layer in the Inspector
     public KeyCode toggleDestructionKey = KeyCode.X;
