@@ -77,7 +77,14 @@ public class TurretPlacementController : MonoBehaviour
         //{
         //    HandlePlacementPreview();
         //}
-
+        if (TurretDemolitionController.Instance != null && TurretDemolitionController.Instance.IsDestructionModeActive())
+        {
+            if (currentSelectedBlueprint != null)
+            {
+                DeselectTurretBlueprint();
+            }
+            return; // Skip placement logic while in destruction mode
+        }
         else
         {
             // If no blueprint is selected, ensure preview is destroyed
@@ -105,8 +112,12 @@ public class TurretPlacementController : MonoBehaviour
     // Call this method when a new turret blueprint is selected (e.g., from UI button)
     public void SelectTurretBlueprint(TurretBlueprint blueprint)
     {
-        if (currentSelectedBlueprint == blueprint) return; // Already selected this one
 
+        if (currentSelectedBlueprint == blueprint) return; // Already selected this one
+        if (TurretDemolitionController.Instance != null && TurretDemolitionController.Instance.IsDestructionModeActive())
+        {
+            TurretDemolitionController.Instance.ForceDeactivateDestructionMode();
+        }
         currentSelectedBlueprint = blueprint;
         Debug.Log("Selected Blueprint: " + (currentSelectedBlueprint != null ? currentSelectedBlueprint.name : "None"));
 
@@ -210,6 +221,17 @@ public class TurretPlacementController : MonoBehaviour
             }
         }
     }
+
+    public void RemoveTurret(GameObject turret)
+{
+    if (activeTurrets.Contains(turret))
+    {
+        activeTurrets.Remove(turret);
+        activeTurretCount = activeTurrets.Count;
+        Destroy(turret);
+        Debug.Log("Turret removed. Active turrets: " + activeTurretCount);
+    }
+}
 
     private void TryPlaceTurret()
     {

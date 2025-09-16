@@ -73,9 +73,8 @@ public class TurretDemolitionController : MonoBehaviour
             TurretBehaviour turretBehaviour = turret.GetComponent<TurretBehaviour>();
             if (turretBehaviour != null && turretBehaviour.turretBlueprint != null)
             {
-                TurretPlacementController.Instance.GetActiveTurrets().Remove(gameObject);
+                TurretPlacementController.Instance.RemoveTurret(turret);
             }
-
             Destroy(turret);
             Debug.Log("Turret destroyed!");
 
@@ -91,5 +90,12 @@ public class TurretDemolitionController : MonoBehaviour
     public bool IsDestructionModeActive()
     {
         return destructionModeActive;
+    }
+
+    public void ForceDeactivateDestructionMode()
+    {
+        destructionModeActive = false;
+        Debug.Log("Destruction Mode: Forced Deactivation");
+        // Optional: reset cursor/UI indicator
     }
 }
