@@ -236,10 +236,11 @@ MonoBehaviour:
   currentDamage: 0
   currentMovementSpeed: 0
   currentKnockbackReduction: 0
-  healthScaleFactor: 1.1
-  damageScaleFactor: 1.1
-  speedScaleFactor: 1.05
-  armorScaleFactor: 1.1
+  healthScaleFactor: 0
+  damageScaleFactor: 0
+  speedScaleFactor: 0
+  armorScaleFactor: 0
+  currentExperienceYield: 0
 --- !u!114 &2443457996428829973
 MonoBehaviour:
   m_ObjectHideFlags: 0
