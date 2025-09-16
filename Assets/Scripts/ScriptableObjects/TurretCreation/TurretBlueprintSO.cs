@@ -10,12 +10,21 @@ public class TurretBlueprint : ScriptableObject
     [Header("TurretType")]
     public TurretType turretType;
 
+    [Header("Stat Values")]
+    public float health;
+
+    [Header("Defense Values")]
+
+    [Header("Offensive Values")]
+    public float attackDamage = 10f;
+
     [Header("Base Values")]
     public float fireRate = 1f;
     public float fireCountdown = 0f;
     public float projectileSpeed = 10f;
     public float attackRange = 5f;
-    public float attackDamage = 10f;
+
+    [Header("Knockback Values")]
     public float knockbackStrength = 1f;
     public float knockbackDuration = 0.5f;
 
