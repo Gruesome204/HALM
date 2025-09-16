@@ -40,5 +40,14 @@ public class TurretBlueprint : ScriptableObject
 
     [Header("Cost")]
     public int buildingCost;
-    public GameObject turretPrefab; 
+    public GameObject turretPrefab;
+
+    [Header("Turret Size")]
+    public int height;
+    public int length;
+
+    [Header("Build Limit")]
+    public int towerLimitValue;
+    public int towerPlacementCooldown;
+
 }

@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e7cda704781734ebb691b39dac05d3, type: 3}
   m_Name: BasicTurret
   m_EditorClassIdentifier: 
-  turretName: BasicTurret
-  description: Test Description
+  turretName: ArcherTower
+  description: "Hoher Turm mit kleiner Grundfl\xE4che und moderaten Lebenspunkten,
+    der aus Holz besteht und Pfeile verschie\xDFt."
   turretType: 0
-  fireRate: 3
+  health: 250
+  attackDamage: 20
+  fireRate: 1
   fireCountdown: 1
   projectileSpeed: 10
   attackRange: 10
-  attackDamage: 10
   knockbackStrength: 50
   knockbackDuration: 0.5
   damageGrowthFactor: 1.2

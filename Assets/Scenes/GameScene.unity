@@ -724,7 +724,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406684503}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad31df69e3a2186459c772cb3c4fadca, type: 3}
   m_Name: 
@@ -1486,6 +1486,7 @@ MonoBehaviour:
   upgradeChoices:
   - {fileID: 11400000, guid: d42d1f34012e1e94d90f549cb645df4a, type: 2}
   - {fileID: 11400000, guid: 2b3b5ad6b10ad55428f6b67f54c21008, type: 2}
+  - {fileID: 11400000, guid: dff0a33adf8f01f4fb2f1ca7948d897e, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

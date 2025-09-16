@@ -84,7 +84,7 @@ public class TurretBehaviour : MonoBehaviour
                         StartCoroutine(ShootFireSalve());
                         break;
                 }
-                currentFireCountdown = 1f / currentFireRate;
+                currentFireCountdown = turretBlueprint.fireCountdown / currentFireRate;
             }
             currentFireCountdown -= Time.deltaTime;
         }
