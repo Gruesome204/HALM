@@ -665,8 +665,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   previewObject: {fileID: 0}
-  maxTurretNumber: 4
-  placementCooldown: 1
+  maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}
 --- !u!114 &368292588
 MonoBehaviour:
@@ -2743,6 +2742,8 @@ GameObject:
   - component: {fileID: 2135666363}
   - component: {fileID: 2135666362}
   - component: {fileID: 2135666364}
+  - component: {fileID: 2135666366}
+  - component: {fileID: 2135666365}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2873,19 +2874,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5da3ffa2df1c24fb3279dbb0a55081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth:
-    baseValue: 100
-    modifier: 0
-  attackDamage:
-    baseValue: 0
-    modifier: 0
-  defense:
-    baseValue: 0
-    modifier: 0
-  moveSpeed:
-    baseValue: 1
-    modifier: 0
+  baseHealth: 100
+  baseArmor: 5
+  baseMagicResistance: 10
+  moveSpeed: 5
   currentHealth: 0
+  currentMaxHealth: 0
+  currentArmor: 0
+  currentMagicResistance: 0
+--- !u!114 &2135666365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135666359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 887b6a351cd90cf40a3f082352d8e034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2135666366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135666359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a751d2605d53a634e9cbd0bef4f4ea32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 2135666364}
+  healthBar: {fileID: 0}
 --- !u!1 &2140789119
 GameObject:
   m_ObjectHideFlags: 0
