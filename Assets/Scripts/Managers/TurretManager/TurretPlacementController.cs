@@ -232,7 +232,8 @@ public class TurretPlacementController : MonoBehaviour
         float lastTime;
         lastPlacementTimes.TryGetValue(currentSelectedBlueprint, out lastTime);
 
-        if (Time.time < lastTime + currentSelectedBlueprint.placementCooldown)
+        // Only check cooldown if the turret has been placed before
+        if (lastPlacementTimes.ContainsKey(currentSelectedBlueprint) && Time.time < lastTime + currentSelectedBlueprint.placementCooldown)
         {
             float remaining = lastTime + currentSelectedBlueprint.placementCooldown - Time.time;
             Debug.Log($"[TurretPlacement] {currentSelectedBlueprint.name} on cooldown. {remaining:F2}s left.");
