@@ -29,15 +29,12 @@ public class TurretPlacementController : MonoBehaviour
     [Tooltip("Maximum number of turrets allowed.")]
     public int maxTurretNumber = 4;
 
-    [Tooltip("Cooldown time between placements (seconds).")]
-    public float placementCooldown = 1.0f;
-
     [Header("Hierarchy Organization")]
     [SerializeField] private Transform turretContainer;
 
     //Currently Active Turrets
     private List<GameObject> activeTurrets = new List<GameObject>();
-    private float lastPlacementTime; // Time when the last turret was placed
+    private Dictionary<TurretBlueprint, float> lastPlacementTimes = new Dictionary<TurretBlueprint, float>();
 
 
     private void Awake()
@@ -229,10 +226,13 @@ public class TurretPlacementController : MonoBehaviour
             return;
         }
 
-        if (Time.time < lastPlacementTime + placementCooldown)
+        float lastTime;
+        lastPlacementTimes.TryGetValue(currentSelectedBlueprint, out lastTime);
+
+        if (Time.time < lastTime + currentSelectedBlueprint.placementCooldown)
         {
-            float remaining = lastPlacementTime + placementCooldown - Time.time;
-            Debug.Log($"[TurretPlacement] Placement on cooldown. {remaining:F2}s left.");
+            float remaining = lastTime + currentSelectedBlueprint.placementCooldown - Time.time;
+            Debug.Log($"[TurretPlacement] {currentSelectedBlueprint.name} on cooldown. {remaining:F2}s left.");
             return;
         }
 
@@ -276,7 +276,7 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         activeTurrets.Add(newTurret);
-        lastPlacementTime = Time.time;
+        lastPlacementTimes[currentSelectedBlueprint] = Time.time;
 
         DeselectTurretBlueprint();
         //DestroyPreview();

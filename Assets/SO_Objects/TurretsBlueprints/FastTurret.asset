@@ -31,5 +31,5 @@ MonoBehaviour:
   turretPrefab: {fileID: 4775935544841688724, guid: e7ba0ce86f14b9c49bff82f2efd22797, type: 3}
   height: 0
   length: 0
-  towerLimitValue: 0
-  towerPlacementCooldown: 0
+  towerLimitValue: 2
+  placementCooldown: 10

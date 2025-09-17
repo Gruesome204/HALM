@@ -49,7 +49,11 @@ public class TurretBlueprint : ScriptableObject
     public int length;
 
     [Header("Build Limit")]
+    [Tooltip("Value the Tower takes to be build")]
     public int towerLimitValue;
-    public int towerPlacementCooldown;
+
+    [Header("Placement Cooldown")]
+    [Tooltip("Cooldown time after placing this turret type (seconds).")]
+    public float placementCooldown = 1.0f;
 
 }
