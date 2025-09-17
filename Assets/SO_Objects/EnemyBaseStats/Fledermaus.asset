@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseName: Fledermaus
   baseDescription: Nerviger kleiner Gegner der
-  baseLevel: 100
+  baseLevel: 1
   baseMovementSpeed: 3.5
   baseMaxHealth: 30
   baseHealth: 30
@@ -35,5 +35,5 @@ MonoBehaviour:
   experienceYield: 100
   baseHealthScaleFactor: 0.1
   baseDamageScaleFactor: 0.1
-  baseSpeedScaleFactor: 0.1
+  baseSpeedScaleFactor: 0
   baseArmorScaleFactor: 0
