@@ -58,6 +58,11 @@ public class TurretDemolitionController : MonoBehaviour
         destructionModeActive = !destructionModeActive;
         Debug.Log("Destruction Mode: " + (destructionModeActive ? "Activated" : "Deactivated"));
 
+        if (destructionModeActive && TurretPlacementController.Instance != null)
+        {
+            // Remove preview and deselect blueprint
+            TurretPlacementController.Instance.DeselectTurretBlueprint();
+        }
         // Optional: Change cursor or UI indicator here
     }
 
@@ -72,6 +77,11 @@ public class TurretDemolitionController : MonoBehaviour
     {
         destructionModeActive = false;
         Debug.Log("Destruction Mode: Forced Deactivation");
+
+        if (TurretPlacementController.Instance != null)
+        {
+            TurretPlacementController.Instance.DestroyPreview();
+        }
         // Optional: reset cursor/UI indicator
     }
 

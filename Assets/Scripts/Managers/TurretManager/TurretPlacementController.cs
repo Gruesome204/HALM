@@ -124,7 +124,7 @@ public class TurretPlacementController : MonoBehaviour
     public void DeselectTurretBlueprint()
     {
         currentSelectedBlueprint = null;
-        //DestroyPreview();
+        DestroyPreview();
         Debug.Log("[TurretPlacement] Placement canceled.");
     }
 
@@ -201,7 +201,7 @@ public class TurretPlacementController : MonoBehaviour
         renderer.material.color = targetColor;
     }
 
-    private void DestroyPreview()
+    public void DestroyPreview()
     {
         if (previewObject != null)
         {
@@ -278,7 +278,8 @@ public class TurretPlacementController : MonoBehaviour
         activeTurrets.Add(newTurret);
         lastPlacementTime = Time.time;
 
-        DestroyPreview();
+        DeselectTurretBlueprint();
+        //DestroyPreview();
         Debug.Log("[TurretPlacement] Turret placed.");
     }
 
