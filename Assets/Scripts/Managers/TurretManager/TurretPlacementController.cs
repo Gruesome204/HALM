@@ -53,7 +53,6 @@ public class TurretPlacementController : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
         HandleBlueprintSelectionInput();
@@ -91,15 +90,15 @@ public class TurretPlacementController : MonoBehaviour
             DeselectTurretBlueprint();
         }
 
-        // Handle preview update
-        if (currentSelectedBlueprint != null)
-        {
-            //HandlePlacementPreview();
-        }
-        else if (previewObject != null)
-        {
-            DestroyPreview();
-        }
+        //// Handle preview update
+        //if (currentSelectedBlueprint != null)
+        //{
+        //    //HandlePlacementPreview();
+        //}
+        //else if (previewObject != null)
+        //{
+        //    DestroyPreview();
+        //}
     }
 
 
@@ -118,37 +117,37 @@ public class TurretPlacementController : MonoBehaviour
         currentSelectedBlueprint = blueprint;
         Debug.Log("Selected Blueprint: " + (currentSelectedBlueprint != null ? currentSelectedBlueprint.name : "None"));
 
-        // Immediately create or update the preview object when a blueprint is selected
-        CreateOrUpdatePreviewObject();
+        //// Immediately create or update the preview object when a blueprint is selected
+        //CreateOrUpdatePreviewObject();
     }
 
     public void DeselectTurretBlueprint()
     {
         currentSelectedBlueprint = null;
-        DestroyPreview();
+        //DestroyPreview();
         Debug.Log("[TurretPlacement] Placement canceled.");
     }
 
 
-    private void CreateOrUpdatePreviewObject()
-    {
-        DestroyPreview();
+    //private void CreateOrUpdatePreviewObject()
+    //{
+    //    DestroyPreview();
 
-        if (currentSelectedBlueprint?.turretPrefab == null) return;
+    //    if (currentSelectedBlueprint?.turretPrefab == null) return;
 
-        previewObject = Instantiate(currentSelectedBlueprint.turretPrefab);
-        previewPlacableObject = previewObject.GetComponent<PlacableObject>();
+    //    previewObject = Instantiate(currentSelectedBlueprint.turretPrefab);
+    //    previewPlacableObject = previewObject.GetComponent<PlacableObject>();
 
-        if (previewPlacableObject == null)
-        {
-            Debug.LogError($"[TurretPlacement] Prefab '{currentSelectedBlueprint.turretPrefab.name}' is missing PlacableObject!");
-            DestroyPreview();
-            currentSelectedBlueprint = null;
-            return;
-        }
+    //    if (previewPlacableObject == null)
+    //    {
+    //        Debug.LogError($"[TurretPlacement] Prefab '{currentSelectedBlueprint.turretPrefab.name}' is missing PlacableObject!");
+    //        DestroyPreview();
+    //        currentSelectedBlueprint = null;
+    //        return;
+    //    }
 
-        MakePreviewTransparent(previewObject);
-    }
+    //    MakePreviewTransparent(previewObject);
+    //}
 
     //private void HandlePlacementPreview()
     //{
@@ -171,41 +170,41 @@ public class TurretPlacementController : MonoBehaviour
     //    UpdatePreviewColor(canPlace);
     //}
 
-    private void MakePreviewTransparent(GameObject obj)
-    {
-        Renderer renderer = obj.GetComponent<Renderer>();
-        if (renderer == null) return;
+    //private void MakePreviewTransparent(GameObject obj)
+    //{
+    //    Renderer renderer = obj.GetComponent<Renderer>();
+    //    if (renderer == null) return;
 
-        renderer.material = new Material(Shader.Find("Standard"));
-        renderer.material.color = new Color(1, 1, 1, 0.5f); // Semi-transparent
-        renderer.material.SetFloat("_Mode", 2); // Fade
-        renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        renderer.material.SetInt("_ZWrite", 0);
-        renderer.material.DisableKeyword("_ALPHATEST_ON");
-        renderer.material.EnableKeyword("_ALPHABLEND_ON");
-        renderer.material.renderQueue = 3000;
-    }
+    //    renderer.material = new Material(Shader.Find("Standard"));
+    //    renderer.material.color = new Color(1, 1, 1, 0.5f); // Semi-transparent
+    //    renderer.material.SetFloat("_Mode", 2); // Fade
+    //    renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+    //    renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+    //    renderer.material.SetInt("_ZWrite", 0);
+    //    renderer.material.DisableKeyword("_ALPHATEST_ON");
+    //    renderer.material.EnableKeyword("_ALPHABLEND_ON");
+    //    renderer.material.renderQueue = 3000;
+    //}
 
-    private void UpdatePreviewColor(bool canPlace)
-    {
-        Renderer renderer = previewObject?.GetComponent<Renderer>();
-        if (renderer == null) return;
+    //private void UpdatePreviewColor(bool canPlace)
+    //{
+    //    Renderer renderer = previewObject?.GetComponent<Renderer>();
+    //    if (renderer == null) return;
 
-        Color targetColor = canPlace ? Color.green : Color.red;
-        targetColor.a = 0.5f;
-        renderer.material.color = targetColor;
-    }
+    //    Color targetColor = canPlace ? Color.green : Color.red;
+    //    targetColor.a = 0.5f;
+    //    renderer.material.color = targetColor;
+    //}
 
-    private void DestroyPreview()
-    {
-        if (previewObject != null)
-        {
-            Destroy(previewObject);
-            previewObject = null;
-            previewPlacableObject = null;
-        }
-    }
+    //private void DestroyPreview()
+    //{
+    //    if (previewObject != null)
+    //    {
+    //        Destroy(previewObject);
+    //        previewObject = null;
+    //        previewPlacableObject = null;
+    //    }
+    //}
 
     public void RemoveTurret(GameObject turret)
     {
@@ -274,7 +273,7 @@ public class TurretPlacementController : MonoBehaviour
         activeTurrets.Add(newTurret);
         lastPlacementTime = Time.time;
 
-        DestroyPreview();
+        //DestroyPreview();
         Debug.Log("[TurretPlacement] Turret placed.");
     }
 
