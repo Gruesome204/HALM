@@ -105,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretBlueprint: {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
   projectilePrefab: {fileID: 1759283730849935406, guid: 35da1b0dcddb8ae4aba1d2ccafe97370, type: 3}
+  previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
   firePoint: {fileID: 3617515960331805413}
   currentFireRate: 0
   currentFireCountdown: 0
@@ -146,7 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
-  turretBehaviour: {fileID: 0}
 --- !u!61 &9068522921408701220
 BoxCollider2D:
   m_ObjectHideFlags: 0

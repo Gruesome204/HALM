@@ -6,6 +6,8 @@ public class TurretBlueprint : ScriptableObject
     [Header("Info")]
     public string turretName;
     [TextArea(3, 10)] public string description;
+    [Header("Preview")]
+    public GameObject previewPrefab; // 👈 purely visual prefab
 
     [Header("TurretType")]
     public TurretType turretType;

@@ -90,15 +90,15 @@ public class TurretPlacementController : MonoBehaviour
             DeselectTurretBlueprint();
         }
 
-        //// Handle preview update
-        //if (currentSelectedBlueprint != null)
-        //{
-        //    //HandlePlacementPreview();
-        //}
-        //else if (previewObject != null)
-        //{
-        //    DestroyPreview();
-        //}
+        // Handle preview update
+        if (currentSelectedBlueprint != null)
+        {
+            HandlePlacementPreview();
+        }
+        else if (previewObject != null)
+        {
+            DestroyPreview();
+        }
     }
 
 
@@ -118,7 +118,7 @@ public class TurretPlacementController : MonoBehaviour
         Debug.Log("Selected Blueprint: " + (currentSelectedBlueprint != null ? currentSelectedBlueprint.name : "None"));
 
         //// Immediately create or update the preview object when a blueprint is selected
-        //CreateOrUpdatePreviewObject();
+        CreateOrUpdatePreviewObject();
     }
 
     public void DeselectTurretBlueprint()
@@ -129,82 +129,87 @@ public class TurretPlacementController : MonoBehaviour
     }
 
 
-    //private void CreateOrUpdatePreviewObject()
-    //{
-    //    DestroyPreview();
+    private void CreateOrUpdatePreviewObject()
+    {
+        DestroyPreview();
 
-    //    if (currentSelectedBlueprint?.turretPrefab == null) return;
+        if (currentSelectedBlueprint?.turretPrefab == null) return;
 
-    //    previewObject = Instantiate(currentSelectedBlueprint.turretPrefab);
-    //    previewPlacableObject = previewObject.GetComponent<PlacableObject>();
+        previewObject = Instantiate(currentSelectedBlueprint.previewPrefab);
+        previewPlacableObject = previewObject.GetComponent<PlacableObject>();
 
-    //    if (previewPlacableObject == null)
-    //    {
-    //        Debug.LogError($"[TurretPlacement] Prefab '{currentSelectedBlueprint.turretPrefab.name}' is missing PlacableObject!");
-    //        DestroyPreview();
-    //        currentSelectedBlueprint = null;
-    //        return;
-    //    }
+        if (previewPlacableObject == null)
+        {
+            Debug.LogError($"[TurretPlacement] Prefab '{currentSelectedBlueprint.turretPrefab.name}' is missing PlacableObject!");
+            DestroyPreview();
+            currentSelectedBlueprint = null;
+            return;
+        }
 
-    //    MakePreviewTransparent(previewObject);
-    //}
+        MakePreviewTransparent(previewObject);
+    }
 
-    //private void HandlePlacementPreview()
-    //{
-    //    Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
+    private void HandlePlacementPreview()
+    {
+        if (previewObject == null || currentSelectedBlueprint == null) return;
 
-    //    if (hit.collider == null)
-    //    {
-    //        if (previewObject != null) previewObject.SetActive(false);
-    //        return;
-    //    }
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0f;
 
-    //    Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
-    //    Vector3 snappedWorldPos = GridManager.Instance.GetWorldPosition(gridCoords);
+        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
 
-    //    previewObject.transform.position = snappedWorldPos;
+        if (hit.collider == null)
+        {
+            previewObject.SetActive(false);
+            return;
+        }
 
-    //    bool canPlace = GridManager.Instance.CanPlaceObject(gridCoords, previewPlacableObject.sizeInCells);
+        previewObject.SetActive(true);
 
-    //    UpdatePreviewColor(canPlace);
-    //}
+        // Snap to grid
+        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
+        Vector3 snappedWorldPos = GridManager.Instance.GetWorldPosition(gridCoords);
 
-    //private void MakePreviewTransparent(GameObject obj)
-    //{
-    //    Renderer renderer = obj.GetComponent<Renderer>();
-    //    if (renderer == null) return;
+        previewObject.transform.position = snappedWorldPos;
 
-    //    renderer.material = new Material(Shader.Find("Standard"));
-    //    renderer.material.color = new Color(1, 1, 1, 0.5f); // Semi-transparent
-    //    renderer.material.SetFloat("_Mode", 2); // Fade
-    //    renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-    //    renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-    //    renderer.material.SetInt("_ZWrite", 0);
-    //    renderer.material.DisableKeyword("_ALPHATEST_ON");
-    //    renderer.material.EnableKeyword("_ALPHABLEND_ON");
-    //    renderer.material.renderQueue = 3000;
-    //}
+        // Check if placement is valid
+        bool canPlace = GridManager.Instance.CanPlaceObject(gridCoords, previewPlacableObject.sizeInCells);
+        UpdatePreviewColor(canPlace);
+    }
+    private void MakePreviewTransparent(GameObject obj)
+    {
+        Renderer renderer = obj.GetComponent<Renderer>();
+        if (renderer == null) return;
 
-    //private void UpdatePreviewColor(bool canPlace)
-    //{
-    //    Renderer renderer = previewObject?.GetComponent<Renderer>();
-    //    if (renderer == null) return;
+        // Use sprite-friendly material
+        Material previewMat = new Material(Shader.Find("Sprites/Default"));
+        previewMat.color = new Color(1f, 1f, 1f, 0.5f); // Semi-transparent
 
-    //    Color targetColor = canPlace ? Color.green : Color.red;
-    //    targetColor.a = 0.5f;
-    //    renderer.material.color = targetColor;
-    //}
+        // Ensure it draws on top of everything
+        previewMat.renderQueue = 4000;
 
-    //private void DestroyPreview()
-    //{
-    //    if (previewObject != null)
-    //    {
-    //        Destroy(previewObject);
-    //        previewObject = null;
-    //        previewPlacableObject = null;
-    //    }
-    //}
+        renderer.material = previewMat;
+    }
+
+    private void UpdatePreviewColor(bool canPlace)
+    {
+        Renderer renderer = previewObject?.GetComponent<Renderer>();
+        if (renderer == null) return;
+
+        Color targetColor = canPlace ? Color.green : Color.red;
+        targetColor.a = 0.5f;
+        renderer.material.color = targetColor;
+    }
+
+    private void DestroyPreview()
+    {
+        if (previewObject != null)
+        {
+            Destroy(previewObject);
+            previewObject = null;
+            previewPlacableObject = null;
+        }
+    }
 
     public void RemoveTurret(GameObject turret)
     {
@@ -273,7 +278,7 @@ public class TurretPlacementController : MonoBehaviour
         activeTurrets.Add(newTurret);
         lastPlacementTime = Time.time;
 
-        //DestroyPreview();
+        DestroyPreview();
         Debug.Log("[TurretPlacement] Turret placed.");
     }
 
