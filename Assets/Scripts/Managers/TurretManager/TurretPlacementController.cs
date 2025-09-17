@@ -26,8 +26,8 @@ public class TurretPlacementController : MonoBehaviour
     private PlacableObject previewPlacableObject;
 
     [Header("Placement Rules")]
-    [Tooltip("Maximum number of turrets allowed.")]
-    public int maxTurretNumber = 4;
+    [Tooltip("Maximum turret capacity (not just number).")]
+    public int maxTurretCapacity = 6;// e.g. total "points" you can spend
 
     [Header("Hierarchy Organization")]
     [SerializeField] private Transform turretContainer;
@@ -220,9 +220,12 @@ public class TurretPlacementController : MonoBehaviour
 
     private void TryPlaceTurret()
     {
-        if (GetActiveTurrets().Count >= maxTurretNumber)
+        int currentCapacity = GetUsedCapacity();
+        int cost = currentSelectedBlueprint.buildCapacityValue;
+
+        if (currentCapacity + cost > maxTurretCapacity)
         {
-            Debug.Log($"[TurretPlacement] Max turret limit reached ({maxTurretNumber}).");
+            Debug.Log($"[TurretPlacement] Not enough capacity. Current: {currentCapacity}/{maxTurretCapacity}, Cost: {cost}");
             return;
         }
 
@@ -280,9 +283,21 @@ public class TurretPlacementController : MonoBehaviour
 
         DeselectTurretBlueprint();
         //DestroyPreview();
-        Debug.Log("[TurretPlacement] Turret placed.");
+        Debug.Log($"[TurretPlacement] Turret placed. Used Capacity: {GetUsedCapacity()}/{maxTurretCapacity}");
     }
-
+    public int GetUsedCapacity()
+    {
+        int total = 0;
+        foreach (var turret in activeTurrets)
+        {
+            var behaviour = turret.GetComponent<TurretBehaviour>();
+            if (behaviour != null && behaviour.turretBlueprint != null)
+            {
+                total += behaviour.turretBlueprint.buildCapacityValue;
+            }
+        }
+        return total;
+    }
     public List<GameObject> GetActiveTurrets() => activeTurrets;
     public List<TurretBlueprint> GetTurretBlueprintList() => turretBlueprintList;
 }
