@@ -8,7 +8,15 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public EnemyStats stats;
     public Slider healthBar;
     public event Action<EnemyHealth, DamageData> OnDeath;
-
+    private void Start()
+    {
+        if (healthBar != null)
+        {
+            healthBar.minValue = 0;
+            healthBar.maxValue = stats.currentMaxHealth;
+            healthBar.value = stats.currentHealth;
+        }
+    }
     public bool IsInvulnerable { get; set; }
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
@@ -18,7 +26,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 
         float damage = CalculateTakenDamage(damageData);
         stats.currentHealth -= damage;
-        healthBar?.SetValueWithoutNotify(stats.currentHealth / stats.currentMaxHealth);
+        healthBar?.SetValueWithoutNotify(stats.currentHealth);
         Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage.");
         Debug.Log($"Health after damage: {stats.currentHealth}");
         if (stats.currentHealth <= 0)

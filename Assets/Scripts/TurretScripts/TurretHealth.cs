@@ -11,13 +11,23 @@ public class TurretHealth : MonoBehaviour, IDamagable
     public bool IsInvulnerable { get; set; }
     public event Action<TurretHealth, DamageData> OnDeath;
 
+
+    private void Start()
+    {
+        if (healthBar != null)
+        {
+            healthBar.minValue = 0;
+            healthBar.maxValue = stats.currentMaxHealth;
+            healthBar.value = stats.currentHealth;
+        }
+    }
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
 
         if (IsInvulnerable || stats == null) return;
 
         stats.currentHealth -= damageData.amount;
-        healthBar?.SetValueWithoutNotify(stats.currentHealth / stats.currentMaxHealth);
+        healthBar?.SetValueWithoutNotify(stats.currentHealth);
         Debug.Log($"{gameObject.name} took {damageData.amount} {damageData.type} damage.");
         Debug.Log($"Health after damage: {stats.currentHealth}");
         if (stats.currentHealth <= 0)

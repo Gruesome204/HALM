@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: -2405534622925964801}
   - component: {fileID: 1044790103878242520}
   - component: {fileID: 9068522921408701220}
+  - component: {fileID: -5128764248628539268}
+  - component: {fileID: 2079832927792806107}
   m_Layer: 7
   m_Name: OrdinaryTurretPrefab
   m_TagString: Untagged
@@ -193,6 +195,45 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-5128764248628539268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775935544841688724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b02a66b70c56948a1a8187500b4943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 825812507820319723}
+--- !u!114 &2079832927792806107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775935544841688724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 261ce8c736131a2469d7965e407e1342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
+  currentLevel: 1
+  currentHealth: 0
+  currentMaxHealth: 0
+  currentAttackDamage: 0
+  currentAttackRange: 0
+  currentFireRate: 0
+  currentProjectileSpeed: 0
+  currentKnockbackStrength: 0
+  currentKnockbackDuration: 0
+  healthScaleFactor: 0
+  damageScaleFactor: 0
+  rangeScaleFactor: 0
+  fireRateScaleFactor: 0
 --- !u!1 &4975998330747021140
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +370,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
+--- !u!114 &825812507820319723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4060429260896049647, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
+  m_PrefabInstance: {fileID: 3687439842267625988}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1596022666429649553 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2669047809251551381, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}

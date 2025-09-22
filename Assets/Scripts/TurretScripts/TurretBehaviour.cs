@@ -16,9 +16,10 @@ public class TurretBehaviour : MonoBehaviour
     {
         stats = GetComponent<TurretStats>();
         health = GetComponent<TurretHealth>();
+
     }
 
-        [Header("Values")]
+    [Header("Values")]
     public float currentFireRate;
     public float currentFireCountdown = 0f;
     public float currentProjectileSpeed;
