@@ -4,33 +4,23 @@ using UnityEngine.UI;
 
 public class TurretHealth : MonoBehaviour, IDamagable
 {
-
+    TurretStats stats;
     [Header("UI")]
     public Slider healthBar;
 
     public bool IsInvulnerable { get; set; }
     public event Action<TurretHealth, DamageData> OnDeath;
 
-    private void Awake()
-    {
-        currentHealth = maxHealth;
-        if (healthBar != null)
-            healthBar.value = 1f;
-    }
-
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
-        if (IsInvulnerable) return;
 
-        float damage = damageData.amount;
-        currentHealth -= damage;
+        if (IsInvulnerable || stats == null) return;
 
-        if (healthBar != null)
-            healthBar.SetValueWithoutNotify(currentHealth / maxHealth);
-
-        Debug.Log($"{gameObject.name} took {damage} damage. Health left: {currentHealth}");
-
-        if (currentHealth <= 0)
+        stats.currentHealth -= damageData.amount;
+        healthBar?.SetValueWithoutNotify(stats.currentHealth / stats.currentMaxHealth);
+        Debug.Log($"{gameObject.name} took {damageData.amount} {damageData.type} damage.");
+        Debug.Log($"Health after damage: {stats.currentHealth}");
+        if (stats.currentHealth <= 0)
         {
             Die(damageData);
         }
