@@ -10,7 +10,7 @@ public class TurretStats : MonoBehaviour
     [Header("Current Stats")]
     public float currentHealth;
     public float currentMaxHealth;
-    public float currentDamage;
+    public float currentAttackDamage;
     public float currentAttackRange;
     public float currentFireRate;
     public float currentProjectileSpeed;
@@ -33,16 +33,16 @@ public class TurretStats : MonoBehaviour
 
         currentLevel = baseStats.baseLevel;
 
-        healthScaleFactor = baseStats.baseHealthScaleFactor;
-        damageScaleFactor = baseStats.baseDamageScaleFactor;
-        rangeScaleFactor = baseStats.baseRangeScaleFactor;
-        fireRateScaleFactor = baseStats.baseFireRateScaleFactor;
+        healthScaleFactor = baseStats.baseHealthGrowthFactor;
+        damageScaleFactor = baseStats.baseDamageGrowthFactor;
+        rangeScaleFactor = baseStats.baseRangeGrowthFlat;
+        fireRateScaleFactor = baseStats.baseFireRateGrowthFactor;
 
         currentMaxHealth = baseStats.baseHealth * GetLevelScaling(healthScaleFactor);
         currentHealth = currentMaxHealth;
 
-        currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
-        currentAttackRange = baseStats.baseRange * GetLevelScaling(rangeScaleFactor);
+        currentAttackDamage = baseStats.baseAttackDamage * GetLevelScaling(damageScaleFactor);
+        currentAttackRange = baseStats.baseAttackDamage * GetLevelScaling(rangeScaleFactor);
         currentFireRate = baseStats.baseFireRate * GetLevelScaling(fireRateScaleFactor);
 
         currentProjectileSpeed = baseStats.baseProjectileSpeed;

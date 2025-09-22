@@ -4,9 +4,6 @@ using UnityEngine.UI;
 
 public class TurretHealth : MonoBehaviour, IDamagable
 {
-    [Header("Health")]
-    public float maxHealth = 100f;
-    public float currentHealth;
 
     [Header("UI")]
     public Slider healthBar;
@@ -39,4 +36,13 @@ public class TurretHealth : MonoBehaviour, IDamagable
         }
     }
 
+    public void OnDamageTaken(float amount)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Die(DamageData damageData)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -5,6 +5,8 @@ public class TurretBlueprint : ScriptableObject
 {
     [Header("Info")]
     public string turretName;
+    [Header("Turret Level")]
+    public int baseLevel;
     [TextArea(3, 10)] public string description;
     [Header("Preview")]
     public GameObject previewPrefab; // 👈 purely visual prefab
@@ -21,24 +23,26 @@ public class TurretBlueprint : ScriptableObject
     public float baseAttackDamage = 10f;
 
     [Header("Base Values")]
-    public float fireRate = 1f;
-    public float fireCountdown = 0f;
-    public float projectileSpeed = 10f;
-    public float attackRange = 5f;
+    public float baseFireRate = 1f;
+    public float baseFireCountdown = 0f;
+    public float baseProjectileSpeed = 10f;
+    public float baseAttackRange = 5f;
 
     [Header("Knockback Values")]
-    public float knockbackStrength = 1f;
-    public float knockbackDuration = 0.5f;
+    public float baseKnockbackStrength = 1f;
+    public float baseKnockbackDuration = 0.5f;
 
     [Header("Per-Level Growth")]
     [Tooltip("Damage scaling per level (1.2 = +20% per level)")]
-    public float damageGrowthFactor = 1.2f;
+    public float baseHealthGrowthFactor = 1.2f;
+    [Tooltip("Damage scaling per level (1.2 = +20% per level)")]
+    public float baseDamageGrowthFactor = 1.2f;
 
     [Tooltip("Fire rate scaling per level (0.95 = 5% faster per level)")]
-    public float fireRateGrowthFactor = 0.95f;
+    public float baseFireRateGrowthFactor = 0.95f;
 
     [Tooltip("Flat range increase per level")]
-    public float rangeGrowthFlat = 0.5f;
+    public float baseRangeGrowthFlat = 0.5f;
 
     [Header("Cost")]
     public int buildingCost;
