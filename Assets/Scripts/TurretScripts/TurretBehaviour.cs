@@ -9,7 +9,16 @@ public class TurretBehaviour : MonoBehaviour
 
     public Transform firePoint; // A point on the turret where projectiles spawn
 
-    [Header("Values")]
+    private TurretStats stats;
+    private TurretHealth health;
+
+    private void Awake()
+    {
+        stats = GetComponent<TurretStats>();
+        health = GetComponent<TurretHealth>();
+    }
+
+        [Header("Values")]
     public float currentFireRate;
     public float currentFireCountdown = 0f;
     public float currentProjectileSpeed;
