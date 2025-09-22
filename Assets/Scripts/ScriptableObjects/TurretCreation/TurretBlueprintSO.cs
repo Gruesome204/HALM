@@ -13,12 +13,12 @@ public class TurretBlueprint : ScriptableObject
     public TurretType turretType;
 
     [Header("Stat Values")]
-    public float health;
+    public float baseHealth;
 
     [Header("Defense Values")]
 
     [Header("Offensive Values")]
-    public float attackDamage = 10f;
+    public float baseAttackDamage = 10f;
 
     [Header("Base Values")]
     public float fireRate = 1f;

@@ -7,7 +7,6 @@ public class EnemyStats : MonoBehaviour
     [Header("Level")]
     public int currentLevel = 1;
 
-    
 
     [Header("Current Stats")]
     public float currentHealth;
