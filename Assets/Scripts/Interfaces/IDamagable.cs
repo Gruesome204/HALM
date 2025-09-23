@@ -7,4 +7,9 @@ public interface IDamagable
     void TakeDamage(DamageData damageData, KnockbackData knockbackData);
     void Die(DamageData damageData);
 
+    bool IsAlive();
+    Transform GetTransform();
+    TargetType GetTargetType();
+
+
 }

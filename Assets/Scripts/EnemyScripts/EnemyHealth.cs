@@ -61,4 +61,19 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     {
         throw new System.NotImplementedException();
     }
+
+    public bool IsAlive()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Transform GetTransform()
+    {
+        throw new NotImplementedException();
+    }
+
+    public TargetType GetTargetType()
+    {
+        throw new NotImplementedException();
+    }
 }

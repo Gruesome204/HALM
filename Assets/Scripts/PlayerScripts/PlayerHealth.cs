@@ -52,4 +52,19 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     {
         throw new NotImplementedException();
     }
+
+    public bool IsAlive()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Transform GetTransform()
+    {
+        throw new NotImplementedException();
+    }
+
+    public TargetType GetTargetType()
+    {
+        throw new NotImplementedException();
+    }
 }
