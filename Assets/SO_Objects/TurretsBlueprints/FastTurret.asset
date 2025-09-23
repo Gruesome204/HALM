@@ -13,20 +13,22 @@ MonoBehaviour:
   m_Name: FastTurret
   m_EditorClassIdentifier: 
   turretName: FastTurret
+  baseLevel: 0
   description: Test Description
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
   turretType: 1
-  health: 0
-  attackDamage: 10
-  fireRate: 4
-  fireCountdown: 1
-  projectileSpeed: 8
-  attackRange: 10
-  knockbackStrength: 50
-  knockbackDuration: 0.5
-  damageGrowthFactor: 1.2
-  fireRateGrowthFactor: 0.95
-  rangeGrowthFlat: 0.5
+  baseHealth: 0
+  baseAttackDamage: 10
+  baseFireRate: 1
+  baseFireCountdown: 1
+  baseProjectileSpeed: 10
+  baseAttackRange: 5
+  baseKnockbackStrength: 1
+  baseKnockbackDuration: 0.5
+  baseHealthGrowthFactor: 1.2
+  baseDamageGrowthFactor: 1.2
+  baseFireRateGrowthFactor: 0.95
+  baseRangeGrowthFlat: 0.5
   buildingCost: 0
   turretPrefab: {fileID: 4775935544841688724, guid: e7ba0ce86f14b9c49bff82f2efd22797, type: 3}
   height: 0
