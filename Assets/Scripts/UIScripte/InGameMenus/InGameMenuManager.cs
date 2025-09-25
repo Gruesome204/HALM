@@ -19,7 +19,7 @@ public class InGameMenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && Time.timeScale == 0)
         {
-            ReturnToGame();
+           ReturnToGame();
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {

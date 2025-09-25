@@ -33,7 +33,10 @@ public class SettingsMenuBehavior : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    void Start()
+    {
+        PlayThisMusic(2);
+    }
     private void OnEnable()
     {
         menuManager = FindObjectOfType<MenuManager>();
@@ -82,16 +85,12 @@ public class SettingsMenuBehavior : MonoBehaviour
         soundVolumeSlider = root.Q<Slider>("soundVolumeSlider");
         soundVolumeSlider.SetBinding("text", new LocalizedString("MenuTranslationaTable", "soundVolumeSlider"));
         soundVolumeSlider.value = settingDataSO.soundVolume;
+
     }
 
     private void Update()
     {
         SettingVolume();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            this.gameObject.SetActive(false);
-        }
     }
 
     void OnBackBtnClicked(ClickEvent clicked)
@@ -172,34 +171,42 @@ public class SettingsMenuBehavior : MonoBehaviour
         {
             case 1:
                 BGMusicTrack_1.Play();
+                settingDataSO.musicTrack = 1;
                 break;
 
             case 2:
                 BGMusicTrack_2.Play();
+                settingDataSO.musicTrack = 2;
                 break;
 
             case 3:
                 BGMusicTrack_3.Play();
+                settingDataSO.musicTrack = 3;
                 break;
 
             case 4:
                 BGMusicTrack_4.Play();
+                settingDataSO.musicTrack = 4;
                 break;
 
             case 5:
                 BGMusicTrack_5.Play();
+                settingDataSO.musicTrack = 5;
                 break;
 
             case 6:
                 BGMusicTrack_6.Play();
+                settingDataSO.musicTrack = 6;
                 break;
 
             case 7:
                 BGMusicTrack_7.Play();
+                settingDataSO.musicTrack = 7;
                 break;
 
             case 8:
                 BGMusicTrack_8.Play();
+                settingDataSO.musicTrack = 8;
                 break;
         }
     }

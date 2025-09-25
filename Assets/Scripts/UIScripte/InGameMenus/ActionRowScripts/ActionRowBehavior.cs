@@ -26,6 +26,7 @@ public class ActionRowBehavior : MonoBehaviour
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
         gameMenuManager = FindObjectOfType<InGameMenuManager>();
+        Time.timeScale = 1;
 
         turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
         turretsCurrentlyPlaced = TurretPlacementController.Instance.GetActiveTurrets();

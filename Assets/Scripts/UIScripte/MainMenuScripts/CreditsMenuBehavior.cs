@@ -30,7 +30,7 @@ public class CreditsMenuBehavior : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            this.gameObject.SetActive(false);
+           // this.gameObject.SetActive(false);
         }
     }
 }

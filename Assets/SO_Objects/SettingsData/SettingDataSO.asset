@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce5cee65e8144b438053fed50f99ad7, type: 3}
   m_Name: SettingDataSO
   m_EditorClassIdentifier: 
+  localSelected: 
+  musicTrack: 2
+  musicVolume: 0.1
+  soundVolume: 0
