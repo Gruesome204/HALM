@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
@@ -6,6 +7,8 @@ using UnityEngine;
 public class TurretPlacementController : MonoBehaviour
 {
     public static TurretPlacementController Instance { get; private set; }
+
+    public event Action OnTurretsChanged;
 
     [Header("Turret Blueprints")]
     [Tooltip("List of available turret blueprints.")]
@@ -213,6 +216,7 @@ public class TurretPlacementController : MonoBehaviour
         if (!activeTurrets.Contains(turret)) return;
 
         activeTurrets.Remove(turret);
+        OnTurretsChanged?.Invoke();
         Destroy(turret);
 
         Debug.Log($"[TurretPlacement] Turret removed");
@@ -280,6 +284,7 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         activeTurrets.Add(newTurret);
+        OnTurretsChanged?.Invoke();
         lastPlacementTimes[currentSelectedBlueprint] = Time.time;
 
         DeselectTurretBlueprint();

@@ -46,7 +46,7 @@ public class TU_ChoiceElementBehavior
             if (turret != null && turret.GetComponent<TurretLevelBehaviour>().blueprint.turretType == turretType)
             {
                 turret.GetComponent<TurretLevelBehaviour>().ApplyUpgrades(turretLevel);
-            }
+            }       
         }
     }
 }
