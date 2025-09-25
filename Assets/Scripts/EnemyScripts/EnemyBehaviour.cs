@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
@@ -29,20 +28,29 @@ public class EnemyBehaviour : MonoBehaviour
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {
         Debug.Log($"Enemy {enemyHealth.gameObject.name} died from {damageData.type} damage.");
-        // Give XP to the turret that killed it
-        var turret = damageData.source?.GetComponent<TurretLevelBehaviour>();
-        if (turret != null)
+
+        // Check if the source still exists before accessing
+        if (damageData.source != null)
         {
-            TurretLevelManager.Instance.AddXP(
-            turret.blueprint.turretType, 
-            stats.currentExperienceYield
-            );
-            Debug.Log($"{stats.currentExperienceYield} EXP Awarded to {turret.blueprint.turretType} ");
+            var turret = damageData.source.GetComponent<TurretLevelBehaviour>();
+            if (turret != null)
+            {
+                TurretLevelManager.Instance.AddXP(
+                    turret.blueprint.turretType,
+                    stats.currentExperienceYield
+                );
+                Debug.Log($"{stats.currentExperienceYield} EXP Awarded to {turret.blueprint.turretType} ");
+            }
+            else
+            {
+                Debug.Log("Source exists but is not a turret");
+            }
         }
         else
         {
-            Debug.Log("No turret source");
+            Debug.Log("No valid turret source (probably demolished or destroyed).");
         }
+
         Destroy(gameObject);
     }
 }

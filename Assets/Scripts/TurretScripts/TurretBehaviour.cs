@@ -9,6 +9,16 @@ public class TurretBehaviour : MonoBehaviour
 
     public Transform firePoint; // A point on the turret where projectiles spawn
 
+    private TurretStats stats;
+    private TurretHealth health;
+
+    private void Awake()
+    {
+        stats = GetComponent<TurretStats>();
+        health = GetComponent<TurretHealth>();
+
+    }
+
     [Header("Values")]
     public float currentFireRate;
     public float currentFireCountdown = 0f;
@@ -44,12 +54,12 @@ public class TurretBehaviour : MonoBehaviour
     }
     public void InitializeFromBlueprint()
     {
-        currentFireCountdown = turretBlueprint.fireCountdown;
-        currentAttackRange = turretBlueprint.attackRange;
-        currentFireRate = turretBlueprint.fireRate;
-        currentProjectileSpeed = turretBlueprint.projectileSpeed;
-        currentKnockbackStrength = turretBlueprint.knockbackStrength;
-        currentKnockbackDuration = turretBlueprint.knockbackDuration;
+        currentFireCountdown = turretBlueprint.baseFireCountdown;
+        currentAttackRange = turretBlueprint.baseAttackRange;
+        currentFireRate = turretBlueprint.baseFireRate;
+        currentProjectileSpeed = turretBlueprint.baseProjectileSpeed;
+        currentKnockbackStrength = turretBlueprint.baseKnockbackStrength;
+        currentKnockbackDuration = turretBlueprint.baseKnockbackDuration;
     }
 
     void Update()
@@ -84,7 +94,7 @@ public class TurretBehaviour : MonoBehaviour
                         StartCoroutine(ShootFireSalve());
                         break;
                 }
-                currentFireCountdown = 1f / currentFireRate;
+                currentFireCountdown = turretBlueprint.baseFireCountdown / currentFireRate;
             }
             currentFireCountdown -= Time.deltaTime;
         }

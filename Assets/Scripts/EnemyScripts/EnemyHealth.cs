@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -9,7 +8,15 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public EnemyStats stats;
     public Slider healthBar;
     public event Action<EnemyHealth, DamageData> OnDeath;
-
+    private void Start()
+    {
+        if (healthBar != null)
+        {
+            healthBar.minValue = 0;
+            healthBar.maxValue = stats.currentMaxHealth;
+            healthBar.value = stats.currentHealth;
+        }
+    }
     public bool IsInvulnerable { get; set; }
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
@@ -19,7 +26,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 
         float damage = CalculateTakenDamage(damageData);
         stats.currentHealth -= damage;
-        healthBar?.SetValueWithoutNotify(stats.currentHealth / stats.currentMaxHealth);
+        healthBar?.SetValueWithoutNotify(stats.currentHealth);
         Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage.");
         Debug.Log($"Health after damage: {stats.currentHealth}");
         if (stats.currentHealth <= 0)
@@ -53,5 +60,20 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public void OnDamageTaken(float amount)
     {
         throw new System.NotImplementedException();
+    }
+
+    public bool IsAlive()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Transform GetTransform()
+    {
+        throw new NotImplementedException();
+    }
+
+    public TargetType GetTargetType()
+    {
+        throw new NotImplementedException();
     }
 }

@@ -55,7 +55,7 @@ public class TurretLevelBehaviour : MonoBehaviour
             ApplyUpgrades(newLevel);
     }
 
-    private void ApplyUpgrades(int level)
+    public void ApplyUpgrades(int level)
     {
         if (blueprint == null)
         {
@@ -72,10 +72,12 @@ public class TurretLevelBehaviour : MonoBehaviour
             Debug.LogError("No TurretUpgradeManager found in scene!");
             return;
         }
+
+
         // --- base scaling using blueprint growth values ---
-        float scaledDamage = blueprint.attackDamage * Mathf.Pow(blueprint.damageGrowthFactor, level - 1);
-        float scaledFireRate = blueprint.fireRate * Mathf.Pow(blueprint.fireRateGrowthFactor, level - 1);
-        float scaledRange = blueprint.attackRange + blueprint.rangeGrowthFlat * (level - 1);
+        float scaledDamage = blueprint.baseAttackDamage * Mathf.Pow(blueprint.baseDamageGrowthFactor, level - 1);
+        float scaledFireRate = blueprint.baseFireRate * Mathf.Pow(blueprint.baseFireRateGrowthFactor, level - 1);
+        float scaledRange = blueprint.baseAttackRange + blueprint.baseRangeGrowthFlat * (level - 1);
 
         // --- apply meta upgrades from UpgradeManager ---
         float dmgMult = TurretUpgradeChoiceManager.Instance.GetDamageMultiplier(blueprint.turretType);

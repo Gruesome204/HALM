@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4be238d9b295624192c160bdbfda97a, type: 3}
+  m_Name: Fledermaus
+  m_EditorClassIdentifier: 
+  baseName: Fledermaus
+  baseDescription: Nerviger kleiner Gegner der
+  baseLevel: 1
+  baseMovementSpeed: 3.5
+  baseMaxHealth: 30
+  baseHealth: 30
+  baseArmor: 0
+  baseMagicResistance: 0
+  baseKnockbackReduction: 0
+  baseknockbackForce: 0
+  baseknockbackDuration: 0
+  baseDamage: 5
+  baseAttackSpeed: 0
+  baseCritChance: 0
+  baseCritHitMultiplier: 0
+  baseAttackRange: 0
+  baseDetectionRange: 2
+  baseVisionRange: 2
+  baseHearingRange: 2
+  pursueRange: 2
+  experienceYield: 100
+  baseHealthScaleFactor: 0.1
+  baseDamageScaleFactor: 0.1
+  baseSpeedScaleFactor: 0
+  baseArmorScaleFactor: 0

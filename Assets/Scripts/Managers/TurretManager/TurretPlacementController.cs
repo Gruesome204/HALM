@@ -1,280 +1,304 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Handles turret blueprint selection, placement, previewing, and active turret management.
+/// </summary>
 public class TurretPlacementController : MonoBehaviour
 {
+    public static TurretPlacementController Instance { get; private set; }
+
+    [Header("Turret Blueprints")]
+    [Tooltip("List of available turret blueprints.")]
     public List<TurretBlueprint> turretBlueprintList = new List<TurretBlueprint>();
+
+    [Tooltip("Currently selected turret blueprint.")]
     public TurretBlueprint currentSelectedBlueprint;
 
+    [Header("Layers")]
+    [Tooltip("Layer for ground placement.")]
     public LayerMask groundLayer; // Assign the layer of your ground in the Inspector
+    [Tooltip("Layer for turrets.")]
     public LayerMask turretLayer;
 
+    [Header("Placement Preview")]
+    [Tooltip("Prefab used to show placement preview (optional).")]
     public GameObject previewObject; // Optional: Prefab for placement preview
     private PlacableObject previewPlacableObject;
 
-    
-    //Currently Active Turrets
-    private List<GameObject> activeTurrets = new List<GameObject>();
-
-    [Header("Placement Cooldown")] // Organize variables in the Inspector
-    public float placementCooldown = 1.0f; // Cooldown duration in seconds
-    private float lastPlacementTime; // Time when the last turret was placed
+    [Header("Placement Rules")]
+    [Tooltip("Maximum turret capacity (not just number).")]
+    public int maxTurretCapacity = 6;// e.g. total "points" you can spend
 
     [Header("Hierarchy Organization")]
     [SerializeField] private Transform turretContainer;
 
-    [Header("Active Turrets")]
-    public int activeTurretCount;
+    //Currently Active Turrets
+    private List<GameObject> activeTurrets = new List<GameObject>();
+    private Dictionary<TurretBlueprint, float> lastPlacementTimes = new Dictionary<TurretBlueprint, float>();
 
-    [Header("Max Turret Number")]
-    public int maxTurretNumber = 10;
-    public static TurretPlacementController Instance { get; private set; }
 
     private void Awake()
     {
-        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
         }
         else
         {
-            Debug.LogWarning("Multiple TurretPlacementManagers found in the scene! Destroying the newest one.");
+            Debug.LogWarning("[TurretPlacement] Duplicate instance detected. Destroying this object.");
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        HandleBlueprintSelectionInput();
+        HandlePlacementInput();
+    }
+    private void HandleBlueprintSelectionInput()
+    {
+        // Example: hotkeys 1 and 2 for selecting blueprints
+        if (Input.GetKeyDown(KeyCode.Alpha1) && turretBlueprintList.Count > 0)
+            SelectTurretBlueprint(turretBlueprintList[0]);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2) && turretBlueprintList.Count > 1)
+            SelectTurretBlueprint(turretBlueprintList[1]);
+    }
+    private void HandlePlacementInput()
+    {
+        // Skip placement if in demolition mode
+        if (TurretDemolitionController.Instance != null && TurretDemolitionController.Instance.IsDestructionModeActive())
+        {
+            if (currentSelectedBlueprint != null)
+                DeselectTurretBlueprint();
+
             return;
         }
-    }
 
-    public List<GameObject> GetActiveTurrets()
-    {
-        return activeTurrets;
-    }
-    public int GetNumActiveTurrets()
-    {
-        return activeTurrets.Count;
-    }
-    public List<TurretBlueprint> GetTurretBlueprintList()
-    {
-        return turretBlueprintList;
-    }
-
-    void Update()
-    {
-
-        // --- Input for selecting turret blueprint ---
-        if (Input.GetKeyDown(KeyCode.Alpha1) && turretBlueprintList.Count > 0)
-        {
-            SelectTurretBlueprint(turretBlueprintList[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && turretBlueprintList.Count > 1)
-        {
-            SelectTurretBlueprint(turretBlueprintList[1]);
-        }
-        // Add more keybinds or UI selection as needed
-
-        // --- Handle Placement Preview ---
-        //if (currentSelectedBlueprint != null)
-        //{
-        //    HandlePlacementPreview();
-        //}
-
-        else
-        {
-            // If no blueprint is selected, ensure preview is destroyed
-            if (previewObject != null)
-            {
-                Destroy(previewObject);
-                previewObject = null;
-                previewPlacableObject = null;
-            }
-        }
-
-        // --- Handle Actual Placement on Mouse Click ---
-        if (Input.GetMouseButtonDown(0) && currentSelectedBlueprint != null) // Left mouse button click
+        // Left click = place turret
+        if (Input.GetMouseButtonDown(0) && currentSelectedBlueprint != null)
         {
             TryPlaceTurret();
         }
 
-        // --- Handle canceling placement (e.g., right click) ---
-        if (Input.GetMouseButtonDown(1)) // Right click
+        // Right click = cancel placement
+        if (Input.GetMouseButtonDown(1))
         {
             DeselectTurretBlueprint();
         }
+
+        // Handle preview update
+        if (currentSelectedBlueprint != null)
+        {
+            HandlePlacementPreview();
+        }
+        else if (previewObject != null)
+        {
+            DestroyPreview();
+        }
     }
+
+
 
     // Call this method when a new turret blueprint is selected (e.g., from UI button)
     public void SelectTurretBlueprint(TurretBlueprint blueprint)
     {
+
         if (currentSelectedBlueprint == blueprint) return; // Already selected this one
 
+        // Cancel demolition mode if active
+        if (TurretDemolitionController.Instance != null && TurretDemolitionController.Instance.IsDestructionModeActive())
+        {
+            TurretDemolitionController.Instance.ForceDeactivateDestructionMode();
+        }
         currentSelectedBlueprint = blueprint;
         Debug.Log("Selected Blueprint: " + (currentSelectedBlueprint != null ? currentSelectedBlueprint.name : "None"));
 
-        // Immediately create or update the preview object when a blueprint is selected
+        //// Immediately create or update the preview object when a blueprint is selected
         CreateOrUpdatePreviewObject();
     }
 
     public void DeselectTurretBlueprint()
     {
         currentSelectedBlueprint = null;
+        DestroyPreview();
+        Debug.Log("[TurretPlacement] Placement canceled.");
+    }
+
+
+    private void CreateOrUpdatePreviewObject()
+    {
+        DestroyPreview();
+
+        if (currentSelectedBlueprint?.turretPrefab == null) return;
+
+        previewObject = Instantiate(currentSelectedBlueprint.previewPrefab);
+        previewPlacableObject = previewObject.GetComponent<PlacableObject>();
+
+        if (previewPlacableObject == null)
+        {
+            Debug.LogError($"[TurretPlacement] Prefab '{currentSelectedBlueprint.turretPrefab.name}' is missing PlacableObject!");
+            DestroyPreview();
+            currentSelectedBlueprint = null;
+            return;
+        }
+
+        MakePreviewTransparent(previewObject);
+    }
+
+    private void HandlePlacementPreview()
+    {
+        if (previewObject == null || currentSelectedBlueprint == null) return;
+
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0f;
+
+        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
+
+        if (hit.collider == null)
+        {
+            previewObject.SetActive(false);
+            return;
+        }
+
+        previewObject.SetActive(true);
+
+        // Snap to grid
+        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
+        Vector3 snappedWorldPos = GridManager.Instance.GetWorldPosition(gridCoords);
+
+        previewObject.transform.position = snappedWorldPos;
+
+        // Check if placement is valid
+        bool canPlace = GridManager.Instance.CanPlaceObject(gridCoords, previewPlacableObject.sizeInCells);
+        UpdatePreviewColor(canPlace);
+    }
+    private void MakePreviewTransparent(GameObject obj)
+    {
+        Renderer renderer = obj.GetComponent<Renderer>();
+        if (renderer == null) return;
+
+        // Use sprite-friendly material
+        Material previewMat = new Material(Shader.Find("Sprites/Default"));
+        previewMat.color = new Color(1f, 1f, 1f, 0.5f); // Semi-transparent
+
+        // Ensure it draws on top of everything
+        previewMat.renderQueue = 4000;
+
+        renderer.material = previewMat;
+    }
+
+    private void UpdatePreviewColor(bool canPlace)
+    {
+        Renderer renderer = previewObject?.GetComponent<Renderer>();
+        if (renderer == null) return;
+
+        Color targetColor = canPlace ? Color.green : Color.red;
+        targetColor.a = 0.5f;
+        renderer.material.color = targetColor;
+    }
+
+    public void DestroyPreview()
+    {
         if (previewObject != null)
         {
             Destroy(previewObject);
             previewObject = null;
             previewPlacableObject = null;
         }
-        Debug.Log("Placement canceled.");
     }
 
-    private void CreateOrUpdatePreviewObject()
+    public void RemoveTurret(GameObject turret)
     {
-        if (previewObject != null)
-        {
-            Destroy(previewObject); // Destroy old preview if it exists
-        }
+        if (!activeTurrets.Contains(turret)) return;
 
-        // Instantiate the actual turret prefab for the preview to ensure correct size/model
-        if (currentSelectedBlueprint != null && currentSelectedBlueprint.turretPrefab != null)
-        {
-            previewObject = Instantiate(currentSelectedBlueprint.turretPrefab); // Use the actual turret prefab
-            previewPlacableObject = previewObject.GetComponent<PlacableObject>();
+        activeTurrets.Remove(turret);
+        Destroy(turret);
 
-            if (previewPlacableObject == null)
-            {
-                Debug.LogError("Turret Prefab '" + currentSelectedBlueprint.turretPrefab.name + "' is missing a PlacableObject component!");
-                Destroy(previewObject);
-                previewObject = null;
-                currentSelectedBlueprint = null; // Deselect to prevent further errors
-                return;
-            }
-
-            // Make the preview transparent or change its material for visual feedback
-            Renderer renderer = previewObject.GetComponent<Renderer>();
-            if (renderer != null && renderer.material != null)
-            {
-                // To make it transparent: change rendering mode to Fade
-                // Save original material/shader if you want to restore it.
-                // For simplicity, just assign a transparent material or change color.
-                renderer.material = new Material(Shader.Find("Standard")); // Or a custom transparent shader
-                renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 0.5f); // 50% opacity
-                renderer.material.SetFloat("_Mode", 2); // Set rendering mode to 'Fade' for transparency (Standard shader)
-                renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                renderer.material.SetInt("_ZWrite", 0);
-                renderer.material.DisableKeyword("_ALPHATEST_ON");
-                renderer.material.EnableKeyword("_ALPHABLEND_ON");
-                renderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                renderer.material.renderQueue = 3000;
-            }
-        }
-    }
-
-    private void HandlePlacementPreview()
-    {
-        // Raycast to get world position under mouse
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
-
-        if (hit.collider != null)
-        {
-            Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
-            Vector3 snappedWorldPos = GridManager.Instance.GetWorldPosition(gridCoords);
-
-            // Ensure preview object exists and has the PlacableObject component
-            if (previewObject == null || previewPlacableObject == null)
-            {
-                CreateOrUpdatePreviewObject(); // Recreate if somehow lost
-                if (previewObject == null) return; // Still null, something went wrong
-            }
-
-            previewObject.transform.position = snappedWorldPos;
-
-            bool canPlace = GridManager.Instance.CanPlaceObject(gridCoords, previewPlacableObject.sizeInCells);
-
-            // Update preview object's color based on validity
-            Renderer renderer = previewObject.GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                // Preserve transparency
-                Color targetColor = canPlace ? Color.green : Color.red;
-                targetColor.a = 0.5f; // Keep it semi-transparent
-                renderer.material.color = targetColor;
-            }
-        }
-        else
-        {
-            // Mouse is not over the ground, hide/destroy preview
-            if (previewObject != null)
-            {
-                previewObject.SetActive(false); // Or Destroy(previewObject);
-            }
-        }
+        Debug.Log($"[TurretPlacement] Turret removed");
     }
 
     private void TryPlaceTurret()
     {
-        if (Time.time < lastPlacementTime + placementCooldown)
+        int currentCapacity = GetUsedCapacity();
+        int cost = currentSelectedBlueprint.buildCapacityValue;
+
+        if (currentCapacity + cost > maxTurretCapacity)
         {
-            Debug.Log("Turret placement on cooldown. Remaining: " + (lastPlacementTime + placementCooldown - Time.time).ToString("F2") + " seconds.");
+            Debug.Log($"[TurretPlacement] Not enough capacity. Current: {currentCapacity}/{maxTurretCapacity}, Cost: {cost}");
+            return;
+        }
+
+        float lastTime;
+        lastPlacementTimes.TryGetValue(currentSelectedBlueprint, out lastTime);
+
+        // Only check cooldown if the turret has been placed before
+        if (lastPlacementTimes.ContainsKey(currentSelectedBlueprint) && Time.time < lastTime + currentSelectedBlueprint.placementCooldown)
+        {
+            float remaining = lastTime + currentSelectedBlueprint.placementCooldown - Time.time;
+            Debug.Log($"[TurretPlacement] {currentSelectedBlueprint.name} on cooldown. {remaining:F2}s left.");
             return;
         }
 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
 
-        if (hit.collider != null)
+        if (hit.collider == null)
         {
-            Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
-
-            // Use the size from the selected blueprint's prefab for actual placement
-            PlacableObject blueprintPlacableObject = currentSelectedBlueprint.turretPrefab.GetComponent<PlacableObject>();
-            if (blueprintPlacableObject == null)
-            {
-                Debug.LogError("Turret Prefab '" + currentSelectedBlueprint.turretPrefab.name + "' is missing a PlacableObject component!");
-                return;
-            }
-
-            if (GridManager.Instance.CanPlaceObject(gridCoords, blueprintPlacableObject.sizeInCells))
-            {
-                    GameObject newTurret = Instantiate(
-                    currentSelectedBlueprint.turretPrefab,
-                    GridManager.Instance.GetWorldPosition(gridCoords), // Position
-                    Quaternion.identity, // Rotation
-                    turretContainer // Parent in hierarchy
-             );
-                newTurret.transform.position = GridManager.Instance.GetWorldPosition(gridCoords);
-
-                // Destroy the active preview object
-                if (previewObject != null)
-                {
-                    Destroy(previewObject);
-                    previewObject = null;
-                    previewPlacableObject = null;
-                }
-
-                // Initialize TurretAttack component
-                TurretBehaviour turretBehaviour = newTurret.GetComponent<TurretBehaviour>();
-                if (turretBehaviour != null)
-                {
-                    turretBehaviour.turretBlueprint = currentSelectedBlueprint;
-                    turretBehaviour.InitializeFromBlueprint(); // Optional initialization method
-                    activeTurrets.Add(newTurret);
-                    activeTurretCount = activeTurrets.Count;
-                }
-
-                lastPlacementTime = Time.time;
-                Debug.Log("Turret placed! Cooldown started.");
-                // Optionally deselect the blueprint after placing
-                // DeselectTurretBlueprint();
-            }
-            else
-            {
-                Debug.Log("Cannot place turret here: grid occupied or out of bounds.");
-            }
+            Debug.Log("[TurretPlacement] Cannot place: mouse not over ground.");
+            return;
         }
-        else
+
+        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
+        PlacableObject blueprintPlacable = currentSelectedBlueprint.turretPrefab.GetComponent<PlacableObject>();
+
+        if (blueprintPlacable == null)
         {
-            Debug.Log("Cannot place turret: mouse not over ground.");
+            Debug.LogError($"[TurretPlacement] Prefab '{currentSelectedBlueprint.turretPrefab.name}' missing PlacableObject!");
+            return;
         }
+
+        if (!GridManager.Instance.CanPlaceObject(gridCoords, blueprintPlacable.sizeInCells))
+        {
+            Debug.Log("[TurretPlacement] Cannot place: grid occupied or out of bounds.");
+            return;
+        }
+
+        // Instantiate and register turret
+        GameObject newTurret = Instantiate(
+            currentSelectedBlueprint.turretPrefab,
+            GridManager.Instance.GetWorldPosition(gridCoords),
+            Quaternion.identity,
+            turretContainer
+        );
+
+        TurretBehaviour behaviour = newTurret.GetComponent<TurretBehaviour>();
+        if (behaviour != null)
+        {
+            behaviour.turretBlueprint = currentSelectedBlueprint;
+            behaviour.InitializeFromBlueprint();
+        }
+
+        activeTurrets.Add(newTurret);
+        lastPlacementTimes[currentSelectedBlueprint] = Time.time;
+
+        DeselectTurretBlueprint();
+        //DestroyPreview();
+        Debug.Log($"[TurretPlacement] Turret placed. Used Capacity: {GetUsedCapacity()}/{maxTurretCapacity}");
     }
+    public int GetUsedCapacity()
+    {
+        int total = 0;
+        foreach (var turret in activeTurrets)
+        {
+            var behaviour = turret.GetComponent<TurretBehaviour>();
+            if (behaviour != null && behaviour.turretBlueprint != null)
+            {
+                total += behaviour.turretBlueprint.buildCapacityValue;
+            }
+        }
+        return total;
+    }
+    public List<GameObject> GetActiveTurrets() => activeTurrets;
+    public List<TurretBlueprint> GetTurretBlueprintList() => turretBlueprintList;
 }

@@ -26,13 +26,13 @@ public class SM_TowerListElementBehavior
         towerDetails.Q<Label>("name").SetBinding("text", new LocalizedString($"TurretTranslation{turret.turretName}",$"name"));
 
         FillDetailValue("cost", turret.buildingCost);
-        FillDetailValue("fireRate", turret.fireRate);
-        FillDetailValue("fireCountdown", turret.fireCountdown);
-        FillDetailValue("projectileSpeed", turret.projectileSpeed);
-        FillDetailValue("attackRange", turret.attackRange);
-        FillDetailValue("damage", turret.attackDamage);
-        FillDetailValue("knockbackStrenght", turret.knockbackStrength);
-        FillDetailValue("knockbackDuration", turret.knockbackDuration);
+        FillDetailValue("fireRate", turret.baseFireRate);
+        FillDetailValue("fireCountdown", turret.baseFireCountdown   );
+        FillDetailValue("projectileSpeed", turret.baseProjectileSpeed);
+        FillDetailValue("attackRange", turret.baseAttackRange);
+        FillDetailValue("damage", turret.baseAttackDamage);
+        FillDetailValue("knockbackStrength", turret.baseKnockbackStrength);
+        FillDetailValue("knockbackDuration", turret.baseKnockbackDuration);
 
     }
 

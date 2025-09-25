@@ -17,7 +17,7 @@ MonoBehaviour:
   options:
   - name: Choice 2
     description: Test 2
-    damageMultiplier: 1
+    damageMultiplier: 2
     fireRateMultiplier: 0
     rangeBonus: 2
     icon: {fileID: 0}

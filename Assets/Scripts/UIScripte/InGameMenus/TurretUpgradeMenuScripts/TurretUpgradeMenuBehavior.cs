@@ -51,11 +51,11 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour
 
         foreach (var option in options)
         {
-            Debug.Log($"Test UI");
-            TU_ChoiceElementBehavior tu_ChoiceElementBehavior = new TU_ChoiceElementBehavior(choiceListElement, option);
-            turretUpgradeChoices.Add(tu_ChoiceElementBehavior.border);
+            TU_ChoiceElementBehavior tu_ChoiceElementBehavior =
+                new TU_ChoiceElementBehavior(choiceListElement, option, type, level);
 
+            turretUpgradeChoices.Add(tu_ChoiceElementBehavior.border);
         }
 
     }
-}
+   }
