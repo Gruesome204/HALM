@@ -23,6 +23,11 @@ public class TurretStats : MonoBehaviour
     public float rangeScaleFactor;
     public float fireRateScaleFactor;
 
+    private void Awake()
+    {
+        Initialize();
+    }
+
     public void Initialize()
     {
         if (baseStats == null)

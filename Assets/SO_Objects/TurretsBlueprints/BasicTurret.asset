@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BasicTurret
   m_EditorClassIdentifier: 
   turretName: ArcherTower
-  baseLevel: 0
+  baseLevel: 1
   description: "Hoher Turm mit kleiner Grundfl\xE4che und moderaten Lebenspunkten,
     der aus Holz besteht und Pfeile verschie\xDFt."
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
   turretType: 0
-  baseHealth: 0
+  baseHealth: 100
   baseAttackDamage: 10
   baseFireRate: 1
   baseFireCountdown: 1
