@@ -14,12 +14,12 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        if (healthBar != null)
-        {
-            healthBar.minValue = 0;
-            healthBar.maxValue = stats.currentMaxHealth;
-            healthBar.value = stats.currentHealth;
-        }
+        //if (healthBar != null)
+        //{
+        //    healthBar.minValue = 0;
+        //    healthBar.maxValue = stats.currentMaxHealth;
+        //    healthBar.value = stats.currentHealth;
+        //}
     }
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
