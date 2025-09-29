@@ -14,12 +14,17 @@ public class TurretHealth : MonoBehaviour, IDamagable
     public event Action<TurretHealth, DamageData> OnDeath;
     private void Start()
     {
-        if (stats != null)
-        {
+        if (stats == null)
             stats = GetComponent<TurretStats>();
-        }
     }
+    public void Initialize(TurretBlueprint turretBlueprint)
+    {
+        if (turretBlueprint == null || stats == null) return;
 
+        stats.currentHealth = stats.currentMaxHealth;
+
+        UpdateHealthBar();
+    }
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
@@ -50,6 +55,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
         if (healthBarFollow != null)
             Destroy(healthBarFollow.gameObject); // clean up UI
+        TurretPlacementController.Instance?.UnregisterTurret(this);
 
         Destroy(gameObject); ;
     }

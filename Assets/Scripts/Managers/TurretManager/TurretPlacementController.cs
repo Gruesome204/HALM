@@ -37,6 +37,7 @@ public class TurretPlacementController : MonoBehaviour
 
     //Currently Active Turrets
     private List<GameObject> activeTurrets = new List<GameObject>();
+    private List<TurretHealth> placedTurrets = new List<TurretHealth>();
     private Dictionary<TurretBlueprint, float> lastPlacementTimes = new Dictionary<TurretBlueprint, float>();
 
 
@@ -58,6 +59,18 @@ public class TurretPlacementController : MonoBehaviour
         HandleBlueprintSelectionInput();
         HandlePlacementInput();
     }
+
+    public void RegisterTurret(TurretHealth turret)
+    {
+        if (!placedTurrets.Contains(turret))
+            placedTurrets.Add(turret);
+    }
+
+    public void UnregisterTurret(TurretHealth turret)
+    {
+        placedTurrets.Remove(turret);
+    }
+
     private void HandleBlueprintSelectionInput()
     {
         // Example: hotkeys 1 and 2 for selecting blueprints
@@ -283,6 +296,18 @@ public class TurretPlacementController : MonoBehaviour
             behaviour.InitializeFromBlueprint();
         }
 
+        // Setup TurretHealth
+        TurretHealth turretHealth = newTurret.GetComponent<TurretHealth>();
+        if (turretHealth != null)
+        {
+            // Assign stats from blueprint (clone if ScriptableObject)
+            if (currentSelectedBlueprint != null)
+                turretHealth.Initialize(currentSelectedBlueprint);
+
+            // Register turret for tracking and cleanup
+            turretHealth.OnDeath += OnTurretDeath;
+            RegisterTurret(turretHealth);
+        }
         activeTurrets.Add(newTurret);
         OnTurretsChanged?.Invoke();
         lastPlacementTimes[currentSelectedBlueprint] = Time.time;
@@ -290,6 +315,15 @@ public class TurretPlacementController : MonoBehaviour
         DeselectTurretBlueprint();
         //DestroyPreview();
         Debug.Log($"[TurretPlacement] Turret placed. Used Capacity: {GetUsedCapacity()}/{maxTurretCapacity}");
+    }
+    private void OnTurretDeath(TurretHealth turret, DamageData data)
+    {
+        UnregisterTurret(turret);
+
+        if (turret != null && activeTurrets.Contains(turret.gameObject))
+            activeTurrets.Remove(turret.gameObject);
+
+        OnTurretsChanged?.Invoke();
     }
     public int GetUsedCapacity()
     {

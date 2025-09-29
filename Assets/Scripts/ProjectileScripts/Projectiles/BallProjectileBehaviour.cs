@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class BallProjectileBehaviour : MonoBehaviour
 {
     private DamageData damageData;
+    private GameObject owner; // The turret that fired this projectile
 
     public float knockbackStrength = 100f;
     public float knockbackDuration = 0.1f;
@@ -14,6 +15,7 @@ public class BallProjectileBehaviour : MonoBehaviour
 
     public void SetOwner(GameObject turret, float damageAmount)
     {
+        owner = turret;
         damageData = new DamageData
         {
             source = turret,
@@ -24,7 +26,8 @@ public class BallProjectileBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        if (other.gameObject == owner)
+            return;
         // Try to get the IDamagable interface from the collided object
         IDamagable damagable = other.GetComponent<IDamagable>();
 
