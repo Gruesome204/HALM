@@ -26,6 +26,8 @@ public class BallProjectileBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Turret"))
+            return;
         if (other.gameObject == owner)
             return;
         // Try to get the IDamagable interface from the collided object

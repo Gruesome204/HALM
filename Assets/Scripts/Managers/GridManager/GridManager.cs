@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -41,13 +42,12 @@ public class GridManager : MonoBehaviour
     }
 
     // Converts grid coordinates to world position (center of the cell)
-    public Vector3 GetWorldPosition(Vector2Int gridCoords)
+    public Vector3 GetWorldPosition(Vector2Int gridCoords, Vector2Int objectSize)
     {
-        // For 2D (XY plane), we position based on X and Y, and use the fixed gridZPosition for Z.
-        float x = originPosition.x + gridCoords.x * cellSize + cellSize / 2f;
-        float y = originPosition.y + gridCoords.y * cellSize + cellSize / 2f; // Changed from .z to .y for Z-axis in 3D to .y for Y-axis in 2D
-
-        return new Vector3(x, y, gridZPosition); // Use fixed gridZPosition
+        // Center the object based on its size
+        float x = originPosition.x + gridCoords.x * cellSize + (objectSize.x * cellSize) / 2f;
+        float y = originPosition.y + gridCoords.y * cellSize + (objectSize.y * cellSize) / 2f;
+        return new Vector3(x, y, gridZPosition);
     }
 
     // Checks if a placable object of a given size can be placed at a specific grid coordinate
@@ -85,13 +85,11 @@ public class GridManager : MonoBehaviour
         }
         return true;
     }
-
-    // Places an object onto the grid
     public void PlaceObject(GameObject obj, Vector2Int startCoords, Vector2Int objectSize)
     {
         if (!CanPlaceObject(startCoords, objectSize))
         {
-            Debug.LogWarning("Cannot place object: " + obj.name + " at " + startCoords);
+            Debug.LogWarning($"Cannot place object: {obj.name} at {startCoords}");
             return;
         }
 
@@ -102,8 +100,8 @@ public class GridManager : MonoBehaviour
                 gridOccupancy[startCoords.x + x, startCoords.y + y] = obj;
             }
         }
-        // Position object at the center of its bottom-left cell, at the fixed Z-position
-        obj.transform.position = GetWorldPosition(startCoords);
+
+        obj.transform.position = GetWorldPosition(startCoords, objectSize);
     }
 
     // Removes an object from the grid
@@ -128,50 +126,44 @@ public class GridManager : MonoBehaviour
     // For debugging: Draw grid lines in the editor
     private void OnDrawGizmos()
     {
-        // Ensure grid settings are valid to prevent errors
         if (gridWidth <= 0 || gridHeight <= 0 || cellSize <= 0) return;
 
-        // Gizmos are drawn in the editor and at runtime
-        Gizmos.color = Color.grey; // Default color for grid lines
+        Gizmos.color = Color.grey;
 
-        // Draw basic grid lines
+        // Draw grid lines
         for (int x = 0; x <= gridWidth; x++)
         {
-            // Lines along the Y-axis (vertical lines)
-            Vector3 start = originPosition + new Vector3(x * cellSize, 0, gridZPosition); // Start at Y=0, fixed Z
-            Vector3 end = originPosition + new Vector3(x * cellSize, gridHeight * cellSize, gridZPosition); // End at max Y, fixed Z
+            Vector3 start = originPosition + new Vector3(x * cellSize, 0, gridZPosition);
+            Vector3 end = originPosition + new Vector3(x * cellSize, gridHeight * cellSize, gridZPosition);
             Gizmos.DrawLine(start, end);
         }
+
         for (int y = 0; y <= gridHeight; y++)
         {
-            // Lines along the X-axis (horizontal lines)
-            Vector3 start = originPosition + new Vector3(0, y * cellSize, gridZPosition); // Start at X=0, fixed Z
-            Vector3 end = originPosition + new Vector3(gridWidth * cellSize, y * cellSize, gridZPosition); // End at max X, fixed Z
+            Vector3 start = originPosition + new Vector3(0, y * cellSize, gridZPosition);
+            Vector3 end = originPosition + new Vector3(gridWidth * cellSize, y * cellSize, gridZPosition);
             Gizmos.DrawLine(start, end);
         }
 
-        // Draw occupancy visualization when playing
-        if (Application.isPlaying)
-        {
-            for (int x = 0; x < gridWidth; x++)
-            {
-                for (int y = 0; y < gridHeight; y++)
-                {
-                    Vector3 cellCenter = GetWorldPosition(new Vector2Int(x, y));
+        if (!Application.isPlaying) return;
 
-                    // Draw a small cube/wire cube to represent the cell
-                    if (gridOccupancy[x, y] != null)
-                    {
-                        Gizmos.color = Color.red; // Occupied cells are red
-                        // Draw a cube representing the cell, slightly raised (0.01f) to be visible if on floor
-                        Gizmos.DrawCube(cellCenter, new Vector3(cellSize, cellSize, 0.01f));
-                    }
-                    else
-                    {
-                        Gizmos.color = Color.blue; // Empty cells are blue
-                        Gizmos.DrawWireCube(cellCenter, new Vector3(cellSize, cellSize, 0.01f));
-                    }
-                }
+        // Draw objects without overlapping
+        HashSet<GameObject> drawnObjects = new HashSet<GameObject>();
+
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+                GameObject obj = gridOccupancy[x, y];
+                if (obj == null || drawnObjects.Contains(obj)) continue;
+
+                drawnObjects.Add(obj);
+
+                Vector2Int size = Vector2Int.one;
+
+                Vector3 center = GetWorldPosition(new Vector2Int(x, y), size);
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(center, new Vector3(size.x * cellSize, size.y * cellSize, 0.01f));
             }
         }
     }

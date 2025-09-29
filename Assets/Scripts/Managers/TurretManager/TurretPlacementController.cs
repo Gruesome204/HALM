@@ -146,20 +146,17 @@ public class TurretPlacementController : MonoBehaviour
     {
         DestroyPreview();
 
-        if (currentSelectedBlueprint?.turretPrefab == null) return;
+        if (currentSelectedBlueprint?.previewPrefab == null) return;
 
         previewObject = Instantiate(currentSelectedBlueprint.previewPrefab);
-        previewPlacableObject = previewObject.GetComponent<PlacableObject>();
-
-        if (previewPlacableObject == null)
-        {
-            Debug.LogError($"[TurretPlacement] Prefab '{currentSelectedBlueprint.turretPrefab.name}' is missing PlacableObject!");
-            DestroyPreview();
-            currentSelectedBlueprint = null;
-            return;
-        }
-
         MakePreviewTransparent(previewObject);
+
+        // Optional: scale preview if needed (e.g., sprite size)
+        previewObject.transform.localScale = new Vector3(
+            currentSelectedBlueprint.sizeInCells.x,
+            currentSelectedBlueprint.sizeInCells.y,
+            1f
+        );
     }
 
     private void HandlePlacementPreview()
@@ -179,14 +176,14 @@ public class TurretPlacementController : MonoBehaviour
 
         previewObject.SetActive(true);
 
-        // Snap to grid
+        // Snap to grid using blueprint size
         Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
-        Vector3 snappedWorldPos = GridManager.Instance.GetWorldPosition(gridCoords);
+        Vector3 snappedWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
 
         previewObject.transform.position = snappedWorldPos;
 
         // Check if placement is valid
-        bool canPlace = GridManager.Instance.CanPlaceObject(gridCoords, previewPlacableObject.sizeInCells);
+        bool canPlace = GridManager.Instance.CanPlaceObject(gridCoords, currentSelectedBlueprint.sizeInCells);
         UpdatePreviewColor(canPlace);
     }
     private void MakePreviewTransparent(GameObject obj)
@@ -267,28 +264,27 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
-        PlacableObject blueprintPlacable = currentSelectedBlueprint.turretPrefab.GetComponent<PlacableObject>();
 
-        if (blueprintPlacable == null)
-        {
-            Debug.LogError($"[TurretPlacement] Prefab '{currentSelectedBlueprint.turretPrefab.name}' missing PlacableObject!");
-            return;
-        }
-
-        if (!GridManager.Instance.CanPlaceObject(gridCoords, blueprintPlacable.sizeInCells))
+        if (!GridManager.Instance.CanPlaceObject(gridCoords, currentSelectedBlueprint.sizeInCells))
         {
             Debug.Log("[TurretPlacement] Cannot place: grid occupied or out of bounds.");
             return;
         }
 
-        // Instantiate and register turret
+        // Instantiate turret at centered position
         GameObject newTurret = Instantiate(
             currentSelectedBlueprint.turretPrefab,
-            GridManager.Instance.GetWorldPosition(gridCoords),
+            GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells),
             Quaternion.identity,
             turretContainer
         );
 
+        // Register turret in grid
+        PlacableObject turretPlacable = newTurret.GetComponent<PlacableObject>();
+        if (turretPlacable != null)
+        {
+            GridManager.Instance.PlaceObject(newTurret, gridCoords, currentSelectedBlueprint.sizeInCells);
+        }
         TurretBehaviour behaviour = newTurret.GetComponent<TurretBehaviour>();
         if (behaviour != null)
         {

@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd9bc04dbd075b4088b4efb84664eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeInCells: {x: 1, y: 1}
+  sizeInCells: {x: 2, y: 2}
   currentGridCoordinates: {x: 0, y: 0}
 --- !u!61 &8814491693949796463
 BoxCollider2D:

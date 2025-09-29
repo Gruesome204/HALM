@@ -32,7 +32,7 @@ MonoBehaviour:
   baseRangeGrowthFlat: 0.5
   buildingCost: 0
   turretPrefab: {fileID: 4775935544841688724, guid: 464a0537dbcbaf943851878e19e0480c, type: 3}
-  height: 0
-  length: 0
+  height: 1
+  length: 1
   buildCapacityValue: 1
   placementCooldown: 1

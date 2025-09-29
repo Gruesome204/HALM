@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FastTurret
   m_EditorClassIdentifier: 
   turretName: FastTurret
-  baseLevel: 0
+  baseLevel: 1
   description: Test Description
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
   turretType: 1
@@ -31,7 +31,7 @@ MonoBehaviour:
   baseRangeGrowthFlat: 0.5
   buildingCost: 0
   turretPrefab: {fileID: 4775935544841688724, guid: e7ba0ce86f14b9c49bff82f2efd22797, type: 3}
-  height: 0
-  length: 0
+  height: 2
+  length: 2
   buildCapacityValue: 2
   placementCooldown: 3
