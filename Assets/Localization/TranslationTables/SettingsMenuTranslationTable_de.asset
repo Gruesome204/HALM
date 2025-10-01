@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: SettingsMenuTranslationTable_de
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: f90e2fab0e50723429d5cbaba278ef9c, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 33732300800
+    m_Localized: Zahnrad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94281273344
+    m_Localized: "F\xFCr die Unmultilingualen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298007007232
+    m_Localized: The common Tongue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338263937024
+    m_Localized: The peasants Tongue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354160349184
+    m_Localized: The one True Tongue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 425933279232
+    m_Localized: Wie Taub bist du?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 452449669120
+    m_Localized: Warum nicht gleich die PC Einstellungen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 501225230336
+    m_Localized: Also sehr Taub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 535253618688
+    m_Localized: Warum nicht gleich die gesamte?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 566278885376
+    m_Localized: Chaos, that is al i am willing to say
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -19,6 +19,7 @@ public class SettingsMenuBehavior : MonoBehaviour
 
     private Label soundSettingsHeadline;
     private SliderInt musicTrackSlider;
+    private Slider masterVolumeSlider;
     private Slider musicVolumeSlider;
     private Slider soundVolumeSlider;
     [SerializeField] AudioSource BGMusicTrack_1;
@@ -35,12 +36,19 @@ public class SettingsMenuBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        menuManager = FindObjectOfType<MenuManager>();
+        ConnectingEverything();
+
         PlayThisMusic(2);
     }
+
     private void OnEnable()
     {
-        menuManager = FindObjectOfType<MenuManager>();
+        ConnectingEverything();
+    }
 
+    void ConnectingEverything()
+    {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
 
@@ -50,48 +58,55 @@ public class SettingsMenuBehavior : MonoBehaviour
         backBtn.RegisterCallback<ClickEvent>(OnBackBtnClicked);
 
         headline = root.Q<Label>("headline");
-        headline.SetBinding("text", new LocalizedString("MenuTranslationaTable", "settingsHeadline"));
+        headline.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "settingsHeadline"));
 
 
         //Connecting the language Stuff
         subHeadlineLanguages = root.Q<Label>("languageSettingsHeadline");
-        subHeadlineLanguages.SetBinding("text", new LocalizedString("MenuTranslationaTable", "settingsLanguageHeadline"));
+        subHeadlineLanguages.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "languageHeadline"));
 
         languageEnglishBtn = root.Q<Button>("englishBtn");
-        languageEnglishBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "languageSettimgsEnglischBtn"));
+        languageEnglishBtn.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "languageBtnEnglish"));
         languageEnglishBtn.RegisterCallback<ClickEvent>(OnLanguageEnglishBtnClicked);
 
         languageGermanBtn = root.Q<Button>("germanBtn");
-        languageGermanBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "languageSettingsDeutschBtn"));
+        languageGermanBtn.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "languageBtnDeutsch"));
         languageGermanBtn.RegisterCallback<ClickEvent>(OnLanguageGermanBtnClicked);
 
         languageDeveloperBtn = root.Q<Button>("developerBtn");
-        languageDeveloperBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "languageSettingsDeveloperBtn"));
+        languageDeveloperBtn.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "languageBtnDeveloper"));
         languageDeveloperBtn.RegisterCallback<ClickEvent>(OnLanguageDeveloperBtnClicked);
 
 
         // Connecting the Sound Stuff
         soundSettingsHeadline = root.Q<Label>("soundSettingsHeadline");
-        soundSettingsHeadline.SetBinding("text", new LocalizedString("MenuTranslationaTable", "soundSettingsHeadline"));
+        soundSettingsHeadline.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundHeadline"));
 
-        musicTrackSlider = root.Q<SliderInt>("musicTrackSlider");
-        musicTrackSlider.SetBinding("text", new LocalizedString("MenuTranslationaTable", "musicTrackSlider"));
-        musicTrackSlider.value = settingDataSO.musicTrack;
+
+        masterVolumeSlider = root.Q<Slider>("masterVolumeSlider");
+        masterVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMasterVolume"));
+        masterVolumeSlider.value = settingDataSO.masterVolume;
 
         musicVolumeSlider = root.Q<Slider>("musicVolumeSlider");
-        musicVolumeSlider.SetBinding("text", new LocalizedString("MenuTranslationaTable", "musicVolumeSlider"));
+        musicVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicVolume"));
         musicVolumeSlider.value = settingDataSO.musicVolume;
 
         soundVolumeSlider = root.Q<Slider>("soundVolumeSlider");
-        soundVolumeSlider.SetBinding("text", new LocalizedString("MenuTranslationaTable", "soundVolumeSlider"));
+        soundVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderSoundVolume"));
         soundVolumeSlider.value = settingDataSO.soundVolume;
 
+        musicTrackSlider = root.Q<SliderInt>("musicTrackSlider");
+        musicTrackSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicTrack"));
+        musicTrackSlider.value = settingDataSO.musicTrack;
     }
 
     private void Update()
     {
         SettingVolume();
     }
+  
+ 
+
 
     void OnBackBtnClicked(ClickEvent clicked)
     {
@@ -132,18 +147,26 @@ public class SettingsMenuBehavior : MonoBehaviour
 
     void SettingVolume()
     {
+        if (masterVolumeSlider.value != settingDataSO.masterVolume)
+        {
+            settingDataSO.masterVolume = masterVolumeSlider.value;
+            Debug.Log($"{settingDataSO.masterVolume}");
+            SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
+        }
+
         if (musicVolumeSlider.value != settingDataSO.musicVolume)
         {
             settingDataSO.musicVolume = musicVolumeSlider.value;
             Debug.Log($"{settingDataSO.musicVolume}");
-            SetAllMusicVolume(musicVolumeSlider.value);
+            SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
         }
 
         if (soundVolumeSlider.value != settingDataSO.soundVolume)
         {
             settingDataSO.soundVolume = soundVolumeSlider.value;
-            Debug.Log($"{settingDataSO.soundVolume}");
+            Debug.Log($"{settingDataSO.soundVolume * settingDataSO.masterVolume}");
         }
+
         if (musicTrackSlider.value != settingDataSO.musicTrack)
         {
             settingDataSO.musicTrack = musicTrackSlider.value;

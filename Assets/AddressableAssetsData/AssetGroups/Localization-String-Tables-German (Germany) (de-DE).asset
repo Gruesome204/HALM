@@ -35,6 +35,13 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-de-DE
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a9b73c6d5baf9c4ba34d3932997e828
+    m_Address: SettingsMenuTranslationTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 72d7664fe7aa4d14fb31a3e813438f97
     m_Address: TurretTranslationFastTurret_de-DE
     m_ReadOnly: 1

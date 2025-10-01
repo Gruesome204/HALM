@@ -1,7 +1,7 @@
 .mainMenuBtnClass {
     width: 30%;
-    height: 50px;
-    font-size: 20px;
+    height: auto;
+    font-size: 17px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -16,6 +16,8 @@
     border-bottom-color: rgba(0, 0, 0, 0.39);
     background-color: rgb(128, 128, 128);
     margin-top: 0%;
+    white-space: normal;
+    min-height: 50px;
 }
 
 .mainMenuBtnClass:hover {
