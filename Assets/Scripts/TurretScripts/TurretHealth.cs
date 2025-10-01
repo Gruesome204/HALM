@@ -4,32 +4,39 @@ using UnityEngine.UI;
 
 public class TurretHealth : MonoBehaviour, IDamagable
 {
-    TurretStats stats;
-    [Header("UI")]
-    public Slider healthBar;
+    [Header("Stats")]
+    [SerializeField] private TurretStats stats;
 
+    [Header("UI")]
+    private Slider healthBar;             // Will be assigned when prefab is spawned
+    private HealthBarFollow healthBarFollow;
     public bool IsInvulnerable { get; set; }
     public event Action<TurretHealth, DamageData> OnDeath;
-
-
     private void Start()
     {
-        if (healthBar != null)
-        {
-            healthBar.minValue = 0;
-            healthBar.maxValue = stats.currentMaxHealth;
-            healthBar.value = stats.currentHealth;
-        }
+        if (stats == null)
+            stats = GetComponent<TurretStats>();
     }
+    public void Initialize(TurretBlueprint turretBlueprint)
+    {
+        if (turretBlueprint == null || stats == null) return;
+
+        stats.currentHealth = stats.currentMaxHealth;
+
+        UpdateHealthBar();
+    }
+
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
 
         if (IsInvulnerable || stats == null) return;
 
         stats.currentHealth -= damageData.amount;
-        healthBar?.SetValueWithoutNotify(stats.currentHealth);
-        Debug.Log($"{gameObject.name} took {damageData.amount} {damageData.type} damage.");
-        Debug.Log($"Health after damage: {stats.currentHealth}");
+        stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0, stats.currentMaxHealth);
+        UpdateHealthBar();
+
+        Debug.Log($"{gameObject.name} took {damageData.amount} {damageData.type} damage. Remaining HP: {stats.currentHealth}");
+
         if (stats.currentHealth <= 0)
         {
             Die(damageData);
@@ -43,7 +50,14 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     public void Die(DamageData damageData)
     {
-        throw new NotImplementedException();
+        Debug.Log($"{gameObject.name} has been destroyed!");
+        OnDeath?.Invoke(this, damageData);
+
+        if (healthBarFollow != null)
+            Destroy(healthBarFollow.gameObject); // clean up UI
+        TurretPlacementController.Instance?.UnregisterTurret(this);
+
+        Destroy(gameObject); ;
     }
 
     public bool IsAlive()
@@ -59,5 +73,36 @@ public class TurretHealth : MonoBehaviour, IDamagable
     public TargetType GetTargetType()
     {
         throw new NotImplementedException();
+    }
+
+    public float GetCurrentHealth() => stats.currentHealth;
+    public float GetMaxHealth() => stats.currentMaxHealth;
+
+    public void AttachHealthBar(GameObject healthBarPrefab, Vector3 offset)
+    {
+        if (healthBarPrefab == null) return;
+
+        GameObject bar = Instantiate(healthBarPrefab);
+        healthBar = bar.GetComponentInChildren<Slider>();
+        healthBarFollow = bar.GetComponent<HealthBarFollow>();
+
+        if (healthBar != null)
+        {
+            healthBar.minValue = 0;
+            healthBar.maxValue = stats.currentMaxHealth;
+            healthBar.value = stats.currentHealth;
+        }
+
+        if (healthBarFollow != null)
+        {
+            healthBarFollow.target = this.transform;
+            healthBarFollow.offset = offset;
+        }
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (healthBar != null)
+            healthBar.value = stats.currentHealth;
     }
 }

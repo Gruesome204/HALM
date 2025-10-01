@@ -6,7 +6,7 @@ public class TurretBlueprint : ScriptableObject
     [Header("Info")]
     public string turretName;
     [Header("Turret Level")]
-    public int baseLevel;
+    public int baseLevel = 1;
     [TextArea(3, 10)] public string description;
     [Header("Preview")]
     public GameObject previewPrefab; // 👈 purely visual prefab
@@ -51,6 +51,9 @@ public class TurretBlueprint : ScriptableObject
     [Header("Turret Size")]
     public int height;
     public int length;
+
+    [Tooltip("Size in grid cells, calculated from length and height")]
+    public Vector2Int sizeInCells => new Vector2Int(length, height);
 
     [Header("Build Capacity Value")]
     [Tooltip("Value the Tower takes to be build")]

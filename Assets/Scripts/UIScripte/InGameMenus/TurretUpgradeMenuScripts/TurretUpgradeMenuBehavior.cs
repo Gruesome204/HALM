@@ -46,7 +46,6 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour
         Debug.Log("Test");
         turretUpgradeChoices.Clear();
 
-
         var options = TurretUpgradeChoiceManager.Instance.GetAllOptionsForLevel(type, level);
 
         foreach (var option in options)

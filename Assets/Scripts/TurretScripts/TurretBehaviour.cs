@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurretBehaviour : MonoBehaviour
 {
@@ -9,15 +10,8 @@ public class TurretBehaviour : MonoBehaviour
 
     public Transform firePoint; // A point on the turret where projectiles spawn
 
-    private TurretStats stats;
-    private TurretHealth health;
+    [SerializeField] private GameObject healthBarPrefab;
 
-    private void Awake()
-    {
-        stats = GetComponent<TurretStats>();
-        health = GetComponent<TurretHealth>();
-
-    }
 
     [Header("Values")]
     public float currentFireRate;
@@ -51,6 +45,13 @@ public class TurretBehaviour : MonoBehaviour
         {
             InitializeFromBlueprint();
         }
+
+        var health = GetComponent<TurretHealth>();
+        if (health != null)
+        {
+            health.AttachHealthBar(healthBarPrefab, new Vector3(0, 1.5f, 0));
+        }
+
     }
     public void InitializeFromBlueprint()
     {

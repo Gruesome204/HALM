@@ -1,7 +1,22 @@
+using System;
 using UnityEngine;
 
 public class InGameMenuManager : MonoBehaviour
 {
+    public static InGameMenuManager Instance;
+    void Awake() => Instance = this;
+
+    public event Action testEvent;
+
+    private void OnEnable()
+    {
+        testEvent?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        testEvent?.Invoke();
+    }
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject statsMenu;
