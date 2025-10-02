@@ -109,28 +109,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 20250925_Fledermaus_0
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 738
-        width: 9
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5389ffdc1e2994e10800000000000000
-      internalID: 2182436992959092789
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: 20250925_Fledermaus_1
       rect:
         serializedVersion: 2
@@ -139,7 +117,7 @@ TextureImporter:
         width: 659
         height: 302
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -161,7 +139,7 @@ TextureImporter:
         width: 791
         height: 232
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -183,7 +161,7 @@ TextureImporter:
         width: 624
         height: 323
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -200,7 +178,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5a81c93eee2d4fe44bb21c5e2f931828
     internalID: 0
     vertices: []
     indices: 
@@ -209,7 +187,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      20250925_Fledermaus_0: 2182436992959092789
+      20250925_Fledermaus_1: 6824685514626452231
+      20250925_Fledermaus_2: 8075539717399632341
+      20250925_Fledermaus_3: 6197058313250407978
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

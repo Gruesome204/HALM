@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2552059653595941372}
   - component: {fileID: 9058891120778029059}
+  - component: {fileID: -8560311335846659384}
   - component: {fileID: 437919818774813270}
   - component: {fileID: 464428886847549793}
   - component: {fileID: 331274451599260733}
@@ -19,7 +20,7 @@ GameObject:
   - component: {fileID: 7339260930082218373}
   - component: {fileID: 2443457996428829973}
   m_Layer: 8
-  m_Name: EnemyPrefab
+  m_Name: FledermausPrefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +97,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &-8560311335846659384
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4040261046768777757}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c879fa496c65094587bbb2c4c4e73d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &437919818774813270
 MonoBehaviour:
   m_ObjectHideFlags: 0
