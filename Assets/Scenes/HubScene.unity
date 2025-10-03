@@ -267,9 +267,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionName: Unnamed Hub Object
-  onInteract:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &845095072
 GameObject:
   m_ObjectHideFlags: 0
@@ -14465,10 +14462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7678479dcc69a0a47b1fadea33057d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionName: Unnamed Hub Object
-  onInteract:
-    m_PersistentCalls:
-      m_Calls: []
+  interactionName: DungeonEntrance
 --- !u!1 &1900371695
 GameObject:
   m_ObjectHideFlags: 0

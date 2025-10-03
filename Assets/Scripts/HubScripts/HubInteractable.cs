@@ -1,22 +1,32 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-[RequireComponent(typeof(Collider2D))] // Or Collider for 3D
 public class HubInteractable : MonoBehaviour
 {
-    [Header("Interaction Settings")]
     public string interactionName = "Unnamed Hub Object";
-    public UnityEvent onInteract; // Assign in inspector
+
+    // Event to notify listeners of an interaction
+    public event System.Action<string> OnInteractedEvent;
 
     private void OnMouseDown()
     {
-        // For mouse clicks in 2D/3D
         Interact();
     }
 
     public void Interact()
     {
         Debug.Log($"Interacted with {interactionName}");
-        onInteract?.Invoke(); // Triggers whatever is linked in Inspector
+        OnInteractedEvent?.Invoke(interactionName);
     }
+
+    //Activate after Implementation of HubUIController
+    //private void OnEnable()
+    //{
+    //    // Notify a manager that this interactable exists
+    //    HubUIController.RegisterInteractable(this);
+    //}
+
+    //private void OnDisable()
+    //{
+    //    HubUIController.UnregisterInteractable(this);
+    //}
 }
