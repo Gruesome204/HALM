@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5361971606197496698}
   - component: {fileID: 7339260930082218373}
   - component: {fileID: 2443457996428829973}
+  - component: {fileID: -8493545583482714336}
   m_Layer: 8
   m_Name: FledermausPrefab
   m_TagString: Enemy
@@ -278,6 +279,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities: []
   target: {fileID: 0}
+--- !u!114 &-8493545583482714336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4040261046768777757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 328fefd2eb5b2e74490d41a6f67c8f83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCooldown: 1
+  attackRange: 1.5
 --- !u!1001 &2257114052561782404
 PrefabInstance:
   m_ObjectHideFlags: 0

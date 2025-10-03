@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2079832927792806107}
   m_Layer: 7
   m_Name: OrdinaryTurretPrefab
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd9bc04dbd075b4088b4efb84664eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeInCells: {x: 1, y: 1}
   currentGridCoordinates: {x: 0, y: 0}
 --- !u!114 &1044790103878242520
 MonoBehaviour:

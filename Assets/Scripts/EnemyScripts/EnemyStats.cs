@@ -7,24 +7,37 @@ public class EnemyStats : MonoBehaviour
     [Header("Level")]
     public int currentLevel = 1;
 
+    [Header("Current Stats - Offensive")]
+    public float currentDamage;
+    public float currentAttackSpeed;
+    public float currentCritChance;
+    public float currentCritMultiplier;
+    public float currentAttackRange;
 
-    [Header("Current Stats")]
+    [Header("Current Stats - Defensive")]
     public float currentHealth;
     public float currentMaxHealth;
     public float currentArmor;
     public float currentMagicResistance;
-    public float currentDamage;
-    public float currentMovementSpeed;
     public float currentKnockbackReduction;
+    public float currentKnockbackForce;
+    public float currentKnockbackDuration;
+
+    [Header("Current Stats - Movement / Detection")]
+    public float currentMovementSpeed;
+    public float currentDetectionRange;
+    public float currentVisionRange;
+    public float currentHearingRange;
+    public float currentPursueRange;
+
+    [Header("Experience Yield")]
+    public float currentExperienceYield;
 
     [Header("Scaling Factors")]
     public float healthScaleFactor;
     public float damageScaleFactor;
     public float speedScaleFactor;
     public float armorScaleFactor;
-
-    [Header("Experience Yield")]
-    public float currentExperienceYield;
 
     public void Initialize()
     {
@@ -33,22 +46,43 @@ public class EnemyStats : MonoBehaviour
             Debug.LogWarning("No base stats assigned to EnemyStats");
             return;
         }
+
+        // Level
         currentLevel = baseStats.baseLevel;
 
+        // Scaling Factors
         healthScaleFactor = baseStats.baseHealthScaleFactor;
         damageScaleFactor = baseStats.baseDamageScaleFactor;
         speedScaleFactor = baseStats.baseSpeedScaleFactor;
         armorScaleFactor = baseStats.baseArmorScaleFactor;
 
-        currentMaxHealth = baseStats.baseHealth * GetLevelScaling(healthScaleFactor);
+        // Defensive Stats
+        currentMaxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
         currentHealth = currentMaxHealth;
-        currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
-        currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
-        currentKnockbackReduction = Mathf.Clamp01(currentKnockbackReduction);
-        currentExperienceYield = baseStats.experienceYield;
+        currentMagicResistance = baseStats.baseMagicResistance; // optional: scale if needed
+        currentKnockbackReduction = Mathf.Clamp01(baseStats.baseKnockbackReduction);
+        currentKnockbackForce = baseStats.baseknockbackForce;
+        currentKnockbackDuration = baseStats.baseknockbackDuration;
 
+        // Offensive Stats
+        currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
+        currentAttackSpeed = baseStats.baseAttackSpeed; // could scale with level if desired
+        currentCritChance = baseStats.baseCritChance;
+        currentCritMultiplier = baseStats.baseCritHitMultiplier;
+        currentAttackRange = baseStats.baseAttackRange;
+
+        // Movement / Detection
+        currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
+        currentDetectionRange = baseStats.baseDetectionRange;
+        currentVisionRange = baseStats.baseVisionRange;
+        currentHearingRange = baseStats.baseHearingRange;
+        currentPursueRange = baseStats.pursueRange;
+
+        // Experience
+        currentExperienceYield = baseStats.experienceYield;
     }
+
 
     private float GetLevelScaling(float factor)
     {

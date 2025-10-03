@@ -50,21 +50,21 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     public void OnDamageTaken(float amount)
     {
-        throw new NotImplementedException();
+  
     }
 
     public bool IsAlive()
     {
-        throw new NotImplementedException();
+        return true;
     }
 
     public Transform GetTransform()
     {
-        throw new NotImplementedException();
+        return transform;
     }
 
     public TargetType GetTargetType()
     {
-        throw new NotImplementedException();
+        return TargetType.Player;
     }
 }

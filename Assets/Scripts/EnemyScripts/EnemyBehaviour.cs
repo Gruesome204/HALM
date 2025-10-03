@@ -6,6 +6,7 @@ public class EnemyBehaviour : MonoBehaviour
     private EnemyHealth health;
     private EnemyMovement movement;
     private EnemyKnockback knockback;
+    private EnemyAttack attack;
 
     private void Awake()
     {
@@ -13,6 +14,7 @@ public class EnemyBehaviour : MonoBehaviour
         health = GetComponent<EnemyHealth>();
         movement = GetComponent<EnemyMovement>();
         knockback = GetComponent<EnemyKnockback>();
+        attack = GetComponent<EnemyAttack>();
 
         stats.Initialize();
         health.OnDeath += HandleDeath;
@@ -20,9 +22,34 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (knockback != null && knockback.IsKnockedBack) return;
+        if (knockback != null && knockback.IsKnockedBack)
+        {
+            movement.Stop();
+            return;
+        }
 
-        movement.MoveTowardTarget();
+        if (movement.target != null)
+        {
+            float distance = Vector2.Distance(transform.position, movement.target.transform.position);
+
+            if (attack != null && distance <= stats.currentAttackRange)
+            {
+                // Stop moving and attack
+                movement.Stop();
+                attack.TryAttack(movement.target);
+                Debug.Log("Try Call Attack");
+            }
+            else
+            {
+                // Move toward target
+                movement.MoveTowardTarget();
+            }
+        }
+        else
+        {
+            // No target, look for one
+            movement.MoveTowardTarget();
+        }
     }
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)

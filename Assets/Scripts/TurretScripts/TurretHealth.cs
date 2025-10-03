@@ -45,7 +45,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     public void OnDamageTaken(float amount)
     {
-        throw new NotImplementedException();
+        Debug.Log($"{gameObject.name} was hit for {amount} damage");
     }
 
     public void Die(DamageData damageData)
@@ -62,17 +62,17 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     public bool IsAlive()
     {
-        throw new NotImplementedException();
+        return stats.currentHealth > 0;
     }
 
     public Transform GetTransform()
     {
-        throw new NotImplementedException();
+        return transform;
     }
 
     public TargetType GetTargetType()
     {
-        throw new NotImplementedException();
+        return TargetType.Turret;
     }
 
     public float GetCurrentHealth() => stats.currentHealth;
