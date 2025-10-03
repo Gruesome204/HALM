@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.IsPaused()) return;
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= spawnInterval)
         {

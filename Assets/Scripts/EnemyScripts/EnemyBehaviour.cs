@@ -22,6 +22,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Checks if Game is Paused
+        if (GameManager.Instance.IsPaused()) return;
+
         if (knockback != null && knockback.IsKnockedBack)
         {
             movement.Stop();

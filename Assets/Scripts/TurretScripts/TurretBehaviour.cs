@@ -65,6 +65,8 @@ public class TurretBehaviour : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.IsPaused()) return;
+
         FindTarget();
         if (targetEnemy != null)
         {
