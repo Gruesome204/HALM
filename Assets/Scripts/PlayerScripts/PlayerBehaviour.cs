@@ -6,6 +6,7 @@ public class PlayerBehaviour : MonoBehaviour
     private PlayerHealth health;
     private PlayerMovement movement;
 
+
     private void Awake()
     {
         stats = GetComponent<PlayerStats>();

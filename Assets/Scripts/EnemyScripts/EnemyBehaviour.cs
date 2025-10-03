@@ -1,12 +1,18 @@
 using UnityEngine;
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour, IPausable
 {
     private EnemyStats stats;
     private EnemyHealth health;
     private EnemyMovement movement;
     private EnemyKnockback knockback;
     private EnemyAttack attack;
+
+    private bool isPaused;
+
+
+    private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
+    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
     private void Awake()
     {
@@ -20,10 +26,22 @@ public class EnemyBehaviour : MonoBehaviour
         health.OnDeath += HandleDeath;
     }
 
+    public void OnPause()
+    {
+        isPaused = true;
+        // Stop moving, stop attacking, etc.
+    }
+
+    public void OnResume()
+    {
+        isPaused = false;
+        // Resume AI
+    }
+
     private void FixedUpdate()
     {
         //Checks if Game is Paused
-        if (GameManager.Instance.IsPaused()) return;
+        if (isPaused) return;
 
         if (knockback != null && knockback.IsKnockedBack)
         {

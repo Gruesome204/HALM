@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurretBehaviour : MonoBehaviour
+public class TurretBehaviour : MonoBehaviour, IPausable
 {
     public TurretBlueprint turretBlueprint;
     public GameObject projectilePrefab;
@@ -38,6 +38,24 @@ public class TurretBehaviour : MonoBehaviour
     public int projectilesPerSalve = 2; // Number of projectiles in a salve
     public float delayBetweenSalveProjectiles = 0.5f; // Delay between each projectile in a salve
 
+    private bool isPaused;
+
+
+    private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
+    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
+
+    public void OnPause()
+    {
+        isPaused = true;
+        // Stop moving, stop attacking, etc.
+    }
+
+    public void OnResume()
+    {
+        isPaused = false;
+        // Resume AI
+    }
+
 
     void Start()
     {
@@ -65,7 +83,7 @@ public class TurretBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.IsPaused()) return;
+        if (isPaused) return;
 
         FindTarget();
         if (targetEnemy != null)

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState { get; private set; }
 
     public event Action<GameState> OnGameStateChanged;
+
+    private readonly List<IPausable> pausables = new List<IPausable>();
+    public void RegisterPausable(IPausable pausable) => pausables.Add(pausable);
+    public void UnregisterPausable(IPausable pausable) => pausables.Remove(pausable);
 
     [Header("Debug Controls")]
     [SerializeField] private GameState debugState;
@@ -47,25 +52,12 @@ public class GameManager : MonoBehaviour
         if (newState == CurrentState) return;
 
         CurrentState = newState;
-        Debug.Log($"Game State changed to: {CurrentState}");
-
-        // Notify listeners (UI, enemies, player controller, etc.)
         OnGameStateChanged?.Invoke(CurrentState);
 
-        // Optional: perform built-in actions depending on the state
-        switch (CurrentState)
+        foreach (var p in pausables)
         {
-            case GameState.MainMenu:
-                break;
-
-            case GameState.Playing:
-                break;
-
-            case GameState.Paused:
-                break;
-
-            case GameState.GameOver:
-                break;
+            if (newState == GameState.Paused) p.OnPause();
+            else if (newState == GameState.Playing) p.OnResume();
         }
     }
     public void SetPaused(bool paused)

@@ -1,9 +1,26 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IPausable
 {
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
+
+    private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
+    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
+
+    private bool isPaused;
+
+    public void OnPause()
+    {
+        isPaused = true;
+        // Stop moving, stop attacking, etc.
+    }
+
+    public void OnResume()
+    {
+        isPaused = false;
+        // Resume AI
+    }
 
     void Start()
     {
@@ -17,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+          if (isPaused) return; 
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical"); // You might only need Horizontal for 2D movement
 
