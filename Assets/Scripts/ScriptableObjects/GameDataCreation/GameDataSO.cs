@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New GameDataSO", menuName = "Game/GameData/New GameDataSO")]
@@ -11,7 +12,13 @@ public class GameDataSO : ScriptableObject
     }
     [SerializeField] private Class currentClass;
 
+    [Header("Turrets")]
+    public List<TurretBlueprint> allTurrets;          // All turrets in the game
+    public List<TurretBlueprint> unlockedTurrets;     // Turrets player has unlocked
+    public List<TurretBlueprint> selectedTurrets;     // Turrets currently selected
 
-    public int buildLimitCount;
+    // Checks if a turret is unlocked
+    public bool IsUnlocked(TurretBlueprint turret) => unlockedTurrets.Contains(turret);
 
+    public bool IsSelected (TurretBlueprint turret) => selectedTurrets.Contains(turret);
 }
