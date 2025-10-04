@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b51c1e77c267c41a826b06faacca5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allTurrets: []
-  unlockedTurrets: []
+  gameData: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
+  maxSelectedTurrets: 4
 --- !u!1 &845095072
 GameObject:
   m_ObjectHideFlags: 0

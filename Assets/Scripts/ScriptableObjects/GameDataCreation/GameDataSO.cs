@@ -4,7 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New GameDataSO", menuName = "Game/GameData/New GameDataSO")]
 public class GameDataSO : ScriptableObject
 {
+    public int gameCurrency = 0;
 
+    public int limitOfUnlockableTurrets = 10;
+    public  int limitOfSelectableTurrets = 5;
     public enum Class
     {
         Mechanic,

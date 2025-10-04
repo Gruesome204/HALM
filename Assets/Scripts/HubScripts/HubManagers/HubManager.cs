@@ -10,7 +10,7 @@ public class HubManager : MonoBehaviour
     [Header("Data References")]
     public GameDataSO gameData;          // Reference to your ScriptableObject
 
-    public int maxSelectedTurrets = 4;
+    public int maxSelectedTurrets;
 
     public event Action<TurretBlueprint> OnTurretUnlocked;
     public event Action<TurretBlueprint> OnTurretSelected;
@@ -25,6 +25,11 @@ public class HubManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject); // keep between scenes if needed
+    }
+
+    private void Start()
+    {
+        maxSelectedTurrets = gameData.limitOfSelectableTurrets;
     }
 
     public bool UnlockTurret(TurretBlueprint turret)
