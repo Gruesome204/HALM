@@ -56,7 +56,7 @@ MonoBehaviour:
     - Locale-de-DE
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c8bf015d5f9a9704d93ef7895b8286ac
-    m_Address: TurretTranslationOrdinaryTurret_de-DE
+    m_Address: TurretTranslationArcherTower_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE

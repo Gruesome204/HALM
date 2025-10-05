@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: TurretTranslationOrdinaryTurret_en
+  m_Name: TurretTranslationArcherTower_de-DE
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: en
+    m_Code: de-DE
   m_SharedData: {fileID: 11400000, guid: 89ed0337a0f9f05408f7d5799d299334, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
   - m_Id: 5991395328
-    m_Localized: Ordinary Turret
+    m_Localized: Bogen Turm
     m_Metadata:
       m_Items: []
   references:

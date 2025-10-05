@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: TurretTranslationOrdinaryTurret Shared Data
+  m_Name: TurretTranslationArcherTower Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: TurretTranslationOrdinaryTurret
+  m_TableCollectionName: TurretTranslationArcherTower
   m_TableCollectionNameGuidString: 89ed0337a0f9f05408f7d5799d299334
   m_Entries:
   - m_Id: 5991395328

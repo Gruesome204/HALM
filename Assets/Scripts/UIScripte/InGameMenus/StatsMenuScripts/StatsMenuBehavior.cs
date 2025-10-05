@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
@@ -93,10 +94,10 @@ public class StatsMenuBehavior : MonoBehaviour
 
         //Creating List Elements for each Turretkind currently placed, giving them the turret they represent and a reference to the turret Detail Menu,
         //and adding the created Button to the scroll List
-        foreach (var turret in turretsCurrentlyPlaced)
+        foreach (var turret in TurretPlacementController.Instance.GetActiveTurrets())
         {
             Debug.Log("Hello there");
-            SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret.GetComponent<TurretBlueprint>(), listElementAsset, ref turretDetails);
+            SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret.GetComponent<TurretBehaviour>().turretBlueprint, listElementAsset, ref turretDetails);
             uIDocument.rootVisualElement.Q("unity-content-container").Add(towerElement.listButton);
         }
     }

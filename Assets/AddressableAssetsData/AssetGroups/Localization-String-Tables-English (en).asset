@@ -28,7 +28,7 @@ MonoBehaviour:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 58e70a0be6ac5d1439d6af1a7a15f786
-    m_Address: TurretTranslationOrdinaryTurret_en
+    m_Address: TurretTranslationArcherTower_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

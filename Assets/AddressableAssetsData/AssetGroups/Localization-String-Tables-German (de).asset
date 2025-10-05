@@ -23,7 +23,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1c1493b789a391a4f961d9adac7375f2
-    m_Address: TurretTranslationOrdinaryTurret_de
+    m_Address: TurretTranslationArcherTower_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de

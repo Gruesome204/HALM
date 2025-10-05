@@ -218,9 +218,9 @@ Transform:
   - {fileID: 2051609382}
   - {fileID: 415030905}
   - {fileID: 90814631}
+  - {fileID: 302126413}
   - {fileID: 1573890352}
   - {fileID: 1542782590}
-  - {fileID: 302126413}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &53424834
@@ -949,7 +949,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &415030905
 Transform:
   m_ObjectHideFlags: 0
@@ -2087,7 +2087,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -3603908917086155970, guid: 4fbb6b597f1fc3c438e24f3c032102f6, type: 2}
   m_audioClip: {fileID: 8300000, guid: 085a9ce1e7d28a645b679d22a08d31d5, type: 3}
   m_Resource: {fileID: 8300000, guid: 085a9ce1e7d28a645b679d22a08d31d5, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -2806,7 +2806,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: 74627d96f2d73014095b8f2b0ba98653, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 4adc4442bb7b7bf4da3fe63ac3704875, type: 3}
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
