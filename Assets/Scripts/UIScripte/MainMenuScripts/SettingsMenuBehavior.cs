@@ -40,6 +40,7 @@ public class SettingsMenuBehavior : MonoBehaviour
         ConnectingEverything();
 
         PlayThisMusic(2);
+        this.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -58,7 +59,7 @@ public class SettingsMenuBehavior : MonoBehaviour
         backBtn.RegisterCallback<ClickEvent>(OnBackBtnClicked);
 
         headline = root.Q<Label>("headline");
-        headline.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "settingsHeadline"));
+        headline.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "headline"));
 
 
         //Connecting the language Stuff

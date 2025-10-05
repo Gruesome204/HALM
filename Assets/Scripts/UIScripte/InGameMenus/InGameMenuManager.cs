@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class InGameMenuManager : MonoBehaviour
 {
-    public static InGameMenuManager Instance;
+    public static InGameMenuManager Instance{ get; private set; }
     void Awake() => Instance = this;
 
     public event Action testEvent;
@@ -22,19 +22,21 @@ public class InGameMenuManager : MonoBehaviour
     [SerializeField] private GameObject statsMenu;
     [SerializeField] private GameObject actionRow;
     [SerializeField] private GameObject settingsMenu;
+    [SerializeField] private GameObject turretUpgradeMenu;
+
 
     void Start()
     {
-        CloseAllMenus();
+        //CloseAllMenus();
         OpenOneInGameMenu(3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && Time.timeScale == 0)
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeInHierarchy)
         {
-           ReturnToGame();
+           pauseMenu.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -42,9 +44,9 @@ public class InGameMenuManager : MonoBehaviour
             OpenOneInGameMenu(1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && Time.timeScale == 0)
+        if (Input.GetKeyDown(KeyCode.Tab) && statsMenu.activeInHierarchy)
         {
-            ReturnToGame();
+            statsMenu.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -59,6 +61,7 @@ public class InGameMenuManager : MonoBehaviour
         statsMenu.SetActive(false);
         actionRow.SetActive(false);
         settingsMenu.SetActive(false);
+        turretUpgradeMenu.SetActive(false);
     }
 
     public void OpenOneInGameMenu(int menuToOpen)
@@ -67,12 +70,10 @@ public class InGameMenuManager : MonoBehaviour
         {
             case 1:
                 pauseMenu.SetActive(true);
-                Time.timeScale = 0;
                 break;
 
             case 2:
                 statsMenu.SetActive(true);
-                Time.timeScale = 0;
                 break;
 
             case 3:
@@ -82,13 +83,17 @@ public class InGameMenuManager : MonoBehaviour
             case 4:
                 settingsMenu.SetActive(true);
                 break;
+
+            case 5:
+                turretUpgradeMenu.SetActive(true);
+                break;
         }
     }
 
     public void ReturnToGame()
     {
-        Time.timeScale = 1;
-        CloseAllMenus();
+        Debug.Log("Returning to Game");
+        //CloseAllMenus();
         OpenOneInGameMenu(3);
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 public class StatsMenuBehavior : MonoBehaviour
 {
-    private InGameMenuManager gameMenuManger;
     private UIDocument uIDocument;
 
     private Label statsMenuHeadline;
@@ -25,7 +24,6 @@ public class StatsMenuBehavior : MonoBehaviour
     void OnEnable()
     {
         uIDocument = GetComponent<UIDocument>();
-        gameMenuManger = FindObjectOfType<InGameMenuManager>();
 
         //Connect and set Stats Menu Headline
         statsMenuHeadline = uIDocument.rootVisualElement.Q<Label>("statsMenuHeadline");
@@ -51,11 +49,18 @@ public class StatsMenuBehavior : MonoBehaviour
         towerButton = uIDocument.rootVisualElement.Q<Button>("towerButton");
         towerButton.SetBinding("text", new LocalizedString("StatsMenuTranslationTable", "towerButton"));
         towerButton.RegisterCallback<ClickEvent>(OnTowerBtnClicked);
+
+        GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+        InGameMenuManager.Instance.ReturnToGame();
     }
 
     void OnResumeBtnClicked(ClickEvent evt)
     {
-        gameMenuManger.ReturnToGame();
+        this.gameObject.SetActive(false);
     }
     void OnCharackterBtnClicked(ClickEvent evt)
     {
@@ -90,6 +95,7 @@ public class StatsMenuBehavior : MonoBehaviour
         //and adding the created Button to the scroll List
         foreach (var turret in turretsCurrentlyPlaced)
         {
+            Debug.Log("Hello there");
             SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret.GetComponent<TurretBlueprint>(), listElementAsset, ref turretDetails);
             uIDocument.rootVisualElement.Q("unity-content-container").Add(towerElement.listButton);
         }

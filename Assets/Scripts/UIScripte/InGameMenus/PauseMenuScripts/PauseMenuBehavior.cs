@@ -13,13 +13,9 @@ public class PauseMenuBehavior : MonoBehaviour
     private Button cancelRunButton;
     private Button mainMenuButton;
     private Button exitButton;
-
-    private InGameMenuManager gameMenuManager;
-
     void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
-        gameMenuManager = FindObjectOfType<InGameMenuManager>();
 
         //Connecting and Setting Pause Menu Headline
         pauseMenuHeadline = root.Q<Label>("pauseMenuHeadline");
@@ -49,19 +45,26 @@ public class PauseMenuBehavior : MonoBehaviour
         exitButton = root.Q<Button>("exitButton");
         exitButton.SetBinding("text", new LocalizedString("MenuTranslationaTable", "exitButton"));
         exitButton.RegisterCallback<ClickEvent>(OnExitBtnCicked);
+
+        GameManager.Instance.ChangeState(GameManager.GameState.Paused);
     }
 
+    private void OnDisable()
+    {
+        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+        InGameMenuManager.Instance.ReturnToGame();
+    }
     void OnBackBtnCicked(ClickEvent evt)
     {
-        gameMenuManager.ReturnToGame();
+        this.gameObject.SetActive(false);
     }
     void OnResumeBtnCicked(ClickEvent evt)
     {
-        gameMenuManager.ReturnToGame();
+        this.gameObject.SetActive(false);
     }
     void OnSettingsBtnCicked(ClickEvent evt)
     {
-        gameMenuManager.OpenOneInGameMenu(4);
+        InGameMenuManager.Instance.OpenOneInGameMenu(4);
     }
     void OnCancelRunBtnCicked(ClickEvent evt)
     {

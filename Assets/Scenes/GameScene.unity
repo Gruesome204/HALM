@@ -2293,6 +2293,7 @@ MonoBehaviour:
   statsMenu: {fileID: 415030904}
   actionRow: {fileID: 90814630}
   settingsMenu: {fileID: 1573890351}
+  turretUpgradeMenu: {fileID: 302126412}
 --- !u!1 &1542782589
 GameObject:
   m_ObjectHideFlags: 0
