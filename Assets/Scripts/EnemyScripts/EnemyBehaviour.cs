@@ -10,16 +10,13 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private EnemyAttack attack;
     private EnemyAbilityBehaviour abilityBehaviour;
 
-    private bool isPaused;
+    public bool isPaused;
 
     [Header("Ability Settings")]
     [Tooltip("Time between ability usage attempts (seconds).")]
     [SerializeField] private float abilityCheckInterval = 1.0f;
-    private float abilityCheckTimer;
-    private float nextAttackTime = 0f;
-    private float nextAbilityTime = 0f;
-
-    private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
+    private float attackTimer = 0f;
+    private float abilityTimer = 0f;
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
     private void Awake()
@@ -46,15 +43,27 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         isPaused = false;
         // Resume AI
     }
+
+    private void Start()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.RegisterPausable(this);
+        else
+            Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
+    
+    }
     private void Update()
     {
         if (isPaused || (knockback != null && knockback.IsKnockedBack)) return;
+
+        attackTimer += Time.deltaTime;
+        abilityTimer += Time.deltaTime;
 
         var target = SelectTarget();
         if (target == null) return;
 
         HandleMovement(target);
-        //TryAttack(target);
+        TryAttack(target);
         TryUseAbilities(target);
     }
     private void HandleMovement(GameObject target)
@@ -80,11 +89,11 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         float attackCooldown = 1f / Mathf.Max(0.01f, stats.currentAttackSpeed);
 
-        if (Time.time >= nextAttackTime)
+        if (attackTimer >= attackCooldown)
         {
-            attack.TryAttack(target);
-            nextAttackTime = Time.time + attackCooldown;
-            Debug.Log($"{name} attacked {target.name}. Next attack at {nextAttackTime:F2}s");
+            attack.TryAttack(target, isPaused);
+            attackTimer = 0f; // reset timer
+            Debug.Log($"{name} attacked {target.name}");
         }
     }
 
@@ -92,7 +101,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (abilityBehaviour == null || target == null || AbilityManager.Instance == null) return;
 
-        if (Time.time < nextAbilityTime) return;
+        if (abilityTimer < abilityCheckInterval) return;
 
         var abilities = AbilityManager.Instance.GetAbilities(gameObject);
         if (abilities == null || abilities.Count == 0) return;
@@ -109,8 +118,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         bool used = AbilityManager.Instance.TryUseAbility(gameObject, usable.index, target);
         if (used)
         {
-            nextAbilityTime = Time.time + abilityCheckInterval;
-            Debug.Log($"{name} used ability: {usable.ability.ability.name}. Next ability at {nextAbilityTime:F2}s");
+            abilityTimer = 0f; // reset ability timer
+            Debug.Log($"{name} used ability: {usable.ability.ability.name}");
         }
     }
 

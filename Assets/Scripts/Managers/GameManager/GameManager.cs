@@ -19,7 +19,17 @@ public class GameManager : MonoBehaviour
     public event Action<GameState> OnGameStateChanged;
 
     private readonly List<IPausable> pausables = new List<IPausable>();
-    public void RegisterPausable(IPausable pausable) => pausables.Add(pausable);
+    public void RegisterPausable(IPausable pausable)
+    {
+        if (!pausables.Contains(pausable))
+            pausables.Add(pausable);
+
+        // Immediately notify of current state
+        if (CurrentState == GameState.Paused)
+            pausable.OnPause();
+        else if (CurrentState == GameState.Playing)
+            pausable.OnResume();
+    }
     public void UnregisterPausable(IPausable pausable) => pausables.Remove(pausable);
 
     [Header("Debug Controls")]
@@ -81,4 +91,17 @@ public class GameManager : MonoBehaviour
     }
     public bool IsPlaying() => CurrentState == GameState.Playing;
     public bool IsPaused() => CurrentState == GameState.Paused;
+#if UNITY_EDITOR
+    // Called when a serialized field changes in the inspector
+    private void OnValidate()
+    {
+        // Only apply if the game is running
+        if (!Application.isPlaying) return;
+
+        if (debugState != CurrentState)
+        {
+            ChangeState(debugState);
+        }
+    }
+#endif
 }

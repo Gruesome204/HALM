@@ -3,8 +3,8 @@ using static DamageData;
 
 public class EnemyAttack : MonoBehaviour
 {
-    private float lastAttackTime;
     private EnemyStats stats;
+    private float attackTimer = 0f;
 
     private void Awake()
     {
@@ -13,11 +13,12 @@ public class EnemyAttack : MonoBehaviour
             Debug.LogWarning("EnemyStats component missing on enemy!");
     }
 
-    public void TryAttack(GameObject target)
+    public void TryAttack(GameObject target, bool isPaused)
     {
         Debug.Log("Attack Target");
         if (target == null || stats == null) return;
-
+        if (isPaused) return;
+        attackTimer += Time.deltaTime;
         IDamagable damagable = target.GetComponent<IDamagable>();
         if (damagable == null || damagable.IsInvulnerable) return;
 
@@ -26,10 +27,9 @@ public class EnemyAttack : MonoBehaviour
         if (distance > attackRangeWithTolerance) return;
 
         float attackCooldown = 1f / stats.currentAttackSpeed;
-        float timeSinceLastAttack = Time.time - lastAttackTime;
-        Debug.Log($"AttackSpeed: {stats.currentAttackSpeed} attacks/sec, Cooldown: {attackCooldown}s, Time since last attack: {timeSinceLastAttack}s");
+        Debug.Log($"AttackSpeed: {stats.currentAttackSpeed} attacks/sec, Cooldown: {attackCooldown}s, Time since last attack: {attackCooldown}s");
 
-        if (timeSinceLastAttack >= attackCooldown)
+        if (attackTimer >= attackCooldown)
         {
             // Create damage data
             DamageData damageData = new DamageData
@@ -49,7 +49,6 @@ public class EnemyAttack : MonoBehaviour
             damagable.TakeDamage(damageData, knockbackData);
             Debug.Log($"{gameObject.name} attacked {damagable.GetTargetType()} for {damageData.amount} damage with {knockbackData.knockbackStrength} knockback.");
 
-            lastAttackTime = Time.time;
         }
     }
 }

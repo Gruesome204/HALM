@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Linq;
 
-public class EnemyAbilityBehaviour : MonoBehaviour
+public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
 {
     public EnemyAbilityBlueprint[] abilities;
     public Transform target;
+
+    private bool isPaused;
+    private float abilityTimer = 0f; // deltaTime-based timer
 
     private void Start()
     {
@@ -28,6 +31,13 @@ public class EnemyAbilityBehaviour : MonoBehaviour
             return;
         if (AbilityManager.Instance == null)
             return;
+
+        // Increment pause-aware timer
+        abilityTimer += Time.deltaTime;
+        float abilityCheckInterval = 1f; // default interval between attempts
+        if (abilityTimer < abilityCheckInterval)
+            return;
+        
         var runtimeList = AbilityManager.Instance.GetAbilities(gameObject);
         if (runtimeList == null) return;
         if (target == null)
@@ -48,8 +58,21 @@ public class EnemyAbilityBehaviour : MonoBehaviour
         bool used = AbilityManager.Instance.TryUseAbility(gameObject, usable.index, target.gameObject);
 
         if (used)
+        {
+            abilityTimer = 0f;
             Debug.Log($"{name} used ability: {usable.ability.ability.abilityName}");
+        }
         else
             Debug.Log($"{name} tried to use ability but failed (cooldown or invalid target).");
+    }
+
+    public void OnPause()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnResume()
+    {
+        throw new System.NotImplementedException();
     }
 }
