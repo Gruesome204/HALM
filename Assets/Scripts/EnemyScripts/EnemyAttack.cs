@@ -25,7 +25,9 @@ public class EnemyAttack : MonoBehaviour
         float attackRangeWithTolerance = stats.currentAttackRange + 0.1f; // small tolerance
         if (distance > attackRangeWithTolerance) return;
 
-        if (Time.time >= lastAttackTime + stats.currentAttackSpeed)
+        float attackCooldown = 1f / Mathf.Max(0.01f, stats.currentAttackSpeed);
+
+        if (Time.time >= lastAttackTime + attackCooldown)
         {
             // Create damage data
             DamageData damageData = new DamageData

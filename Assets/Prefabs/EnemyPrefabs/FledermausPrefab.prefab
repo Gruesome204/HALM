@@ -238,7 +238,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 7339260930082218373}
   target: {fileID: 0}
-  pursueRange: 5
 --- !u!114 &7339260930082218373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,18 +252,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseStats: {fileID: 11400000, guid: 44d30920b39db314fa7ac40f4935d856, type: 2}
   currentLevel: 1
+  currentDamage: 0
+  currentAttackSpeed: 0
+  currentCritChance: 0
+  currentCritMultiplier: 0
+  currentAttackRange: 0
   currentHealth: 0
   currentMaxHealth: 0
   currentArmor: 0
   currentMagicResistance: 0
-  currentDamage: 0
-  currentMovementSpeed: 0
   currentKnockbackReduction: 0
+  currentKnockbackForce: 0
+  currentKnockbackDuration: 0
+  currentMovementSpeed: 0
+  currentDetectionRange: 0
+  currentVisionRange: 0
+  currentHearingRange: 0
+  currentPursueRange: 0
+  currentExperienceYield: 0
   healthScaleFactor: 0
   damageScaleFactor: 0
   speedScaleFactor: 0
   armorScaleFactor: 0
-  currentExperienceYield: 0
 --- !u!114 &2443457996428829973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,7 +286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87815e6b4e8fbc48b5c2334ac77c188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilities: []
+  abilities:
+  - {fileID: 0}
   target: {fileID: 0}
 --- !u!114 &-8493545583482714336
 MonoBehaviour:
@@ -291,8 +301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328fefd2eb5b2e74490d41a6f67c8f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 1
-  attackRange: 1.5
 --- !u!1001 &2257114052561782404
 PrefabInstance:
   m_ObjectHideFlags: 0

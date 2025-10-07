@@ -8,28 +8,48 @@ public class EnemyAbilityBehaviour : MonoBehaviour
 
     private void Start()
     {
+        if (abilities == null || abilities.Length == 0)
+        {
+            Debug.LogWarning($"{name} has no abilities assigned — skipping registration.");
+            return;
+        }
         AbilityManager.Instance.Register(gameObject, abilities);
     }
 
     private void OnDestroy()
     {
-        AbilityManager.Instance.Unregister(gameObject);
+        if (AbilityManager.Instance != null)
+            AbilityManager.Instance.Unregister(gameObject);
     }
 
     private void Update()
     {
-        //var runtimeList = AbilityManager.Instance.GetAbilities(gameObject);
-        //if (runtimeList == null) return;
+        if (abilities == null || abilities.Length == 0)
+            return;
+        if (AbilityManager.Instance == null)
+            return;
+        var runtimeList = AbilityManager.Instance.GetAbilities(gameObject);
+        if (runtimeList == null) return;
+        if (target == null)
+            return;
 
-        //// Pick best ability by priority
-        //var best = runtimeList
-        //    .Where(a => a.CanUse(gameObject, target?.gameObject))
-        //    .OrderByDescending(a => a.ability.priority)
-        //    .FirstOrDefault();
 
-        //if (best != null)
-        //{
-        //    best.Use(gameObject, target?.gameObject);
-        //}
+        // Filter abilities that can currently be used
+        var usable = runtimeList
+            .Select((a, i) => new { ability = a, index = i })
+            .Where(x => x.ability != null && x.ability.CanUse(gameObject, target.gameObject))
+            .OrderByDescending(x => x.ability.ability.priority)
+            .FirstOrDefault();
+
+        if (usable == null)
+            return;
+
+        // Try using it via the manager (respects cooldowns, conditions)
+        bool used = AbilityManager.Instance.TryUseAbility(gameObject, usable.index, target.gameObject);
+
+        if (used)
+            Debug.Log($"{name} used ability: {usable.ability.ability.abilityName}");
+        else
+            Debug.Log($"{name} tried to use ability but failed (cooldown or invalid target).");
     }
 }
