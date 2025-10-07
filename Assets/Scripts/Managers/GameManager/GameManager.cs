@@ -15,22 +15,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public GameState CurrentState { get; private set; }
+    public GameState PreviousState { get; private set; }
 
-    public event Action<GameState> OnGameStateChanged;
+    public event Action<GameState, GameState> OnGameStateChanged;
 
     private readonly List<IPausable> pausables = new List<IPausable>();
-    public void RegisterPausable(IPausable pausable)
-    {
-        if (!pausables.Contains(pausable))
-            pausables.Add(pausable);
-
-        // Immediately notify of current state
-        if (CurrentState == GameState.Paused)
-            pausable.OnPause();
-        else if (CurrentState == GameState.Playing)
-            pausable.OnResume();
-    }
-    public void UnregisterPausable(IPausable pausable) => pausables.Remove(pausable);
 
     [Header("Debug Controls")]
     [SerializeField] private GameState debugState;
@@ -51,22 +40,30 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
+        // Allow changing game state from inspector in play mode
         if (debugState != CurrentState)
         {
             ChangeState(debugState);
         }
+#endif
 
+        HandlePauseInput();
+    }
+
+    private void HandlePauseInput()
+    {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (IsPaused())
             {
-                ChangeState(GameState.Playing);
+                ResumeGame();
                 InGameMenuManager.Instance?.ReturnToGame();
             }
             else if (IsPlaying())
             {
-                ChangeState(GameState.Paused);
-                InGameMenuManager.Instance?.OpenOneInGameMenu(1); // Show pause menu
+                PauseGame();
+                InGameMenuManager.Instance?.OpenOneInGameMenu(1);
             }
         }
     }
@@ -76,19 +73,58 @@ public class GameManager : MonoBehaviour
     {
         if (newState == CurrentState) return;
 
+        PreviousState = CurrentState;
         CurrentState = newState;
-        OnGameStateChanged?.Invoke(CurrentState);
+        Debug.Log($"[GameManager] State changed: {PreviousState} → {CurrentState}");
+        OnGameStateChanged?.Invoke(CurrentState, PreviousState); 
 
+        UpdatePausables(newState);
+    }
+
+    private void UpdatePausables(GameState newState)
+    {
         foreach (var p in pausables)
         {
-            if (newState == GameState.Paused) p.OnPause();
-            else if (newState == GameState.Playing) p.OnResume();
+            if (p == null) continue;
+
+            switch (newState)
+            {
+                case GameState.Paused:
+                    p.OnPause();
+                    break;
+                case GameState.Playing:
+                    p.OnResume();
+                    break;
+            }
         }
     }
+
+    public void RegisterPausable(IPausable pausable)
+    {
+        if (!pausables.Contains(pausable))
+            pausables.Add(pausable);
+
+        // Immediately notify of current state
+        if (CurrentState == GameState.Paused)
+            pausable.OnPause();
+        else if (CurrentState == GameState.Playing)
+            pausable.OnResume();
+    }
+
+    public void UnregisterPausable(IPausable pausable)
+    {
+        if (pausable == null) return;
+        pausables.Remove(pausable);
+    }
+
     public void SetPaused(bool paused)
     {
         CurrentState = paused ? GameState.Paused : GameState.Playing;
     }
+
+    public void PauseGame() => ChangeState(GameState.Paused);
+    public void ResumeGame() => ChangeState(GameState.Playing);
+
     public bool IsPlaying() => CurrentState == GameState.Playing;
     public bool IsPaused() => CurrentState == GameState.Paused;
 #if UNITY_EDITOR
