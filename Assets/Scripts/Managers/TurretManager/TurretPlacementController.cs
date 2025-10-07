@@ -299,7 +299,7 @@ public class TurretPlacementController : MonoBehaviour
             // Assign stats from blueprint (clone if ScriptableObject)
             if (currentSelectedBlueprint != null)
                 turretHealth.Initialize(currentSelectedBlueprint);
-
+                
             // Register turret for tracking and cleanup
             turretHealth.OnDeath += OnTurretDeath;
             RegisterTurret(turretHealth);

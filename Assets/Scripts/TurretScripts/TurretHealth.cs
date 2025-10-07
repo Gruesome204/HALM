@@ -9,7 +9,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     [Header("UI")]
     private Slider healthBar;             // Will be assigned when prefab is spawned
-    private HealthBarFollow healthBarFollow;
+    public HealthBarFollow healthBarFollow;
     public bool IsInvulnerable { get; set; }
     public event Action<TurretHealth, DamageData> OnDeath;
     private void Start()
@@ -82,7 +82,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
     {
         if (healthBarPrefab == null) return;
 
-        GameObject bar = Instantiate(healthBarPrefab);
+        GameObject bar = Instantiate(healthBarPrefab, this.transform);
         healthBar = bar.GetComponentInChildren<Slider>();
         healthBarFollow = bar.GetComponent<HealthBarFollow>();
 

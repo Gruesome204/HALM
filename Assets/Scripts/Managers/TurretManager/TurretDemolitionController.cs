@@ -104,17 +104,6 @@ public class TurretDemolitionController : MonoBehaviour
 
         GameObject turret = hit.collider.gameObject;
 
-        // Remove from GridManager
-        PlacableObject placableObject = turret.GetComponent<PlacableObject>();
-        if (placableObject != null)
-        {
-            GridManager.Instance.RemoveObject(
-                placableObject.gameObject,
-                placableObject.currentGridCoordinates,
-               turret.GetComponent<TurretBlueprint>().sizeInCells
-            ) ;
-        }
-
         // Remove from TurretPlacementController list
         TurretPlacementController.Instance.RemoveTurret(turret);
 
