@@ -3,52 +3,38 @@ using UnityEngine;
 public class AbilityRuntime
 {
     public EnemyAbilityBlueprint ability;
-    public float lastUseTime = -Mathf.Infinity;
+    private float nextUseTime = 0f;
 
     public AbilityRuntime(EnemyAbilityBlueprint ability)
     {
         this.ability = ability;
-        lastUseTime = -999f;
     }
 
     public bool CanUse(GameObject user, GameObject target)
     {
-        if (ability == null)
-            return false;
-        // Cooldown check
-        if (Time.time - lastUseTime < ability.cooldown)
-            return false;
-        if (target != null)
-        {
-            float distance = Vector2.Distance(user.transform.position, target.transform.position);
-            if (distance > ability.range)
-                return false;
-        }
+        if (ability == null) return false;
+        if (Time.time < nextUseTime) return false;
+
+        // Add more conditions as needed (range, status, etc.)
         return true;
     }
 
     public void Use(GameObject user, GameObject target)
     {
-        if (ability == null)
-            return;
+        if (ability == null) return;
 
-        lastUseTime = Time.time;
-
-        Debug.Log($"{user.name} used {ability.abilityName}");
-
-        // Apply all defined effects
-        if (ability.effects != null)
+        // Apply all effects
+        foreach (var effect in ability.effects)
         {
-            foreach (var effect in ability.effects)
-            {
-                if (effect == null) continue;
-                effect.Apply(user, target);
-            }
+            effect?.Apply(user, target);
         }
+        // Here you trigger the actual ability effect
+        // For example: spawn projectiles, apply damage, buffs, etc.
+        Debug.Log($"{user.name} used ability {ability.abilityName} on {target?.name}");
+
+
+        // Set cooldown
+        nextUseTime = Time.time + ability.cooldown;
     }
 
-    public float GetCooldownRemaining()
-    {
-        return Mathf.Max(0, (lastUseTime + ability.cooldown) - Time.time);
-    }
 }

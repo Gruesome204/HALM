@@ -24,7 +24,7 @@ MonoBehaviour:
   baseknockbackForce: 0
   baseknockbackDuration: 0
   baseDamage: 5
-  baseAttackSpeed: 2
+  baseAttackSpeed: 1
   baseCritChance: 0
   baseCritHitMultiplier: 0
   baseAttackRange: 1
