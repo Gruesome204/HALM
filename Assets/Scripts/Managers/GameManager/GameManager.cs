@@ -44,6 +44,21 @@ public class GameManager : MonoBehaviour
         {
             ChangeState(debugState);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (IsPaused())
+            {
+                ChangeState(GameState.Playing);
+                InGameMenuManager.Instance?.ReturnToGame();
+            }
+            else if (IsPlaying())
+            {
+                ChangeState(GameState.Paused);
+                InGameMenuManager.Instance?.OpenOneInGameMenu(1); // Show pause menu
+            }
+            
+        }
     }
 
 
