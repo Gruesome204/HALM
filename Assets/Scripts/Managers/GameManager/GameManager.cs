@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
         MainMenu,
         Playing,
         Paused,
+        Stats,
         GameOver
     }
     public static GameManager Instance { get; private set; }
@@ -57,7 +58,6 @@ public class GameManager : MonoBehaviour
                 ChangeState(GameState.Paused);
                 InGameMenuManager.Instance?.OpenOneInGameMenu(1); // Show pause menu
             }
-            
         }
     }
 
