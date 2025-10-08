@@ -13,7 +13,8 @@ public class GameDataSO : ScriptableObject
         Mechanic,
         Test
     }
-    [SerializeField] private Class currentClass;
+    [SerializeField] public Class currentClass;
+    public int currentPlayerLevel;
 
     [Header("Turrets")]
     public List<TurretBlueprint> allTurrets;          // All turrets in the game
