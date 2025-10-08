@@ -27,6 +27,10 @@ public class GameDataSO : ScriptableObject
     {
         return allTurretBlueprints.FirstOrDefault(t => t.turretType == type);
     }
+    public TurretBlueprint GetBlueprint(TurretType type)
+    {
+        return allTurretBlueprints.Find(t => t.turretType == type);
+    }
     public bool IsUnlocked(TurretType type)
     {
         return unlockedTurrets.Contains(type);
@@ -43,4 +47,5 @@ public class GameDataSO : ScriptableObject
             .Where(t => unlockedTurrets.Contains(t.turretType))
             .ToList();
     }
+
 }
