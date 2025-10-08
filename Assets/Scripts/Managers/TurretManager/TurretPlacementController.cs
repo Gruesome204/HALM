@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 /// <summary>
 /// Handles turret blueprint selection, placement, previewing, and active turret management.
@@ -80,6 +81,8 @@ public class TurretPlacementController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2) && turretBlueprintList.Count > 1)
             SelectTurretBlueprint(turretBlueprintList[1]);
     }
+
+
     private void HandlePlacementInput()
     {
         // Skip placement if in demolition mode
@@ -336,4 +339,15 @@ public class TurretPlacementController : MonoBehaviour
     }
     public List<GameObject> GetActiveTurrets() => activeTurrets;
     public List<TurretBlueprint> GetTurretBlueprintList() => turretBlueprintList;
+
+
+    public void SetupFromGameData(GameDataSO gameData)
+    {
+        turretBlueprintList = gameData.allTurretBlueprints
+            .Where(b => gameData.unlockedTurrets.Contains(b.turretType))
+            .ToList();
+
+        Debug.Log($"[TurretPlacement] Loaded {turretBlueprintList.Count} unlocked turrets from GameDataSO.");
+        OnTurretsChanged?.Invoke();
+    }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
+    public GameDataSO gameDataSO;
     public enum GameState
     {
         MainMenu,
@@ -120,6 +121,18 @@ public class GameManager : MonoBehaviour
     public void SetPaused(bool paused)
     {
         CurrentState = paused ? GameState.Paused : GameState.Playing;
+    }
+
+    public void SaveGame()
+    {
+        SaveSystem.Save(gameDataSO);
+    }
+
+    public void LoadGame()
+    {
+        SaveSystem.Load(gameDataSO);
+        //Loads the saved turretTypes into TurretManager
+        TurretPlacementController.Instance.SetupFromGameData(gameDataSO);
     }
 
     public void PauseGame() => ChangeState(GameState.Paused);
