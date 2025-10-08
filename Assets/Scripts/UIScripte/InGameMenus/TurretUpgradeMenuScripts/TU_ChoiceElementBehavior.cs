@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UIElements;
 
 public class TU_ChoiceElementBehavior
@@ -21,12 +22,14 @@ public class TU_ChoiceElementBehavior
 
         border = choiceElement.Q<VisualElement>();
         button = choiceElement.Q<Button>();
+        button.SetBinding("text", new LocalizedString("TurretUpgradeTranslationTable", "placeholder"));
         button.RegisterCallback<ClickEvent>(OnClicked);
     }
 
     void OnClicked(ClickEvent evt)
     {
         ApplyUpgrade(option);
+        InGameMenuManager.Instance.CloseTurretUpgrade();
     }
 
     private void ApplyUpgrade(TurretUpgradeChoiceSO.UpgradeOption option)
