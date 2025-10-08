@@ -6,13 +6,14 @@ public class TurretBlueprint : ScriptableObject
     [Header("Info")]
     public string turretName;
     [Header("Turret Level")]
-    public int baseLevel = 1;
+    [Min(1)] public int baseLevel = 1;
     [TextArea(3, 10)] public string description;
-    [Header("Preview")]
-    public GameObject previewPrefab; // 👈 purely visual prefab
-
     [Header("TurretType")]
-    public TurretType turretType;
+    public TurretType turretType;   
+    [Tooltip("Visual-only model shown before building.")]
+    public GameObject previewPrefab; // 👈 purely visual prefab
+    [Tooltip("Prefab actually placed in the world.")]
+    public GameObject turretPrefab;
 
     [Header("Stat Values")]
     public float baseHealth;
@@ -46,8 +47,6 @@ public class TurretBlueprint : ScriptableObject
 
     [Header("Cost")]
     public int buildingCost;
-    public GameObject turretPrefab;
-
     [Header("Turret Size")]
     public int height;
     public int length;

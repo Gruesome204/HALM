@@ -42,6 +42,7 @@ public class AbilityManager : MonoBehaviour
     public bool TryUseAbility(GameObject user, int abilityIndex, GameObject target)
     {
         if (!runtimeAbilities.ContainsKey(user)) return false;
+        if (abilityIndex < 0 || abilityIndex >= runtimeAbilities[user].Count) return false;
 
         var ability = runtimeAbilities[user][abilityIndex];
         if (ability.CanUse(user, target))
@@ -49,6 +50,7 @@ public class AbilityManager : MonoBehaviour
             ability.Use(user, target);
             return true;
         }
+
         return false;
     }
 
