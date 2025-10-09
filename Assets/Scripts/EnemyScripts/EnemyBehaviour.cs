@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -15,8 +16,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     [Header("Ability Settings")]
     [Tooltip("Time between ability usage attempts (seconds).")]
     [SerializeField] private float abilityCheckInterval = 1.0f;
-    private float attackTimer = 0f;
-    private float abilityTimer = 0f;
+    private float nextAttackTime = 0f;   
+    private float nextAbilityTime = 0f;
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
     private void Awake()
@@ -35,14 +36,24 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     public void OnPause()
     {
         isPaused = true;
+        movement?.SetPaused(true);
         // Stop moving, stop attacking, etc.
     }
 
     public void OnResume()
     {
         isPaused = false;
-        // Resume AI
+        movement?.SetPaused(false);
+        // Reset attack & ability timers
+        nextAttackTime = Time.time;
+        nextAbilityTime = Time.time;
+        if (movement != null)
+        {
+            movement.target = null;
+            movement.MoveTowardTarget();
+        }
     }
+
 
     private void Start()
     {
@@ -52,12 +63,9 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
     
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (isPaused || (knockback != null && knockback.IsKnockedBack)) return;
-
-        attackTimer += Time.deltaTime;
-        abilityTimer += Time.deltaTime;
 
         var target = SelectTarget();
         if (target == null) return;
@@ -84,16 +92,18 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (attack == null || target == null) return;
 
-        float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > stats.currentAttackRange) return;
-
         float attackCooldown = 1f / Mathf.Max(0.01f, stats.currentAttackSpeed);
 
-        if (attackTimer >= attackCooldown)
+        if (Time.time >= nextAttackTime)
         {
-            attack.TryAttack(target, isPaused);
-            attackTimer = 0f; // reset timer
-            Debug.Log($"{name} attacked {target.name}");
+            float distance = Vector2.Distance(transform.position, target.transform.position);
+            if (distance <= stats.currentAttackRange)
+            {
+                attack.PerformAttack(target, isPaused);
+                nextAttackTime = Time.time + attackCooldown;
+
+                Debug.Log($"{name} attacked {target.name} (Cooldown: {attackCooldown:F2}s)");
+            }
         }
     }
 
@@ -101,12 +111,11 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (abilityBehaviour == null || target == null || AbilityManager.Instance == null) return;
 
-        if (abilityTimer < abilityCheckInterval) return;
+        if (Time.time < nextAbilityTime) return;
 
         var abilities = AbilityManager.Instance.GetAbilities(gameObject);
         if (abilities == null || abilities.Count == 0) return;
 
-        // Pick highest-priority usable ability
         var usable = abilities
             .Select((a, i) => new { ability = a, index = i })
             .Where(x => x.ability != null && x.ability.CanUse(gameObject, target))
@@ -118,7 +127,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         bool used = AbilityManager.Instance.TryUseAbility(gameObject, usable.index, target);
         if (used)
         {
-            abilityTimer = 0f; // reset ability timer
+            nextAbilityTime = Time.time + abilityCheckInterval;
             Debug.Log($"{name} used ability: {usable.ability.ability.name}");
         }
     }

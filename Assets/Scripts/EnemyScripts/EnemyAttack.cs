@@ -4,7 +4,6 @@ using static DamageData;
 public class EnemyAttack : MonoBehaviour
 {
     private EnemyStats stats;
-    private float attackTimer = 0f;
 
     private void Awake()
     {
@@ -13,42 +12,32 @@ public class EnemyAttack : MonoBehaviour
             Debug.LogWarning("EnemyStats component missing on enemy!");
     }
 
-    public void TryAttack(GameObject target, bool isPaused)
+    public void PerformAttack(GameObject target, bool isPaused)
     {
-        Debug.Log("Attack Target");
         if (target == null || stats == null) return;
-        if (isPaused) return;
-        attackTimer += Time.deltaTime;
+
         IDamagable damagable = target.GetComponent<IDamagable>();
         if (damagable == null || damagable.IsInvulnerable) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        float attackRangeWithTolerance = stats.currentAttackRange + 0.1f; // small tolerance
-        if (distance > attackRangeWithTolerance) return;
+        if (distance > stats.currentAttackRange + 0.1f) return;
 
-        float attackCooldown = 1f / stats.currentAttackSpeed;
-        Debug.Log($"AttackSpeed: {stats.currentAttackSpeed} attacks/sec, Cooldown: {attackCooldown}s, Time since last attack: {attackCooldown}s");
-
-        if (attackTimer >= attackCooldown)
+        // Create damage data
+        DamageData damageData = new DamageData
         {
-            // Create damage data
-            DamageData damageData = new DamageData
-            {
-                amount = stats.currentDamage,
-                source = gameObject,
-                type = DamageType.Physical // Change if needed
-            };
+            amount = stats.currentDamage,
+            source = gameObject,
+            type = DamageType.Physical // Change if needed
+        };
 
-            // Knockback
-            KnockbackData knockbackData = new KnockbackData
-            {
-                knockbackStrength = stats.currentKnockbackForce,
-                direction = (target.transform.position - transform.position).normalized
-            };
+        // Knockback data
+        KnockbackData knockbackData = new KnockbackData
+        {
+            knockbackStrength = stats.currentKnockbackForce,
+            direction = (target.transform.position - transform.position).normalized
+        };
 
-            damagable.TakeDamage(damageData, knockbackData);
-            Debug.Log($"{gameObject.name} attacked {damagable.GetTargetType()} for {damageData.amount} damage with {knockbackData.knockbackStrength} knockback.");
-
-        }
+        damagable.TakeDamage(damageData, knockbackData);
+        Debug.Log($"{gameObject.name} attacked {damagable.GetTargetType()} for {damageData.amount} damage with {knockbackData.knockbackStrength} knockback.");
     }
 }

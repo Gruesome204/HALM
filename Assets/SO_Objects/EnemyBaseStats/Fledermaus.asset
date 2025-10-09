@@ -16,7 +16,7 @@ MonoBehaviour:
   baseDescription: Nerviger kleiner Gegner der
   baseLevel: 1
   baseMovementSpeed: 3.5
-  baseMaxHealth: 30
+  baseMaxHealth: 33
   baseHealth: 30
   baseArmor: 0
   baseMagicResistance: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   baseCritChance: 0
   baseCritHitMultiplier: 0
   baseAttackRange: 1
-  baseDetectionRange: 2
+  baseDetectionRange: 10
   baseVisionRange: 2
   baseHearingRange: 2
   pursueRange: 2

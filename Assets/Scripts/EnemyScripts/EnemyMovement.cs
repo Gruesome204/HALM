@@ -6,10 +6,22 @@ public class EnemyMovement : MonoBehaviour
     public GameObject target;
 
     private Rigidbody2D rb;
+    private bool isPaused;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+    private void FixedUpdate()
+    {
+        if (isPaused) return;
+        MoveTowardTarget();
+    }
+    public void SetPaused(bool paused)
+    {
+        isPaused = paused;
+        if (paused)
+            rb.linearVelocity = Vector2.zero;
     }
 
     // Call this in FixedUpdate from EnemyBehaviour
@@ -36,11 +48,9 @@ public class EnemyMovement : MonoBehaviour
 
     public void Stop()
     {
-        if (rb != null)
-            rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
     }
 
-    // Finds the closest target (player or turret)
     private void LookForTarget()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -49,7 +59,6 @@ public class EnemyMovement : MonoBehaviour
         GameObject closest = null;
         float closestDistance = Mathf.Infinity;
 
-        // Check player
         if (player != null)
         {
             float dist = Vector2.Distance(transform.position, player.transform.position);
@@ -60,7 +69,6 @@ public class EnemyMovement : MonoBehaviour
             }
         }
 
-        // Check turrets
         foreach (GameObject turret in turrets)
         {
             float dist = Vector2.Distance(transform.position, turret.transform.position);
