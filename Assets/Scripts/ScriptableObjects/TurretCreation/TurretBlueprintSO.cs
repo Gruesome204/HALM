@@ -5,6 +5,8 @@ public class TurretBlueprint : ScriptableObject
 {
     [Header("Info")]
     public string turretName;
+    [Header("Icon")]
+    public Sprite towerIcon;
     [Header("Turret Level")]
     [Min(1)] public int baseLevel = 1;
     [TextArea(3, 10)] public string description;
@@ -14,6 +16,7 @@ public class TurretBlueprint : ScriptableObject
     public GameObject previewPrefab; // 👈 purely visual prefab
     [Tooltip("Prefab actually placed in the world.")]
     public GameObject turretPrefab;
+
 
     [Header("Stat Values")]
     public float baseHealth;

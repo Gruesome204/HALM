@@ -12,30 +12,40 @@ public class EnemyMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
+
     private void FixedUpdate()
     {
         if (isPaused) return;
+
         MoveTowardTarget();
     }
 
+    public void SetPaused(bool paused)
+    {
+        isPaused = paused;
 
-    // Call this in FixedUpdate from EnemyBehaviour
+        if (paused)
+        {
+            // Stop all movement and freeze physics
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        else
+        {
+            // Unfreeze physics, allow rotation if needed
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+    }
+
     public void MoveTowardTarget()
     {
         LookForTarget();
 
-        if (target == null || stats == null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
+        if (target == null || stats == null) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > stats.currentPursueRange)
-        {
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
+        if (distance > stats.currentPursueRange) return;
 
         Vector2 dir = (target.transform.position - transform.position).normalized;
         rb.MovePosition(rb.position + dir * stats.currentMovementSpeed * Time.fixedDeltaTime);
