@@ -61,6 +61,13 @@ MonoBehaviour:
     - Locale-en
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b30284c54e155c3459fe4f502ded0f73
+    m_Address: TurretUpgradeTranslationTable_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f4630720c2fd1b84f9b5f4346eb6f810
     m_Address: ActionRowTranslationTable_en
     m_ReadOnly: 1

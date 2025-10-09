@@ -51,6 +51,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbf8d7e09d4a02645939537c832780c8
+    m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretUpgradeTranslationTable
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ed55aba6ff1d81c4f9b0c5a79153ff66
     m_Address: Assets/Localization/TranslationTables/StatsMenuTranslationTable Shared
       Data.asset

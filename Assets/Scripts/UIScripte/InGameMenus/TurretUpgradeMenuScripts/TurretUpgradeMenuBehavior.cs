@@ -26,19 +26,15 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour
             Debug.LogError("No UIDocument found!");
             return;
         }
+
+        GameManager.Instance.ChangeState(GameManager.GameState.Paused);
     }
 
-    private void Start()
-    {
-        if (TurretLevelManager.Instance != null)
-        {
-            TurretLevelManager.Instance.OnMilestoneReached += CreateListEntry;
-        }
-    }
 
     private void OnDisable()
     {
-        TurretLevelManager.Instance.OnMilestoneReached -= CreateListEntry;
+        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+        InGameMenuManager.Instance.ReturnToGame();
     }
 
     public void CreateListEntry(TurretType type, int level)
