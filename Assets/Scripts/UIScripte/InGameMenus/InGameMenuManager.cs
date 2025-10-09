@@ -34,21 +34,23 @@ public class InGameMenuManager : MonoBehaviour
 
     void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
     {
-        Debug.Log("Meeeeep");
         OpenOneInGameMenu(5);
         turretUpgradeMenu.GetComponent<TurretUpgradeMenuBehavior>().CreateListEntry(type, progressLevel);
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !pauseMenu.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeInHierarchy)
         {
-            CloseAllMenus();
-            OpenOneInGameMenu(1);
+            pauseMenu.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //pauseMenu.SetActive(false);
+            if (!turretUpgradeMenu.activeInHierarchy)
+            {
+                CloseAllMenus();
+                OpenOneInGameMenu(1);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Tab) && statsMenu.activeInHierarchy)
@@ -57,8 +59,11 @@ public class InGameMenuManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
-            CloseAllMenus();
-            OpenOneInGameMenu(2);
+            if (!turretUpgradeMenu.activeInHierarchy)
+            {
+                CloseAllMenus();
+                OpenOneInGameMenu(2);
+            }
         }
     }
 
