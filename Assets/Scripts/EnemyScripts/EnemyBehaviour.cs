@@ -36,14 +36,13 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     public void OnPause()
     {
         isPaused = true;
-        movement?.SetPaused(true);
+        movement?.Stop();
         // Stop moving, stop attacking, etc.
     }
 
     public void OnResume()
     {
         isPaused = false;
-        movement?.SetPaused(false);
         // Reset attack & ability timers
         nextAttackTime = Time.time;
         nextAbilityTime = Time.time;

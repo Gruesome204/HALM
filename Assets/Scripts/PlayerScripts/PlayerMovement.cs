@@ -30,7 +30,8 @@ public class PlayerMovement : MonoBehaviour, IPausable
             Debug.LogError("Rigidbody2D component not found on this GameObject!");
             enabled = false; // Disable the script if no Rigidbody2D is present
         }
-    }
+    
+    }       
 
     void FixedUpdate()
     {
@@ -39,6 +40,6 @@ public class PlayerMovement : MonoBehaviour, IPausable
         float moveY = Input.GetAxisRaw("Vertical"); // You might only need Horizontal for 2D movement
 
         Vector2 movement2D = new Vector2(moveX, moveY).normalized; // Create a 2D vector
-        rb.linearVelocity = movement2D * moveSpeed; // Apply velocity to the Rigidbody2D
+        rb.MovePosition(rb.position + movement2D * moveSpeed * Time.fixedDeltaTime);
     }
 }

@@ -17,12 +17,7 @@ public class EnemyMovement : MonoBehaviour
         if (isPaused) return;
         MoveTowardTarget();
     }
-    public void SetPaused(bool paused)
-    {
-        isPaused = paused;
-        if (paused)
-            rb.linearVelocity = Vector2.zero;
-    }
+
 
     // Call this in FixedUpdate from EnemyBehaviour
     public void MoveTowardTarget()
@@ -43,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
         }
 
         Vector2 dir = (target.transform.position - transform.position).normalized;
-        rb.linearVelocity = dir * stats.currentMovementSpeed;
+        rb.MovePosition(rb.position + dir * stats.currentMovementSpeed * Time.fixedDeltaTime);
     }
 
     public void Stop()
