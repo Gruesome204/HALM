@@ -10,6 +10,12 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     public bool IsInvulnerable { get; set; }
 
+    private void Awake()
+    {
+        if (stats == null)
+            stats = GetComponent<PlayerStats>();
+    }
+
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
         if (IsInvulnerable || stats == null) return;
@@ -55,7 +61,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     public bool IsAlive()
     {
-        return true;
+        return stats != null && stats.currentHealth > 0;
     }
 
     public Transform GetTransform()

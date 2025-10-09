@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public float baseHealth = 100f;
-    public float baseArmor = 5f;
-    public float baseMagicResistance = 10f;
+    public float baseArmor = 0f;
+    public float baseMagicResistance = 0f;
     public float moveSpeed = 5f;
 
     [HideInInspector] public float currentHealth;

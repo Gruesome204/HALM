@@ -16,6 +16,7 @@ public class PlayerBehaviour : MonoBehaviour
         stats.Initialize();
         health.OnDeath += HandleDeath;
     }
+
     private void HandleDeath(PlayerHealth playerHealth, DamageData damageData)
     {
         Debug.Log($"Player died from {damageData.type} damage.");

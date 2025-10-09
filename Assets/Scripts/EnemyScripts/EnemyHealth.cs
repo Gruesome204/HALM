@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
-
 public class EnemyHealth : MonoBehaviour, IDamagable
 {
     public EnemyStats stats;
