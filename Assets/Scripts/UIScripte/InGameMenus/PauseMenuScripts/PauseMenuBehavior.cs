@@ -68,7 +68,7 @@ public class PauseMenuBehavior : MonoBehaviour
     }
     void OnCancelRunBtnCicked(ClickEvent evt)
     {
-        //SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("HubScene");
         Debug.Log("Gibbet noch net");
     }
     void OnMainMenuBtnCicked(ClickEvent evt)
