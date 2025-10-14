@@ -8,7 +8,7 @@
                 <ui:Button text="Button" name="charackterButton" class="mainMenuBtnClass" style="width: 40%;" />
                 <ui:Button text="Button" name="relicsButton" class="mainMenuBtnClass" style="width: 40%;" />
                 <ui:Button text="Button" name="towerButton" class="mainMenuBtnClass" style="width: 40%;" />
-                <ui:VisualElement style="height: 2px; width: 90%; background-color: rgb(3, 0, 60);" />
+                <ui:VisualElement name="divider" class="divider" />
             </ui:VisualElement>
             <ui:VisualElement name="lowerButtonContainer" style="width: 80%; height: 45%; -unity-text-align: upper-center; align-items: center; justify-content: center;">
                 <ui:ScrollView />

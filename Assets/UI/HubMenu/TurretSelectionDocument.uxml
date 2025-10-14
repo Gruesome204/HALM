@@ -1,0 +1,20 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
+    <ui:VisualElement name="mainContainer" class="mainContainerClass">
+        <ui:VisualElement name="rightSide" style="flex-shrink: 0; flex-grow: 1; background-color: rgba(3, 0, 60, 0.47);">
+            <ui:Label text="Label" name="headline" class="headline" style="height: 15%;" />
+            <ui:VisualElement name="divider" class="divider" />
+            <ui:VisualElement name="unlockedTurretsContainer" style="background-size: 100% 100%; height: 65%; width: 90%; align-self: center;">
+                <ui:ScrollView name="unlockedTurrets" />
+            </ui:VisualElement>
+            <ui:VisualElement name="divider" class="divider" />
+            <ui:VisualElement name="selectedTurrets" style="height: 20%; width: 100%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="leftSide" style="flex-grow: 1; flex-shrink: 0; align-content: center; justify-content: center;">
+            <ui:VisualElement name="characterContainer" style="flex-shrink: 0; flex-grow: 0; height: 80%; width: 90%; align-self: center; background-color: rgba(101, 101, 101, 0.39);">
+                <ui:Label text="Label" name="characterName" class="sub-headline" style="-unity-text-align: upper-center;" />
+                <ui:VisualElement name="characterPicture" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
