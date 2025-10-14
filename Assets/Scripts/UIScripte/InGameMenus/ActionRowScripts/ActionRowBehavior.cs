@@ -7,7 +7,7 @@ public class ActionRowBehavior : MonoBehaviour
 {
     private InGameMenuManager gameMenuManager;
 
-    private VisualElement turrentButtonContainer;
+    private VisualElement turretButtonContainer;
     private VisualElement resourceContainer;
     private VisualElement towerLimitContainer;
     private Button pauseMenuButton;
@@ -31,7 +31,9 @@ public class ActionRowBehavior : MonoBehaviour
         turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
         turretsCurrentlyPlaced = TurretPlacementController.Instance.GetActiveTurrets();
 
-        turrentButtonContainer = root.Q<VisualElement>("turrentButtonContainer");
+        turretButtonContainer = root.Q<VisualElement>("turrentButtonContainer");
+        TurretButtonContainerColor();
+        TurretDemolitionController.Instance.OnDemolitionModeChange += TurretButtonContainerColor;
 
         resourceContainer = root.Q<VisualElement>("resourceContainer");
 
@@ -56,6 +58,8 @@ public class ActionRowBehavior : MonoBehaviour
     {
         if (TurretPlacementController.Instance != null)
             TurretPlacementController.Instance.OnTurretsChanged -= UpdateTowerLimitBar;
+
+        TurretDemolitionController.Instance.OnDemolitionModeChange -= TurretButtonContainerColor;
     }
 
     private void FixedUpdate()
@@ -74,7 +78,7 @@ public class ActionRowBehavior : MonoBehaviour
         foreach (var turret in turretsInGame)
         {
             AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret, turretNumber);
-            turrentButtonContainer.Add(aR_Element.turretBorder);
+            turretButtonContainer.Add(aR_Element.turretBorder);
             turretBtnList.Add(aR_Element);
 
             turretNumber++;
@@ -105,7 +109,7 @@ public class ActionRowBehavior : MonoBehaviour
 
     void FillTowerLimitBar(int towerLimit)
     {
-        for (int i = 1; i < towerLimit; i++)
+        for (int i = 1; i < towerLimit +1; i++)
         {
             AR_TowerLimitElementBehavior aR_TowerLimitElement = new AR_TowerLimitElementBehavior(towerLimitElement, i);
             towerLimitContainer.Add(aR_TowerLimitElement.border);
@@ -117,7 +121,7 @@ public class ActionRowBehavior : MonoBehaviour
 
     public void UpdateTowerLimitBar()
     {
-       int t = TurretPlacementController.Instance.GetActiveTurrets().Count;
+       int t = TurretPlacementController.Instance.GetUsedCapacity();
         foreach ( var limitElement in towerLimitElementList)
         {
             limitElement.UpdateColor(t);
@@ -126,5 +130,17 @@ public class ActionRowBehavior : MonoBehaviour
     void SetCurrentTurret(int clickedBtn)
     {
         FindObjectOfType<TurretPlacementController>().currentSelectedBlueprint = turretsInGame[clickedBtn];
+    }
+
+    public void TurretButtonContainerColor()
+    {
+        if (TurretDemolitionController.Instance.IsDestructionModeActive())
+        {
+            turretButtonContainer.style.backgroundColor = Color.red;
+        }
+        else
+        {
+            turretButtonContainer.style.backgroundColor = Color.grey;
+        }
     }
 }

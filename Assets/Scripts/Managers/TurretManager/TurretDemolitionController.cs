@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+
 /// <summary>
 /// Handles demolition (removal) of turrets by the player.
 /// Toggles demolition mode, listens for input, and destroys selected turrets.
@@ -15,6 +17,8 @@ public class TurretDemolitionController : MonoBehaviour
     public KeyCode toggleDestructionKey = KeyCode.X;
 
     private bool destructionModeActive = false;
+
+    public event Action OnDemolitionModeChange;
 
     private void Awake()
     {
@@ -64,6 +68,9 @@ public class TurretDemolitionController : MonoBehaviour
             TurretPlacementController.Instance.DeselectTurretBlueprint();
         }
         // Optional: Change cursor or UI indicator here
+
+        //Sending out Event on mode Change so the UI can change accordingly
+        OnDemolitionModeChange?.Invoke();
     }
 
     private void DeactivateDestructionMode()
@@ -76,6 +83,7 @@ public class TurretDemolitionController : MonoBehaviour
     public void ForceDeactivateDestructionMode()
     {
         destructionModeActive = false;
+
         Debug.Log("Destruction Mode: Forced Deactivation");
 
         if (TurretPlacementController.Instance != null)
@@ -83,6 +91,9 @@ public class TurretDemolitionController : MonoBehaviour
             TurretPlacementController.Instance.DestroyPreview();
         }
         // Optional: reset cursor/UI indicator
+
+        //Sending out Event on mode Change so the UI can change accordingly
+        OnDemolitionModeChange?.Invoke();
     }
 
     public bool IsDestructionModeActive() => destructionModeActive;
