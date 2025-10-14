@@ -108,7 +108,7 @@ Animator:
   m_GameObject: {fileID: 4040261046768777757}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9c879fa496c65094587bbb2c4c4e73d3, type: 2}
+  m_Controller: {fileID: 9100000, guid: 89f103082b9617e40aed9b6602b8c618, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ffd5b0590513e409c7b7b089b126e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPaused: 0
+  abilityCheckInterval: 1
 --- !u!58 &464428886847549793
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -257,7 +259,7 @@ MonoBehaviour:
   currentCritChance: 0
   currentCritMultiplier: 0
   currentAttackRange: 0
-  currentHealth: 0
+  currentHealth: 500
   currentMaxHealth: 0
   currentArmor: 0
   currentMagicResistance: 0
@@ -287,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 3797d01a1286c7448b80efbfda99dbab, type: 2}
   target: {fileID: 0}
 --- !u!114 &-8493545583482714336
 MonoBehaviour:
