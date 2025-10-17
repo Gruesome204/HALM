@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,6 +19,7 @@ public class AR_ElementBehavior
         turretBorder = rowElement.Q<VisualElement>("border");
 
         turretIcon = rowElement.Q<VisualElement>("icon");
+        turretIcon.style.backgroundImage = new StyleBackground(AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/ArtAssets/TowerAssets/TowerIcons/{_turret.turretName}_Icon.png"));
 
         turretNumber = rowElement.Q<Label>("turretNumber");
         turretNumber.text = $"{_turretNumber}";

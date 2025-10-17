@@ -18,6 +18,7 @@
     margin-top: 0%;
     white-space: normal;
     min-height: 50px;
+    align-self: center;
 }
 
 .mainMenuBtnClass:hover {
@@ -45,7 +46,7 @@
     font-size: 50px;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
-    -unity-text-align: upper-center;
+    -unity-text-align: middle-center;
     white-space: normal;
 }
 

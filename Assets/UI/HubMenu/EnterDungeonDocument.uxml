@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ui="UnityEngine.UIElements"
-    xmlns:uie="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
->
-    
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
+    <ui:VisualElement name="mainContainer" class="mainContainerClass" style="flex-grow: 1; justify-content: center;">
+        <ui:VisualElement style="flex-shrink: 0; width: 70%; height: 80%; background-color: rgba(3, 0, 60, 0.47); align-content: auto; align-self: center;">
+            <ui:Label text="Label" name="headline" class="headline" style="height: 30%;" />
+            <ui:Button text="Button" name="enterDungeonButton" class="mainMenuBtnClass" />
+            <ui:Button text="Button" name="stayInHubButton" class="mainMenuBtnClass" />
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>
