@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   description: 
   cooldown: 2
-  range: 1
+  range: 5
   priority: 0
   targetType: 1
   targetSelection: 1

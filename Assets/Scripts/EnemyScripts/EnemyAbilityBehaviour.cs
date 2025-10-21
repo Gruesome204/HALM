@@ -4,7 +4,7 @@ using System.Linq;
 public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
 {
     public EnemyAbilityBlueprint[] abilities;
-    public Transform target;
+    public GameObject target;
 
     private bool isPaused;
     private float abilityTimer = 0f; // deltaTime-based timer
@@ -37,6 +37,15 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
         float abilityCheckInterval = 1f; // default interval between attempts
         if (abilityTimer < abilityCheckInterval)
             return;
+
+        float distance = Vector2.Distance(transform.position, target.transform.position);
+        float maxAbilityRange = abilities.Max(a => a.range); 
+
+        if (distance > maxAbilityRange)
+        {
+            target = null;
+            return;
+        }
         
         var runtimeList = AbilityManager.Instance.GetAbilities(gameObject);
         if (runtimeList == null) return;

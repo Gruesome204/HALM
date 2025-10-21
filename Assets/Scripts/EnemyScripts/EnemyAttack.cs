@@ -4,7 +4,6 @@ using static DamageData;
 public class EnemyAttack : MonoBehaviour
 {
     private EnemyStats stats;
-
     private void Awake()
     {
         stats = GetComponent<EnemyStats>();
@@ -20,7 +19,8 @@ public class EnemyAttack : MonoBehaviour
         if (damagable == null || damagable.IsInvulnerable) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > stats.currentAttackRange + 0.1f) return;
+
+        if (distance > stats.currentAttackRange) return;
 
         // Create damage data
         DamageData damageData = new DamageData
