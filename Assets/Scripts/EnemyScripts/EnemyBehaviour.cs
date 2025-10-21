@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -12,6 +13,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private EnemyAbilityBehaviour abilityBehaviour;
 
     public bool isPaused;
+
+    public GameObject target;
+
+    [SerializeField] private string[] targetTags = { "Player", "Turret" };
 
     [Header("Ability Settings")]
     [Tooltip("Time between ability usage attempts (seconds).")]
@@ -61,33 +66,40 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             GameManager.Instance.RegisterPausable(this);
         else
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
-    
+
     }
+    
     private void FixedUpdate()
     {
         if (isPaused || (knockback != null && knockback.IsKnockedBack)) return;
 
-        var target = SelectTarget();
+        CheckAndDropTargetIfTooFar(); 
+        target = SelectTarget();
         if (target == null) return;
 
         HandleMovement(target);
-        TryAttack(target);
-        TryUseAbilities(target);
-    }
+        
+        if (abilityBehaviour != null)
+            abilityBehaviour.target = target;
+            TryAttack(target);
+            TryUseAbilities(target);
+        }
+
     private void HandleMovement(GameObject target)
     {
+        if (movement.target == null || movement.target.gameObject != target)
+            movement.target = target;
+
         float distance = Vector2.Distance(transform.position, target.transform.position);
         bool inAttackRange = distance <= stats.currentAttackRange;
 
         if (!inAttackRange)
-        {
             movement.MoveTowardTarget();
-        }
         else
-        {
             movement.Stop();
-        }
     }
+        
+    
     private void TryAttack(GameObject target)
     {
         if (attack == null || target == null) return;
@@ -116,9 +128,12 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         var abilities = AbilityManager.Instance.GetAbilities(gameObject);
         if (abilities == null || abilities.Count == 0) return;
 
+         float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
+
         var usable = abilities
             .Select((a, i) => new { ability = a, index = i })
-            .Where(x => x.ability != null && x.ability.CanUse(gameObject, target))
+            .Where(x => x.ability != null && x.ability.CanUse(gameObject, target)
+                                    && distanceToTarget <= x.ability.ability.range)         
             .OrderByDescending(x => x.ability.ability.priority)
             .FirstOrDefault();
 
@@ -130,22 +145,67 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             nextAbilityTime = Time.time + abilityCheckInterval;
             Debug.Log($"{name} used ability: {usable.ability.ability.name}");
         }
+
+
     }
 
     private GameObject SelectTarget()
     {
-        // First try movement's assigned target
-        if (movement?.target != null)
-            return movement.target.gameObject;
+        var potentialTargets = new List<GameObject>();
 
-        // Otherwise fallback to closest enemy (players/towers)
-        var potentialTargets = GameObject.FindGameObjectsWithTag("Player"); // or other target tag
-        if (potentialTargets.Length == 0) return null;
+        // Gather targets from multiple tags
+        foreach (var tag in targetTags)
+        {
+            potentialTargets.AddRange(GameObject.FindGameObjectsWithTag(tag));
+        }
 
-        return potentialTargets
+        if (potentialTargets.Count == 0)
+            return null;
+
+        // Filter valid targets
+        var validTargets = potentialTargets
+            .Where(t => t != null && t.activeInHierarchy)
             .OrderBy(t => Vector2.Distance(transform.position, t.transform.position))
-            .First();
+            .ToList();
+
+        return validTargets.FirstOrDefault();
     }
+
+    private void CheckAndDropTargetIfTooFar()
+    {
+    if (target == null) return;
+
+    float distance = Vector2.Distance(transform.position, target.transform.position);
+
+    CheckAndDropTargetForMovement(distance);
+    CheckAndDropTargetForAttack(distance);
+    }
+
+    private void CheckAndDropTargetForMovement(float distance)
+    {
+        float detectionRange = stats.currentDetectionRange;  // Assume you have this in your EnemyStats
+
+        if (distance > detectionRange)
+        {
+            Debug.Log($"{name} dropped movement target {target.name} (too far: {distance:F2} > {detectionRange})");
+            movement.target = null;
+        }
+    }
+
+    private void CheckAndDropTargetForAttack(float distance)
+    {
+        float attackRange = stats.currentAttackRange;
+
+        if (distance > attackRange)
+        {
+            Debug.Log($"{name} dropped attack target {target.name} (too far: {distance:F2} > {attackRange})");
+            abilityBehaviour.target = null;
+        }
+    }
+
+
+
+
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {
         Debug.Log($"Enemy {enemyHealth.gameObject.name} died from {damageData.type} damage.");
