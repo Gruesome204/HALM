@@ -30,7 +30,7 @@ public class AbilityRuntime
         }
         // Here you trigger the actual ability effect
         // For example: spawn projectiles, apply damage, buffs, etc.
-        Debug.Log($"{user.name} used ability {ability.abilityName} on {target?.name}");
+        //Debug.Log($"{user.name} used ability {ability.abilityName} on {target?.name}");
 
 
         // Set cooldown
