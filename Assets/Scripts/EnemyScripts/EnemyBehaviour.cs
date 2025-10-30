@@ -187,7 +187,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         if (distance > detectionRange)
         {
-            Debug.Log($"{name} dropped movement target {target.name} (too far: {distance:F2} > {detectionRange})");
+            //Debug.Log($"{name} dropped movement target {target.name} (too far: {distance:F2} > {detectionRange})");
             movement.target = null;
         }
     }
@@ -198,7 +198,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         if (distance > attackRange)
         {
-            Debug.Log($"{name} dropped attack target {target.name} (too far: {distance:F2} > {attackRange})");
+            //Debug.Log($"{name} dropped attack target {target.name} (too far: {distance:F2} > {attackRange})");
             abilityBehaviour.target = null;
         }
     }
