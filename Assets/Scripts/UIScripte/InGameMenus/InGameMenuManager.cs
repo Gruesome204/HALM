@@ -23,6 +23,7 @@ public class InGameMenuManager : MonoBehaviour
     [SerializeField] private GameObject actionRow;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject turretUpgradeMenu;
+    [SerializeField] private GameObject gameOverMenu;
 
 
     void Start()
@@ -74,6 +75,7 @@ public class InGameMenuManager : MonoBehaviour
         actionRow.SetActive(false);
         settingsMenu.SetActive(false);
         turretUpgradeMenu.SetActive(false);
+        gameOverMenu.SetActive(false);
     }
 
     public void OpenOneInGameMenu(int menuToOpen)
@@ -99,12 +101,15 @@ public class InGameMenuManager : MonoBehaviour
             case 5:
                 turretUpgradeMenu.SetActive(true);
                 break;
+
+            case 6:
+                gameOverMenu.SetActive(true);
+                break;
         }
     }
 
     public void ReturnToGame()
     {
-        Debug.Log("Returning to Game");
         //CloseAllMenus();
         OpenOneInGameMenu(3);
     }

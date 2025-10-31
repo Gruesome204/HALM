@@ -15,6 +15,13 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-German (Germany) (de-DE)
   m_GUID: 9a8477400ee2cab4f91e957647a45b61
   m_SerializeEntries:
+  - m_GUID: 0df4cb6d0fba2d249a7cdc4ae7aad887
+    m_Address: GameOverTranslationaTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2bfbf5da3f08e824abb46c5a86288269
     m_Address: TurretUpgradeTranslationTable_de-DE
     m_ReadOnly: 1
@@ -34,7 +41,6 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE
-    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 678260709aec4464da97164f5892bacc
     m_Address: ActionRowTranslationTable_de-DE

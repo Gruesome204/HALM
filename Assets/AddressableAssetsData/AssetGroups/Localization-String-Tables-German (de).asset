@@ -20,7 +20,6 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de
-    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1c1493b789a391a4f961d9adac7375f2
     m_Address: TurretTranslationArcherTower_de
@@ -56,6 +55,13 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a280f1be2a9f75042971a7f772af3ab1
     m_Address: TurretTranslationCommon_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6bca84e33431ad4aad935175ece59e8
+    m_Address: GameOverTranslationaTable_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de
