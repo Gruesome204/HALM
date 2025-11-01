@@ -1,0 +1,55 @@
+using UnityEngine;
+using System.Collections.Generic;
+using System;
+public class PlayerManager : MonoBehaviour
+{
+    [SerializeField] private PlayerHealth playerHealth;
+    public event Action OnPlayerGameOver;
+    public static PlayerManager Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+
+        // Auto-find PlayerHealth if not assigned in inspector
+        if (playerHealth == null)
+            playerHealth = FindObjectOfType<PlayerHealth>();
+    }
+    private void Start()
+    {
+        if (playerHealth != null)
+        {
+            // Subscribe to PlayerHealth death event
+            playerHealth.OnDeath += HandlePlayerDeath;
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerManager] No PlayerHealth found!");
+        }
+    }
+
+
+    private void OnDestroy()
+    {
+        // Always unsubscribe to prevent memory leaks
+        if (playerHealth != null)
+            playerHealth.OnDeath -= HandlePlayerDeath;
+    }
+    private void HandlePlayerDeath(PlayerHealth player, DamageData damageData)
+    {
+        Debug.Log("[PlayerManager] Player died! Checking Game Over condition...");
+
+        // Double-check that the player is truly dead
+        if (!player.IsAlive())
+        {
+            Debug.Log("[PlayerManager] Player confirmed dead. Triggering Game Over event.");
+            OnPlayerGameOver?.Invoke(); // Fire event for UI or GameManager
+        }
+    }
+}
