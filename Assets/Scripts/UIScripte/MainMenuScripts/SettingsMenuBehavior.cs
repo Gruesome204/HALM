@@ -39,6 +39,7 @@ public class SettingsMenuBehavior : MonoBehaviour
         menuManager = FindObjectOfType<MenuManager>();
         ConnectingEverything();
 
+        SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
         PlayThisMusic(2);
         this.gameObject.SetActive(false);
     }
