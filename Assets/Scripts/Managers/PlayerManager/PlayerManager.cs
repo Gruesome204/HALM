@@ -4,7 +4,7 @@ using System;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerHealth playerHealth;
-    public event Action OnPlayerGameOver;
+    public event Action OnPlayerDeath;
     public static PlayerManager Instance { get; private set; }
     private void Awake()
     {
@@ -49,7 +49,7 @@ public class PlayerManager : MonoBehaviour
         if (!player.IsAlive())
         {
             Debug.Log("[PlayerManager] Player confirmed dead. Triggering Game Over event.");
-            OnPlayerGameOver?.Invoke(); // Fire event for UI or GameManager
+            OnPlayerDeath?.Invoke(); // Fire event for UI or GameManager
         }
     }
 }
