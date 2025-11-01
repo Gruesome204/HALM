@@ -39,15 +39,16 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.MainMenu);
     }
 
+    //Testin Purpose
     private void Update()
     {
-#if UNITY_EDITOR
-        // Allow changing game state from inspector in play mode
-        if (debugState != CurrentState)
-        {
-            ChangeState(debugState);
-        }
-#endif
+    #if UNITY_EDITOR
+            // Allow changing game state from inspector in play mode
+            if (debugState != CurrentState)
+            {
+                ChangeState(debugState);
+            }
+    #endif
 
         HandlePauseInput();
     }
@@ -90,6 +91,9 @@ public class GameManager : MonoBehaviour
 
             switch (newState)
             {
+                case GameState.GameOver:
+                    p.OnPause();
+                    break;
                 case GameState.Paused:
                     p.OnPause();
                     break;
