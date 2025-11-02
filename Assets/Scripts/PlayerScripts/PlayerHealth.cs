@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 {
     public PlayerStats stats;
     public Slider healthBar;
+    //Event does nothing yet
     public event Action<PlayerHealth, DamageData> OnDeath;
 
     public bool IsInvulnerable { get; set; }
@@ -35,6 +36,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     public void Die(DamageData damageData)
     {
+        //Event use not yet implemented
         OnDeath?.Invoke(this, damageData);
     }
 

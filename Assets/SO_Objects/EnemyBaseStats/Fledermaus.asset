@@ -28,7 +28,7 @@ MonoBehaviour:
   baseCritChance: 0
   baseCritHitMultiplier: 0
   baseAttackRange: 1
-  baseDetectionRange: 10
+  baseDetectionRange: 15
   baseVisionRange: 2
   baseHearingRange: 2
   pursueRange: 2

@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 2079832927792806107}
+  healthBarFollow: {fileID: 0}
 --- !u!114 &2079832927792806107
 MonoBehaviour:
   m_ObjectHideFlags: 0

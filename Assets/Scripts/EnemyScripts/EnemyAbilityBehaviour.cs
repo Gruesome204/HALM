@@ -38,6 +38,9 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
         if (abilityTimer < abilityCheckInterval)
             return;
 
+        if (target == null)
+            return; 
+
         float distance = Vector2.Distance(transform.position, target.transform.position);
         float maxAbilityRange = abilities.Max(a => a.range); 
 
