@@ -23,6 +23,9 @@ public class EnemySpawnManager : MonoBehaviour
     private bool allEnemiesSpawned = false; // Tracks if we've spawned all enemies
 
     public static System.Action OnAllEnemiesDefeated;
+
+    public Transform enemyContainer;// parent container for spawned enemies
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -83,7 +86,7 @@ public class EnemySpawnManager : MonoBehaviour
     void SpawnAtPoint(Vector3 position)
     {
         GameObject spawnedEnemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-        spawnedEnemy.GetComponent<EnemyMovement>().target = FindAnyObjectByType<PlayerMovement>().gameObject;
+        spawnedEnemy.transform.SetParent(enemyContainer, true);
         activeEnemies.Add(spawnedEnemy);
         totalSpawned++;
     }

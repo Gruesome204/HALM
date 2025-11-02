@@ -27,11 +27,11 @@ MonoBehaviour:
   baseAttackSpeed: 1
   baseCritChance: 0
   baseCritHitMultiplier: 0
-  baseAttackRange: 1
+  baseAttackRange: 2
   baseDetectionRange: 15
   baseVisionRange: 2
   baseHearingRange: 2
-  pursueRange: 2
+  pursueRange: 10
   experienceYield: 100
   baseHealthScaleFactor: 0.1
   baseDamageScaleFactor: 0.1
