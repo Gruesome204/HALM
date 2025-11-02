@@ -20,11 +20,9 @@ public class AR_TowerLimitElementBehavior
         if (assignedNumber <= towersPlaced)
         {
             border.style.backgroundColor = Color.red;
-            Debug.Log($"{assignedNumber} should be red");
         }
         else
         {
-            Debug.Log($"{assignedNumber} should be white");
             border.style.backgroundColor = Color.white;
         }
     }
