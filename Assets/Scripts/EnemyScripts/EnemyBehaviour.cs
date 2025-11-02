@@ -231,7 +231,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         {
             Debug.Log("No valid turret source (probably demolished or destroyed).");
         }
-
+        EnemySpawnManager.Instance.UnregisterEnemy(gameObject);
         Destroy(gameObject);
     }
 }
