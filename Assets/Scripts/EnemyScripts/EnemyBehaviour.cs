@@ -55,7 +55,7 @@ using UnityEngine;
             if (movement != null)
             {
                 movement.target = null;
-                target = SelectTarget();
+                movement.MoveTowardTarget();
             }
         }
 
@@ -142,6 +142,8 @@ using UnityEngine;
                 nextAbilityTime = Time.time + abilityCheckInterval;
                 Debug.Log($"{name} used ability: {usable.ability.ability.name}");
             }
+
+
         }
 
         private GameObject SelectTarget()
@@ -160,6 +162,8 @@ using UnityEngine;
             // Filter valid targets
             var validTargets = potentialTargets
                 .Where(t => t != null && t.activeInHierarchy)
+                //.Where(t => Vector2.Distance(transform.position, t.transform.position) <= stats.currentDetectionRange)
+                .OrderBy(t => Vector2.Distance(transform.position, t.transform.position))
                 .ToList();
 
             return validTargets.FirstOrDefault();

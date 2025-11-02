@@ -15,7 +15,6 @@ public class EnemyMovement : MonoBehaviour
         stats = GetComponent<EnemyStats>();
     }
 
-
     private void FixedUpdate()
     {
 
@@ -24,11 +23,10 @@ public class EnemyMovement : MonoBehaviour
             rb.linearVelocity = Vector2.zero; // stop immediately while paused
             return;
         }
-
         if (target != null)
             MoveTowardTarget();
-        //else
-        //    rb.linearVelocity = Vector2.zero;
+        else
+            rb.linearVelocity = Vector2.zero;
     }
 
     public void SetPaused(bool paused)
@@ -43,17 +41,11 @@ public class EnemyMovement : MonoBehaviour
 
     public void MoveTowardTarget()
     {
-        if (target == null || stats == null) return;
+        if (isPaused || target == null) return;
 
-        float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > stats.currentPursueRange)
-        {
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
 
-        Vector2 dir = (target.transform.position - transform.position).normalized;
-        rb.linearVelocity = dir * stats.currentMovementSpeed;
+        Vector2 direction = ((Vector2)target.transform.position - rb.position).normalized;
+        rb.linearVelocity = direction * stats.currentMovementSpeed;
     }
 
     public void Stop()

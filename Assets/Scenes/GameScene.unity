@@ -1412,9 +1412,12 @@ MonoBehaviour:
   enemyPrefab: {fileID: 4040261046768777757, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
   spawnInterval: 1
   spawnAmount: 1
-  spawnPoints: []
+  spawnPoints:
+  - {fileID: 1383891467}
+  - {fileID: 1379736039}
+  - {fileID: 1269977298}
   useRandomSpawnPoint: 1
-  enemyContainer: {fileID: 0}
+  enemyContainer: {fileID: 1260051719}
 --- !u!1 &816791901
 GameObject:
   m_ObjectHideFlags: 0
@@ -18432,7 +18435,7 @@ MonoBehaviour:
   statsMenu: {fileID: 415030904}
   actionRow: {fileID: 90814630}
   settingsMenu: {fileID: 1573890351}
-  turretUpgradeMenu: {fileID: 0}
+  turretUpgradeMenu: {fileID: 302126412}
 --- !u!1 &1542782589
 GameObject:
   m_ObjectHideFlags: 0
@@ -18597,10 +18600,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FledermausPrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 5361971606197496698, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 2135666359}
     - target: {fileID: 6381012867596936606, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -18608,10 +18607,6 @@ PrefabInstance:
     - target: {fileID: 6381012867596936606, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7339260930082218373, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
-      propertyPath: currentPursueRange
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18969,7 +18964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d977bbd8660569e42a1aa8ad708ba1ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDataSO: {fileID: 0}
+  gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
   debugState: 0
 --- !u!1 &2051609381
 GameObject:
