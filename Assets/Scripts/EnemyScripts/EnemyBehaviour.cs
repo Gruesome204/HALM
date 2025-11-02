@@ -73,7 +73,7 @@ using UnityEngine;
             if (isPaused || (knockback != null && knockback.IsKnockedBack)) return;
 
             target = SelectTarget();
-
+            if(target == null) return;
             HandleMovement(target);
             TryAttack(target);
 
@@ -159,7 +159,7 @@ using UnityEngine;
             // Filter valid targets
             var validTargets = potentialTargets
                 .Where(t => t != null && t.activeInHierarchy)
-                .Where(t => Vector2.Distance(transform.position, t.transform.position) <= stats.currentDetectionRange)
+                //.Where(t => Vector2.Distance(transform.position, t.transform.position) <= stats.currentDetectionRange)
                 .OrderBy(t => Vector2.Distance(transform.position, t.transform.position))
                 .ToList();
 
