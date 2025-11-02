@@ -17,16 +17,13 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (isPaused)
         {
             rb.linearVelocity = Vector2.zero; // stop immediately while paused
             return;
         }
-        if (target != null)
-            MoveTowardTarget();
-        else
-            rb.linearVelocity = Vector2.zero;
+
+        MoveTowardTarget();
     }
 
     public void SetPaused(bool paused)
@@ -41,8 +38,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void MoveTowardTarget()
     {
-        if (isPaused || target == null) return;
-
+        if (target == null) return;
 
         Vector2 direction = ((Vector2)target.transform.position - rb.position).normalized;
         rb.linearVelocity = direction * stats.currentMovementSpeed;
