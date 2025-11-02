@@ -63,6 +63,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2d5105cd3f84dc43be5250faa85ce69
+    m_Address: Assets/Localization/TranslationTables/GameWonTranslationaTable Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f54ef236fc66be84cbbc728f2dda48fd
     m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretTranslationCommon
       Shared Data.asset

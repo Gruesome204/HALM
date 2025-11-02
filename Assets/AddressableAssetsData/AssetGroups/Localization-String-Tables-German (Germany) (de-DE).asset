@@ -42,6 +42,13 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-de-DE
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 490a71be3f9ce5445a3fa3b696bbe638
+    m_Address: GameWonTranslationaTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 678260709aec4464da97164f5892bacc
     m_Address: ActionRowTranslationTable_de-DE
     m_ReadOnly: 1

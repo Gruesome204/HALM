@@ -24,6 +24,8 @@ public class InGameMenuManager : MonoBehaviour
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject turretUpgradeMenu;
     [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private GameObject gameWonMenu;
+
 
 
     void Start()
@@ -31,6 +33,8 @@ public class InGameMenuManager : MonoBehaviour
         //CloseAllMenus();
         OpenOneInGameMenu(3);
         TurretLevelManager.Instance.OnMilestoneReached += OpenTurretUpgradeChoice;
+
+        PlayerManager.Instance.OnPlayerDeath += GameOver;
     }
 
     void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
@@ -76,6 +80,7 @@ public class InGameMenuManager : MonoBehaviour
         settingsMenu.SetActive(false);
         turretUpgradeMenu.SetActive(false);
         gameOverMenu.SetActive(false);
+        gameWonMenu.SetActive(false);
     }
 
     public void OpenOneInGameMenu(int menuToOpen)
@@ -85,7 +90,7 @@ public class InGameMenuManager : MonoBehaviour
             case 1:
                 pauseMenu.SetActive(true);
                 break;
-
+                 
             case 2:
                 statsMenu.SetActive(true);
                 break;
@@ -105,6 +110,10 @@ public class InGameMenuManager : MonoBehaviour
             case 6:
                 gameOverMenu.SetActive(true);
                 break;
+
+            case 7:
+                gameWonMenu.SetActive(true);
+                break;
         }
     }
 
@@ -117,5 +126,17 @@ public class InGameMenuManager : MonoBehaviour
     public void CloseTurretUpgrade()
     {
         turretUpgradeMenu.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        CloseAllMenus();
+        OpenOneInGameMenu(6);
+    }
+
+    public void GameWon()
+    {
+        CloseAllMenus();
+        OpenOneInGameMenu(7);
     }
 }

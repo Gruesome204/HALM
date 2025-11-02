@@ -30,6 +30,14 @@ MonoBehaviour:
     m_Localized: Flee coward!
     m_Metadata:
       m_Items: []
+  - m_Id: 218659164160
+    m_Localized: Might as well take the one below
+    m_Metadata:
+      m_Items: []
+  - m_Id: 187273187328
+    m_Localized: Renn nach Hause
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
