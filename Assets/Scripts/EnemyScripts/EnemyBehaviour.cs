@@ -72,15 +72,12 @@ using UnityEngine;
         {
             if (isPaused || (knockback != null && knockback.IsKnockedBack)) return;
 
-            if (target == null)
-            {
             target = SelectTarget();
-            }
-
+            if(target == null) return;
             HandleMovement(target);
             TryAttack(target);
 
-            if (abilityBehaviour != null)
+        if (abilityBehaviour != null)
             {
             abilityBehaviour.target = target;
             TryUseAbilities(target);
@@ -93,7 +90,7 @@ using UnityEngine;
 
         // Always move toward the target
         movement.target = target;
-        //movement.MoveTowardTarget();
+        movement.MoveTowardTarget();
     }
 
 
