@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
             }
     #endif
 
-        HandlePauseInput();
+        //HandlePauseInput();
     }
 
     private void HandlePauseInput()

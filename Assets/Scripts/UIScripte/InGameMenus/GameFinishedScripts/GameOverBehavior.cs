@@ -14,7 +14,7 @@ public class GameOverBehavior : MonoBehaviour
 
     private void Start()
     {
-        //this.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
     }
     private void OnEnable()
     {

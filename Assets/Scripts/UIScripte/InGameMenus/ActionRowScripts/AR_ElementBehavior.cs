@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,7 +20,10 @@ public class AR_ElementBehavior
         turretBorder = rowElement.Q<VisualElement>("border");
 
         turretIcon = rowElement.Q<VisualElement>("icon");
-      //  turretIcon.style.backgroundImage = new StyleBackground(AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/ArtAssets/TowerAssets/TowerIcons/{_turret.turretName}_Icon.png"));
+        if (_turret.towerIcon != null)
+        {
+            turretIcon.style.backgroundImage = new StyleBackground(_turret.towerIcon);
+        }
 
         turretNumber = rowElement.Q<Label>("turretNumber");
         turretNumber.text = $"{_turretNumber}";

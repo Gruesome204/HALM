@@ -6,18 +6,6 @@ public class InGameMenuManager : MonoBehaviour
     public static InGameMenuManager Instance{ get; private set; }
     void Awake() => Instance = this;
 
-    public event Action testEvent;
-
-    private void OnEnable()
-    {
-        testEvent?.Invoke();
-    }
-
-    private void OnDisable()
-    {
-        testEvent?.Invoke();
-    }
-
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject statsMenu;
     [SerializeField] private GameObject actionRow;
@@ -27,7 +15,7 @@ public class InGameMenuManager : MonoBehaviour
     [SerializeField] private GameObject gameWonMenu;
 
 
-
+    void OnDisable() => Debug.Log($"{name} was disabled!");
     void Start()
     {
         //CloseAllMenus();
@@ -35,9 +23,11 @@ public class InGameMenuManager : MonoBehaviour
         TurretLevelManager.Instance.OnMilestoneReached += OpenTurretUpgradeChoice;
 
         PlayerManager.Instance.OnPlayerDeath += GameOver;
-    }
+        EnemySpawnManager.Instance.OnAllEnemiesDefeated += GameWon;
 
-    void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
+}
+
+void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
     {
         OpenOneInGameMenu(5);
         turretUpgradeMenu.GetComponent<TurretUpgradeMenuBehavior>().CreateListEntry(type, progressLevel);
@@ -45,13 +35,13 @@ public class InGameMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pauseMenu.SetActive(false);
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!turretUpgradeMenu.activeInHierarchy)
+            if (pauseMenu.activeSelf)
+            {
+                pauseMenu.SetActive(false);
+            }
+            else if (!turretUpgradeMenu.activeSelf)
             {
                 CloseAllMenus();
                 OpenOneInGameMenu(1);
