@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour, IPausable
 {
+    [Header("References")]
     private EnemyStats stats;
     private EnemyHealth health;
     private EnemyMovement movement;
@@ -12,17 +13,19 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private EnemyAttack attack;
     private EnemyAbilityBehaviour abilityBehaviour;
 
-    public bool isPaused;
 
+    [Header("Targeting")]
     public GameObject target;
-
     [SerializeField] private string[] targetTags = { "Player", "Turret" };
 
     [Header("Ability Settings")]
     [Tooltip("Time between ability usage attempts (seconds).")]
     [SerializeField] private float abilityCheckInterval = 1.0f;
+
     private float nextAttackTime = 0f;   
     private float nextAbilityTime = 0f;
+    private bool isPaused;
+
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
     private void Awake()
@@ -38,6 +41,15 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         health.OnDeath += HandleDeath;
     }
 
+
+    private void Start()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.RegisterPausable(this);
+        else
+            Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
+
+    }
     public void OnPause()
     {
         isPaused = true;
@@ -59,31 +71,20 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         }
     }
 
-
-    private void Start()
-    {
-        if (GameManager.Instance != null)
-            GameManager.Instance.RegisterPausable(this);
-        else
-            Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
-
-    }
-    
     private void FixedUpdate()
     {
         if (isPaused || (knockback != null && knockback.IsKnockedBack)) return;
 
-        CheckAndDropTargetIfTooFar(); 
+        DropTargetIfTooFar();
+
         target = SelectTarget();
         if (target == null) return;
 
         HandleMovement(target);
-        
-        if (abilityBehaviour != null)
-            abilityBehaviour.target = target;
-            TryAttack(target);
-            TryUseAbilities(target);
-        }
+        TryAttack(target);
+        TryUseAbilities(target);
+
+    }
 
     private void HandleMovement(GameObject target)
     {
@@ -148,6 +149,18 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
 
     }
+    private void DropTargetIfTooFar()
+    {
+        if (target == null) return;
+
+        float distance = Vector2.Distance(transform.position, target.transform.position);
+
+        if (distance > stats.currentDetectionRange)
+            movement.target = null;
+
+        if (distance > stats.currentAttackRange && abilityBehaviour != null)
+            abilityBehaviour.target = null;
+    }
 
     private GameObject SelectTarget()
     {
@@ -170,41 +183,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         return validTargets.FirstOrDefault();
     }
-
-    private void CheckAndDropTargetIfTooFar()
-    {
-    if (target == null) return;
-
-    float distance = Vector2.Distance(transform.position, target.transform.position);
-
-    CheckAndDropTargetForMovement(distance);
-    CheckAndDropTargetForAttack(distance);
-    }
-
-    private void CheckAndDropTargetForMovement(float distance)
-    {
-        float detectionRange = stats.currentDetectionRange;  // Assume you have this in your EnemyStats
-
-        if (distance > detectionRange)
-        {
-            //Debug.Log($"{name} dropped movement target {target.name} (too far: {distance:F2} > {detectionRange})");
-            movement.target = null;
-        }
-    }
-
-    private void CheckAndDropTargetForAttack(float distance)
-    {
-        float attackRange = stats.currentAttackRange;
-
-        if (distance > attackRange)
-        {
-            //Debug.Log($"{name} dropped attack target {target.name} (too far: {distance:F2} > {attackRange})");
-            abilityBehaviour.target = null;
-        }
-    }
-
-
-
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {

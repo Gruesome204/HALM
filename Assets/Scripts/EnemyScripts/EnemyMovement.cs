@@ -11,6 +11,7 @@ public class EnemyMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        stats = GetComponent<EnemyStats>();
     }
 
     private void FixedUpdate()
