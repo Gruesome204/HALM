@@ -1,6 +1,6 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public event Action<GameState, GameState> OnGameStateChanged;
 
-    private readonly List<IPausable> pausables = new List<IPausable>();
+    [SerializeField]private readonly List<IPausable> pausables = new List<IPausable>();
 
     [Header("Debug Controls")]
     [SerializeField] private GameState debugState;
@@ -42,34 +42,15 @@ public class GameManager : MonoBehaviour
     //Testin Purpose
     private void Update()
     {
-    #if UNITY_EDITOR
-            // Allow changing game state from inspector in play mode
-            if (debugState != CurrentState)
-            {
-                ChangeState(debugState);
-            }
-    #endif
+    //#if UNITY_EDITOR
+    //        // Allow changing game state from inspector in play mode
+    //        if (debugState != CurrentState)
+    //        {
+    //            ChangeState(debugState);
+    //        }
+    //#endif
 
-        //HandlePauseInput();
     }
-
-    private void HandlePauseInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (IsPaused())
-            {
-                ResumeGame();
-                InGameMenuManager.Instance?.ReturnToGame();
-            }
-            else if (IsPlaying())
-            {
-                PauseGame();
-                InGameMenuManager.Instance?.OpenOneInGameMenu(1);
-            }
-        }
-    }
-
 
     public void ChangeState(GameState newState)
     {
@@ -122,10 +103,6 @@ public class GameManager : MonoBehaviour
         pausables.Remove(pausable);
     }
 
-    public void SetPaused(bool paused)
-    {
-        CurrentState = paused ? GameState.Paused : GameState.Playing;
-    }
 
     public void SaveGame()
     {

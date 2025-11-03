@@ -1755,6 +1755,7 @@ MonoBehaviour:
   - {fileID: 1379736039}
   - {fileID: 1269977298}
   useRandomSpawnPoint: 1
+  isPaused: 0
 --- !u!1 &816791901
 GameObject:
   m_ObjectHideFlags: 0

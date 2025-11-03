@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
-public class EnemySpawnManager : MonoBehaviour, IPausable
+public class EnemySpawnManager : MonoBehaviour
 {
     public static EnemySpawnManager Instance { get; private set; }
 
@@ -24,10 +26,34 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     public event System.Action OnAllEnemiesDefeated;
 
-    private bool isPaused;
+    [SerializeField]private bool isPaused;
 
-    private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
-    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChanged += HandleGameChange;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged -= HandleGameChange;
+    }
+
+    private void HandleGameChange(GameManager.GameState newState, GameManager.GameState oldState)
+    {
+        Debug.Log("call HandleGameChange");
+        switch (newState)
+        {
+            case GameManager.GameState.Playing:
+                isPaused = false;
+                Debug.Log("call play");
+                break;
+            case GameManager.GameState.Paused:
+                isPaused = true;
+                Debug.Log("call pause");
+                break;
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -42,7 +68,6 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     void Update()
     {
         if (isPaused) return;
-
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= spawnInterval)
         {
@@ -51,9 +76,9 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         }
     }
 
-    void TrySpawnEnemy()
-    {
-        if (isPaused) return;
+        private void TrySpawnEnemy()
+        {
+    
         // Clean up destroyed enemies
         activeEnemies.RemoveAll(e => e == null);
 
@@ -89,7 +114,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     void SpawnAtPoint(Vector3 position)
     {
         GameObject spawnedEnemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-        spawnedEnemy.GetComponent<EnemyMovement>().target = FindAnyObjectByType<PlayerMovement>().gameObject;
+        spawnedEnemy.GetComponentInChildren<EnemyMovement>().target = FindAnyObjectByType<PlayerMovement>().gameObject;
         activeEnemies.Add(spawnedEnemy);
         totalSpawned++;
     }
@@ -110,15 +135,4 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         }
     }
 
-    public void OnPause()
-    {
-        isPaused = true;
-        // Stop moving, stop attacking, etc.
-    }
-
-    public void OnResume()
-    {
-        isPaused = false;
-        // Resume AI
-    }
 }

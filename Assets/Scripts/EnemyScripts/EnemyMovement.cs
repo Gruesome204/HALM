@@ -88,7 +88,7 @@ public class EnemyMovement : MonoBehaviour
         if (closest != null && closest != target)
         {
             target = closest;
-            Debug.Log($"{gameObject.name} found target: {target.name}");
+           // Debug.Log($"{gameObject.name} found target: {target.name}");
         }
     }
 }
