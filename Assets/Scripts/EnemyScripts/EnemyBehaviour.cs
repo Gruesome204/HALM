@@ -54,6 +54,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         isPaused = true;
         movement.SetPaused(true);
+        Animator animator = GetComponent<Animator>();
+        animator.enabled = false;
         // Stop moving, stop attacking, etc.
     }
 
@@ -69,6 +71,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             movement.target = null;
             movement.MoveTowardTarget();
         }
+        Animator animator = GetComponent<Animator>();
+        animator.enabled = true;
     }
 
     private void FixedUpdate()
