@@ -28,32 +28,6 @@ public class EnemySpawnManager : MonoBehaviour
 
     [SerializeField]private bool isPaused;
 
-    private void OnEnable()
-    {
-        GameManager.Instance.OnGameStateChanged += HandleGameChange;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.Instance.OnGameStateChanged -= HandleGameChange;
-    }
-
-    private void HandleGameChange(GameManager.GameState newState, GameManager.GameState oldState)
-    {
-        Debug.Log("call HandleGameChange");
-        switch (newState)
-        {
-            case GameManager.GameState.Playing:
-                isPaused = false;
-                Debug.Log("call play");
-                break;
-            case GameManager.GameState.Paused:
-                isPaused = true;
-                Debug.Log("call pause");
-                break;
-        }
-    }
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
