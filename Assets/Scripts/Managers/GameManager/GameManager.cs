@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(CurrentState, PreviousState); 
 
         UpdatePausables(newState);
+        GameManager.Instance.DebugRegisteredPausables();
     }
 
     private void UpdatePausables(GameState newState)
@@ -115,6 +116,28 @@ public class GameManager : MonoBehaviour
         //Loads the saved turretTypes into TurretManager
         TurretPlacementController.Instance.SetupFromGameData(gameDataSO);
     }
+    public void DebugRegisteredPausables()
+    {
+        Debug.Log($"[GameManager] {pausables.Count} IPausable(s) currently registered:");
+
+        for (int i = 0; i < pausables.Count; i++)
+        {
+            var p = pausables[i];
+            if (p == null)
+            {
+                Debug.Log($" - {i}: null reference");
+            }
+            else
+            {
+                // If the IPausable is a MonoBehaviour, show the GameObject name
+                if (p is MonoBehaviour mb)
+                    Debug.Log($" - {i}: {mb.GetType().Name} on GameObject '{mb.gameObject.name}'");
+                else
+                    Debug.Log($" - {i}: {p.GetType().Name}");
+            }
+        }
+    }
+
 
     public void PauseGame() => ChangeState(GameState.Paused);
     public void ResumeGame() => ChangeState(GameState.Playing);
@@ -132,6 +155,12 @@ public class GameManager : MonoBehaviour
         {
             ChangeState(debugState);
         }
+    }
+
+    [ContextMenu("Debug Registered Pausables")]
+    private void DebugRegisteredPausablesContextMenu()
+    {
+        DebugRegisteredPausables();
     }
 #endif
 }

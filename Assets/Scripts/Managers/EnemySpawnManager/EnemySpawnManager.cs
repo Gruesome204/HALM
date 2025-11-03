@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
-public class EnemySpawnManager : MonoBehaviour
+public class EnemySpawnManager : MonoBehaviour, IPausable
 {
     public static EnemySpawnManager Instance { get; private set; }
 
@@ -28,6 +28,8 @@ public class EnemySpawnManager : MonoBehaviour
 
     [SerializeField]private bool isPaused;
 
+    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -39,9 +41,15 @@ public class EnemySpawnManager : MonoBehaviour
             Instance = this;
         }
     }
+
+    private void Start()
+    {
+        GameManager.Instance.RegisterPausable(this);
+    }
     void Update()
     {
         if (isPaused) return;
+
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= spawnInterval)
         {
@@ -109,4 +117,15 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
+    public void OnPause()
+    {
+        isPaused = true;
+        Debug.Log("Spawner paused");
+    }
+
+    public void OnResume()
+    {
+        isPaused = false;
+        Debug.Log("Spawner resumed");
+    }
 }
