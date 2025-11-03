@@ -48,6 +48,6 @@ public class AR_ElementBehavior
 
     void OnTurretButtonClicked(ClickEvent evt)
     {
-        TurretPlacementController.Instance.currentSelectedBlueprint = representedTurret;
+        TurretPlacementController.Instance.SelectTurretBlueprint(representedTurret);
     }
 }

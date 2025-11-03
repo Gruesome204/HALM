@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "20251103_Bogensch\xFCtzenturm_0": 7274916224334571485
+      "20251103_Bogensch\xFCtzenturm_1": -8754052649512542606
+      "20251103_Bogensch\xFCtzenturm_2": 596036392006360314
+      "20251103_Bogensch\xFCtzenturm_3": -2005231246252641377
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
