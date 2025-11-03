@@ -38,8 +38,14 @@ public class GameOverBehavior : MonoBehaviour
         exitButton = root.Q<Button>("exitButton");
         exitButton.SetBinding("text", new LocalizedString("GameOverTranslationaTable", "exitButton"));
         exitButton.RegisterCallback<ClickEvent>(OnExitButtonClicked);
+
+        GameManager.Instance.ChangeState(GameManager.GameState.Paused);
     }
 
+    private void OnDisable()
+    {
+        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+    }
     void OnRetryLevelButtonClicked(ClickEvent evt)
     {
         SceneManager.LoadScene($"{SceneManager.GetActiveScene().name}");

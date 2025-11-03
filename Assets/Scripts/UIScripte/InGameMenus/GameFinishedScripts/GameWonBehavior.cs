@@ -33,6 +33,13 @@ public class GameWonBehavior : MonoBehaviour
         exitButton = root.Q<Button>("exitButton");
         exitButton.SetBinding("text", new LocalizedString("GameOverTranslationaTable", "exitButton"));
         exitButton.RegisterCallback<ClickEvent>(OnExitButtonClicked);
+
+        GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
     }
 
     void OnReturnToHubButtonClicked(ClickEvent evt)
