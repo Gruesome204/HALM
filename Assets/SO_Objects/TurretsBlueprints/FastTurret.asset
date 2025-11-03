@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: FastTurret
   m_EditorClassIdentifier: 
   turretName: FastTurret
+  towerIcon: {fileID: 0}
   baseLevel: 1
   description: Test Description
-  previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
-  turretPrefab: {fileID: 4775935544841688724, guid: e7ba0ce86f14b9c49bff82f2efd22797, type: 3}
   turretType: 1
+  previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
+  turretPrefab: {fileID: 2143098689819666265, guid: e7ba0ce86f14b9c49bff82f2efd22797, type: 3}
   baseHealth: 100
   baseAttackDamage: 10
   baseFireRate: 1
@@ -31,7 +32,7 @@ MonoBehaviour:
   baseFireRateGrowthFactor: 0.95
   baseRangeGrowthFlat: 0.5
   buildingCost: 0
-  height: 2
-  length: 2
+  height: 3
+  length: 3
   buildCapacityValue: 2
   placementCooldown: 3

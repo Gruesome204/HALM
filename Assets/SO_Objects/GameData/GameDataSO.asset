@@ -12,3 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e468b7970ef99446ac45fc5a4b2c010, type: 3}
   m_Name: GameDataSO
   m_EditorClassIdentifier: 
+  gameCurrency: 0
+  limitOfUnlockableTurrets: 10
+  limitOfSelectableTurrets: 5
+  currentClass: 0
+  currentPlayerLevel: 0
+  allTurretBlueprints:
+  - {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
+  - {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
+  allTurrets: 
+  unlockedTurrets: 
+  selectedTurrets: 

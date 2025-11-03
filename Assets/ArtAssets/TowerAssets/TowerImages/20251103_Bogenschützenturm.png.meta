@@ -112,10 +112,10 @@ TextureImporter:
       name: "20251103_Bogensch\xFCtzenturm_0"
       rect:
         serializedVersion: 2
-        x: 75
-        y: 9
-        width: 757
-        height: 956
+        x: 0
+        y: 0
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,77 +130,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: "20251103_Bogensch\xFCtzenturm_1"
-      rect:
-        serializedVersion: 2
-        x: 127
-        y: 202
-        width: 9
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 27edcb80f7b538680800000000000000
-      internalID: -8754052649512542606
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "20251103_Bogensch\xFCtzenturm_2"
-      rect:
-        serializedVersion: 2
-        x: 827
-        y: 73
-        width: 71
-        height: 138
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: afc9ebac0fb854800800000000000000
-      internalID: 596036392006360314
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "20251103_Bogensch\xFCtzenturm_3"
-      rect:
-        serializedVersion: 2
-        x: 118
-        y: 105
-        width: 9
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f93f8924eccfb24e0800000000000000
-      internalID: -2005231246252641377
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 91cea6059ac44a840a8ba68bf6bcd073
     internalID: 0
     vertices: []
     indices: 
@@ -211,9 +145,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       "20251103_Bogensch\xFCtzenturm_0": 7274916224334571485
-      "20251103_Bogensch\xFCtzenturm_1": -8754052649512542606
-      "20251103_Bogensch\xFCtzenturm_2": 596036392006360314
-      "20251103_Bogensch\xFCtzenturm_3": -2005231246252641377
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -282,11 +282,11 @@ public class TurretPlacementController : MonoBehaviour
             turretContainer
         );
 
-        newTurret.transform.localScale = new Vector3(
-        currentSelectedBlueprint.sizeInCells.x,
-        currentSelectedBlueprint.sizeInCells.y,
-        1f
-        );
+        //newTurret.transform.localScale = new Vector3(
+        //currentSelectedBlueprint.sizeInCells.x,
+        //currentSelectedBlueprint.sizeInCells.y,
+        //1f
+        //);
 
         // Register turret in grid
         PlacableObject turretPlacable = newTurret.GetComponent<PlacableObject>();
