@@ -25,14 +25,16 @@ public class InGameMenuManager : MonoBehaviour
         PlayerManager.Instance.OnPlayerDeath += GameOver;
         EnemySpawnManager.Instance.OnAllEnemiesDefeated += GameWon;
 
-}
+    }
+
+
 
 void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
     {
         OpenOneInGameMenu(5);
         turretUpgradeMenu.GetComponent<TurretUpgradeMenuBehavior>().CreateListEntry(type, progressLevel);
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -41,26 +43,38 @@ void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
             {
                 pauseMenu.SetActive(false);
             }
-            else if (!turretUpgradeMenu.activeSelf)
+            else if (!CertainMenuesOpen())
             {
                 CloseAllMenus();
                 OpenOneInGameMenu(1);
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && statsMenu.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            statsMenu.SetActive(false);
-        }
-        else if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            if (!turretUpgradeMenu.activeInHierarchy)
+            if (statsMenu.activeSelf)
+            {
+                statsMenu.SetActive(false);
+            }
+            else if (!CertainMenuesOpen())
             {
                 CloseAllMenus();
                 OpenOneInGameMenu(2);
             }
         }
     }
+    private Boolean CertainMenuesOpen()
+    {
+        if (turretUpgradeMenu.activeSelf || gameOverMenu.activeSelf || gameWonMenu.activeSelf)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     public void CloseAllMenus()
     {
