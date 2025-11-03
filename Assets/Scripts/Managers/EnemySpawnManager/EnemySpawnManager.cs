@@ -22,7 +22,7 @@ public class EnemySpawnManager : MonoBehaviour
     private int totalSpawned = 0; // How many enemies this spawner has spawned
     private bool allEnemiesSpawned = false; // Tracks if we've spawned all enemies
 
-    public static System.Action OnAllEnemiesDefeated;
+    public event System.Action OnAllEnemiesDefeated;
     private void Awake()
     {
         if (Instance != null && Instance != this)

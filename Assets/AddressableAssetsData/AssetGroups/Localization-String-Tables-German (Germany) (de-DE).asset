@@ -15,6 +15,13 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-German (Germany) (de-DE)
   m_GUID: 9a8477400ee2cab4f91e957647a45b61
   m_SerializeEntries:
+  - m_GUID: 0df4cb6d0fba2d249a7cdc4ae7aad887
+    m_Address: GameOverTranslationaTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2bfbf5da3f08e824abb46c5a86288269
     m_Address: TurretUpgradeTranslationTable_de-DE
     m_ReadOnly: 1
@@ -31,6 +38,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 460bf22d12523084f8a3ba3cd27558de
     m_Address: MenuTranslationaTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 490a71be3f9ce5445a3fa3b696bbe638
+    m_Address: GameWonTranslationaTable_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE
