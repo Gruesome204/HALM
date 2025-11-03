@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawnManager : MonoBehaviour
+public class EnemySpawnManager : MonoBehaviour, IPausable
 {
     public static EnemySpawnManager Instance { get; private set; }
 
@@ -23,6 +23,11 @@ public class EnemySpawnManager : MonoBehaviour
     private bool allEnemiesSpawned = false; // Tracks if we've spawned all enemies
 
     public event System.Action OnAllEnemiesDefeated;
+
+    private bool isPaused;
+
+    private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
+    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -36,7 +41,7 @@ public class EnemySpawnManager : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.Instance.IsPaused()) return;
+        if (isPaused) return;
 
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= spawnInterval)
@@ -48,6 +53,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     void TrySpawnEnemy()
     {
+        if (isPaused) return;
         // Clean up destroyed enemies
         activeEnemies.RemoveAll(e => e == null);
 
@@ -104,4 +110,15 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
+    public void OnPause()
+    {
+        isPaused = true;
+        // Stop moving, stop attacking, etc.
+    }
+
+    public void OnResume()
+    {
+        isPaused = false;
+        // Resume AI
+    }
 }
