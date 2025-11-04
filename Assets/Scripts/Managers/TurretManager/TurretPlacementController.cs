@@ -37,8 +37,8 @@ public class TurretPlacementController : MonoBehaviour
     [SerializeField] private Transform turretContainer;
 
     //Currently Active Turrets
-    private List<GameObject> activeTurrets = new List<GameObject>();
-    private List<TurretHealth> placedTurrets = new List<TurretHealth>();
+    [SerializeField]private List<GameObject> activeTurrets = new List<GameObject>();
+     [SerializeField]private List<TurretHealth> placedTurrets = new List<TurretHealth>();
     private Dictionary<TurretBlueprint, float> lastPlacementTimes = new Dictionary<TurretBlueprint, float>();
 
 
@@ -289,12 +289,12 @@ public class TurretPlacementController : MonoBehaviour
         //);
 
         // Register turret in grid
-        PlacableObject turretPlacable = newTurret.GetComponent<PlacableObject>();
+        PlacableObject turretPlacable = newTurret.GetComponentInChildren<PlacableObject>();
         if (turretPlacable != null)
         {
             GridManager.Instance.PlaceObject(newTurret, gridCoords, currentSelectedBlueprint.sizeInCells);
         }
-        TurretBehaviour behaviour = newTurret.GetComponent<TurretBehaviour>();
+        TurretBehaviour behaviour = newTurret.GetComponentInChildren<TurretBehaviour>();
         if (behaviour != null)
         {
             behaviour.turretBlueprint = currentSelectedBlueprint;
@@ -302,7 +302,7 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         // Setup TurretHealth
-        TurretHealth turretHealth = newTurret.GetComponent<TurretHealth>();
+        TurretHealth turretHealth = newTurret.GetComponentInChildren<TurretHealth>();
         if (turretHealth != null)
         {
             // Assign stats from blueprint (clone if ScriptableObject)
@@ -326,7 +326,7 @@ public class TurretPlacementController : MonoBehaviour
         UnregisterTurret(turret);
 
         if (turret != null && activeTurrets.Contains(turret.gameObject))
-            activeTurrets.Remove(turret.gameObject);
+        activeTurrets.Remove(turret.gameObject);
 
         OnTurretsChanged?.Invoke();
     }
@@ -335,7 +335,7 @@ public class TurretPlacementController : MonoBehaviour
         int total = 0;
         foreach (var turret in activeTurrets)
         {
-            var behaviour = turret.GetComponent<TurretBehaviour>();
+            var behaviour = turret.GetComponentInChildren<TurretBehaviour>();
             if (behaviour != null && behaviour.turretBlueprint != null)
             {
                 total += behaviour.turretBlueprint.buildCapacityValue;
@@ -343,6 +343,7 @@ public class TurretPlacementController : MonoBehaviour
         }
         return total;
     }
+
     public List<GameObject> GetActiveTurrets() => activeTurrets;
     public List<TurretBlueprint> GetTurretBlueprintList() => turretBlueprintList;
 
