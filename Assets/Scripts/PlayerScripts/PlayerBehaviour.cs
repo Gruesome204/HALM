@@ -21,5 +21,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Debug.Log($"Player died from {damageData.type} damage.");
 
+        // Destroy or disable player object
+        Destroy(gameObject);
     }
 }
