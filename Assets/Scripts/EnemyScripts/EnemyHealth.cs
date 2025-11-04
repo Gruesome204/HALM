@@ -26,7 +26,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
         stats.currentHealth -= damage;
         healthBar?.SetValueWithoutNotify(stats.currentHealth);
         Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage.");
-        Debug.Log($"Health after damage: {stats.currentHealth}");
+        //Debug.Log($"Health after damage: {stats.currentHealth}");
         if (stats.currentHealth <= 0)
         {
             Die(damageData);

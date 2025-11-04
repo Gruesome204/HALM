@@ -16,8 +16,12 @@ public class EnemyAttack : MonoBehaviour
         Debug.Log("Enemy Attack");
         if (target == null || stats == null) return;
 
-        IDamagable damagable = target.GetComponent<IDamagable>();
-        if (damagable == null || damagable.IsInvulnerable) return;
+        IDamagable damagable = target.GetComponentInChildren<IDamagable>();
+        if (damagable == null || damagable.IsInvulnerable)
+        {
+                    Debug.Log("Target could not be hit");
+         return;
+        }
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
 
