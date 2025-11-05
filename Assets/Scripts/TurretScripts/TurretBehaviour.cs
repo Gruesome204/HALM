@@ -12,7 +12,6 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     [SerializeField] private GameObject healthBarPrefab;
 
-
     [Header("Values")]
     public float currentFireRate;
     public float currentFireCountdown = 0f;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Handles demolition (removal) of turrets by the player.
@@ -117,7 +118,6 @@ public class TurretDemolitionController : MonoBehaviour
 
         // Remove from TurretPlacementController list
         TurretPlacementController.Instance.RemoveTurret(turret);
-
         Destroy(turret);
         Debug.Log($"[TurretDemolition] Turret:{turret.name} destroyed!");
     }
