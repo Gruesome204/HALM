@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7404836717555547999}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: OrdinaryTurretPrefab
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3458765640829375606}
   - component: {fileID: 2789723204494806824}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,9 +132,9 @@ GameObject:
   - component: {fileID: 4107142114786325596}
   - component: {fileID: 1769220035969220366}
   - component: {fileID: 9129192068123294735}
-  - component: {fileID: 3960291459664829254}
-  - component: {fileID: 7579462456299982044}
   - component: {fileID: 6378840624702643837}
+  - component: {fileID: 861570595662392854}
+  - component: {fileID: 5586022041456068151}
   m_Layer: 7
   m_Name: Tower
   m_TagString: Turret
@@ -213,7 +213,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
---- !u!61 &3960291459664829254
+--- !u!114 &6378840624702643837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366739089275610355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 261ce8c736131a2469d7965e407e1342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
+  currentLevel: 1
+  currentHealth: 0
+  currentMaxHealth: 0
+  currentAttackDamage: 0
+  currentAttackRange: 0
+  currentFireRate: 0
+  currentProjectileSpeed: 0
+  currentKnockbackStrength: 0
+  currentKnockbackDuration: 0
+  healthScaleFactor: 0
+  damageScaleFactor: 0
+  rangeScaleFactor: 0
+  fireRateScaleFactor: 0
+--- !u!114 &861570595662392854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366739089275610355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b02a66b70c56948a1a8187500b4943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 6378840624702643837}
+  healthBarFollow: {fileID: 0}
+--- !u!61 &5586022041456068151
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -243,11 +283,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.27}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -259,46 +299,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &7579462456299982044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366739089275610355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1b02a66b70c56948a1a8187500b4943, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 6378840624702643837}
-  healthBarFollow: {fileID: 0}
---- !u!114 &6378840624702643837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366739089275610355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 261ce8c736131a2469d7965e407e1342, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseStats: {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
-  currentLevel: 1
-  currentHealth: 0
-  currentMaxHealth: 0
-  currentAttackDamage: 0
-  currentAttackRange: 0
-  currentFireRate: 0
-  currentProjectileSpeed: 0
-  currentKnockbackStrength: 0
-  currentKnockbackDuration: 0
-  healthScaleFactor: 0
-  damageScaleFactor: 0
-  rangeScaleFactor: 0
-  fireRateScaleFactor: 0
 --- !u!1 &9099245903098031496
 GameObject:
   m_ObjectHideFlags: 0
