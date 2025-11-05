@@ -48,6 +48,7 @@ public class PauseMenuBehavior : MonoBehaviour
         exitButton.RegisterCallback<ClickEvent>(OnExitBtnCicked);
 
         GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+        root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
     }
 
     private void OnDisable()
@@ -57,10 +58,18 @@ public class PauseMenuBehavior : MonoBehaviour
     }
     void OnBackBtnCicked(ClickEvent evt)
     {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+
+        root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
+
         this.gameObject.SetActive(false);
     }
     void OnResumeBtnCicked(ClickEvent evt)
     {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+
+        root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
+
         this.gameObject.SetActive(false);
     }
     void OnSettingsBtnCicked(ClickEvent evt)
@@ -70,7 +79,6 @@ public class PauseMenuBehavior : MonoBehaviour
     void OnCancelRunBtnCicked(ClickEvent evt)
     {
         SceneManager.LoadScene("HubScene");
-        Debug.Log("Gibbet noch net");
     }
     void OnMainMenuBtnCicked(ClickEvent evt)
     {

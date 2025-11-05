@@ -1,0 +1,11 @@
+.pauseMenuSlideOut {
+    translate: -700px 0;
+    transition-timing-function: ease-in-out;
+    transition-duration: 1s;
+    background-color: rgba(0, 217, 0, 0.25);
+}
+
+.pauseMenuSlideIn {
+    transition-timing-function: ease-in-out;
+    transition-duration: 1s;
+}
