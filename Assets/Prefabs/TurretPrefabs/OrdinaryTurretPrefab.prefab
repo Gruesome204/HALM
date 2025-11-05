@@ -299,6 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 6378840624702643837}
   healthBarFollow: {fileID: 0}
+  collisionDamageCooldown: 1
 --- !u!1 &9099245903098031496
 GameObject:
   m_ObjectHideFlags: 0

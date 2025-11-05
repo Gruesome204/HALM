@@ -59,36 +59,20 @@ public class EnemyMovement : MonoBehaviour
 
     private void LookForTarget()
     {
+        //Only find and follow the Player
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        GameObject[] turrets = GameObject.FindGameObjectsWithTag("Turret");
 
-        GameObject closest = null;
-        float closestDistance = Mathf.Infinity;
-
-        if (player != null)
+        if (player == null)
         {
-            float dist = Vector2.Distance(transform.position, player.transform.position);
-            if (dist < closestDistance)
-            {
-                closestDistance = dist;
-                closest = player;
-            }
+            target = null;
+            return;
         }
 
-        foreach (GameObject turret in turrets)
+        // Assign player as the only target
+        if (target != player)
         {
-            float dist = Vector2.Distance(transform.position, turret.transform.position);
-            if (dist < closestDistance)
-            {
-                closestDistance = dist;
-                closest = turret;
-            }
-        }
-
-        if (closest != null && closest != target)
-        {
-            target = closest;
-           // Debug.Log($"{gameObject.name} found target: {target.name}");
+            target = player;
+            // Debug.Log($"{gameObject.name} now targeting Player");
         }
     }
 }

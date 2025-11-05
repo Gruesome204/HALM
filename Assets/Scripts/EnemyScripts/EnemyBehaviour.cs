@@ -16,7 +16,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     [Header("Targeting")]
     public GameObject target;
-    [SerializeField] private string[] targetTags = { "Player", "Turret" };
 
     [Header("Ability Settings")]
     [Tooltip("Time between ability usage attempts (seconds).")]
@@ -48,7 +47,9 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             GameManager.Instance.RegisterPausable(this);
         else
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
-
+        target = GameObject.FindGameObjectWithTag("Player");
+        if (target == null)
+            Debug.LogWarning($"{name} could not find a GameObject with tag 'Player'");
     }
     public void OnPause()
     {
@@ -81,7 +82,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         DropTargetIfTooFar();
 
-        target = SelectTarget();
         if (target == null) return;
 
         HandleMovement(target);
@@ -164,28 +164,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         if (distance > stats.currentAttackRange && abilityBehaviour != null)
             abilityBehaviour.target = null;
-    }
-
-    private GameObject SelectTarget()
-    {
-        var potentialTargets = new List<GameObject>();
-
-        // Gather targets from multiple tags
-        foreach (var tag in targetTags)
-        {
-            potentialTargets.AddRange(GameObject.FindGameObjectsWithTag(tag));
-        }
-
-        if (potentialTargets.Count == 0)
-            return null;
-
-        // Filter valid targets
-        var validTargets = potentialTargets
-            .Where(t => t != null && t.activeInHierarchy)
-            .OrderBy(t => Vector2.Distance(transform.position, t.transform.position))
-            .ToList();
-
-        return validTargets.FirstOrDefault();
     }
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
