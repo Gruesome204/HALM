@@ -19,7 +19,7 @@ public class EnemyAttack : MonoBehaviour
         IDamagable damagable = target.GetComponentInChildren<IDamagable>();
         if (damagable == null || damagable.IsInvulnerable)
         {
-                    Debug.Log("Target could not be hit");
+        Debug.Log("Target could not be hit");
          return;
         }
 

@@ -133,9 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  targetTags:
-  - Player
-  - Turret
   abilityCheckInterval: 1
 --- !u!58 &464428886847549793
 CircleCollider2D:

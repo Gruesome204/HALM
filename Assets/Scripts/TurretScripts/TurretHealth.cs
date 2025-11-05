@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using static DamageData;
 
 public class TurretHealth : MonoBehaviour, IDamagable
 {
@@ -12,6 +13,10 @@ public class TurretHealth : MonoBehaviour, IDamagable
     public HealthBarFollow healthBarFollow;
     public bool IsInvulnerable { get; set; }
     public event Action<TurretHealth, DamageData> OnDeath;
+
+    [Tooltip("Cooldown between collisions to avoid rapid repeated damage.")]
+    [SerializeField] private float collisionDamageCooldown = 1f;
+    private float lastCollisionTime;
     private void Start()
     {
         if (stats == null)
@@ -104,5 +109,31 @@ public class TurretHealth : MonoBehaviour, IDamagable
     {
         if (healthBar != null)
             healthBar.value = stats.currentHealth;
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Test Collision");
+        if (Time.time < lastCollisionTime + collisionDamageCooldown) return;
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            EnemyStats enemyStats = collision.gameObject.GetComponentInChildren<EnemyStats>();
+            if (enemyStats != null)
+            {
+                var damageData = new DamageData
+                {
+                    amount = stats.currentAttackDamage,
+                    type = DamageType.Physical,
+                    source = collision.gameObject
+                };
+
+                TakeDamage(damageData, new KnockbackData());
+                lastCollisionTime = Time.time;
+
+                Debug.Log($"{gameObject.name} collided with {collision.gameObject.name} and took {stats.currentAttackDamage} damage.");
+            }
+        }
     }
 }

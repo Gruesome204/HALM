@@ -28,6 +28,8 @@ public class BallProjectileBehaviour : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Turret"))
             return;
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            return;
         if (other.gameObject == owner)
             return;
         // Try to get the IDamagable interface from the collided object
