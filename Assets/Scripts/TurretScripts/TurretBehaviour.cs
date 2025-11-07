@@ -87,20 +87,20 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         FindTarget();
         if (targetEnemy != null)
         {
-            // *** ADD THIS TURRET ROTATION LOGIC HERE ***
-            // Calculate the direction from the turret's position to the target enemy's position
-            Vector3 directionToTarget = targetEnemy.position - transform.position;
+            //// *** ADD THIS TURRET ROTATION LOGIC HERE ***
+            //// Calculate the direction from the turret's position to the target enemy's position
+            //Vector3 directionToTarget = targetEnemy.position - transform.position;
 
-            // Calculate the angle in degrees for 2D rotation (around Z-axis)
-            // Mathf.Atan2 returns the angle in radians between the X-axis and a 2D vector (y, x).
-            // Multiply by Mathf.Rad2Deg to convert radians to degrees.
-            float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
+            //// Calculate the angle in degrees for 2D rotation (around Z-axis)
+            //// Mathf.Atan2 returns the angle in radians between the X-axis and a 2D vector (y, x).
+            //// Multiply by Mathf.Rad2Deg to convert radians to degrees.
+            //float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
 
-            // Apply the rotation to the turret.
-            // Assuming your turret's front is aligned with the positive X-axis when its Z-rotation is 0.
-            // If your turret sprite is oriented differently (e.g., facing up when rotation is 0),
-            // you might need to add an offset: Quaternion.Euler(0, 0, angle - 90f);
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            //// Apply the rotation to the turret.
+            //// Assuming your turret's front is aligned with the positive X-axis when its Z-rotation is 0.
+            //// If your turret sprite is oriented differently (e.g., facing up when rotation is 0),
+            //// you might need to add an offset: Quaternion.Euler(0, 0, angle - 90f);
+            //transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
             if (currentFireCountdown <= 0f)
             {

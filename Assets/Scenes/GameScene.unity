@@ -813,6 +813,12 @@ MonoBehaviour:
   turretLayer:
     serializedVersion: 2
     m_Bits: 128
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
   previewObject: {fileID: 0}
   maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}

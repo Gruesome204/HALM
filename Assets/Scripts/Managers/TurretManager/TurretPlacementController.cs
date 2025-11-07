@@ -24,6 +24,13 @@ public class TurretPlacementController : MonoBehaviour
     [Tooltip("Layer for turrets.")]
     public LayerMask turretLayer;
 
+    [Header("Blocking Layers")]
+    [Tooltip("Layer for player characters (placement blocked).")]
+    public LayerMask playerLayer;
+
+    [Tooltip("Layer for enemies (placement blocked).")]
+    public LayerMask enemyLayer;
+
     [Header("Placement Preview")]
     [Tooltip("Prefab used to show placement preview (optional).")]
     public GameObject previewObject; // Optional: Prefab for placement preview
@@ -187,6 +194,13 @@ public class TurretPlacementController : MonoBehaviour
 
         // Check if placement is valid
         bool canPlace = GridManager.Instance.CanPlaceObject(gridCoords, currentSelectedBlueprint.sizeInCells);
+
+        Vector3 targetWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
+        if (IsPlacementBlocked(targetWorldPos, currentSelectedBlueprint.sizeInCells))
+        {
+            canPlace = false;
+        }
+
         UpdatePreviewColor(canPlace);
     }
     private void MakePreviewTransparent(GameObject obj)
@@ -274,6 +288,13 @@ public class TurretPlacementController : MonoBehaviour
             return;
         }
 
+        Vector3 targetWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
+        if (IsPlacementBlocked(targetWorldPos, currentSelectedBlueprint.sizeInCells))
+        {
+            Debug.Log("[TurretPlacement] Cannot place: blocked by enemy or player.");
+            return;
+        }
+
         // Instantiate turret at centered position
         GameObject newTurret = Instantiate(
             currentSelectedBlueprint.turretPrefab,
@@ -350,5 +371,17 @@ public class TurretPlacementController : MonoBehaviour
 
         Debug.Log($"[TurretPlacement] Loaded {turretBlueprintList.Count} unlocked turrets from GameDataSO.");
         OnTurretsChanged?.Invoke();
+    }
+
+    private bool IsPlacementBlocked(Vector3 position, Vector2 size)
+    {
+        // You can adjust this depending on how your turrets are sized
+        Vector2 checkSize = size * 0.9f; // slightly smaller to avoid false positives
+
+        // Check if any collider overlaps with the given area on restricted layers
+        Collider2D playerHit = Physics2D.OverlapBox(position, checkSize, 0f, playerLayer);
+        Collider2D enemyHit = Physics2D.OverlapBox(position, checkSize, 0f, enemyLayer);
+
+        return playerHit != null || enemyHit != null;
     }
 }
