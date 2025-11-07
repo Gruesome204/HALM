@@ -18,22 +18,16 @@ public class ActionRowBehavior : MonoBehaviour
     public VisualTreeAsset towerLimitElement;
 
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
-    private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
-    private List<GameObject> turretsCurrentlyPlaced = new List<GameObject>();
     private List<AR_TowerLimitElementBehavior> towerLimitElementList = new List<AR_TowerLimitElementBehavior>();
 
     void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
         gameMenuManager = FindObjectOfType<InGameMenuManager>();
-        Time.timeScale = 1;
 
-        turretsInGame = TurretPlacementController.Instance.GetTurretBlueprintList();
-        turretsCurrentlyPlaced = TurretPlacementController.Instance.GetActiveTurrets();
 
         turretButtonContainer = root.Q<VisualElement>("turrentButtonContainer");
         TurretButtonContainerColor();
-        TurretDemolitionController.Instance.OnDemolitionModeChange += TurretButtonContainerColor;
 
         resourceContainer = root.Q<VisualElement>("resourceContainer");
 
@@ -75,7 +69,7 @@ public class ActionRowBehavior : MonoBehaviour
         turretBtnList.Clear();
         var turretNumber = new int();
         turretNumber = 1;
-        foreach (var turret in turretsInGame)
+        foreach (var turret in TurretPlacementController.Instance.GetTurretBlueprintList())
         {
             AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret, turretNumber);
             turretButtonContainer.Add(aR_Element.turretBorder);
@@ -97,14 +91,14 @@ public class ActionRowBehavior : MonoBehaviour
     void PauseBtnClicked(ClickEvent evt)
     {
         gameMenuManager.CloseAllMenus();
-        gameMenuManager.OpenOneInGameMenu(1);
+        gameMenuManager.OpenCloseOneMenu("PauseMenuDoc", true);
 
     }
 
     void StatsBtnClicked(ClickEvent evt)
     {
         gameMenuManager.CloseAllMenus();
-        gameMenuManager.OpenOneInGameMenu(2);
+        gameMenuManager.OpenCloseOneMenu("StatsMenuDoc", true);
     }
 
     void FillTowerLimitBar(int towerLimit)
@@ -129,7 +123,7 @@ public class ActionRowBehavior : MonoBehaviour
     }
     void SetCurrentTurret(int clickedBtn)
     {
-        FindObjectOfType<TurretPlacementController>().currentSelectedBlueprint = turretsInGame[clickedBtn];
+        FindObjectOfType<TurretPlacementController>().currentSelectedBlueprint = TurretPlacementController.Instance.GetTurretBlueprintList()[clickedBtn];
     }
 
     public void TurretButtonContainerColor()

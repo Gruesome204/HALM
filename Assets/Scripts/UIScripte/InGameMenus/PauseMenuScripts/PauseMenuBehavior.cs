@@ -29,7 +29,7 @@ public class PauseMenuBehavior : MonoBehaviour
 
         resumeButton = root.Q<Button>("resumeButton");
         resumeButton.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "resumeButton"));
-        resumeButton.RegisterCallback<ClickEvent>(OnResumeBtnCicked);
+        resumeButton.RegisterCallback<ClickEvent>(OnBackBtnCicked);
 
         settingsButton = root.Q<Button>("settingsButton");
         settingsButton.SetBinding("text", new LocalizedString("MenuTranslationaTable", "settingsButton"));
@@ -46,35 +46,15 @@ public class PauseMenuBehavior : MonoBehaviour
         exitButton = root.Q<Button>("exitButton");
         exitButton.SetBinding("text", new LocalizedString("MenuTranslationaTable", "exitButton"));
         exitButton.RegisterCallback<ClickEvent>(OnExitBtnCicked);
-
-        GameManager.Instance.ChangeState(GameManager.GameState.Paused);
-        root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
     }
 
-    private void OnDisable()
-    {
-        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
-        InGameMenuManager.Instance.ReturnToGame();
-    }
     void OnBackBtnCicked(ClickEvent evt)
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-
-        root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
-
-        this.gameObject.SetActive(false);
-    }
-    void OnResumeBtnCicked(ClickEvent evt)
-    {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-
-        root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
-
-        this.gameObject.SetActive(false);
+        InGameMenuManager.Instance.ReturnToGame();
     }
     void OnSettingsBtnCicked(ClickEvent evt)
     {
-        InGameMenuManager.Instance.OpenOneInGameMenu(4);
+        InGameMenuManager.Instance.OpenCloseOneMenu("SettingsMenuDoc", true);
     }
     void OnCancelRunBtnCicked(ClickEvent evt)
     {

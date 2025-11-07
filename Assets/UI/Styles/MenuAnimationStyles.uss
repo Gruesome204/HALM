@@ -2,10 +2,35 @@
     translate: -700px 0;
     transition-timing-function: ease-in-out;
     transition-duration: 1s;
-    background-color: rgba(0, 217, 0, 0.25);
+    opacity: 0;
 }
 
 .pauseMenuSlideIn {
+    transition-timing-function: ease-in-out;
+    transition-duration: 1s;
+}
+
+.settingsMenuSlideOut {
+    translate: 0 1000px;
+    transition-timing-function: ease-in-out;
+    transition-duration: 1s;
+    opacity: 0;
+}
+
+.settingsMenuSlideIn {
+    transition-timing-function: ease-in-out;
+    transition-duration: 1s;
+}
+
+.actionRowSlideOut {
+    translate: 0 0;
+    transition-timing-function: ease-in-out;
+    transition-duration: 1s;
+    opacity: 0;
+    scale: 1 2;
+}
+
+.actionRowSlideIn {
     transition-timing-function: ease-in-out;
     transition-duration: 1s;
 }

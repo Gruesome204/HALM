@@ -51,17 +51,12 @@ public class StatsMenuBehavior : MonoBehaviour
         towerButton.SetBinding("text", new LocalizedString("StatsMenuTranslationTable", "towerButton"));
         towerButton.RegisterCallback<ClickEvent>(OnTowerBtnClicked);
 
-        GameManager.Instance.ChangeState(GameManager.GameState.Paused);
     }
-    private void OnDisable()
-    {
-        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
-        InGameMenuManager.Instance.ReturnToGame();
-    }
+
 
     void OnResumeBtnClicked(ClickEvent evt)
     {
-        this.gameObject.SetActive(false);
+        InGameMenuManager.Instance.ReturnToGame();
     }
     void OnCharackterBtnClicked(ClickEvent evt)
     {

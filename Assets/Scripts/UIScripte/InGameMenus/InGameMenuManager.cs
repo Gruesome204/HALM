@@ -1,25 +1,32 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class InGameMenuManager : MonoBehaviour
 {
     public static InGameMenuManager Instance{ get; private set; }
     void Awake() => Instance = this;
 
-    [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private GameObject statsMenu;
-    [SerializeField] private GameObject actionRow;
-    [SerializeField] private GameObject settingsMenu;
-    [SerializeField] private GameObject turretUpgradeMenu;
-    [SerializeField] private GameObject gameOverMenu;
-    [SerializeField] private GameObject gameWonMenu;
+    [SerializeField] private GameObject PauseMenuDoc;
+    [SerializeField] private GameObject StatsMenuDoc;
+    [SerializeField] private GameObject ActionRowDoc;
+    [SerializeField] private GameObject SettingsMenuDoc;
+    [SerializeField] private GameObject TurretUpgradeChoiceDoc;
+    [SerializeField] private GameObject GameOverDoc;
+    [SerializeField] private GameObject GameWonDoc;
+
+
+    public List<GameObject> openMenus = new List<GameObject>();
 
 
     void OnDisable() => Debug.Log($"{name} was disabled!");
     void Start()
     {
         //CloseAllMenus();
-        OpenOneInGameMenu(3);
+        ActionRowDoc.SetActive(true);
+        OpenCloseOneMenu("ActionRowDoc", true);
         TurretLevelManager.Instance.OnMilestoneReached += OpenTurretUpgradeChoice;
 
         PlayerManager.Instance.OnPlayerDeath += GameOver;
@@ -31,116 +38,169 @@ public class InGameMenuManager : MonoBehaviour
 
 void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
     {
-        OpenOneInGameMenu(5);
-        turretUpgradeMenu.GetComponent<TurretUpgradeMenuBehavior>().CreateListEntry(type, progressLevel);
+        OpenCloseOneMenu("turretUpgradeMenu", true);
+        TurretUpgradeChoiceDoc.GetComponent<TurretUpgradeMenuBehavior>().CreateListEntry(type, progressLevel);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (pauseMenu.activeSelf)
-            {
-                pauseMenu.SetActive(false);
-            }
-            else if (!CertainMenuesOpen())
+            if (openMenus.Count == 0)
             {
                 CloseAllMenus();
-                OpenOneInGameMenu(1);
+                OpenCloseOneMenu("PauseMenuDoc", true);
+            }
+            else
+            {
+                EscapePressed();
             }
         }
+
+
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (statsMenu.activeSelf)
+            if (openMenus.Contains(StatsMenuDoc))
             {
-                statsMenu.SetActive(false);
+                ReturnToGame();
             }
-            else if (!CertainMenuesOpen())
+            else
             {
                 CloseAllMenus();
-                OpenOneInGameMenu(2);
+                OpenCloseOneMenu("StatsMenuDoc", true);
             }
         }
     }
-    private Boolean CertainMenuesOpen()
+
+    private void EscapePressed()
     {
-        if (turretUpgradeMenu.activeSelf || gameOverMenu.activeSelf || gameWonMenu.activeSelf)
+        if (openMenus.Last().tag == "NoEscMenu")
         {
-            return true;
+
+        }
+        else if (openMenus.Count == 1)
+        {
+            ReturnToGame();
         }
         else
         {
-            return false;
+            OpenCloseOneMenu($"{openMenus.Last().name}", false);
         }
     }
 
-
     public void CloseAllMenus()
     {
-        pauseMenu.SetActive(false);
-        statsMenu.SetActive(false);
-        actionRow.SetActive(false);
-        settingsMenu.SetActive(false);
-        turretUpgradeMenu.SetActive(false);
-        gameOverMenu.SetActive(false);
-        gameWonMenu.SetActive(false);
+        OpenCloseOneMenu("PauseMenuDoc", false);
+        OpenCloseOneMenu("StatsMenuDoc", false);
+        OpenCloseOneMenu("ActionRowDoc", false);
+        OpenCloseOneMenu("SettingsMenuDoc", false);
+        TurretUpgradeChoiceDoc.SetActive(false);
+        GameOverDoc.SetActive(false);
+        GameWonDoc.SetActive(false);
     }
 
-    public void OpenOneInGameMenu(int menuToOpen)
+    public void OpenCloseOneMenu(string menuToOpen, Boolean openMenu)
     {
         switch (menuToOpen)
         {
-            case 1:
-                pauseMenu.SetActive(true);
+            case "PauseMenuDoc":
+                if (openMenu)
+                {
+                    var root = PauseMenuDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
+                    openMenus.Add(PauseMenuDoc);
+                    GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+                }
+                else
+                {
+                    var root = PauseMenuDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
+                    openMenus.Remove(PauseMenuDoc);
+                    GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+                }
                 break;
                  
-            case 2:
-                statsMenu.SetActive(true);
+            case "StatsMenuDoc":
+                if (openMenu)
+                {
+                    var root = StatsMenuDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
+                    openMenus.Add(StatsMenuDoc);
+                    GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+                }
+                else
+                {
+                    var root = StatsMenuDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
+                    openMenus.Remove(StatsMenuDoc);
+                    GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+                }
                 break;
 
-            case 3:
-                actionRow.SetActive(true);
+            case "ActionRowDoc":
+                if (openMenu)
+                {
+                    var root = ActionRowDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
+                }
+                else
+                {
+                    var root = ActionRowDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").AddToClassList("actionRowSlideOut");
+                }
                 break;
 
-            case 4:
-                settingsMenu.SetActive(true);
+            case "SettingsMenuDoc":
+                if (openMenu)
+                {
+                    var root = SettingsMenuDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").RemoveFromClassList("settingsMenuSlideOut");
+                    openMenus.Add(SettingsMenuDoc);
+                }
+                else
+                {
+                    var root = SettingsMenuDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").AddToClassList("settingsMenuSlideOut");
+                    openMenus.Remove(SettingsMenuDoc);
+                }
                 break;
 
-            case 5:
-                turretUpgradeMenu.SetActive(true);
+            case "TurretUpgradeChoiceDoc":
+                TurretUpgradeChoiceDoc.SetActive(true);
                 break;
 
-            case 6:
-                gameOverMenu.SetActive(true);
+            case "GameOverDoc":
+                GameOverDoc.SetActive(true);
+                openMenus.Add(GameOverDoc);
                 break;
 
-            case 7:
-                gameWonMenu.SetActive(true);
+            case "GameWonDoc":
+                GameWonDoc.SetActive(true);
                 break;
         }
     }
 
     public void ReturnToGame()
     {
-        //CloseAllMenus();
-        OpenOneInGameMenu(3);
+        CloseAllMenus();
+        OpenCloseOneMenu("ActionRowDoc", true);
     }
 
     public void CloseTurretUpgrade()
     {
-        turretUpgradeMenu.SetActive(false);
+        TurretUpgradeChoiceDoc.SetActive(false);
     }
 
     public void GameOver()
     {
         CloseAllMenus();
-        OpenOneInGameMenu(6);
+        OpenCloseOneMenu("GameOverDoc", true);
     }
 
     public void GameWon()
     {
         CloseAllMenus();
-        OpenOneInGameMenu(7);
+        OpenCloseOneMenu("GameWonDoc", true);
     }
 }

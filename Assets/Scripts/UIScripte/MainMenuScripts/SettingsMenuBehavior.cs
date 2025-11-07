@@ -1,7 +1,9 @@
 using System.Collections;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class SettingsMenuBehavior : MonoBehaviour
@@ -41,7 +43,10 @@ public class SettingsMenuBehavior : MonoBehaviour
 
         SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
         PlayThisMusic(2);
-        this.gameObject.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     private void OnEnable()
@@ -112,7 +117,14 @@ public class SettingsMenuBehavior : MonoBehaviour
 
     void OnBackBtnClicked(ClickEvent clicked)
     {
-        this.gameObject.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            InGameMenuManager.Instance.OpenCloseOneMenu("SettingsMenuDoc", false);
+        }
     }
 
     void OnLanguageEnglishBtnClicked(ClickEvent clicked)
