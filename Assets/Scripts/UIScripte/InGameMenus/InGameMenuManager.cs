@@ -38,15 +38,15 @@ public class InGameMenuManager : MonoBehaviour
 
 void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
     {
-        OpenCloseOneMenu("turretUpgradeMenu", true);
-        TurretUpgradeChoiceDoc.GetComponent<TurretUpgradeMenuBehavior>().CreateListEntry(type, progressLevel);
+        //OpenCloseOneMenu("TurretUpgradeChoiceDoc", true);
+        //TurretUpgradeChoiceDoc.GetComponent<TurretUpgradeMenuBehavior>().CreateListEntry(type, progressLevel);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (openMenus.Count == 0)
+            if (openMenus.Count == 0 || openMenus.Contains(StatsMenuDoc))
             {
                 CloseAllMenus();
                 OpenCloseOneMenu("PauseMenuDoc", true);
@@ -61,14 +61,14 @@ void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (openMenus.Contains(StatsMenuDoc))
-            {
-                ReturnToGame();
-            }
-            else
+            if (openMenus.Count == 0 || openMenus.Contains(PauseMenuDoc))
             {
                 CloseAllMenus();
                 OpenCloseOneMenu("StatsMenuDoc", true);
+            }
+            else if (openMenus.Contains(StatsMenuDoc))
+            {
+                ReturnToGame();
             }
         }
     }
@@ -95,7 +95,7 @@ void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
         OpenCloseOneMenu("StatsMenuDoc", false);
         OpenCloseOneMenu("ActionRowDoc", false);
         OpenCloseOneMenu("SettingsMenuDoc", false);
-        TurretUpgradeChoiceDoc.SetActive(false);
+        OpenCloseOneMenu("TurretUpgradeChoiceDoc", false);
         GameOverDoc.SetActive(false);
         GameWonDoc.SetActive(false);
     }
@@ -167,7 +167,20 @@ void OpenTurretUpgradeChoice(TurretType type, int progressLevel)
                 break;
 
             case "TurretUpgradeChoiceDoc":
-                TurretUpgradeChoiceDoc.SetActive(true);
+                if (openMenu)
+                {
+                    var root = TurretUpgradeChoiceDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").RemoveFromClassList("turretChoiceMenuSlideOut");
+                    openMenus.Add(TurretUpgradeChoiceDoc);
+                    GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+                }
+                else
+                {
+                    var root = TurretUpgradeChoiceDoc.GetComponent<UIDocument>().rootVisualElement;
+                    root.Q<VisualElement>("mainContainer").AddToClassList("turretChoiceMenuSlideOut");
+                    openMenus.Remove(TurretUpgradeChoiceDoc);
+                    GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+                }
                 break;
 
             case "GameOverDoc":

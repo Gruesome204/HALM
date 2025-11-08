@@ -5,7 +5,7 @@
     opacity: 0;
 }
 
-.pauseMenuSlideIn {
+.SlideIn {
     transition-timing-function: ease-in-out;
     transition-duration: 1s;
 }
@@ -17,11 +17,6 @@
     opacity: 0;
 }
 
-.settingsMenuSlideIn {
-    transition-timing-function: ease-in-out;
-    transition-duration: 1s;
-}
-
 .actionRowSlideOut {
     translate: 0 0;
     transition-timing-function: ease-in-out;
@@ -30,7 +25,10 @@
     scale: 1 2;
 }
 
-.actionRowSlideIn {
+.turretChoiceMenuSlideOut {
+    translate: 1200px 0;
     transition-timing-function: ease-in-out;
     transition-duration: 1s;
+    opacity: 0;
+    scale: 0.5 0.5;
 }
