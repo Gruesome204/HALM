@@ -27,6 +27,7 @@ public class ActionRowBehavior : MonoBehaviour
 
 
         turretButtonContainer = root.Q<VisualElement>("turrentButtonContainer");
+        TurretDemolitionController.Instance.OnDemolitionModeChange += TurretButtonContainerColor;
         TurretButtonContainerColor();
 
         resourceContainer = root.Q<VisualElement>("resourceContainer");

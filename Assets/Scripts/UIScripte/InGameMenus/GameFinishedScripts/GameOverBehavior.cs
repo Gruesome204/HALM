@@ -12,10 +12,6 @@ public class GameOverBehavior : MonoBehaviour
     private Button returnToMainMenuButton;
     private Button exitButton;
 
-    private void Start()
-    {
-        this.gameObject.SetActive(false);
-    }
     private void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
@@ -39,13 +35,8 @@ public class GameOverBehavior : MonoBehaviour
         exitButton.SetBinding("text", new LocalizedString("GameOverTranslationaTable", "exitButton"));
         exitButton.RegisterCallback<ClickEvent>(OnExitButtonClicked);
 
-        GameManager.Instance.ChangeState(GameManager.GameState.Paused);
     }
 
-    private void OnDisable()
-    {
-        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
-    }
     void OnRetryLevelButtonClicked(ClickEvent evt)
     {
         SceneManager.LoadScene($"{SceneManager.GetActiveScene().name}");

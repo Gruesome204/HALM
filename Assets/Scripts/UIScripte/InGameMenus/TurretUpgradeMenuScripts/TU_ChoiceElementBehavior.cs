@@ -29,7 +29,7 @@ public class TU_ChoiceElementBehavior
     void OnClicked(ClickEvent evt)
     {
         ApplyUpgrade(option);
-        InGameMenuManager.Instance.CloseTurretUpgrade();
+        InGameMenuManager.Instance.ReturnToGame();
     }
 
     private void ApplyUpgrade(TurretUpgradeChoiceSO.UpgradeOption option)
