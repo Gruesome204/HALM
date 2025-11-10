@@ -7,7 +7,7 @@ public class TurretLevelManager : MonoBehaviour
 {
     public static TurretLevelManager Instance { get; private set; }
 
-    [System.Serializable]
+    [Serializable]
     public class TurretProgress
     {
      [SerializeField] public int currentLevel = 1;
@@ -93,6 +93,7 @@ public class TurretLevelManager : MonoBehaviour
         return turretProgressDict[type].currentLevel;
     }
 
+    // Forces all active turrets of the specified type to reapply their upgrades.
     public void ForceReapplyUpgrades(TurretType type)
     {
         foreach (var turret in TurretPlacementController.Instance.GetActiveTurrets())
@@ -107,7 +108,7 @@ public class TurretLevelManager : MonoBehaviour
             }
         }
     }
-
+    // Convenience method to trigger upgrade reapplication.
     public void OnTurretLevelChanged(TurretType type)
     {
         ForceReapplyUpgrades(type);
