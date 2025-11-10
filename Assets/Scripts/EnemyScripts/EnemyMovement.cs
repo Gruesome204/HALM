@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [Header("References")]
     public EnemyStats stats;
     public GameObject target;
 
@@ -21,27 +22,21 @@ public class EnemyMovement : MonoBehaviour
         MoveTowardTarget();
     }
 
+    //Enables or disables movement and physics interaction
     public void SetPaused(bool paused)
     {
         isPaused = paused;
 
         if (paused)
-        {
-            // Stop all movement and freeze physics
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        }
+            PauseMovement();
         else
-        {
-            // Unfreeze physics, allow rotation if needed
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        }
+            ResumeMovement();
     }
 
+    // Moves the enemy toward the current target if within pursue range
     public void MoveTowardTarget()
     {
-        LookForTarget();
+        UpdateTarget();
 
         if (target == null || stats == null) return;
 
@@ -52,12 +47,13 @@ public class EnemyMovement : MonoBehaviour
         rb.MovePosition(rb.position + dir * stats.currentMovementSpeed * Time.fixedDeltaTime);
     }
 
+    //Stops the enemy completely
     public void Stop()
     {
         rb.linearVelocity = Vector2.zero;
     }
 
-    private void LookForTarget()
+    private void UpdateTarget()
     {
         //Only find and follow the Player
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -74,5 +70,17 @@ public class EnemyMovement : MonoBehaviour
             target = player;
             // Debug.Log($"{gameObject.name} now targeting Player");
         }
+    }
+
+    private void PauseMovement()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    private void ResumeMovement()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }

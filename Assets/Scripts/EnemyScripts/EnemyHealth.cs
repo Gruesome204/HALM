@@ -5,6 +5,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 {
     public EnemyStats stats;
     public Slider healthBar;
+
     public event Action<EnemyHealth, DamageData> OnDeath;
     private void Start()
     {

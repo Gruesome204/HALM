@@ -34,22 +34,44 @@ public class TU_ChoiceElementBehavior
 
     private void ApplyUpgrade(TurretUpgradeChoiceSO.UpgradeOption option)
     {
+        if (TurretUpgradeChoiceManager.Instance == null)
+        {
+            Debug.LogError("TurretUpgradeChoiceManager instance is missing!");
+            return;
+        }
+        if (TurretPlacementController.Instance == null)
+        {
+            Debug.LogError("TurretPlacementController instance is missing!");
+            return;
+        }
+
+
         // Use the passed-in turretType and level
         TurretUpgradeChoiceManager.Instance.ChooseUpgrade(turretType, turretLevel, option);
-
         Debug.Log($"Applied upgrade: {option.name} to {turretType} at level {turretLevel}");
 
-        // Apply upgrades to all turrets of this type
+
         foreach (var turret in TurretPlacementController.Instance.GetActiveTurrets())
         {
-            // Make sure turret is a GameObject
             if (turret == null) continue;
-            // Access the actual TurretLevelBehaviour component directly
-        
-            if (turret != null && turret.GetComponentInChildren<TurretLevelBehaviour>().blueprint.turretType == turretType)
+
+            var levelBehaviour = turret.GetComponentInChildren<TurretLevelBehaviour>();
+            if (levelBehaviour == null)
             {
-                turret.GetComponentInChildren<TurretLevelBehaviour>().ApplyUpgrades(turretLevel);
-            }       
+                Debug.LogWarning($"Turret {turret.name} has no TurretLevelBehaviour component.");
+                continue;
+            }
+
+            if (levelBehaviour.blueprint == null)
+            {
+                Debug.LogWarning($"Turret {turret.name} has no blueprint assigned in TurretLevelBehaviour.");
+                continue;
+            }
+
+            if (levelBehaviour.blueprint.turretType == turretType)
+            {
+                levelBehaviour.ApplyUpgrades(turretLevel);
+            }
         }
     }
 }
