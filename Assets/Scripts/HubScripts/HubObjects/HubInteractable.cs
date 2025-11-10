@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HubInteractable : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class HubInteractable : MonoBehaviour
     {
         Debug.Log($"Interacted with {interactionName}");
         OnInteractedEvent?.Invoke(interactionName);
+
+        if (interactionName == "DungeonEntrance")
+        {
+            SceneManager.LoadScene("GameScene");
+        }
     }
 
     //Activate after Implementation of HubUIController
