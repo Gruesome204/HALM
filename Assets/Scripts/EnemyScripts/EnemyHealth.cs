@@ -57,21 +57,20 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 
     public void OnDamageTaken(float amount)
     {
-        throw new System.NotImplementedException();
     }
 
     public bool IsAlive()
     {
-        throw new NotImplementedException();
+        return stats.currentHealth > 0;
     }
 
     public Transform GetTransform()
     {
-        throw new NotImplementedException();
+        return transform;
     }
 
     public TargetType GetTargetType()
     {
-        throw new NotImplementedException();
+        return TargetType.Enemy;
     }
 }

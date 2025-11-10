@@ -9,19 +9,25 @@ public class TurretHealth : MonoBehaviour, IDamagable
     [SerializeField] private TurretStats stats;
 
     [Header("UI")]
-    private Slider healthBar;             // Will be assigned when prefab is spawned
+    private Slider healthBar;   // Will be assigned when prefab is spawned
     public HealthBarFollow healthBarFollow;
+
+
+    [Header("Settings")]
+    [Tooltip("Cooldown between collisions to avoid rapid repeated damage.")]
+    [SerializeField] private float collisionDamageCooldown = 1f;
+
+
+    private float lastCollisionTime;
     public bool IsInvulnerable { get; set; }
     public event Action<TurretHealth, DamageData> OnDeath;
 
-    [Tooltip("Cooldown between collisions to avoid rapid repeated damage.")]
-    [SerializeField] private float collisionDamageCooldown = 1f;
-    private float lastCollisionTime;
     private void Start()
     {
         if (stats == null)
             stats = GetComponent<TurretStats>();
     }
+
     public void Initialize(TurretBlueprint turretBlueprint)
     {
         if (turretBlueprint == null || stats == null) return;
@@ -50,7 +56,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     public void OnDamageTaken(float amount)
     {
-        Debug.Log($"{gameObject.name} was hit for {amount} damage");
+     
     }
 
     public void Die(DamageData damageData)
@@ -59,13 +65,15 @@ public class TurretHealth : MonoBehaviour, IDamagable
         OnDeath?.Invoke(this, damageData);
 
         if (healthBarFollow != null)
-            Destroy(healthBarFollow.gameObject); // clean up UI
+        Destroy(healthBarFollow.gameObject); // clean up UI
+
+        // Unregister turret
         TurretPlacementController.Instance?.UnregisterTurret(this);
 
         var placable = GetComponentInParent<PlacableObject>();
         var behaviour = GetComponentInParent<TurretBehaviour>();
 
-        //Removes the tower from the grid occupiency
+        //Removes the tower from the grid 
         if (placable != null && behaviour != null)
         {
             GridManager.Instance.RemoveObject(
