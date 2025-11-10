@@ -13,7 +13,6 @@ public class EnemyAttack : MonoBehaviour
 
     public void PerformAttack(GameObject target, bool isPaused)
     {
-        Debug.Log("Enemy Attack");
         if (target == null || stats == null) return;
 
         IDamagable damagable = target.GetComponentInChildren<IDamagable>();

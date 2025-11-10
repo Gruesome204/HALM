@@ -303,12 +303,14 @@ public class TurretPlacementController : MonoBehaviour
             turretContainer
         );
 
-        // Register turret in grid
+        // Register turret in grid and give the turret its coordiantes
         PlacableObject turretPlacable = newTurret.GetComponentInChildren<PlacableObject>();
         if (turretPlacable != null)
         {
             GridManager.Instance.PlaceObject(newTurret, gridCoords, currentSelectedBlueprint.sizeInCells);
+            turretPlacable.currentGridCoordinates = gridCoords;
         }
+
         TurretBehaviour behaviour = newTurret.GetComponentInChildren<TurretBehaviour>();
         if (behaviour != null)
         {

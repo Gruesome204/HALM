@@ -122,6 +122,22 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    //public void RemoveObject(GameObject obj)
+    //{
+    //    if (obj == null) return;
+
+    //    for (int x = 0; x < gridWidth; x++)
+    //    {
+    //        for (int y = 0; y < gridHeight; y++)
+    //        {
+    //            if (gridOccupancy[x, y] == obj)
+    //            {
+    //                gridOccupancy[x, y] = null;
+    //            }
+    //        }
+    //    }
+    //}
+
     // Show the grid at all times in the editor
     // For debugging: Draw grid lines in the editor
     private void OnDrawGizmos()

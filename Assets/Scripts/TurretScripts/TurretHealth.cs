@@ -62,6 +62,20 @@ public class TurretHealth : MonoBehaviour, IDamagable
             Destroy(healthBarFollow.gameObject); // clean up UI
         TurretPlacementController.Instance?.UnregisterTurret(this);
 
+        var placable = GetComponentInParent<PlacableObject>();
+        var behaviour = GetComponentInParent<TurretBehaviour>();
+
+        //Removes the tower from the grid occupiency
+        if (placable != null && behaviour != null)
+        {
+            GridManager.Instance.RemoveObject(
+                transform.parent.gameObject,
+                placable.currentGridCoordinates,
+                behaviour.turretBlueprint.sizeInCells);
+            Debug.Log("Remove turret from grid");
+        }
+        
+        //Removes the visual etc..
         Destroy(gameObject); ;
     }
 
@@ -114,7 +128,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Test Collision");
+       // Debug.Log("Test Collision");
         if (Time.time < lastCollisionTime + collisionDamageCooldown) return;
 
         if (collision.gameObject.CompareTag("Enemy"))

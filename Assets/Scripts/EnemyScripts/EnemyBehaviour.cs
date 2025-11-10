@@ -119,7 +119,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
                 attack.PerformAttack(target, isPaused);
                 nextAttackTime = Time.time + attackCooldown;
 
-                Debug.Log($"{name} attacked {target.name} (Cooldown: {attackCooldown:F2}s)");
+               // Debug.Log($"{name} attacked {target.name} (Cooldown: {attackCooldown:F2}s)");
             }
         }
     }
