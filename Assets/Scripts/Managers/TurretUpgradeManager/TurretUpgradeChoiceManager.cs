@@ -55,6 +55,12 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         }
 
         chosenUpgrades[(type, level)] = option;
+
+        if (TurretLevelManager.Instance != null)
+        {
+            TurretLevelManager.Instance.ForceReapplyUpgrades(type);
+        }
+
     }
 
     public TurretUpgradeChoiceSO.UpgradeOption GetChosenUpgrade(TurretType type, int level)

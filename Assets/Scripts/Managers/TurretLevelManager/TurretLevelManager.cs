@@ -93,4 +93,24 @@ public class TurretLevelManager : MonoBehaviour
         return turretProgressDict[type].currentLevel;
     }
 
+    public void ForceReapplyUpgrades(TurretType type)
+    {
+        foreach (var turret in TurretPlacementController.Instance.GetActiveTurrets())
+        {
+            if (turret == null) continue;
+
+            var levelBehaviour = turret.GetComponentInChildren<TurretLevelBehaviour>();
+            if (levelBehaviour != null && levelBehaviour.blueprint != null &&
+                levelBehaviour.blueprint.turretType == type)
+            {
+                levelBehaviour.SyncWithCurrentLevel();
+            }
+        }
+    }
+
+    public void OnTurretLevelChanged(TurretType type)
+    {
+        ForceReapplyUpgrades(type);
+    }
+
 }

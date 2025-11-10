@@ -43,7 +43,7 @@ public class TurretLevelBehaviour : MonoBehaviour
             TurretLevelManager.Instance.OnLevelUp -= HandleLevelUp;
     }
 
-    private void SyncWithCurrentLevel()
+    public void SyncWithCurrentLevel()
     {
         int currentLevel = TurretLevelManager.Instance.GetLevel(blueprint.turretType);
         ApplyUpgrades(currentLevel);
