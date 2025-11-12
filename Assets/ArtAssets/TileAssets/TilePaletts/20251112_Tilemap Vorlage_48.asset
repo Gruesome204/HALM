@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 20251112_Tilemap Vorlage_48
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 802632267, guid: c2cc2972cd1c3fa44933941b739a229e, type: 3}
+  m_Sprite: {fileID: 1226679796, guid: c2cc2972cd1c3fa44933941b739a229e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

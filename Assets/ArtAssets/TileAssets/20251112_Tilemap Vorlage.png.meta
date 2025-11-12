@@ -20,9 +20,6 @@ TextureImporter:
   - first:
       213: 5467622432146482363
     second: 20251112_Tilemap Vorlage_5
-  - first:
-      213: 9149514004636867803
-    second: 20251112_Tilemap Vorlage_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -263,10 +260,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: bdc97d1d28a99fe70800000000000000
-      internalID: 9149514004636867803
+      spriteID: 97c2f95c134404b4a9a109e41701609d
+      internalID: -256029449
       vertices: []
       indices: 
       edges: []
@@ -287,8 +284,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2061d3b99d0a1fe4ba6e27707c7c4ef2
-      internalID: -1013435749
+      spriteID: 9d2f7a5d8aec2c44aa55e2228747521e
+      internalID: 1331147263
       vertices: []
       indices: 
       edges: []
@@ -309,8 +306,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c96e76fe2ec5c344e95d6a45539babcb
-      internalID: -894899651
+      spriteID: dc7f589c78e372049b8b60e6b4c16b1b
+      internalID: 1427506344
       vertices: []
       indices: 
       edges: []
@@ -331,8 +328,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85fff28d63d06734a8f33982fa59fc26
-      internalID: -102113053
+      spriteID: 77051d9415e074d48a49607f041cfe84
+      internalID: 187188530
       vertices: []
       indices: 
       edges: []
@@ -353,8 +350,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 89d407939c10a6045882b91d167c5048
-      internalID: 1275290169
+      spriteID: 0a4875830c14b324d81193c407dd2171
+      internalID: -1824408071
       vertices: []
       indices: 
       edges: []
@@ -375,8 +372,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c564618afae231c4f973573f1375cc1f
-      internalID: 1912827113
+      spriteID: 92e15b2ba9f24c3438e3a720e1440508
+      internalID: -1575190306
       vertices: []
       indices: 
       edges: []
@@ -397,8 +394,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b16c449e13ac58944babc98b71411cd7
-      internalID: -1958691027
+      spriteID: f47c2e2a29b9a3b429cc0624d93a908f
+      internalID: -359297378
       vertices: []
       indices: 
       edges: []
@@ -419,8 +416,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c393d163907ceee4d8b20afd64befe22
-      internalID: -321022054
+      spriteID: 3d191b058dd3f5f48886096c41f8b548
+      internalID: 196090555
       vertices: []
       indices: 
       edges: []
@@ -441,8 +438,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6df5b7c9e9aa6a844bfc58a872b579c9
-      internalID: -1236928189
+      spriteID: cf0f37bb8013492479bb31f5670e8609
+      internalID: -1472629007
       vertices: []
       indices: 
       edges: []
@@ -451,7 +448,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_15
       rect:
         serializedVersion: 2
-        x: 2000
+        x: 2400
         y: 1600
         width: 400
         height: 400
@@ -463,8 +460,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d52526987e4a13b49909e339b28db7bb
-      internalID: 1152686072
+      spriteID: 398ffca53ba46d440bcae79dac735d8e
+      internalID: -1015593410
       vertices: []
       indices: 
       edges: []
@@ -473,7 +470,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_16
       rect:
         serializedVersion: 2
-        x: 2400
+        x: 2800
         y: 1600
         width: 400
         height: 400
@@ -485,8 +482,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 508509bd1ff538b4c931bec1ab24322d
-      internalID: -1885220794
+      spriteID: ba142c8caeb5ec24f92facc3c218ae9e
+      internalID: -1853704278
       vertices: []
       indices: 
       edges: []
@@ -495,7 +492,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_17
       rect:
         serializedVersion: 2
-        x: 2800
+        x: 3200
         y: 1600
         width: 400
         height: 400
@@ -507,8 +504,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81a41b8990cb4654e980b7565ca34b70
-      internalID: -2115524286
+      spriteID: 52848ed130506904e8cefc71508e5a02
+      internalID: -45046047
       vertices: []
       indices: 
       edges: []
@@ -517,7 +514,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_18
       rect:
         serializedVersion: 2
-        x: 3200
+        x: 3600
         y: 1600
         width: 400
         height: 400
@@ -529,8 +526,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e673a71f80d22c45b67aee04cf4aa0e
-      internalID: 1390048636
+      spriteID: 8fea4f9eaad986740a6c53b38791dc64
+      internalID: 368593498
       vertices: []
       indices: 
       edges: []
@@ -539,8 +536,8 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_19
       rect:
         serializedVersion: 2
-        x: 3600
-        y: 1600
+        x: 0
+        y: 1200
         width: 400
         height: 400
       alignment: 0
@@ -551,8 +548,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fdac68a2c281c6d43b0766a29b87aacb
-      internalID: 55999353
+      spriteID: 45bcd2e7fcfc9a04abf55857e4937fbc
+      internalID: -499133057
       vertices: []
       indices: 
       edges: []
@@ -561,7 +558,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_20
       rect:
         serializedVersion: 2
-        x: 0
+        x: 400
         y: 1200
         width: 400
         height: 400
@@ -573,8 +570,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2fe0e1efac83a8d4db168089d6041ca1
-      internalID: 982080756
+      spriteID: 616751a70fce44b4f9dd619949dff921
+      internalID: -108832287
       vertices: []
       indices: 
       edges: []
@@ -583,7 +580,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_21
       rect:
         serializedVersion: 2
-        x: 400
+        x: 800
         y: 1200
         width: 400
         height: 400
@@ -595,8 +592,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b36dc77dbe44c84bba5349f812ef379
-      internalID: -116857090
+      spriteID: 1a07178891c868b43b57a1dc4b3c0852
+      internalID: -409284449
       vertices: []
       indices: 
       edges: []
@@ -605,7 +602,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_22
       rect:
         serializedVersion: 2
-        x: 800
+        x: 1200
         y: 1200
         width: 400
         height: 400
@@ -617,8 +614,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6ca9169fbfee284ba3bda9c6be6a995
-      internalID: -1920561235
+      spriteID: b56fd8bbd7050904d90e3f1bd27fe707
+      internalID: 1003096726
       vertices: []
       indices: 
       edges: []
@@ -627,7 +624,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_23
       rect:
         serializedVersion: 2
-        x: 1200
+        x: 1600
         y: 1200
         width: 400
         height: 400
@@ -639,8 +636,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ac4328398ef9b949acb8627b5d55496
-      internalID: -1348932721
+      spriteID: d74f66985e30a3e4cb25cc9ef928b32f
+      internalID: -281651345
       vertices: []
       indices: 
       edges: []
@@ -649,7 +646,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_24
       rect:
         serializedVersion: 2
-        x: 1600
+        x: 2000
         y: 1200
         width: 400
         height: 400
@@ -661,8 +658,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b87b2de883010be409a4579ae7db6439
-      internalID: -1633940127
+      spriteID: a7dc6e34e95f86d4f914b6e1c72a5397
+      internalID: 2142835771
       vertices: []
       indices: 
       edges: []
@@ -671,7 +668,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_25
       rect:
         serializedVersion: 2
-        x: 2000
+        x: 2400
         y: 1200
         width: 400
         height: 400
@@ -683,8 +680,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49b29f853460da0418933c2f13dc2cb0
-      internalID: 1782378083
+      spriteID: beb5e4a510821524d935cba7fa61d7f2
+      internalID: 100916640
       vertices: []
       indices: 
       edges: []
@@ -693,7 +690,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_26
       rect:
         serializedVersion: 2
-        x: 2400
+        x: 2800
         y: 1200
         width: 400
         height: 400
@@ -705,8 +702,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d035f113b878e6499c0e5b81575ee30
-      internalID: 400056362
+      spriteID: e2a8b60648aa5d7498575ec0a0320a7c
+      internalID: -4409267
       vertices: []
       indices: 
       edges: []
@@ -715,7 +712,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_27
       rect:
         serializedVersion: 2
-        x: 2800
+        x: 3200
         y: 1200
         width: 400
         height: 400
@@ -727,8 +724,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11085e692feafd2458e9391031b0e820
-      internalID: -784914755
+      spriteID: 5c2f1d1cb9b48bb4eb15cda55d1150c3
+      internalID: 590951209
       vertices: []
       indices: 
       edges: []
@@ -737,7 +734,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_28
       rect:
         serializedVersion: 2
-        x: 3200
+        x: 3600
         y: 1200
         width: 400
         height: 400
@@ -749,8 +746,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a8f0c63f9acc0247be28206a6562f61
-      internalID: 1973404212
+      spriteID: bf750ca6c06c83a499e0bfe5d1161ae1
+      internalID: -664247765
       vertices: []
       indices: 
       edges: []
@@ -759,8 +756,8 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_29
       rect:
         serializedVersion: 2
-        x: 3600
-        y: 1200
+        x: 0
+        y: 800
         width: 400
         height: 400
       alignment: 0
@@ -771,8 +768,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf42ad8a5a726fd4d9075bf2da8bae98
-      internalID: 340641285
+      spriteID: b5ab2f6d1550eaa46b6c3170ef2fd3ef
+      internalID: -2023707202
       vertices: []
       indices: 
       edges: []
@@ -781,7 +778,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_30
       rect:
         serializedVersion: 2
-        x: 0
+        x: 400
         y: 800
         width: 400
         height: 400
@@ -793,8 +790,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d84929f12dbdbe144a7f766210808d0d
-      internalID: 108435934
+      spriteID: 84e1fa9c064943c4ba791b5861878738
+      internalID: -1031923919
       vertices: []
       indices: 
       edges: []
@@ -803,7 +800,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_31
       rect:
         serializedVersion: 2
-        x: 400
+        x: 800
         y: 800
         width: 400
         height: 400
@@ -815,8 +812,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6bb741bc30e375a4ab562a153da5b603
-      internalID: 1346656404
+      spriteID: 440621991365ce24cab4ed122088a037
+      internalID: 2004006219
       vertices: []
       indices: 
       edges: []
@@ -825,7 +822,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_32
       rect:
         serializedVersion: 2
-        x: 800
+        x: 1200
         y: 800
         width: 400
         height: 400
@@ -837,8 +834,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea43ad76327cd5a4ab0fadb64e4c4ffb
-      internalID: 1761357227
+      spriteID: bdff7224ea1e09845a66cfc1dd8984b3
+      internalID: 606023845
       vertices: []
       indices: 
       edges: []
@@ -847,7 +844,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_33
       rect:
         serializedVersion: 2
-        x: 1200
+        x: 1600
         y: 800
         width: 400
         height: 400
@@ -859,8 +856,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83c87a149ee3ddf45b4d54adc8d87cdf
-      internalID: -100087004
+      spriteID: 2b4e19ca4b606024e9c41ad9f20d45fb
+      internalID: -1041262857
       vertices: []
       indices: 
       edges: []
@@ -869,7 +866,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_34
       rect:
         serializedVersion: 2
-        x: 1600
+        x: 2000
         y: 800
         width: 400
         height: 400
@@ -881,8 +878,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b72989d9b730e4b428d29bf8999ce515
-      internalID: 2065450087
+      spriteID: 447d8911f28fb7142be4175295504c46
+      internalID: 1001742864
       vertices: []
       indices: 
       edges: []
@@ -891,7 +888,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_35
       rect:
         serializedVersion: 2
-        x: 2000
+        x: 2400
         y: 800
         width: 400
         height: 400
@@ -903,8 +900,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9519d1e4b0130954193df52c9dc67340
-      internalID: -1459146590
+      spriteID: 5c4353d56b4c10745818558f04dfdceb
+      internalID: 1285139254
       vertices: []
       indices: 
       edges: []
@@ -913,7 +910,7 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_36
       rect:
         serializedVersion: 2
-        x: 2400
+        x: 2800
         y: 800
         width: 400
         height: 400
@@ -925,8 +922,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3df3d18d5ad2d3e45a7a6faedafc9cd6
-      internalID: -2035815250
+      spriteID: 1800e62e72c1acb4bb15cf983178c5ae
+      internalID: 1730459222
       vertices: []
       indices: 
       edges: []
@@ -935,28 +932,6 @@ TextureImporter:
       name: 20251112_Tilemap Vorlage_37
       rect:
         serializedVersion: 2
-        x: 2800
-        y: 800
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8bb3ea8b4331ed449b8154e4fc558591
-      internalID: 1008512590
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_38
-      rect:
-        serializedVersion: 2
         x: 3600
         y: 800
         width: 400
@@ -969,14 +944,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51ec6aefafd0e5049ad9297b9faabcb1
-      internalID: -776725641
+      spriteID: 399a3689d1b1fb04f9290e39c1706349
+      internalID: -715534395
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_39
+      name: 20251112_Tilemap Vorlage_38
       rect:
         serializedVersion: 2
         x: 0
@@ -991,14 +966,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33bf0aea56cc06646933f49622377207
-      internalID: 1987346574
+      spriteID: 926cdc88541af9b4cb152ac452d75441
+      internalID: -1860888039
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_40
+      name: 20251112_Tilemap Vorlage_39
       rect:
         serializedVersion: 2
         x: 400
@@ -1013,14 +988,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b85f6597137b8b54aa9494f9be538d07
-      internalID: 556341111
+      spriteID: 3a707ba8e8b46074bb07909442d0ef1d
+      internalID: 304850962
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_41
+      name: 20251112_Tilemap Vorlage_40
       rect:
         serializedVersion: 2
         x: 800
@@ -1035,14 +1010,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1f86723b043df641ae1a025577a3286
-      internalID: 675451952
+      spriteID: adde486765f6afb408bdb2411499895b
+      internalID: 1646018853
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_42
+      name: 20251112_Tilemap Vorlage_41
       rect:
         serializedVersion: 2
         x: 1200
@@ -1057,14 +1032,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a4ddfcb5dee6f64b8199a8c56548d4c
-      internalID: 818050438
+      spriteID: 72168bfc666d5104ab4482989a895e41
+      internalID: -215212466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_43
+      name: 20251112_Tilemap Vorlage_42
       rect:
         serializedVersion: 2
         x: 1600
@@ -1079,14 +1054,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b47854a240a779743b72e3027c8be5ef
-      internalID: -1819928565
+      spriteID: 32ab292040569294c9ad3466161929e0
+      internalID: -269069858
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_44
+      name: 20251112_Tilemap Vorlage_43
       rect:
         serializedVersion: 2
         x: 2000
@@ -1101,14 +1076,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cedb2acd7127d9f4c9593ec615abd537
-      internalID: 787137414
+      spriteID: f3bce4774d749054482fa428fce55b7b
+      internalID: 1381697404
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_45
+      name: 20251112_Tilemap Vorlage_44
       rect:
         serializedVersion: 2
         x: 2800
@@ -1123,14 +1098,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: deb5ab0e67925164d894b384dd7857be
-      internalID: -1737684165
+      spriteID: 7c70f81b914dc114fb36765c01916e1d
+      internalID: 971723121
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_46
+      name: 20251112_Tilemap Vorlage_45
       rect:
         serializedVersion: 2
         x: 3200
@@ -1145,14 +1120,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b70673b2a1a61f48accf3c0ff114965
-      internalID: -801738287
+      spriteID: 08635cf7b3f32754b9181b9ba738299f
+      internalID: -1043346578
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_47
+      name: 20251112_Tilemap Vorlage_46
       rect:
         serializedVersion: 2
         x: 3600
@@ -1167,14 +1142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6eb160097c9dfe4c95a27877502c019
-      internalID: -759448210
+      spriteID: cb64d34cd0c83034aa0c642cbefbd4d2
+      internalID: -597356528
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_48
+      name: 20251112_Tilemap Vorlage_47
       rect:
         serializedVersion: 2
         x: 0
@@ -1189,14 +1164,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4f59a33499a6bc4a8f7ada9f8c9ff6f
-      internalID: 802632267
+      spriteID: 18145555782a5ee478b0c9348a995638
+      internalID: 956000745
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_49
+      name: 20251112_Tilemap Vorlage_48
       rect:
         serializedVersion: 2
         x: 400
@@ -1211,14 +1186,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 201841eda91cece4a918113c61d15674
-      internalID: 1820213060
+      spriteID: 792cda52c7031ff4a8872293995a3f4c
+      internalID: 1226679796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_50
+      name: 20251112_Tilemap Vorlage_49
       rect:
         serializedVersion: 2
         x: 800
@@ -1233,14 +1208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3fd5c6aa141cdaf41b4ab712ed541e9f
-      internalID: 686756157
+      spriteID: 7a399d85d12c69e479093cff10397d86
+      internalID: -1332134812
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_51
+      name: 20251112_Tilemap Vorlage_50
       rect:
         serializedVersion: 2
         x: 1200
@@ -1255,14 +1230,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11c8be6ffe64d3d4fac463098ead7452
-      internalID: 1093614857
+      spriteID: 8957e3e271b60024f9a2a8a642ce8aaa
+      internalID: -289416472
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_52
+      name: 20251112_Tilemap Vorlage_51
       rect:
         serializedVersion: 2
         x: 1600
@@ -1277,14 +1252,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b3814a8b633693459faa5e69108c025
-      internalID: 807181697
+      spriteID: f08fa63ef7eac3d46b0ee0e3b39c72df
+      internalID: -849188023
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_53
+      name: 20251112_Tilemap Vorlage_52
       rect:
         serializedVersion: 2
         x: 2000
@@ -1299,14 +1274,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2d8c3d25c9bea248858164c88196f65
-      internalID: -67819414
+      spriteID: 4776daa1fc5406a46bc83185499cda0e
+      internalID: -1615317423
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_54
+      name: 20251112_Tilemap Vorlage_53
       rect:
         serializedVersion: 2
         x: 2400
@@ -1321,14 +1296,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0207b469ba81f8448e13c12f18918ef
-      internalID: -754800735
+      spriteID: 61b5d91ab602ae244be0a7aabd809df5
+      internalID: 1665361242
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_55
+      name: 20251112_Tilemap Vorlage_54
       rect:
         serializedVersion: 2
         x: 2800
@@ -1343,14 +1318,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23f351ac4e9e13c40a8bebc0510f0a12
-      internalID: 1365745323
+      spriteID: 743dca99dbb0136468a2981f46be74ca
+      internalID: 799091628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_56
+      name: 20251112_Tilemap Vorlage_55
       rect:
         serializedVersion: 2
         x: 3200
@@ -1365,14 +1340,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8b4857e946318d4eaf43f908850f15e
-      internalID: -1443211397
+      spriteID: cb941fd0cebcc724592e62b851bc52ab
+      internalID: 412696932
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 20251112_Tilemap Vorlage_57
+      name: 20251112_Tilemap Vorlage_56
       rect:
         serializedVersion: 2
         x: 3600
@@ -1387,8 +1362,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5588577b683537d48940e16b38ebbd20
-      internalID: -37487916
+      spriteID: 261ac4488e43b9b4bbe3cef7f0165b1e
+      internalID: -1231351918
       vertices: []
       indices: 
       edges: []
@@ -1397,7 +1372,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7be22f7476ffb774e88ff4b90c76af29
+    spriteID: dddf8208fb01f35439ec87f3a90540f4
     internalID: 0
     vertices: []
     indices: 
@@ -1409,62 +1384,61 @@ TextureImporter:
     nameFileIdTable:
       20251112_Tilemap Vorlage_0: -1266514364760841753
       20251112_Tilemap Vorlage_1: 1076416582188562445
-      20251112_Tilemap Vorlage_10: 1275290169
-      20251112_Tilemap Vorlage_11: 1912827113
-      20251112_Tilemap Vorlage_12: -1958691027
-      20251112_Tilemap Vorlage_13: -321022054
-      20251112_Tilemap Vorlage_14: -1236928189
-      20251112_Tilemap Vorlage_15: 1152686072
-      20251112_Tilemap Vorlage_16: -1885220794
-      20251112_Tilemap Vorlage_17: -2115524286
-      20251112_Tilemap Vorlage_18: 1390048636
-      20251112_Tilemap Vorlage_19: 55999353
+      20251112_Tilemap Vorlage_10: -1824408071
+      20251112_Tilemap Vorlage_11: -1575190306
+      20251112_Tilemap Vorlage_12: -359297378
+      20251112_Tilemap Vorlage_13: 196090555
+      20251112_Tilemap Vorlage_14: -1472629007
+      20251112_Tilemap Vorlage_15: -1015593410
+      20251112_Tilemap Vorlage_16: -1853704278
+      20251112_Tilemap Vorlage_17: -45046047
+      20251112_Tilemap Vorlage_18: 368593498
+      20251112_Tilemap Vorlage_19: -499133057
       20251112_Tilemap Vorlage_2: 8809234025913177002
-      20251112_Tilemap Vorlage_20: 982080756
-      20251112_Tilemap Vorlage_21: -116857090
-      20251112_Tilemap Vorlage_22: -1920561235
-      20251112_Tilemap Vorlage_23: -1348932721
-      20251112_Tilemap Vorlage_24: -1633940127
-      20251112_Tilemap Vorlage_25: 1782378083
-      20251112_Tilemap Vorlage_26: 400056362
-      20251112_Tilemap Vorlage_27: -784914755
-      20251112_Tilemap Vorlage_28: 1973404212
-      20251112_Tilemap Vorlage_29: 340641285
+      20251112_Tilemap Vorlage_20: -108832287
+      20251112_Tilemap Vorlage_21: -409284449
+      20251112_Tilemap Vorlage_22: 1003096726
+      20251112_Tilemap Vorlage_23: -281651345
+      20251112_Tilemap Vorlage_24: 2142835771
+      20251112_Tilemap Vorlage_25: 100916640
+      20251112_Tilemap Vorlage_26: -4409267
+      20251112_Tilemap Vorlage_27: 590951209
+      20251112_Tilemap Vorlage_28: -664247765
+      20251112_Tilemap Vorlage_29: -2023707202
       20251112_Tilemap Vorlage_3: -8990636573108221856
-      20251112_Tilemap Vorlage_30: 108435934
-      20251112_Tilemap Vorlage_31: 1346656404
-      20251112_Tilemap Vorlage_32: 1761357227
-      20251112_Tilemap Vorlage_33: -100087004
-      20251112_Tilemap Vorlage_34: 2065450087
-      20251112_Tilemap Vorlage_35: -1459146590
-      20251112_Tilemap Vorlage_36: -2035815250
-      20251112_Tilemap Vorlage_37: 1008512590
-      20251112_Tilemap Vorlage_38: -776725641
-      20251112_Tilemap Vorlage_39: 1987346574
+      20251112_Tilemap Vorlage_30: -1031923919
+      20251112_Tilemap Vorlage_31: 2004006219
+      20251112_Tilemap Vorlage_32: 606023845
+      20251112_Tilemap Vorlage_33: -1041262857
+      20251112_Tilemap Vorlage_34: 1001742864
+      20251112_Tilemap Vorlage_35: 1285139254
+      20251112_Tilemap Vorlage_36: 1730459222
+      20251112_Tilemap Vorlage_37: -715534395
+      20251112_Tilemap Vorlage_38: -1860888039
+      20251112_Tilemap Vorlage_39: 304850962
       20251112_Tilemap Vorlage_4: -6999391727207067556
-      20251112_Tilemap Vorlage_40: 556341111
-      20251112_Tilemap Vorlage_41: 675451952
-      20251112_Tilemap Vorlage_42: 818050438
-      20251112_Tilemap Vorlage_43: -1819928565
-      20251112_Tilemap Vorlage_44: 787137414
-      20251112_Tilemap Vorlage_45: -1737684165
-      20251112_Tilemap Vorlage_46: -801738287
-      20251112_Tilemap Vorlage_47: -759448210
-      20251112_Tilemap Vorlage_48: 802632267
-      20251112_Tilemap Vorlage_49: 1820213060
+      20251112_Tilemap Vorlage_40: 1646018853
+      20251112_Tilemap Vorlage_41: -215212466
+      20251112_Tilemap Vorlage_42: -269069858
+      20251112_Tilemap Vorlage_43: 1381697404
+      20251112_Tilemap Vorlage_44: 971723121
+      20251112_Tilemap Vorlage_45: -1043346578
+      20251112_Tilemap Vorlage_46: -597356528
+      20251112_Tilemap Vorlage_47: 956000745
+      20251112_Tilemap Vorlage_48: 1226679796
+      20251112_Tilemap Vorlage_49: -1332134812
       20251112_Tilemap Vorlage_5: 5467622432146482363
-      20251112_Tilemap Vorlage_50: 686756157
-      20251112_Tilemap Vorlage_51: 1093614857
-      20251112_Tilemap Vorlage_52: 807181697
-      20251112_Tilemap Vorlage_53: -67819414
-      20251112_Tilemap Vorlage_54: -754800735
-      20251112_Tilemap Vorlage_55: 1365745323
-      20251112_Tilemap Vorlage_56: -1443211397
-      20251112_Tilemap Vorlage_57: -37487916
-      20251112_Tilemap Vorlage_6: 9149514004636867803
-      20251112_Tilemap Vorlage_7: -1013435749
-      20251112_Tilemap Vorlage_8: -894899651
-      20251112_Tilemap Vorlage_9: -102113053
+      20251112_Tilemap Vorlage_50: -289416472
+      20251112_Tilemap Vorlage_51: -849188023
+      20251112_Tilemap Vorlage_52: -1615317423
+      20251112_Tilemap Vorlage_53: 1665361242
+      20251112_Tilemap Vorlage_54: 799091628
+      20251112_Tilemap Vorlage_55: 412696932
+      20251112_Tilemap Vorlage_56: -1231351918
+      20251112_Tilemap Vorlage_6: -256029449
+      20251112_Tilemap Vorlage_7: 1331147263
+      20251112_Tilemap Vorlage_8: 1427506344
+      20251112_Tilemap Vorlage_9: 187188530
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
