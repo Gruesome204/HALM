@@ -262,6 +262,7 @@ public class TurretPlacementController : MonoBehaviour
 
         activeTurrets.Remove(turret);
         OnTurretsChanged?.Invoke();
+
         Destroy(turret);
 
         Debug.Log($"[TurretPlacement] Turret removed");
