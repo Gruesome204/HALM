@@ -822,6 +822,8 @@ MonoBehaviour:
   previewObject: {fileID: 0}
   maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}
+  placementRadius: 8
+  playerTransform: {fileID: 2135666360}
   activeTurrets: []
   placedTurrets: []
 --- !u!114 &368292588

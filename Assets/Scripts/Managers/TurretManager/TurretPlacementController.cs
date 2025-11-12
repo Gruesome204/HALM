@@ -43,6 +43,13 @@ public class TurretPlacementController : MonoBehaviour
     [Header("Hierarchy Organization")]
     [SerializeField] private Transform turretContainer;
 
+    [Header("Placement Range")]
+    [Tooltip("Maximum distance from the player where turrets can be placed.")]
+    public float placementRadius = 30f;
+
+    [Tooltip("Reference to the player transform.")]
+    public Transform playerTransform;
+
     //Currently Active Turrets
     [SerializeField]private List<GameObject> activeTurrets = new List<GameObject>();
      [SerializeField]private List<TurretHealth> placedTurrets = new List<TurretHealth>();
@@ -60,6 +67,8 @@ public class TurretPlacementController : MonoBehaviour
             Debug.LogWarning("[TurretPlacement] Duplicate instance detected. Destroying this object.");
             Destroy(gameObject);
         }
+
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
@@ -201,6 +210,15 @@ public class TurretPlacementController : MonoBehaviour
             canPlace = false;
         }
 
+        float distanceToPlayer = playerTransform != null
+        ? Vector3.Distance(playerTransform.position, targetWorldPos)
+        : 0f;
+
+        bool inRange = playerTransform == null || distanceToPlayer <= placementRadius;
+
+        if (!inRange)
+            canPlace = false;
+
         UpdatePreviewColor(canPlace);
     }
     private void MakePreviewTransparent(GameObject obj)
@@ -251,6 +269,12 @@ public class TurretPlacementController : MonoBehaviour
 
     private void TryPlaceTurret()
     {
+        if (playerTransform == null)
+        {
+            Debug.LogWarning("[TurretPlacement] No player transform assigned. Please set it in the inspector.");
+            return;
+        }
+
         int currentCapacity = GetUsedCapacity();
         int cost = currentSelectedBlueprint.buildCapacityValue;
 
@@ -289,6 +313,15 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         Vector3 targetWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
+
+        float distanceToPlayer = Vector3.Distance(playerTransform.position, targetWorldPos);
+        if (distanceToPlayer > placementRadius)
+        {
+            Debug.Log($"[TurretPlacement] Too far from player! Distance: {distanceToPlayer:F2}, Max: {placementRadius}");
+            return;
+        }
+
+
         if (IsPlacementBlocked(targetWorldPos, currentSelectedBlueprint.sizeInCells))
         {
             Debug.Log("[TurretPlacement] Cannot place: blocked by enemy or player.");
