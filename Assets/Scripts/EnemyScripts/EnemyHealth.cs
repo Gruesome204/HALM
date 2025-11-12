@@ -4,11 +4,14 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour, IDamagable
 {
     public EnemyStats stats;
+    public EnemyMovement movement;
     public Slider healthBar;
 
     public event Action<EnemyHealth, DamageData> OnDeath;
     private void Start()
     {
+        movement = GetComponent<EnemyMovement>();
+
         if (healthBar != null)
         {
             healthBar.minValue = 0;
@@ -20,7 +23,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
-
+        movement.SetTargetPlayer();
         if (IsInvulnerable || stats == null) return;
 
         float damage = CalculateTakenDamage(damageData);
