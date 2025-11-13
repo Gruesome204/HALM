@@ -8,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool isPaused;
+    private bool hasForcedTarget;
 
     private void Awake()
     {
@@ -33,6 +34,13 @@ public class EnemyMovement : MonoBehaviour
             ResumeMovement();
     }
 
+    public void SetTargetPlayer(bool ignorePursueRange = false)
+    {
+        Debug.Log("call set target");
+        target = GameObject.FindGameObjectWithTag("Player");
+        this.hasForcedTarget = false;
+    }
+
     // Moves the enemy toward the current target if within pursue range
     public void MoveTowardTarget()
     {
@@ -41,7 +49,7 @@ public class EnemyMovement : MonoBehaviour
         if (target == null || stats == null) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > stats.currentPursueRange) return;
+        if (!hasForcedTarget && distance > stats.currentPursueRange) return;
 
         Vector2 dir = (target.transform.position - transform.position).normalized;
         rb.MovePosition(rb.position + dir * stats.currentMovementSpeed * Time.fixedDeltaTime);
