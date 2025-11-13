@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
-    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass settingsMenuSlideIn settingsMenuSlideOut" style="width: 100%; height: 100%; align-items: center; background-color: rgb(19, 0, 0);">
+    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass settingsMenuSlideOut SlideIn" style="width: 100%; height: 100%; align-items: center; background-color: rgb(19, 0, 0);">
         <ui:VisualElement name="test" style="flex-grow: 1; flex-shrink: 0; width: 100%; height: 100%; align-items: center;">
             <ui:Label text="Label" name="headline" class="headline" style="margin-top: 15px; margin-right: 0; margin-bottom: 30px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             <ui:ScrollView style="width: 60%; height: 80%; align-items: flex-start; border-top-width: 3px; border-right-width: 0; border-bottom-width: 3px; border-left-width: 0; border-left-color: rgb(70, 0, 0); border-right-color: rgb(70, 0, 0); border-top-color: rgb(70, 0, 0); border-bottom-color: rgb(70, 0, 0);">

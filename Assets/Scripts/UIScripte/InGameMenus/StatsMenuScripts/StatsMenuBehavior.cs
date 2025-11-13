@@ -9,12 +9,13 @@ public class StatsMenuBehavior : MonoBehaviour
     private UIDocument uIDocument;
 
     private Label statsMenuHeadline;
+
     private Button resumeButton;
+    private Button pauseMenuButton;
     private Button charackterButton;
     private Button relicsButton;
     private Button towerButton;
 
-    private VisualElement lowerButtonContainer;
     public VisualTreeAsset listElementAsset;
     public VisualTreeAsset turretDetailsAsset;
     public VisualTreeAsset charackterDetailsAsset;
@@ -39,6 +40,10 @@ public class StatsMenuBehavior : MonoBehaviour
         resumeButton.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "resumeButton"));
         resumeButton.RegisterCallback<ClickEvent>(OnResumeBtnClicked);
 
+        pauseMenuButton = uIDocument.rootVisualElement.Q<Button>("pauseMenuButton");
+        pauseMenuButton.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "pauseMenuHeadline"));
+        pauseMenuButton.RegisterCallback<ClickEvent>(OnPauseBtnClicked);
+
         charackterButton = uIDocument.rootVisualElement.Q<Button>("charackterButton");
         charackterButton.SetBinding("text", new LocalizedString("StatsMenuTranslationTable", "charackterButton"));
         charackterButton.RegisterCallback<ClickEvent>(OnCharackterBtnClicked);
@@ -57,6 +62,11 @@ public class StatsMenuBehavior : MonoBehaviour
     void OnResumeBtnClicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.ReturnToGame();
+    }
+    void OnPauseBtnClicked(ClickEvent evt)
+    {
+        InGameMenuManager.Instance.CloseAllMenus();
+        InGameMenuManager.Instance.OpenCloseOneMenu("PauseMenuDoc", true);
     }
     void OnCharackterBtnClicked(ClickEvent evt)
     {

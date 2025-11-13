@@ -6,6 +6,7 @@
             <ui:Label text="Label" name="statsMenuHeadline" class="sub-headline" style="margin-top: 4%; position: absolute; white-space: normal;" />
             <ui:VisualElement name="upperButtonContainer" style="width: 100%; height: 55%; align-items: center; justify-content: flex-end;">
                 <ui:Button text="Button" name="resumeButton" class="mainMenuBtnClass" style="width: 40%;" />
+                <ui:Button text="Button" focusable="false" name="pauseMenuButton" class="mainMenuBtnClass" style="top: auto; align-self: auto; width: 40%;" />
                 <ui:Button text="Button" name="charackterButton" class="mainMenuBtnClass" style="width: 40%;" />
                 <ui:Button text="Button" name="relicsButton" class="mainMenuBtnClass" style="width: 40%;" />
                 <ui:Button text="Button" name="towerButton" class="mainMenuBtnClass" style="width: 40%;" />

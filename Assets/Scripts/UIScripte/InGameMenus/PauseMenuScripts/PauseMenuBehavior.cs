@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class PauseMenuBehavior : MonoBehaviour
 {
-    private Button backButton;
+    private Button statsMenuButton;
 
     private Label pauseMenuHeadline;
     private Button resumeButton;
@@ -23,13 +23,14 @@ public class PauseMenuBehavior : MonoBehaviour
         pauseMenuHeadline.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "pauseMenuHeadline"));
 
         //Connecting all Buttons, Settings their texts and their functions
-        backButton = root.Q<Button>("backButton");
-        backButton.SetBinding("text", new LocalizedString("MenuTranslationaTable", "backBtnText"));
-        backButton.RegisterCallback<ClickEvent>(OnBackBtnCicked);
 
         resumeButton = root.Q<Button>("resumeButton");
         resumeButton.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "resumeButton"));
-        resumeButton.RegisterCallback<ClickEvent>(OnBackBtnCicked);
+        resumeButton.RegisterCallback<ClickEvent>(OnResumeBtnCicked);
+
+        statsMenuButton = root.Q<Button>("statsMenuButton");
+        statsMenuButton.SetBinding("text", new LocalizedString("StatsMenuTranslationTable", "statsMenuHeadline"));
+        statsMenuButton.RegisterCallback<ClickEvent>(OnStatsMenuButtonClicked);
 
         settingsButton = root.Q<Button>("settingsButton");
         settingsButton.SetBinding("text", new LocalizedString("MenuTranslationaTable", "settingsButton"));
@@ -45,12 +46,17 @@ public class PauseMenuBehavior : MonoBehaviour
 
         exitButton = root.Q<Button>("exitButton");
         exitButton.SetBinding("text", new LocalizedString("MenuTranslationaTable", "exitButton"));
-        exitButton.RegisterCallback<ClickEvent>(OnExitBtnCicked);
+        exitButton.RegisterCallback<ClickEvent>(OnExitBtnCicked);        
     }
 
-    void OnBackBtnCicked(ClickEvent evt)
+    void OnResumeBtnCicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.ReturnToGame();
+    }
+    void OnStatsMenuButtonClicked(ClickEvent evt)
+    {
+        InGameMenuManager.Instance.CloseAllMenus();
+        InGameMenuManager.Instance.OpenCloseOneMenu("StatsMenuDoc", true);
     }
     void OnSettingsBtnCicked(ClickEvent evt)
     {

@@ -1,15 +1,15 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
-    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass SlideIn pauseMenuSlideOut" style="flex-direction: column;">
+    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass SlideIn pauseMenuSlideOut" style="flex-direction: column; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
         <ui:VisualElement name="buttonContainer" style="height: 100%; width: 40%; background-color: rgba(3, 0, 60, 0.47); flex-shrink: 0; align-items: center; justify-content: center;">
             <ui:Label text="Label" name="pauseMenuHeadline" class="sub-headline" style="position: absolute; align-self: center; top: 2%; white-space: normal;" />
             <ui:Button text="Button" name="resumeButton" class="mainMenuBtnClass" style="width: 40%;" />
+            <ui:Button text="Button" focusable="false" name="statsMenuButton" class="mainMenuBtnClass" style="width: 40%;" />
             <ui:Button text="Button" name="settingsButton" class="mainMenuBtnClass" style="width: 40%;" />
             <ui:Button text="Button" name="cancelRunButton" class="mainMenuBtnClass" style="width: 40%;" />
             <ui:Button text="Button" name="mainMenuButton" class="mainMenuBtnClass" style="width: 40%;" />
             <ui:Button text="Button" name="exitButton" class="mainMenuBtnClass" style="width: 40%;" />
-            <ui:Button text="Button" focusable="false" name="backButton" class="mainMenuBtnClass" style="position: absolute; top: 90%; align-self: flex-end; right: 2%;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

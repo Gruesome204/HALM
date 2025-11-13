@@ -60,6 +60,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 85d28a5aec9e0b14795709770f692b80
     m_Address: MenuTranslationaTable_en
