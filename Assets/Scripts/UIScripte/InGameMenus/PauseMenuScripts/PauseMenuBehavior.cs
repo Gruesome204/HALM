@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class PauseMenuBehavior : MonoBehaviour
+public class PauseMenuBehavior : MonoBehaviour, IMenu
 {
     private Button statsMenuButton;
 
@@ -14,6 +15,26 @@ public class PauseMenuBehavior : MonoBehaviour
     private Button cancelRunButton;
     private Button mainMenuButton;
     private Button exitButton;
+
+    public void OpenOrClose(Boolean open)
+    {
+        //Gets the UiDocument and checks weather the Menu should opened or closed
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        if (open)
+        {
+            InGameMenuManager.Instance.CloseAllMenus();
+            //Open the Pause Menu, adds to openMenu List and sets Game to paused
+            root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
+            InGameMenuManager.Instance.openMenus.Add(this.gameObject);
+            GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+        }
+        else
+        {
+            //Closes Pause Menu and removes from openMenu List
+            root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
+            InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
+        }
+    }
     void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
@@ -56,11 +77,11 @@ public class PauseMenuBehavior : MonoBehaviour
     void OnStatsMenuButtonClicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.CloseAllMenus();
-        InGameMenuManager.Instance.OpenCloseOneMenu("StatsMenuDoc", true);
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("StatsMenuDoc", true);
     }
     void OnSettingsBtnCicked(ClickEvent evt)
     {
-        InGameMenuManager.Instance.OpenCloseOneMenu("SettingsMenuDoc", true);
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", true);
     }
     void OnCancelRunBtnCicked(ClickEvent evt)
     {

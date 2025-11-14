@@ -128,7 +128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 53424833}
-  - component: {fileID: 53424834}
   m_Layer: 0
   m_Name: --UIElementDocs--
   m_TagString: Untagged
@@ -159,18 +158,6 @@ Transform:
   - {fileID: 935072171}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &53424834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53424832}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8079ec0ce1e334a4dae644a8552808fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &68913899
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &302126413
 Transform:
   m_ObjectHideFlags: 0
@@ -3114,13 +3101,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e819c7b32f84f234487e425e49c07175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseMenuDoc: {fileID: 2051609381}
-  StatsMenuDoc: {fileID: 415030904}
-  ActionRowDoc: {fileID: 90814630}
-  SettingsMenuDoc: {fileID: 1573890351}
-  TurretUpgradeChoiceDoc: {fileID: 302126412}
-  GameOverDoc: {fileID: 462102098}
-  GameWonDoc: {fileID: 935072170}
+  allMenuesInThisScene:
+  - {fileID: 2051609381}
+  - {fileID: 415030904}
+  - {fileID: 90814630}
+  - {fileID: 1573890351}
+  - {fileID: 302126412}
+  - {fileID: 462102098}
+  - {fileID: 935072170}
   openMenus: []
 --- !u!1 &1542782589
 GameObject:

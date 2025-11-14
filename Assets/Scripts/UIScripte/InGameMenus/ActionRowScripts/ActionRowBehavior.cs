@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
 
-public class ActionRowBehavior : MonoBehaviour
+public class ActionRowBehavior : MonoBehaviour, IMenu
 {
     private InGameMenuManager gameMenuManager;
 
@@ -20,6 +21,24 @@ public class ActionRowBehavior : MonoBehaviour
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<AR_TowerLimitElementBehavior> towerLimitElementList = new List<AR_TowerLimitElementBehavior>();
 
+
+    public void OpenOrClose(Boolean open)
+    {
+        //Gets the UiDocument and checks weather the Menu should opened or closed
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        if (open)
+        {
+            //Open the ActionRow and sets Game to playing
+            root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
+            GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+            Debug.Log("Open ActionRow");
+        }
+        else
+        {
+            //Closes ActionRow
+            root.Q<VisualElement>("mainContainer").AddToClassList("actionRowSlideOut");
+        }
+    }
     void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
@@ -82,9 +101,9 @@ public class ActionRowBehavior : MonoBehaviour
 
     void FillResourceRow()
     {
-        for (int i = 0; i < Random.Range(1,6); i++)
+        for (int i = 0; i < UnityEngine.Random.Range(1,6); i++)
         {
-            AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, Random.Range(5,50));
+            AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, UnityEngine.Random.Range(5,50));
             resourceContainer.Add(aR_Resource.border);
         }
     }
@@ -92,14 +111,14 @@ public class ActionRowBehavior : MonoBehaviour
     void PauseBtnClicked(ClickEvent evt)
     {
         gameMenuManager.CloseAllMenus();
-        gameMenuManager.OpenCloseOneMenu("PauseMenuDoc", true);
+        gameMenuManager.OpenOrCloseOneMenu("PauseMenuDoc", true);
 
     }
 
     void StatsBtnClicked(ClickEvent evt)
     {
         gameMenuManager.CloseAllMenus();
-        gameMenuManager.OpenCloseOneMenu("StatsMenuDoc", true);
+        gameMenuManager.OpenOrCloseOneMenu("StatsMenuDoc", true);
     }
 
     void FillTowerLimitBar(int towerLimit)

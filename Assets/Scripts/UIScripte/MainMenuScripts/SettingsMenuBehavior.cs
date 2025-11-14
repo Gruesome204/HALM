@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -5,9 +6,8 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class SettingsMenuBehavior : MonoBehaviour
+public class SettingsMenuBehavior : MonoBehaviour, IMenu
 {
-    private MenuManager menuManager;
     [SerializeField] SettingDataSO settingDataSO;
 
     private Button backBtn;
@@ -32,25 +32,30 @@ public class SettingsMenuBehavior : MonoBehaviour
     [SerializeField] AudioSource BGMusicTrack_7;
     [SerializeField] AudioSource BGMusicTrack_8;
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void OpenOrClose(Boolean open)
     {
-        menuManager = FindObjectOfType<MenuManager>();
-        ConnectingEverything();
-
-        SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
-        PlayThisMusic(2);
-        if (SceneManager.GetActiveScene().name == "MainMenu")
+        //Gets the UiDocument and checks weather the Menu should opened or closed
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        if (open)
         {
-            this.gameObject.SetActive(false);
+            //Open the SettingsMenu and adds it to openMenu List
+            root.Q<VisualElement>("mainContainer").RemoveFromClassList("settingsMenuSlideOut");
+            InGameMenuManager.Instance.openMenus.Add(this.gameObject);
+        }
+        else
+        {
+            //Closes SettingsMenu and removes from openMenu List
+            root.Q<VisualElement>("mainContainer").AddToClassList("settingsMenuSlideOut");
+            InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
         }
     }
 
     private void OnEnable()
     {
         ConnectingEverything();
+
+        SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
+        PlayThisMusic(2);
     }
 
     void ConnectingEverything()
@@ -110,20 +115,10 @@ public class SettingsMenuBehavior : MonoBehaviour
     {
         SettingVolume();
     }
-  
- 
-
 
     void OnBackBtnClicked(ClickEvent clicked)
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            this.gameObject.SetActive(false);
-        }
-        else
-        {
-            InGameMenuManager.Instance.OpenCloseOneMenu("SettingsMenuDoc", false);
-        }
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", false);
     }
 
     void OnLanguageEnglishBtnClicked(ClickEvent clicked)

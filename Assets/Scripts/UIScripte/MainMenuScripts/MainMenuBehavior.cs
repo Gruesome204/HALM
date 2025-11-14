@@ -5,8 +5,6 @@ using UnityEngine.UIElements;
 
 public class MainMenuBehavior : MonoBehaviour
 {
-    private MenuManager menuManager;
-
     private Label mainMenuHeadline;
 
     private Button playBtn;
@@ -17,7 +15,6 @@ public class MainMenuBehavior : MonoBehaviour
     private void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
-        menuManager = FindObjectOfType<MenuManager>();
 
         mainMenuHeadline = root.Q<Label>("mainMenuHeadine");
         mainMenuHeadline.SetBinding("text", new LocalizedString("MenuTranslationaTable", "mainMenuHeadline"));
@@ -47,11 +44,11 @@ public class MainMenuBehavior : MonoBehaviour
     }
     void OnSettingsBtnClicked(ClickEvent clicked)
     {
-        menuManager.EnterSettingsMenu();
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", true);
     }
     void OnCreditsBtnClicked(ClickEvent clicked)
     {
-        menuManager.EnterCreditsMenu();
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("CreditsMenuDoc", true);
     }
     void OnExitBtnClicked(ClickEvent clicked)
     {

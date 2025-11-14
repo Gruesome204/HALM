@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 207556928}
   - component: {fileID: 207556929}
   m_Layer: 0
-  m_Name: --HubManager--
+  m_Name: -UIManager-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -308,11 +308,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 207556927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b51c1e77c267c41a826b06faacca5c, type: 3}
+  m_Script: {fileID: 11500000, guid: e819c7b32f84f234487e425e49c07175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameData: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
-  maxSelectedTurrets: 4
+  allMenuesInThisScene: []
+  openMenus: []
 --- !u!1 &845095072
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,7 +703,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2023103396}
-  - component: {fileID: 2023103397}
   m_Layer: 0
   m_Name: --UIDocuments--
   m_TagString: Untagged
@@ -726,18 +725,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2023103397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2023103395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8079ec0ce1e334a4dae644a8552808fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

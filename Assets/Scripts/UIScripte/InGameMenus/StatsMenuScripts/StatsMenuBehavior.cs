@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
 
-public class StatsMenuBehavior : MonoBehaviour
+public class StatsMenuBehavior : MonoBehaviour, IMenu
 {
     private UIDocument uIDocument;
 
@@ -23,6 +24,26 @@ public class StatsMenuBehavior : MonoBehaviour
     private List<GameObject> turretsCurrentlyPlaced = new List<GameObject>();
     private List<TurretBlueprint> turretsInGame = new List<TurretBlueprint>();
 
+
+    public void OpenOrClose(Boolean open)
+    {
+        //Gets the UiDocument and checks weather the Menu should opened or closed
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        if (open)
+        {
+            //Open the StatsMenu, adds to openMenu List and sets Game to paused
+            root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
+            InGameMenuManager.Instance.openMenus.Add(this.gameObject);
+            GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+        }
+        else
+        {
+            //Closes StatsMenu, removes from openMenu List, and clears all lists
+            root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
+            InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
+            ClearList();
+        }
+    }
     void OnEnable()
     {
         uIDocument = GetComponent<UIDocument>();
@@ -55,7 +76,6 @@ public class StatsMenuBehavior : MonoBehaviour
         towerButton = uIDocument.rootVisualElement.Q<Button>("towerButton");
         towerButton.SetBinding("text", new LocalizedString("StatsMenuTranslationTable", "towerButton"));
         towerButton.RegisterCallback<ClickEvent>(OnTowerBtnClicked);
-
     }
 
 
@@ -66,7 +86,7 @@ public class StatsMenuBehavior : MonoBehaviour
     void OnPauseBtnClicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.CloseAllMenus();
-        InGameMenuManager.Instance.OpenCloseOneMenu("PauseMenuDoc", true);
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("PauseMenuDoc", true);
     }
     void OnCharackterBtnClicked(ClickEvent evt)
     {
@@ -102,7 +122,7 @@ public class StatsMenuBehavior : MonoBehaviour
         foreach (var turret in TurretPlacementController.Instance.GetActiveTurrets())
         {
             Debug.Log("Hello there");
-            SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret.GetComponent<TurretBehaviour>().turretBlueprint, listElementAsset, ref turretDetails);
+            SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret.GetComponentInChildren<TurretBehaviour>().turretBlueprint, listElementAsset, ref turretDetails);
             uIDocument.rootVisualElement.Q("unity-content-container").Add(towerElement.listButton);
         }
     }

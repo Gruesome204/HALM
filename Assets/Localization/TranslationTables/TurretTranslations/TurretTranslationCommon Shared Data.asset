@@ -36,7 +36,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 64953949974528
-    m_Key: knockbackStrenght
+    m_Key: knockbackStrength
     m_Metadata:
       m_Items: []
   - m_Id: 64970135793664

@@ -27,7 +27,7 @@ public class SM_TowerListElementBehavior
 
         FillDetailValue("cost", turret.buildingCost);
         FillDetailValue("fireRate", turret.baseFireRate);
-        FillDetailValue("fireCountdown", turret.baseFireCountdown   );
+        FillDetailValue("fireCountdown", turret.baseFireCountdown);
         FillDetailValue("projectileSpeed", turret.baseProjectileSpeed);
         FillDetailValue("attackRange", turret.baseAttackRange);
         FillDetailValue("damage", turret.baseAttackDamage);
