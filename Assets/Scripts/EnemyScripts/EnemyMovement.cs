@@ -34,17 +34,9 @@ public class EnemyMovement : MonoBehaviour
             ResumeMovement();
     }
 
-    public void SetTargetPlayer(bool ignorePursueRange = false)
-    {
-        Debug.Log("call set target");
-        target = GameObject.FindGameObjectWithTag("Player");
-        this.hasForcedTarget = false;
-    }
-
     // Moves the enemy toward the current target if within pursue range
     public void MoveTowardTarget()
-    {
-        UpdateTarget();
+    { 
 
         if (target == null || stats == null) return;
 
@@ -55,29 +47,11 @@ public class EnemyMovement : MonoBehaviour
         rb.MovePosition(rb.position + dir * stats.currentMovementSpeed * Time.fixedDeltaTime);
     }
 
+
     //Stops the enemy completely
     public void Stop()
     {
         rb.linearVelocity = Vector2.zero;
-    }
-
-    private void UpdateTarget()
-    {
-        //Only find and follow the Player
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        if (player == null)
-        {
-            target = null;
-            return;
-        }
-
-        // Assign player as the only target
-        if (target != player)
-        {
-            target = player;
-            // Debug.Log($"{gameObject.name} now targeting Player");
-        }
     }
 
     private void PauseMovement()

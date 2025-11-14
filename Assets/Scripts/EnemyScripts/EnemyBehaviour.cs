@@ -17,6 +17,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     [Header("Targeting")]
     public GameObject target;
 
+
     [Header("Ability Settings")]
     [Tooltip("Time between ability usage attempts (seconds).")]
     [SerializeField] private float abilityCheckInterval = 1.0f;
@@ -24,6 +25,9 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private float nextAttackTime = 0f;   
     private float nextAbilityTime = 0f;
     private bool isPaused;
+
+    private bool isAggroed = false;
+    [SerializeField] private float aggroRange = 8f;
 
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
@@ -38,6 +42,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         stats.Initialize();
         health.OnDeath += HandleDeath;
+        health.OnDamaged += HandleDamaged;
     }
 
 
@@ -80,7 +85,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (isPaused || (knockback != null && knockback.IsKnockedBack)) return;
 
-        DropTargetIfTooFar();
+       // DropTargetIfTooFar();
 
         if (target == null) return;
 
@@ -99,12 +104,30 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         bool inAttackRange = distance <= stats.currentAttackRange;
 
         if (!inAttackRange)
-            movement.MoveTowardTarget();
+            //  movement.MoveTowardTarget();
+            movement.target = target;
         else
             movement.Stop();
     }
-        
-    
+
+    private void HandleDamaged(DamageData damageData)
+    {
+        if (isPaused) return;
+        AggroPlayer();
+    }
+    private void AggroPlayer()
+    {
+        if (target == null)
+            target = GameObject.FindGameObjectWithTag("Player");
+
+        if (target == null) return;
+
+        isAggroed = true;
+
+        // Lock onto the player
+        movement.target = target;
+    }
+
     private void TryAttack(GameObject target)
     {
         if (attack == null || target == null) return;
@@ -160,7 +183,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         float distance = Vector2.Distance(transform.position, target.transform.position);
 
         if (distance > stats.currentDetectionRange)
-            movement.target = null;
+         //   movement.target = null;
 
         if (distance > stats.currentAttackRange && abilityBehaviour != null)
             abilityBehaviour.target = null;
