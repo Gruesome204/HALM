@@ -77,16 +77,25 @@ public class DungeonGenerator : MonoBehaviour
     {
         List<RectInt> rooms = new List<RectInt>();
 
-        int currentX = 1; // start on the left
+        // --- First room at map center ---
+        int firstRoomW = rng.Next(minRoomSize, maxRoomSize + 1);
+        int firstRoomH = rng.Next(minRoomSize, maxRoomSize + 1);
+        int centerX = mapWidth / 2 - firstRoomW / 2;
+        int centerY = mapHeight / 2 - firstRoomH / 2;
+        RectInt firstRoom = new RectInt(centerX, centerY, firstRoomW, firstRoomH);
+        rooms.Add(firstRoom);
+        CarveRoom(firstRoom);
 
-        for (int i = 0; i < maxRooms; i++)
+        int currentX = centerX + firstRoomW + minRoomDistance; // X position for next room
+
+        // --- Remaining rooms ---
+        for (int i = 1; i < maxRooms; i++)
         {
             int w = rng.Next(minRoomSize, maxRoomSize + 1);
             int h = rng.Next(minRoomSize, maxRoomSize + 1);
 
             if (currentX + w >= mapWidth - 1) break; // stop if out of bounds
 
-            // Randomize Y position so rooms are not all on the same line
             int yMin = 1;
             int yMax = mapHeight - h - 1;
             int currentY = rng.Next(yMin, yMax + 1);
@@ -95,11 +104,12 @@ public class DungeonGenerator : MonoBehaviour
             rooms.Add(room);
             CarveRoom(room);
 
-            currentX += w + minRoomDistance; // move to next X position
+            currentX += w + minRoomDistance;
         }
 
         return rooms;
     }
+
 
 
     private void CarveRoom(RectInt room)
@@ -200,26 +210,38 @@ public class DungeonGenerator : MonoBehaviour
     {
         if (floorTilemap == null || floorTile == null) return;
 
+        // Compute offsets so the dungeon is centered around 0,0
+        int xOffset = mapWidth / 2;
+        int yOffset = mapHeight / 2;
+
         for (int x = 0; x < mapWidth; x++)
+        {
             for (int y = 0; y < mapHeight; y++)
             {
-                Vector3Int pos = new Vector3Int(x - mapWidth / 2, y - mapHeight / 2, 0);
+                Vector3Int pos = new Vector3Int(x - xOffset, y - yOffset, 0);
                 floorTilemap.SetTile(pos, map[x, y] == 1 ? floorTile : null);
             }
+        }
     }
 
     private void PaintWalls()
     {
         if (wallTilemap == null || wallTile == null) return;
 
+        int xOffset = mapWidth / 2;
+        int yOffset = mapHeight / 2;
+
         for (int x = 0; x < mapWidth; x++)
+        {
             for (int y = 0; y < mapHeight; y++)
             {
-                Vector3Int pos = new Vector3Int(x - mapWidth / 2, y - mapHeight / 2, 0);
+                Vector3Int pos = new Vector3Int(x - xOffset, y - yOffset, 0);
                 if (map[x, y] == 2)
                     wallTilemap.SetTile(pos, wallTile);
             }
+        }
     }
+
 
     #endregion
 
