@@ -17,29 +17,24 @@ public class DungeonGenerator : MonoBehaviour
     [Header("Map Settings")]
     public int mapWidth = 100;
     public int mapHeight = 80;
+    public int minRooms = 3;  // Minimum rooms
     public int maxRooms = 10;
     public int minRoomSize = 5;
     public int maxRoomSize = 15;
     public int minRoomDistance = 2;
+    public int maxRoomDistance = 10;
     public int seed = 0; // 0 = random
 
     #endregion
 
-    // Internal map representation: 0 = empty, 1 = floor, 2 = wall
-    private int[,] map;
+    private int[,] map; // 0 = empty, 1 = floor, 2 = wall
 
     #region Unity Callbacks
 
     [ContextMenu("Generate Dungeon")]
-    private void Start()
-    {
-        Generate();
-    }
+    private void Start() => Generate();
 
-    public void GenerateContext()
-    {
-        Generate();
-    }
+    public void GenerateContext() => Generate();
 
     #endregion
 
@@ -50,23 +45,22 @@ public class DungeonGenerator : MonoBehaviour
         System.Random rng = seed == 0 ? new System.Random() : new System.Random(seed);
         map = new int[mapWidth, mapHeight];
 
-        // Clear previous tiles
         floorTilemap?.ClearAllTiles();
         wallTilemap?.ClearAllTiles();
 
-        // Step 1: Generate linearly placed rooms
+        // Step 1: Generate rooms
         List<RectInt> rooms = GenerateRoomsLinear(rng);
 
-        // Step 2: Connect rooms strictly one-to-one
+        // Step 2: Connect rooms one-to-one
         ConnectRoomsLinearly(rooms);
 
-        // Step 3: Surround all floors and corridors with walls
+        // Step 3: Surround floors and corridors with walls
         SurroundFloorsWithWalls();
 
-        // Step 4: Paint the tilemaps
+        // Step 4: Paint tilemaps
         PaintTilemaps();
 
-        Debug.Log($"Dungeon generated: {rooms.Count} rooms");
+        Debug.Log($"Dungeon generated: {rooms.Count} rooms (min required: {minRooms})");
     }
 
     #endregion
@@ -77,40 +71,62 @@ public class DungeonGenerator : MonoBehaviour
     {
         List<RectInt> rooms = new List<RectInt>();
 
-        // --- First room at map center ---
-        int firstRoomW = rng.Next(minRoomSize, maxRoomSize + 1);
-        int firstRoomH = rng.Next(minRoomSize, maxRoomSize + 1);
-        int centerX = mapWidth / 2 - firstRoomW / 2;
-        int centerY = mapHeight / 2 - firstRoomH / 2;
-        RectInt firstRoom = new RectInt(centerX, centerY, firstRoomW, firstRoomH);
+        // --- First room at center ---
+        int firstW = rng.Next(minRoomSize, maxRoomSize + 1);
+        int firstH = rng.Next(minRoomSize, maxRoomSize + 1);
+        int centerX = mapWidth / 2 - firstW / 2;
+        int centerY = mapHeight / 2 - firstH / 2;
+
+        RectInt firstRoom = new RectInt(centerX, centerY, firstW, firstH);
         rooms.Add(firstRoom);
         CarveRoom(firstRoom);
 
-        int currentX = centerX + firstRoomW + minRoomDistance; // X position for next room
+        int prevX = centerX;
+        int prevY = centerY;
 
         // --- Remaining rooms ---
-        for (int i = 1; i < maxRooms; i++)
+        while (rooms.Count < maxRooms)
         {
             int w = rng.Next(minRoomSize, maxRoomSize + 1);
             int h = rng.Next(minRoomSize, maxRoomSize + 1);
 
-            if (currentX + w >= mapWidth - 1) break; // stop if out of bounds
+            int minX = prevX + firstW + minRoomDistance;
+            int maxX = Math.Min(minX + maxRoomDistance, mapWidth - w - 1);
+            if (minX >= maxX && rooms.Count >= minRooms) break;
 
-            int yMin = 1;
-            int yMax = mapHeight - h - 1;
-            int currentY = rng.Next(yMin, yMax + 1);
+            int x = rng.Next(minX, maxX + 1);
 
-            RectInt room = new RectInt(currentX, currentY, w, h);
+            int minY = Math.Max(1, prevY - maxRoomDistance);
+            int maxY = Math.Min(mapHeight - h - 1, prevY + maxRoomDistance);
+            int y = rng.Next(minY, maxY + 1);
+
+            RectInt room = new RectInt(x, y, w, h);
             rooms.Add(room);
             CarveRoom(room);
 
-            currentX += w + minRoomDistance;
+            prevX = x;
+            prevY = y;
+        }
+
+        // Ensure at least minRooms are generated
+        while (rooms.Count < minRooms)
+        {
+            int w = rng.Next(minRoomSize, maxRoomSize + 1);
+            int h = rng.Next(minRoomSize, maxRoomSize + 1);
+
+            int x = Mathf.Clamp(prevX + firstW + minRoomDistance, 1, mapWidth - w - 1);
+            int y = Mathf.Clamp(prevY - maxRoomDistance + rng.Next(0, 2 * maxRoomDistance), 1, mapHeight - h - 1);
+
+            RectInt room = new RectInt(x, y, w, h);
+            rooms.Add(room);
+            CarveRoom(room);
+
+            prevX = x;
+            prevY = y;
         }
 
         return rooms;
     }
-
-
 
     private void CarveRoom(RectInt room)
     {
@@ -157,7 +173,7 @@ public class DungeonGenerator : MonoBehaviour
         int ex = Math.Max(x1, x2);
 
         for (int x = sx; x <= ex; x++)
-            for (int dy = -1; dy <= 1; dy++) // 3 tiles wide
+            for (int dy = -1; dy <= 1; dy++)
                 if (InBounds(x, y + dy)) map[x, y + dy] = 1;
     }
 
@@ -167,7 +183,7 @@ public class DungeonGenerator : MonoBehaviour
         int ey = Math.Max(y1, y2);
 
         for (int y = sy; y <= ey; y++)
-            for (int dx = -1; dx <= 1; dx++) // 3 tiles wide
+            for (int dx = -1; dx <= 1; dx++)
                 if (InBounds(x + dx, y)) map[x + dx, y] = 1;
     }
 
@@ -178,7 +194,6 @@ public class DungeonGenerator : MonoBehaviour
     private void SurroundFloorsWithWalls()
     {
         for (int x = 0; x < mapWidth; x++)
-        {
             for (int y = 0; y < mapHeight; y++)
             {
                 if (map[x, y] == 1)
@@ -193,7 +208,6 @@ public class DungeonGenerator : MonoBehaviour
                         }
                 }
             }
-        }
     }
 
     #endregion
@@ -210,18 +224,15 @@ public class DungeonGenerator : MonoBehaviour
     {
         if (floorTilemap == null || floorTile == null) return;
 
-        // Compute offsets so the dungeon is centered around 0,0
         int xOffset = mapWidth / 2;
         int yOffset = mapHeight / 2;
 
         for (int x = 0; x < mapWidth; x++)
-        {
             for (int y = 0; y < mapHeight; y++)
             {
                 Vector3Int pos = new Vector3Int(x - xOffset, y - yOffset, 0);
                 floorTilemap.SetTile(pos, map[x, y] == 1 ? floorTile : null);
             }
-        }
     }
 
     private void PaintWalls()
@@ -232,16 +243,13 @@ public class DungeonGenerator : MonoBehaviour
         int yOffset = mapHeight / 2;
 
         for (int x = 0; x < mapWidth; x++)
-        {
             for (int y = 0; y < mapHeight; y++)
             {
                 Vector3Int pos = new Vector3Int(x - xOffset, y - yOffset, 0);
                 if (map[x, y] == 2)
                     wallTilemap.SetTile(pos, wallTile);
             }
-        }
     }
-
 
     #endregion
 
