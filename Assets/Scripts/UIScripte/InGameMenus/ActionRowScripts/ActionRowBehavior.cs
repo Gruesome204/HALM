@@ -81,6 +81,7 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         foreach (var btn in turretBtnList)
         {
             btn.ChangeColor();
+            btn.HandleVisualCooldown();
         }
     }
 

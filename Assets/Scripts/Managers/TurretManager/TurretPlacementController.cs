@@ -56,7 +56,7 @@ public class TurretPlacementController : MonoBehaviour
     [SerializeField]private List<TurretHealth> placedTurrets = new List<TurretHealth>();
     private Dictionary<TurretBlueprint, float> cooldownEndTimes = new();
 
-    public static event Action<TurretBlueprint, bool> OnPlacementCooldownStateChanged;
+    public event Action<TurretBlueprint, bool> OnPlacementCooldownStateChanged;
 
 
     private void OnEnable()

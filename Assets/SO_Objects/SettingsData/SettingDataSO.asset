@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localSelected: 
   musicTrack: 2
-  musicVolume: 0.1
+  masterVolume: 0.5
+  musicVolume: 1
   soundVolume: 0

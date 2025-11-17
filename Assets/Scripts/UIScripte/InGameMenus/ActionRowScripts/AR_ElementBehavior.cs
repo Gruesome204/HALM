@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -6,10 +7,13 @@ using UnityEngine.UIElements;
 public class AR_ElementBehavior
 {
     public TurretBlueprint representedTurret;
+    public Boolean turretOnCooldown = false;
+    private int turretNumber;
 
     public VisualElement turretBorder;
     public VisualElement turretIcon;
-    public Label turretNumber;
+    public VisualElement cooldownCover;
+    public Label turretNumbertxt;
     public Button turretButton;
 
 
@@ -18,20 +22,22 @@ public class AR_ElementBehavior
         TemplateContainer rowElement = asset.Instantiate();
 
         turretBorder = rowElement.Q<VisualElement>("border");
+        cooldownCover = rowElement.Q<VisualElement>("cooldownCover");
 
         turretIcon = rowElement.Q<VisualElement>("icon");
-        if (_turret.towerIcon != null)
-        {
-            turretIcon.style.backgroundImage = new StyleBackground(_turret.towerIcon);
-        }
+        turretIcon.style.backgroundImage = new StyleBackground(_turret.towerIcon);
 
-        turretNumber = rowElement.Q<Label>("turretNumber");
-        turretNumber.text = $"{_turretNumber}";
+        turretNumber = _turretNumber;
+        turretNumbertxt = rowElement.Q<Label>("turretNumber");
+        turretNumbertxt.text = $"{_turretNumber}";
 
         turretButton = rowElement.Q<Button>("button");
         turretButton.RegisterCallback<ClickEvent>(OnTurretButtonClicked);
 
+
         representedTurret = _turret;
+
+        TurretPlacementController.Instance.OnPlacementCooldownStateChanged += HandleCooldown;
     }
 
     public void ChangeColor()
@@ -49,5 +55,33 @@ public class AR_ElementBehavior
     void OnTurretButtonClicked(ClickEvent evt)
     {
         TurretPlacementController.Instance.SelectTurretBlueprint(representedTurret);
+    }
+
+    void HandleCooldown(TurretBlueprint _turret, Boolean _active)
+    {
+        if (_turret == representedTurret)
+        {
+            turretOnCooldown = _active;
+            if (_active)
+            {
+
+            }
+            else
+            {
+                cooldownCover.style.height = new Length(0, LengthUnit.Percent);
+                turretNumbertxt.text = $"{turretNumber}";
+            }
+        }
+    }
+
+    public void HandleVisualCooldown()
+    {
+        if (turretOnCooldown)
+        {
+            float remainingCooldownPercentage = (TurretPlacementController.Instance.GetCooldownRemaining(representedTurret)/ representedTurret.placementCooldown) * 100;
+            cooldownCover.style.height = new Length(remainingCooldownPercentage, LengthUnit.Percent);
+
+            turretNumbertxt.text = $"{TurretPlacementController.Instance.GetCooldownRemaining(representedTurret).ToString("F1")}";
+        }
     }
 }
