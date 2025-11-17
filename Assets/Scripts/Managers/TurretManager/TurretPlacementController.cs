@@ -53,11 +53,11 @@ public class TurretPlacementController : MonoBehaviour
 
     //Currently Active Turrets
     [SerializeField]private List<GameObject> activeTurrets = new List<GameObject>();
-     [SerializeField]private List<TurretHealth> placedTurrets = new List<TurretHealth>();
-    private Dictionary<TurretBlueprint, float> lastPlacementTimes = new Dictionary<TurretBlueprint, float>();
+    [SerializeField]private List<TurretHealth> placedTurrets = new List<TurretHealth>();
+    private Dictionary<TurretBlueprint, float> cooldownEndTimes = new();
 
     public static event Action<TurretBlueprint, bool> OnPlacementCooldownStateChanged;
-    private bool isOnCooldown = false;
+
 
     private void OnEnable()
     {
@@ -100,6 +100,27 @@ public class TurretPlacementController : MonoBehaviour
     public void UnregisterTurret(TurretHealth turret)
     {
         placedTurrets.Remove(turret);
+    }
+
+    public bool IsBlueprintOnCooldown(TurretBlueprint blueprint)
+    {
+        if (!cooldownEndTimes.TryGetValue(blueprint, out float endTime))
+            return false;
+
+        return Time.time < endTime;
+    }
+    private void HandleCooldownEvent(TurretBlueprint blueprint, bool active)
+    {
+        if (currentSelectedBlueprint == blueprint)
+            Debug.Log($"Cooldown changed: {blueprint.name} active={active}");
+    }
+
+    public float GetCooldownRemaining(TurretBlueprint blueprint)
+    {
+        if (!cooldownEndTimes.TryGetValue(blueprint, out float endTime))
+            return 0f;
+
+        return Mathf.Max(0f, endTime - Time.time);
     }
 
     private void HandleBlueprintSelectionInput()
@@ -233,13 +254,7 @@ public class TurretPlacementController : MonoBehaviour
         if (!inRange)
             canPlace = false;
 
-        // Check cooldown
-        if (lastPlacementTimes.TryGetValue(currentSelectedBlueprint, out float lastTime))
-        {
-            if (Time.time < lastTime + currentSelectedBlueprint.placementCooldown)
-                canPlace = false;
-        }
-        if (isOnCooldown)
+        if (IsBlueprintOnCooldown(currentSelectedBlueprint))
             canPlace = false;
 
         UpdatePreviewColor(canPlace);
@@ -308,14 +323,9 @@ public class TurretPlacementController : MonoBehaviour
             return;
         }
 
-        float lastTime;
-        lastPlacementTimes.TryGetValue(currentSelectedBlueprint, out lastTime);
-
-        // Only check cooldown if the turret has been placed before
-        if (lastPlacementTimes.ContainsKey(currentSelectedBlueprint) && Time.time < lastTime + currentSelectedBlueprint.placementCooldown)
+        if (IsBlueprintOnCooldown(currentSelectedBlueprint))
         {
-            float remaining = lastTime + currentSelectedBlueprint.placementCooldown - Time.time;
-            Debug.Log($"[TurretPlacement] {currentSelectedBlueprint.name} on cooldown. {remaining:F2}s left.");
+            Debug.Log($"[TurretPlacement] {currentSelectedBlueprint.name} is on cooldown ({GetCooldownRemaining(currentSelectedBlueprint):F2}s left).");
             return;
         }
 
@@ -389,9 +399,11 @@ public class TurretPlacementController : MonoBehaviour
         }
         activeTurrets.Add(newTurret);
         OnTurretsChanged?.Invoke();
-        lastPlacementTimes[currentSelectedBlueprint] = Time.time;
 
-        StartCoroutine(HandleCooldown(currentSelectedBlueprint));
+        float endTime = Time.time + currentSelectedBlueprint.placementCooldown;
+        cooldownEndTimes[currentSelectedBlueprint] = endTime;
+
+        StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint));
 
         DeselectTurretBlueprint();
         //DestroyPreview();
@@ -408,14 +420,15 @@ public class TurretPlacementController : MonoBehaviour
         // announce cooldown end
         OnPlacementCooldownStateChanged?.Invoke(blueprint, false);
     }
-
-    private void HandleCooldownEvent(TurretBlueprint blueprint, bool active)
+    private IEnumerator StartAndEndCooldown(TurretBlueprint blueprint)
     {
-        // Only respond if it's the currently selected blueprint
-        if (currentSelectedBlueprint == blueprint)
-        {
-            isOnCooldown = active;
-        }
+        // Start
+        OnPlacementCooldownStateChanged?.Invoke(blueprint, true);
+
+        yield return new WaitForSeconds(blueprint.placementCooldown);
+
+        // End
+        OnPlacementCooldownStateChanged?.Invoke(blueprint, false);
     }
     private void OnTurretDeath(TurretHealth turret, DamageData data)
     {
