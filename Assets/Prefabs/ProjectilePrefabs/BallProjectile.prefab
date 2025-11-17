@@ -104,9 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockbackStrength: 100
-  knockbackDuration: 0.1
+  knockbackDuration: 0.5
   direction: {x: 0, y: 0}
-  piercingHitsRemaining: 2
+  piercingHitsRemaining: 1
 --- !u!50 &5522442266733711567
 Rigidbody2D:
   serializedVersion: 5

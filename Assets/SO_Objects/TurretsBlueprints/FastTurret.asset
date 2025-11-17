@@ -21,7 +21,7 @@ MonoBehaviour:
   turretPrefab: {fileID: 2143098689819666265, guid: e7ba0ce86f14b9c49bff82f2efd22797, type: 3}
   baseHealth: 100
   baseAttackDamage: 10
-  baseFireRate: 1
+  baseFireRate: 2
   baseFireCountdown: 1
   baseProjectileSpeed: 10
   baseAttackRange: 5

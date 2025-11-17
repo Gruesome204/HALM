@@ -20,13 +20,13 @@ MonoBehaviour:
   turretType: 0
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
   turretPrefab: {fileID: 673453059274113653, guid: 130817ef7da155845abce0dd7b6b7f83, type: 3}
-  baseHealth: 20
+  baseHealth: 100
   baseAttackDamage: 10
   baseFireRate: 1
   baseFireCountdown: 1
   baseProjectileSpeed: 10
-  baseAttackRange: 5
-  baseKnockbackStrength: 1
+  baseAttackRange: 10
+  baseKnockbackStrength: 10
   baseKnockbackDuration: 0.5
   baseHealthGrowthFactor: 1.2
   baseDamageGrowthFactor: 1.2
@@ -36,4 +36,4 @@ MonoBehaviour:
   height: 2
   length: 2
   buildCapacityValue: 1
-  placementCooldown: 1
+  placementCooldown: 5

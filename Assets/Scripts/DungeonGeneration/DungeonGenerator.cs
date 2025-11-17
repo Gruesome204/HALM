@@ -25,6 +25,9 @@ public class DungeonGenerator : MonoBehaviour
     public int maxRoomDistance = 10;
     public int seed = 0; // 0 = random
 
+    [Header("Corridor Settings")]
+    public int corridorRadius = 1;
+
     #endregion
 
     private int[,] map; // 0 = empty, 1 = floor, 2 = wall
@@ -173,9 +176,11 @@ public class DungeonGenerator : MonoBehaviour
         int ex = Math.Max(x1, x2);
 
         for (int x = sx; x <= ex; x++)
-            for (int dy = -1; dy <= 1; dy++)
-                if (InBounds(x, y + dy)) map[x, y + dy] = 1;
+            for (int dy = -corridorRadius; dy <= corridorRadius; dy++)
+                if (InBounds(x, y + dy))
+                    map[x, y + dy] = 1;
     }
+
 
     private void CarveVertical(int y1, int y2, int x)
     {
@@ -183,9 +188,11 @@ public class DungeonGenerator : MonoBehaviour
         int ey = Math.Max(y1, y2);
 
         for (int y = sy; y <= ey; y++)
-            for (int dx = -1; dx <= 1; dx++)
-                if (InBounds(x + dx, y)) map[x + dx, y] = 1;
+            for (int dx = -corridorRadius; dx <= corridorRadius; dx++)
+                if (InBounds(x + dx, y))
+                    map[x + dx, y] = 1;
     }
+
 
     #endregion
 

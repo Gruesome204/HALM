@@ -98,8 +98,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   currentFiringPattern: 1
-  projectilesPerSalve: 3
-  delayBetweenSalveProjectiles: 2
+  projectilesPerSalve: 4
+  delayBetweenSalveProjectiles: 0.4
 --- !u!114 &7158522242924221709
 MonoBehaviour:
   m_ObjectHideFlags: 0

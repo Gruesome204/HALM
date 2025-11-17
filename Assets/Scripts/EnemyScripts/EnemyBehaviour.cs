@@ -22,7 +22,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     [Tooltip("Time between ability usage attempts (seconds).")]
     [SerializeField] private float abilityCheckInterval = 1.0f;
 
-    private float nextAttackTime = 0f;   
+    private float nextAttackTime = 0.5f;   
     private float nextAbilityTime = 0f;
     private bool isPaused;
 

@@ -11,7 +11,7 @@ public class BallProjectileBehaviour : MonoBehaviour
     public float knockbackDuration = 0.1f;
     public Vector2 direction;
 
-    public int piercingHitsRemaining = 2;
+    public int piercingHitsRemaining = 0;
 
     public void SetOwner(GameObject turret, float damageAmount)
     {
