@@ -16,6 +16,19 @@ public class TurretBlueprint : ScriptableObject
     public GameObject previewPrefab; // 👈 purely visual prefab
     [Tooltip("Prefab actually placed in the world.")]
     public GameObject turretPrefab;
+    public enum FiringPattern
+    {
+        SingleShot,
+        FireSalve
+    }
+    [Header("Firing Pattern Settings")]
+    public FiringPattern firingPattern = FiringPattern.SingleShot;
+
+    [Tooltip("Number of projectiles per salve (only used if FiringPattern = FireSalve)")]
+    public int projectilesPerSalve = 2;
+
+    [Tooltip("Delay between projectiles in a salve (only used if FiringPattern = FireSalve)")]
+    public float delayBetweenSalveProjectiles = 0.5f;
 
 
     [Header("Stat Values")]
@@ -28,7 +41,7 @@ public class TurretBlueprint : ScriptableObject
 
     [Header("Base Values")]
     public float baseFireRate = 1f;
-    public float baseFireCountdown = 0f;
+    public float BaseFireCountdown => 1f / baseFireRate;
     public float baseProjectileSpeed = 10f;
     public float baseAttackRange = 5f;
 
@@ -48,6 +61,8 @@ public class TurretBlueprint : ScriptableObject
     [Tooltip("Flat range increase per level")]
     public float baseRangeGrowthFlat = 0.5f;
 
+
+
     [Header("Cost")]
     public int buildingCost;
     [Header("Turret Size")]
@@ -66,3 +81,4 @@ public class TurretBlueprint : ScriptableObject
     public float placementCooldown = 1.0f;
 
 }
+
