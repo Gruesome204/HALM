@@ -27,7 +27,7 @@ MonoBehaviour:
   baseProjectileSpeed: 10
   baseAttackRange: 10
   baseKnockbackStrength: 10
-  baseKnockbackDuration: 0.5
+  baseKnockbackDuration: 1
   baseHealthGrowthFactor: 1.2
   baseDamageGrowthFactor: 1.2
   baseFireRateGrowthFactor: 0.95
