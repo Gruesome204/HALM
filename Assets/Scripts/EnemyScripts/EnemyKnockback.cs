@@ -24,7 +24,7 @@ public class EnemyKnockback : MonoBehaviour
 
     private void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
-        ApplyKnockback(knockbackData.direction);
+        ApplyKnockback(knockbackData.direction, knockbackData.knockbackStrength);
     }
     private void OnDisable()
     {
@@ -37,21 +37,24 @@ public class EnemyKnockback : MonoBehaviour
         stats ??= GetComponent<EnemyStats>();
     }
     // Applies a knockback force in the specified direction if not already knocked back.
-    public void ApplyKnockback(Vector2 direction)
+    public void ApplyKnockback(Vector2 direction, float strength)
     {
         if (isKnockedBack || stats == null) return;
-        StartCoroutine(KnockbackRoutine(direction));
+        StartCoroutine(KnockbackRoutine(direction, strength));
     }
-    // Coroutine that applies and resolves knockback behavior over time.
-    private IEnumerator KnockbackRoutine(Vector2 direction)
+    // Coroutine that applies and resolves knockback b  
+    private IEnumerator KnockbackRoutine(Vector2 direction, float strength)
     {
         isKnockedBack = true;
         rb.linearVelocity = Vector2.zero;
 
-        float adjustedForce = knockbackForce * (1f - Mathf.Clamp01(stats.currentKnockbackReduction));
+        float adjustedForce =
+            strength * knockbackForce * (1f - Mathf.Clamp01(stats.currentKnockbackReduction));
+
         rb.AddForce(direction.normalized * adjustedForce, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(knockbackDuration);
+
         rb.linearVelocity = Vector2.zero;
         isKnockedBack = false;
     }

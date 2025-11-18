@@ -62,7 +62,6 @@ public class BallProjectileBehaviour : MonoBehaviour
             };
 
             damagable.TakeDamage(damageData, knockbackData);
-            Debug.Log(knockbackData.knockbackStrength);
             // Reduce piercing hits remaining
             if (piercingHitsRemaining > 0) // Only decrement if not infinite piercing
             {
