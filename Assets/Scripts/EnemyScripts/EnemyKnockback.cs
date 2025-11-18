@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyKnockback : MonoBehaviour
 {
     [Header("References")]
     public EnemyStats stats;
+    public EnemyHealth health;
 
     [Header("Knockback Settings")]
     public float knockbackForce = 10f;
@@ -12,6 +15,21 @@ public class EnemyKnockback : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool isKnockedBack;
+
+    private void OnEnable()
+    {
+        health = GetComponent<EnemyHealth>();
+        health.OnDamaged += HandleDamaged;
+    }
+
+    private void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
+    {
+        ApplyKnockback(knockbackData.direction);
+    }
+    private void OnDisable()
+    {
+        health.OnDamaged -= HandleDamaged;
+    }
 
     private void Awake()
     {

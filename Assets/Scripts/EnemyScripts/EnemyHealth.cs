@@ -8,7 +8,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public Slider healthBar;
 
     public event Action<EnemyHealth, DamageData> OnDeath;
-    public event Action<DamageData> OnDamaged;
+    public event Action<DamageData, KnockbackData> OnDamaged;
     private void Start()
     {
         movement = GetComponent<EnemyMovement>();
@@ -24,14 +24,12 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
-        OnDamaged?.Invoke(damageData);
         if (IsInvulnerable || stats == null) return;
-
+        OnDamaged?.Invoke(damageData, knockbackData);
         float damage = CalculateTakenDamage(damageData);
         stats.currentHealth -= damage;
         healthBar?.SetValueWithoutNotify(stats.currentHealth);
-        Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage.");
-        //Debug.Log($"Health after damage: {stats.currentHealth}");
+        Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage and {knockbackData.knockbackStrength} Knockback.");
         if (stats.currentHealth <= 0)
         {
             Die(damageData);
