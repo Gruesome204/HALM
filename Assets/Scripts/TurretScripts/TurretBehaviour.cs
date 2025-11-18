@@ -165,7 +165,6 @@ public class TurretBehaviour : MonoBehaviour, IPausable
             projectileObject.GetComponent<BallProjectileBehaviour>().knockbackStrength = currentKnockbackStrength;
             projectileObject.GetComponent<BallProjectileBehaviour>().knockbackDuration = currentKnockbackDuration;
 
-
             Rigidbody2D projectileRb = projectileObject.GetComponent<Rigidbody2D>();
             if (projectileRb != null)
             {

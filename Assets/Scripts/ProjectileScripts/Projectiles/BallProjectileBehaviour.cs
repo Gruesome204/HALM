@@ -7,8 +7,8 @@ public class BallProjectileBehaviour : MonoBehaviour
     private DamageData damageData;
     private GameObject owner; // The turret that fired this projectile
 
-    public float knockbackStrength = 100f;
-    public float knockbackDuration = 0.1f;
+    public float knockbackStrength;
+    public float knockbackDuration;
     public Vector2 direction;
 
     public int piercingHitsRemaining = 0;
