@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]private readonly List<IPausable> pausables = new List<IPausable>();
 
-    [Header("Debug Controls")]
-    [SerializeField] private GameState debugState;
 
     private void Awake()
     {
@@ -38,17 +36,9 @@ public class GameManager : MonoBehaviour
 
         ChangeState(GameState.MainMenu);
     }
-
-    //Testin Purpose
     private void Update()
     {
-    //#if UNITY_EDITOR
-    //        // Allow changing game state from inspector in play mode
-    //        if (debugState != CurrentState)
-    //        {
-    //            ChangeState(debugState);
-    //        }
-    //#endif
+
 
     }
 
@@ -62,7 +52,6 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(CurrentState, PreviousState); 
 
         UpdatePausables(newState);
-        GameManager.Instance.DebugRegisteredPausables();
     }
 
     private void UpdatePausables(GameState newState)
@@ -105,38 +94,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void SaveGame()
-    {
-        SaveSystem.Save(gameDataSO);
-    }
-
-    public void LoadGame()
-    {
-        SaveSystem.Load(gameDataSO);
-        //Loads the saved turretTypes into TurretManager
-        TurretPlacementController.Instance.SetupFromGameData(gameDataSO);
-    }
-    public void DebugRegisteredPausables()
-    {
-        Debug.Log($"[GameManager] {pausables.Count} IPausable(s) currently registered:");
-
-        for (int i = 0; i < pausables.Count; i++)
-        {
-            var p = pausables[i];
-            if (p == null)
-            {
-                Debug.Log($" - {i}: null reference");
-            }
-            else
-            {
-                // If the IPausable is a MonoBehaviour, show the GameObject name
-                if (p is MonoBehaviour mb)
-                    Debug.Log($" - {i}: {mb.GetType().Name} on GameObject '{mb.gameObject.name}'");
-                else
-                    Debug.Log($" - {i}: {p.GetType().Name}");
-            }
-        }
-    }
 
 
     public void PauseGame() => ChangeState(GameState.Paused);
@@ -144,23 +101,5 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlaying() => CurrentState == GameState.Playing;
     public bool IsPaused() => CurrentState == GameState.Paused;
-#if UNITY_EDITOR
-    // Called when a serialized field changes in the inspector
-    private void OnValidate()
-    {
-        // Only apply if the game is running
-        if (!Application.isPlaying) return;
 
-        if (debugState != CurrentState)
-        {
-            ChangeState(debugState);
-        }
-    }
-
-    [ContextMenu("Debug Registered Pausables")]
-    private void DebugRegisteredPausablesContextMenu()
-    {
-        DebugRegisteredPausables();
-    }
-#endif
 }
