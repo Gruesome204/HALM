@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]private readonly List<IPausable> pausables = new List<IPausable>();
 
+    private float autosaveTimer = 0f;
+    public float autosaveInterval = 60f;
+
 
     private void Awake()
     {
@@ -45,27 +48,48 @@ public class GameManager : MonoBehaviour
         ApplyRuntimeDataToSO();
     }
 
+    private void Update()
+    {
+        if (CurrentState != GameState.Playing)
+            return;
+
+        autosaveTimer += Time.deltaTime;
+
+        if (autosaveTimer >= autosaveInterval)
+        {
+            autosaveTimer = 0f;
+            SaveGame();
+            Debug.Log("Auto-saved.");
+        }
+    }
+
     private void ApplyRuntimeDataToSO()
     {
-        gameDataSO.currentPlayerLevel = gameData.currentPlayerLevel;
-        gameDataSO.gameCurrency = gameData.gameCurrency;
-        gameDataSO.currentClass = gameData.currentClass;
+        var so = gameDataSO;
 
-        gameDataSO.unlockedTurrets = new List<TurretType>(gameData.unlockedTurrets);
-        gameDataSO.selectedTurrets = new List<TurretType>(gameData.selectedTurrets);
+        so.gameCurrency = gameData.gameCurrency;
+        so.currentPlayerLevel = gameData.currentPlayerLevel;
+        so.currentClass = gameData.currentClass;
+
+        so.unlockedTurrets = new List<TurretType>(gameData.unlockedTurrets);
+        so.selectedTurrets = new List<TurretType>(gameData.selectedTurrets);
     }
+
 
     public void SaveGame()
     {
-        gameData.gameCurrency = gameDataSO.gameCurrency;
-        gameData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
-        gameData.currentClass = gameDataSO.currentClass;
+        var so = gameDataSO;
 
-        gameData.unlockedTurrets = gameDataSO.unlockedTurrets.ToList();
-        gameData.selectedTurrets = gameDataSO.selectedTurrets.ToList();
+        gameData.gameCurrency = so.gameCurrency;
+        gameData.currentPlayerLevel = so.currentPlayerLevel;
+        gameData.currentClass = so.currentClass;
+
+        gameData.unlockedTurrets = so.unlockedTurrets.ToList();
+        gameData.selectedTurrets = so.selectedTurrets.ToList();
 
         SaveSystem.Save(gameData);
     }
+
     public void ChangeState(GameState newState)
     {
         if (newState == CurrentState) return;
