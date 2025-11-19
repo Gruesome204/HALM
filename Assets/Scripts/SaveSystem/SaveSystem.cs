@@ -4,10 +4,10 @@ using UnityEngine;
 
 public static class SaveSystem
 {
-    private static string path = Path.Combine(Application.persistentDataPath, "player.json");
-    private static string backupPath = Path.Combine(Application.persistentDataPath, "player_backup.json");
+    private static string path = Path.Combine(Application.persistentDataPath, "gameData.json");
+    private static string backupPath = Path.Combine(Application.persistentDataPath, "gameData_backup.json");
 
-    public static bool Save(PlayerData data)
+    public static bool Save(GameData data)
     {
         try
         {
@@ -27,18 +27,18 @@ public static class SaveSystem
         }
     }
 
-    public static PlayerData Load()
+    public static GameData Load()
     {
         try
         {
             if (!File.Exists(path))
             {
                 Debug.LogWarning("No save file – returning new PlayerData");
-                return new PlayerData();
+                return new GameData();
             }
 
             string json = File.ReadAllText(path);
-            return JsonUtility.FromJson<PlayerData>(json);
+            return JsonUtility.FromJson<GameData>(json);
         }
         catch (Exception e)
         {
@@ -48,12 +48,12 @@ public static class SaveSystem
             if (File.Exists(backupPath))
             {
                 string json = File.ReadAllText(backupPath);
-                return JsonUtility.FromJson<PlayerData>(json);
+                return JsonUtility.FromJson<GameData>(json);
             }
 
             // No backup? Start new profile
             Debug.LogWarning("No backup found – returning new PlayerData");
-            return new PlayerData();
+            return new GameData();
         }
     }
 }

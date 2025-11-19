@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
     public GameDataSO gameDataSO;
+    public GameData gameData;
     public enum GameState
     {
         MainMenu,
@@ -36,12 +38,34 @@ public class GameManager : MonoBehaviour
 
         ChangeState(GameState.MainMenu);
     }
-    private void Update()
+
+    private void Start()
     {
-
-
+        gameData = SaveSystem.Load();
+        ApplyRuntimeDataToSO();
     }
 
+    private void ApplyRuntimeDataToSO()
+    {
+        gameDataSO.currentPlayerLevel = gameData.currentPlayerLevel;
+        gameDataSO.gameCurrency = gameData.gameCurrency;
+        gameDataSO.currentClass = gameData.currentClass;
+
+        gameDataSO.unlockedTurrets = new List<TurretType>(gameData.unlockedTurrets);
+        gameDataSO.selectedTurrets = new List<TurretType>(gameData.selectedTurrets);
+    }
+
+    public void SaveGame()
+    {
+        gameData.gameCurrency = gameDataSO.gameCurrency;
+        gameData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
+        gameData.currentClass = gameDataSO.currentClass;
+
+        gameData.unlockedTurrets = gameDataSO.unlockedTurrets.ToList();
+        gameData.selectedTurrets = gameDataSO.selectedTurrets.ToList();
+
+        SaveSystem.Save(gameData);
+    }
     public void ChangeState(GameState newState)
     {
         if (newState == CurrentState) return;
