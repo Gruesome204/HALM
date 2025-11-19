@@ -99,18 +99,25 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     void SpawnAtPoint(Vector3 position)
     {
-        // 2D random offset (top-down) — X/Z plane
-        Vector2 offset = Random.insideUnitCircle * spawnRadius;
-        Vector3 spawnPos = position + new Vector3(offset.x, 0f, offset.y);
+        // 2D random offset — X/Y plane
+        Vector2 offset = UnityEngine.Random.insideUnitCircle * spawnRadius;
+        Vector3 spawnPos = position + new Vector3(offset.x, offset.y, 0f); // Z = 0 for 2D
 
         GameObject spawnedEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
-        spawnedEnemy.GetComponentInChildren<EnemyMovement>().target =
-            FindAnyObjectByType<PlayerMovement>().gameObject;
+        // Assign player target if EnemyMovement exists
+        EnemyMovement enemyMovement = spawnedEnemy.GetComponentInChildren<EnemyMovement>();
+        if (enemyMovement != null)
+        {
+            PlayerMovement player = FindAnyObjectByType<PlayerMovement>();
+            if (player != null)
+                enemyMovement.target = player.gameObject;
+        }
 
         activeEnemies.Add(spawnedEnemy);
         totalSpawned++;
     }
+
     public void UnregisterEnemy(GameObject enemy)
     {
         activeEnemies.Remove(enemy);

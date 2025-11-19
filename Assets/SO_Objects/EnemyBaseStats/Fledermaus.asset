@@ -32,7 +32,7 @@ MonoBehaviour:
   baseVisionRange: 2
   baseHearingRange: 2
   pursueRange: 10
-  experienceYield: 100
+  experienceYield: 10
   baseHealthScaleFactor: 0.1
   baseDamageScaleFactor: 0.1
   baseSpeedScaleFactor: 0

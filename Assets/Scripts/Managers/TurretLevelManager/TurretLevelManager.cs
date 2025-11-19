@@ -56,7 +56,10 @@ public class TurretLevelManager : MonoBehaviour
         while (progress.currentXP >= progress.xpToNextLevel && progress.currentLevel < maxLevel)
         {
             progress.currentXP -= progress.xpToNextLevel;
-            LevelUp(type);
+            progress.currentLevel++;
+            progress.xpToNextLevel *= xpGrowthMultiplier;
+
+            OnLevelUp?.Invoke(type, progress.currentLevel);
         }
     }
 
@@ -112,6 +115,24 @@ public class TurretLevelManager : MonoBehaviour
     public void OnTurretLevelChanged(TurretType type)
     {
         ForceReapplyUpgrades(type);
+    }
+
+    public float GetProgressPercentage(TurretType type)
+    {
+        var progress = turretProgressDict[type];
+        return Mathf.Clamp01(progress.currentXP / progress.xpToNextLevel);
+    }
+    public void DebugAllTurretLevels()
+    {
+        foreach (var kvp in turretProgressDict)
+        {
+            Debug.Log($"{kvp.Key}: Level {kvp.Value.currentLevel}, XP {kvp.Value.currentXP}/{kvp.Value.xpToNextLevel}");
+        }
+    }
+
+    private void Update()
+    {
+        DebugAllTurretLevels();
     }
 
 }
