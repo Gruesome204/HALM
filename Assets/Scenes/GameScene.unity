@@ -50507,6 +50507,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 4040261046768777757, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
   spawnInterval: 1
   spawnAmount: 15
+  spawnRadius: 5
   spawnPoints:
   - {fileID: 1383891467}
   - {fileID: 1379736039}
@@ -59376,7 +59377,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
-  debugState: 0
+  gameData:
+    saveVersion: 1
+    gameCurrency: 0
+    currentPlayerLevel: 0
+    currentClass: 0
+    unlockedTurrets: 
+    selectedTurrets: 
+  autosaveInterval: 60
 --- !u!1 &2051609381
 GameObject:
   m_ObjectHideFlags: 0
@@ -59926,9 +59934,9 @@ SceneRoots:
   - {fileID: 1512055815}
   - {fileID: 53424833}
   - {fileID: 68913900}
+  - {fileID: 1492222881}
   - {fileID: 278887215}
   - {fileID: 1260051719}
   - {fileID: 503136056}
   - {fileID: 711555125}
   - {fileID: 214302530}
-  - {fileID: 1492222881}

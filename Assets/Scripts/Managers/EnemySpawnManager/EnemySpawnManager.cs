@@ -12,6 +12,10 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     public float spawnInterval = 3f;
     public int spawnAmount = 1; // Total number of enemies this spawner will spawn
 
+    [Header("Spawn Randomization")]
+    public float spawnRadius = 5f;
+
+
     [Header("Spawn Points")]
     public Transform[] spawnPoints;
     public bool useRandomSpawnPoint = true;
@@ -95,12 +99,18 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     void SpawnAtPoint(Vector3 position)
     {
-        GameObject spawnedEnemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-        spawnedEnemy.GetComponentInChildren<EnemyMovement>().target = FindAnyObjectByType<PlayerMovement>().gameObject;
+        // 2D random offset (top-down) — X/Z plane
+        Vector2 offset = Random.insideUnitCircle * spawnRadius;
+        Vector3 spawnPos = position + new Vector3(offset.x, 0f, offset.y);
+
+        GameObject spawnedEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+
+        spawnedEnemy.GetComponentInChildren<EnemyMovement>().target =
+            FindAnyObjectByType<PlayerMovement>().gameObject;
+
         activeEnemies.Add(spawnedEnemy);
         totalSpawned++;
     }
-
     public void UnregisterEnemy(GameObject enemy)
     {
         activeEnemies.Remove(enemy);
