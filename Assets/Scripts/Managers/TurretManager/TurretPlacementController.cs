@@ -478,4 +478,12 @@ public class TurretPlacementController : MonoBehaviour
 
         return playerHit != null || enemyHit != null;
     }
+
+    private void OnDrawGizmos()
+    {
+        if (currentSelectedBlueprint == null || playerTransform == null) return;
+
+        Gizmos.color = new Color(0f, 1f, 0f, 0.35f);
+        Gizmos.DrawWireSphere(playerTransform.position, placementRadius);
+    }
 }
