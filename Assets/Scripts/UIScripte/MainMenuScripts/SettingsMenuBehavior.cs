@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -23,14 +24,9 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     private Slider masterVolumeSlider;
     private Slider musicVolumeSlider;
     private Slider soundVolumeSlider;
-    [SerializeField] AudioSource BGMusicTrack_1;
-    [SerializeField] AudioSource BGMusicTrack_2;
-    [SerializeField] AudioSource BGMusicTrack_3;
-    [SerializeField] AudioSource BGMusicTrack_4;
-    [SerializeField] AudioSource BGMusicTrack_5;
-    [SerializeField] AudioSource BGMusicTrack_6;
-    [SerializeField] AudioSource BGMusicTrack_7;
-    [SerializeField] AudioSource BGMusicTrack_8;
+
+    public List<AudioSource> AllMusicTracks = new List<AudioSource>();
+
 
     public void OpenOrClose(Boolean open)
     {
@@ -108,6 +104,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
         musicTrackSlider = root.Q<SliderInt>("musicTrackSlider");
         musicTrackSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicTrack"));
+        musicTrackSlider.highValue = AllMusicTracks.Count -1;
         musicTrackSlider.value = gameDataSO.musicTrack;
     }
 
@@ -184,73 +181,34 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
     void StopAllMusic()
     {
-        BGMusicTrack_1.Stop();
-        BGMusicTrack_2.Stop();
-        BGMusicTrack_3.Stop();
-        BGMusicTrack_4.Stop();
-        BGMusicTrack_5.Stop();
-        BGMusicTrack_6.Stop();
-        BGMusicTrack_7.Stop();
-        BGMusicTrack_8.Stop();
+        foreach (var musicTrack in AllMusicTracks)
+        {
+            musicTrack.Stop();
+        }
     }
 
     void PlayThisMusic(int songToPlay)
     {
         StopAllMusic();
+        Debug.Log("Well this fires");
 
-        switch (songToPlay)
+        if (AllMusicTracks[songToPlay] == null)
         {
-            case 1:
-                BGMusicTrack_1.Play();
-                gameDataSO.musicTrack = 1;
-                break;
-
-            case 2:
-                BGMusicTrack_2.Play();
-                gameDataSO.musicTrack = 2;
-                break;
-
-            case 3:
-                BGMusicTrack_3.Play();
-                gameDataSO.musicTrack = 3;
-                break;
-
-            case 4:
-                BGMusicTrack_4.Play();
-                gameDataSO.musicTrack = 4;
-                break;
-
-            case 5:
-                BGMusicTrack_5.Play();
-                gameDataSO.musicTrack = 5;
-                break;
-
-            case 6:
-                BGMusicTrack_6.Play();
-                gameDataSO.musicTrack = 6;
-                break;
-
-            case 7:
-                BGMusicTrack_7.Play();
-                gameDataSO.musicTrack = 7;
-                break;
-
-            case 8:
-                BGMusicTrack_8.Play();
-                gameDataSO.musicTrack = 8;
-                break;
+            AllMusicTracks[1].Play();
+            gameDataSO.musicTrack = 1;
+        }
+        else
+        {
+            AllMusicTracks[songToPlay].Play();
+            gameDataSO.musicTrack = songToPlay;
         }
     }
 
     void SetAllMusicVolume(float musicVolume)
     {
-        BGMusicTrack_1.volume = musicVolume;
-        BGMusicTrack_2.volume = musicVolume;
-        BGMusicTrack_3.volume = musicVolume;
-        BGMusicTrack_4.volume = musicVolume;
-        BGMusicTrack_5.volume = musicVolume;
-        BGMusicTrack_6.volume = musicVolume;
-        BGMusicTrack_7.volume = musicVolume;
-        BGMusicTrack_8.volume = musicVolume;
+        foreach (var musicTrack in AllMusicTracks)
+        {
+            musicTrack.volume= musicVolume;
+        }
     }
 }

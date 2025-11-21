@@ -16,7 +16,7 @@
                     <ui:Slider label="Master Volume" value="50" high-value="1" name="masterVolumeSlider" style="color: rgb(255, 255, 255); font-size: 16px; margin-top: 10px; margin-right: 5%; margin-bottom: 0; margin-left: 0;" />
                     <ui:Slider label="Music Volume" value="50" high-value="1" name="musicVolumeSlider" style="color: rgb(255, 255, 255); font-size: 16px; margin-top: 10px; margin-right: 5%; margin-bottom: 0; margin-left: 0;" />
                     <ui:Slider label="Sound Volume" value="50" high-value="1" name="soundVolumeSlider" fill="false" style="color: rgb(255, 255, 255); font-size: 16px; margin-top: 10px; margin-right: 5%; margin-bottom: 0; margin-left: 0;" />
-                    <ui:SliderInt label="Music Track" value="42" high-value="8" name="musicTrackSlider" low-value="1" fill="false" style="font-size: 16px; color: rgb(255, 255, 255); width: 94.5%;" />
+                    <ui:SliderInt label="Music Track" value="42" high-value="8" name="musicTrackSlider" low-value="0" fill="false" style="font-size: 16px; color: rgb(255, 255, 255); width: 94.5%;" />
                 </ui:VisualElement>
             </ui:ScrollView>
         </ui:VisualElement>
