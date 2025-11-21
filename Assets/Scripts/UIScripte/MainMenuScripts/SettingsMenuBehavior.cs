@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -8,7 +9,7 @@ using UnityEngine.UIElements;
 
 public class SettingsMenuBehavior : MonoBehaviour, IMenu
 {
-    [SerializeField] SettingDataSO settingDataSO;
+    [SerializeField] GameDataSO gameDataSO;
 
     private Button backBtn;
     private Label headline;
@@ -23,14 +24,9 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     private Slider masterVolumeSlider;
     private Slider musicVolumeSlider;
     private Slider soundVolumeSlider;
-    [SerializeField] AudioSource BGMusicTrack_1;
-    [SerializeField] AudioSource BGMusicTrack_2;
-    [SerializeField] AudioSource BGMusicTrack_3;
-    [SerializeField] AudioSource BGMusicTrack_4;
-    [SerializeField] AudioSource BGMusicTrack_5;
-    [SerializeField] AudioSource BGMusicTrack_6;
-    [SerializeField] AudioSource BGMusicTrack_7;
-    [SerializeField] AudioSource BGMusicTrack_8;
+
+    public List<AudioSource> AllMusicTracks = new List<AudioSource>();
+
 
     public void OpenOrClose(Boolean open)
     {
@@ -54,7 +50,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     {
         ConnectingEverything();
 
-        SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
+        SetAllMusicVolume(gameDataSO.musicVolume * gameDataSO.masterVolume);
         PlayThisMusic(2);
     }
 
@@ -96,19 +92,20 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
         masterVolumeSlider = root.Q<Slider>("masterVolumeSlider");
         masterVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMasterVolume"));
-        masterVolumeSlider.value = settingDataSO.masterVolume;
+        masterVolumeSlider.value = gameDataSO.masterVolume;
 
         musicVolumeSlider = root.Q<Slider>("musicVolumeSlider");
         musicVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicVolume"));
-        musicVolumeSlider.value = settingDataSO.musicVolume;
+        musicVolumeSlider.value = gameDataSO.musicVolume;
 
         soundVolumeSlider = root.Q<Slider>("soundVolumeSlider");
         soundVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderSoundVolume"));
-        soundVolumeSlider.value = settingDataSO.soundVolume;
+        soundVolumeSlider.value = gameDataSO.soundVolume;
 
         musicTrackSlider = root.Q<SliderInt>("musicTrackSlider");
         musicTrackSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicTrack"));
-        musicTrackSlider.value = settingDataSO.musicTrack;
+        musicTrackSlider.highValue = AllMusicTracks.Count -1;
+        musicTrackSlider.value = gameDataSO.musicTrack;
     }
 
     private void Update()
@@ -155,102 +152,63 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
     void SettingVolume()
     {
-        if (masterVolumeSlider.value != settingDataSO.masterVolume)
+        if (masterVolumeSlider.value != gameDataSO.masterVolume)
         {
-            settingDataSO.masterVolume = masterVolumeSlider.value;
-            Debug.Log($"{settingDataSO.masterVolume}");
-            SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
+            gameDataSO.masterVolume = masterVolumeSlider.value;
+            Debug.Log($"{gameDataSO.masterVolume}");
+            SetAllMusicVolume(gameDataSO.musicVolume * gameDataSO.masterVolume);
         }
 
-        if (musicVolumeSlider.value != settingDataSO.musicVolume)
+        if (musicVolumeSlider.value != gameDataSO.musicVolume)
         {
-            settingDataSO.musicVolume = musicVolumeSlider.value;
-            Debug.Log($"{settingDataSO.musicVolume}");
-            SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
+            gameDataSO.musicVolume = musicVolumeSlider.value;
+            Debug.Log($"{gameDataSO.musicVolume}");
+            SetAllMusicVolume(gameDataSO.musicVolume * gameDataSO.masterVolume);
         }
 
-        if (soundVolumeSlider.value != settingDataSO.soundVolume)
+        if (soundVolumeSlider.value != gameDataSO.soundVolume)
         {
-            settingDataSO.soundVolume = soundVolumeSlider.value;
-            Debug.Log($"{settingDataSO.soundVolume * settingDataSO.masterVolume}");
+            gameDataSO.soundVolume = soundVolumeSlider.value;
+            Debug.Log($"{gameDataSO.soundVolume * gameDataSO.masterVolume}");
         }
 
-        if (musicTrackSlider.value != settingDataSO.musicTrack)
+        if (musicTrackSlider.value != gameDataSO.musicTrack)
         {
-            settingDataSO.musicTrack = musicTrackSlider.value;
+            gameDataSO.musicTrack = musicTrackSlider.value;
             PlayThisMusic(musicTrackSlider.value);
         }
     }
 
     void StopAllMusic()
     {
-        BGMusicTrack_1.Stop();
-        BGMusicTrack_2.Stop();
-        BGMusicTrack_3.Stop();
-        BGMusicTrack_4.Stop();
-        BGMusicTrack_5.Stop();
-        BGMusicTrack_6.Stop();
-        BGMusicTrack_7.Stop();
-        BGMusicTrack_8.Stop();
+        foreach (var musicTrack in AllMusicTracks)
+        {
+            musicTrack.Stop();
+        }
     }
 
     void PlayThisMusic(int songToPlay)
     {
         StopAllMusic();
+        Debug.Log("Well this fires");
 
-        switch (songToPlay)
+        if (AllMusicTracks[songToPlay] == null)
         {
-            case 1:
-                BGMusicTrack_1.Play();
-                settingDataSO.musicTrack = 1;
-                break;
-
-            case 2:
-                BGMusicTrack_2.Play();
-                settingDataSO.musicTrack = 2;
-                break;
-
-            case 3:
-                BGMusicTrack_3.Play();
-                settingDataSO.musicTrack = 3;
-                break;
-
-            case 4:
-                BGMusicTrack_4.Play();
-                settingDataSO.musicTrack = 4;
-                break;
-
-            case 5:
-                BGMusicTrack_5.Play();
-                settingDataSO.musicTrack = 5;
-                break;
-
-            case 6:
-                BGMusicTrack_6.Play();
-                settingDataSO.musicTrack = 6;
-                break;
-
-            case 7:
-                BGMusicTrack_7.Play();
-                settingDataSO.musicTrack = 7;
-                break;
-
-            case 8:
-                BGMusicTrack_8.Play();
-                settingDataSO.musicTrack = 8;
-                break;
+            AllMusicTracks[1].Play();
+            gameDataSO.musicTrack = 1;
+        }
+        else
+        {
+            AllMusicTracks[songToPlay].Play();
+            gameDataSO.musicTrack = songToPlay;
         }
     }
 
     void SetAllMusicVolume(float musicVolume)
     {
-        BGMusicTrack_1.volume = musicVolume;
-        BGMusicTrack_2.volume = musicVolume;
-        BGMusicTrack_3.volume = musicVolume;
-        BGMusicTrack_4.volume = musicVolume;
-        BGMusicTrack_5.volume = musicVolume;
-        BGMusicTrack_6.volume = musicVolume;
-        BGMusicTrack_7.volume = musicVolume;
-        BGMusicTrack_8.volume = musicVolume;
+        foreach (var musicTrack in AllMusicTracks)
+        {
+            musicTrack.volume= musicVolume;
+        }
     }
 }
