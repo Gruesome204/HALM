@@ -1,29 +1,73 @@
 using System.IO;
 using UnityEngine;
+using System;
 
 public static class SaveSystem
 {
-    private static string path = Application.persistentDataPath + "/player.json";
+    private static readonly string Folder = Path.Combine(Application.persistentDataPath, "Saves");
+    private static readonly string PathMain = System.IO.Path.Combine(Folder, "player.json");
+    private static readonly string PathBackup = System.IO.Path.Combine(Folder, "player_backup.json");
 
-    public static void Save(GameDataSO gameDataSO)
+    public static GameData Load()
     {
-        SaveGameData gameSaveData = new SaveGameData(gameDataSO );
-        string json = JsonUtility.ToJson(gameSaveData, true);
-        File.WriteAllText(path, json);
-        Debug.Log("Saved to " + path);
-    }
-
-    public static void Load(GameDataSO gameDataSO)
-    {
-        if (!File.Exists(path))
+        try
         {
-            Debug.LogWarning("No save file found at " + path);
-            return;
+            if (!Directory.Exists(Folder))
+                Directory.CreateDirectory(Folder);
+
+            if (File.Exists(PathMain))
+            {
+                string json = File.ReadAllText(PathMain);
+                GameData data = JsonUtility.FromJson<GameData>(json);
+
+                if (data != null)
+                    return data;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Main save corrupted: " + e);
         }
 
-        string json = File.ReadAllText(path);
-        SaveGameData loadedData = JsonUtility.FromJson<SaveGameData>(json);
-        loadedData.ApplyToSO(gameDataSO);
-        Debug.Log("Loaded from " + path);
+        // Try backup
+        try
+        {
+            if (File.Exists(PathBackup))
+            {
+                string json = File.ReadAllText(PathBackup);
+                GameData data = JsonUtility.FromJson<GameData>(json);
+
+                if (data != null)
+                {
+                    Debug.LogWarning("Loaded from backup.");
+                    return data;
+                }
+            }
+        }
+        catch { }
+
+        Debug.LogWarning("No valid save found. Using new default GameData.");
+        return new GameData();
+    }
+
+
+    public static void Save(GameData data)
+    {
+        try
+        {
+            if (!Directory.Exists(Folder))
+                Directory.CreateDirectory(Folder);
+
+            string json = JsonUtility.ToJson(data, true);
+
+            if (File.Exists(PathMain))
+                File.Copy(PathMain, PathBackup, true); // backup before overwrite
+
+            File.WriteAllText(PathMain, json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Failed to save file: " + e);
+        }
     }
 }

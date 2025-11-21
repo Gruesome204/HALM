@@ -89,13 +89,13 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         if (target == null) return;
 
-        HandleMovement(target);
+        HandleMovementTarget(target);
         TryAttack(target);
         TryUseAbilities(target);
 
     }
 
-    private void HandleMovement(GameObject target)
+    private void HandleMovementTarget(GameObject target)
     {
         if (movement.target == null || movement.target.gameObject != target)
             movement.target = target;
@@ -110,7 +110,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             movement.Stop();
     }
 
-    private void HandleDamaged(DamageData damageData)
+    private void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
         if (isPaused) return;
         AggroPlayer();

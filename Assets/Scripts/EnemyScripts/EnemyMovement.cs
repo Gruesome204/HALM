@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
     [Header("References")]
     public EnemyStats stats;
     public GameObject target;
+    public EnemyKnockback knockback;
 
     private Rigidbody2D rb;
     private bool isPaused;
@@ -14,12 +15,14 @@ public class EnemyMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         stats = GetComponent<EnemyStats>();
+        knockback = GetComponent<EnemyKnockback>();
     }
 
     private void FixedUpdate()
     {
         if (isPaused) return;
-
+        if (knockback != null && knockback.IsKnockedBack)
+            return; 
         MoveTowardTarget();
     }
 
@@ -36,15 +39,14 @@ public class EnemyMovement : MonoBehaviour
 
     // Moves the enemy toward the current target if within pursue range
     public void MoveTowardTarget()
-    { 
-
+    {
         if (target == null || stats == null) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
         if (!hasForcedTarget && distance > stats.currentPursueRange) return;
 
         Vector2 dir = (target.transform.position - transform.position).normalized;
-        rb.MovePosition(rb.position + dir * stats.currentMovementSpeed * Time.fixedDeltaTime);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, dir * stats.currentMovementSpeed, 10 * Time.fixedDeltaTime);
     }
 
 

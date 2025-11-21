@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class DungeonGenerator : MonoBehaviour
 {
     #region Inspector Variables

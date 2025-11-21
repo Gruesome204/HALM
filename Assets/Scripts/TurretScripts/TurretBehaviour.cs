@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     [Header("Values")]
     public float currentFireRate;
-    public float currentFireCountdown = 0f;
+    public float currentFireCountdown;
     public float currentProjectileSpeed;
     public float currentAttackRange;
     public float currentAttackDamage;
@@ -26,16 +27,10 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     [Header("Targeting Settings")] // Optional: for better organization in Inspector
     public LayerMask enemyLayer; // New variable to select the enemy layer
 
-    public enum FiringPattern
-    {
-        SingleShot,
-        FireSalve
-    }
-    public FiringPattern currentFiringPattern = FiringPattern.SingleShot;
-
-    [Header("Fire Salve Settings")]
-    public int projectilesPerSalve = 2; // Number of projectiles in a salve
-    public float delayBetweenSalveProjectiles = 0.5f; // Delay between each projectile in a salve
+    private TurretBlueprint.FiringPattern currentFiringPattern;
+    private bool isShootingSalve;
+    private int projectilesPerSalve; // Number of projectiles in a salve
+    private float delayBetweenSalveProjectiles; // Delay between each projectile in a salve
 
     private bool isPaused;
 
@@ -72,12 +67,16 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     }
     public void InitializeFromBlueprint()
     {
-        currentFireCountdown = turretBlueprint.baseFireCountdown;
+        currentFireCountdown = turretBlueprint.BaseFireCountdown;
         currentAttackRange = turretBlueprint.baseAttackRange;
         currentFireRate = turretBlueprint.baseFireRate;
         currentProjectileSpeed = turretBlueprint.baseProjectileSpeed;
         currentKnockbackStrength = turretBlueprint.baseKnockbackStrength;
         currentKnockbackDuration = turretBlueprint.baseKnockbackDuration;
+
+        currentFiringPattern = turretBlueprint.firingPattern;
+        projectilesPerSalve = turretBlueprint.projectilesPerSalve;
+        delayBetweenSalveProjectiles = turretBlueprint.delayBetweenSalveProjectiles;
     }
 
     void Update()
@@ -87,34 +86,19 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         FindTarget();
         if (targetEnemy != null)
         {
-            //// *** ADD THIS TURRET ROTATION LOGIC HERE ***
-            //// Calculate the direction from the turret's position to the target enemy's position
-            //Vector3 directionToTarget = targetEnemy.position - transform.position;
-
-            //// Calculate the angle in degrees for 2D rotation (around Z-axis)
-            //// Mathf.Atan2 returns the angle in radians between the X-axis and a 2D vector (y, x).
-            //// Multiply by Mathf.Rad2Deg to convert radians to degrees.
-            //float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
-
-            //// Apply the rotation to the turret.
-            //// Assuming your turret's front is aligned with the positive X-axis when its Z-rotation is 0.
-            //// If your turret sprite is oriented differently (e.g., facing up when rotation is 0),
-            //// you might need to add an offset: Quaternion.Euler(0, 0, angle - 90f);
-            //transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-
             if (currentFireCountdown <= 0f)
             {
                 // Call the appropriate shooting pattern
                 switch (currentFiringPattern)
                 {
-                    case FiringPattern.SingleShot:
-                        ShootSingleProjectile();
+                    case TurretBlueprint.FiringPattern.SingleShot:
+                        ShootProjectileAt(targetEnemy);
                         break;
-                    case FiringPattern.FireSalve:
+                    case TurretBlueprint.FiringPattern.FireSalve:
                         StartCoroutine(ShootFireSalve());
                         break;
                 }
-                currentFireCountdown = turretBlueprint.baseFireCountdown / currentFireRate;
+                currentFireCountdown = turretBlueprint.BaseFireCountdown;
             }
             currentFireCountdown -= Time.deltaTime;
         }
@@ -128,7 +112,8 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     //TODO: Add different Shooting Patterns
     void FindTarget()
     {
-        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, currentAttackRange);
+        Collider2D[] enemiesInRange =
+            Physics2D.OverlapCircleAll(transform.position, currentAttackRange, enemyLayer);
 
         // Initialize shortestDistance to a very large value
         float shortestDistance = Mathf.Infinity;
@@ -153,47 +138,114 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         this.targetEnemy = closestEnemyInThisScan;
     }
 
-    void ShootSingleProjectile()
+    private List<Transform> GetEnemiesInRange()
     {
-        if (projectilePrefab != null && firePoint != null && targetEnemy != null)
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, currentAttackRange, enemyLayer);
+        List<Transform> enemies = new List<Transform>();
+
+        foreach (Collider2D hit in hits)
         {
-            GameObject projectileObject = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-
-            //SetOwner of the bullet(Turret) and damage
-            projectileObject.GetComponent<BallProjectileBehaviour>().SetOwner(this.gameObject, currentAttackDamage);
-
-            projectileObject.GetComponent<BallProjectileBehaviour>().knockbackStrength = currentKnockbackStrength;
-            projectileObject.GetComponent<BallProjectileBehaviour>().knockbackDuration = currentKnockbackDuration;
-
-
-            Rigidbody2D projectileRb = projectileObject.GetComponent<Rigidbody2D>();
-            if (projectileRb != null)
-            {
-                Vector3 directionToTarget = (targetEnemy.position - firePoint.position).normalized;
-                projectileRb.linearVelocity = directionToTarget * currentProjectileSpeed;
-                Destroy(projectileObject, 5f);
-            }
-            else
-            {
-                Debug.LogWarning("Projectile prefab does not have a Rigidbody component. It won't move.");
-                Destroy(projectileObject);
-            }
+            EnemyBehaviour enemy = hit.GetComponent<EnemyBehaviour>();
+            if (enemy != null)
+                enemies.Add(enemy.transform);
         }
+
+        return enemies;
     }
+
+
     // Coroutine for shooting a fire salve
     IEnumerator ShootFireSalve()
     {
+        if (isShootingSalve) yield break;
+        isShootingSalve = true;
+
+        float delay = delayBetweenSalveProjectiles;
+
+        // snapshot of all enemies in range at the moment the salve starts
+        List<Transform> targets = GetEnemiesInRange();
+
+        if (targets.Count == 0)
+        {
+            isShootingSalve = false;
+            yield break;
+        }
+
+        // Optional: shuffle targets for more dynamic salve
+        for (int t = 0; t < targets.Count; t++)
+        {
+            int r = UnityEngine.Random.Range(t, targets.Count);
+            var temp = targets[t];
+            targets[t] = targets[r];
+            targets[r] = temp;
+        }
+
+        int targetIndex = 0;
+
         for (int i = 0; i < projectilesPerSalve; i++)
         {
-            ShootSingleProjectile(); // Reuse the single projectile shooting logic
-            yield return new WaitForSeconds(delayBetweenSalveProjectiles);
-            currentFireCountdown = 0f;
-            // If the target is lost during a salve, stop firing
-            if (targetEnemy == null)
+            // Pause-safe waiting
+            while (isPaused)
+                yield return null;
+
+            // Filter alive and in-range targets
+            targets.RemoveAll(t => t == null || Vector2.Distance(transform.position, t.position) > currentAttackRange);
+            if (targets.Count == 0)
+                break;
+
+            Transform currentTarget = targets[targetIndex % targets.Count];
+
+            ShootProjectileAt(currentTarget);
+
+            // Move to next target in the next shot
+            targetIndex++;
+
+            // Wait between shots
+            float elapsed = 0f;
+            while (elapsed < delay)
             {
-                yield break;
+                if (!isPaused)
+                    elapsed += Time.deltaTime;
+
+                yield return null;
             }
         }
+
+        // normal cooldown after salve
+        currentFireCountdown = turretBlueprint.BaseFireCountdown;
+
+        isShootingSalve = false;
+    }
+
+    void ShootProjectileAt(Transform target)
+    {
+        if (!projectilePrefab || !firePoint || target == null) return;
+
+        GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        var projectile = projectileObj.GetComponent<BallProjectileBehaviour>();
+        var rb = projectileObj.GetComponent<Rigidbody2D>();
+
+        if (projectile == null || rb == null)
+        {
+            Debug.LogWarning("Projectile prefab is missing components.");
+            Destroy(projectileObj);
+            return;
+        }
+
+        projectile.SetOwner(gameObject, currentAttackDamage);
+        projectile.knockbackStrength = currentKnockbackStrength;
+        projectile.knockbackDuration = currentKnockbackDuration;
+
+        Vector2 direction = (target.position - firePoint.position).normalized;
+        rb.linearVelocity = direction * currentProjectileSpeed;
+
+        Destroy(projectileObj, 5f);
+    }
+
+    void ShootSingleProjectile()
+    {
+        if (targetEnemy != null)
+            ShootProjectileAt(targetEnemy);
     }
 
     // This method will always draw the Gizmo in the Scene view

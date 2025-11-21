@@ -7,12 +7,23 @@ public class BallProjectileBehaviour : MonoBehaviour
     private DamageData damageData;
     private GameObject owner; // The turret that fired this projectile
 
-    public float knockbackStrength = 100f;
-    public float knockbackDuration = 0.1f;
+    public float knockbackStrength;
+    public float knockbackDuration;
     public Vector2 direction;
+    private Rigidbody2D rb;
 
     public int piercingHitsRemaining = 0;
-
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    private void Update()
+    {
+        if (rb.linearVelocity.sqrMagnitude > 0.01f)
+        {
+            transform.up = rb.linearVelocity.normalized;
+        }
+    }
     public void SetOwner(GameObject turret, float damageAmount)
     {
         owner = turret;
