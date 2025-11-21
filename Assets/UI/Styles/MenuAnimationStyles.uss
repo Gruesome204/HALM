@@ -1,5 +1,5 @@
 .pauseMenuSlideOut {
-    translate: -700px 0;
+    translate: -1600px 0;
     transition-timing-function: ease-in-out;
     transition-duration: 1s;
     opacity: 0;

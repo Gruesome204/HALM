@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e468b7970ef99446ac45fc5a4b2c010, type: 3}
   m_Name: GameDataSO
   m_EditorClassIdentifier: 
+  localSelected: 
+  musicTrack: 6
+  masterVolume: 0
+  musicVolume: 0
+  soundVolume: 0
   gameCurrency: 0
   limitOfUnlockableTurrets: 10
   limitOfSelectableTurrets: 5
