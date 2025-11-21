@@ -136,6 +136,7 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     public void UpdateTowerLimitBar()
     {
+        Debug.Log("Update Triggered");
        int t = TurretPlacementController.Instance.GetUsedCapacity();
         foreach ( var limitElement in towerLimitElementList)
         {

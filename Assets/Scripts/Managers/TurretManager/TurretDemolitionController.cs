@@ -78,6 +78,7 @@ public class TurretDemolitionController : MonoBehaviour
     {
         destructionModeActive = false;
         Debug.Log("Destruction Mode: Deactivated");
+        OnDemolitionModeChange?.Invoke();
         // Optional: Reset cursor/UI indicator
     }
 

@@ -296,12 +296,13 @@ public class TurretPlacementController : MonoBehaviour
 
     public void RemoveTurret(GameObject turret)
     {
+        Debug.Log("Why is this not working?");
         if (!activeTurrets.Contains(turret)) return;
 
         activeTurrets.Remove(turret);
-        OnTurretsChanged?.Invoke();
 
         Destroy(turret);
+        OnTurretsChanged?.Invoke();
 
         Debug.Log($"[TurretPlacement] Turret removed");
     }
