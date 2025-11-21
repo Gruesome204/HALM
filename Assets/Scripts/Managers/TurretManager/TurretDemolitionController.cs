@@ -117,8 +117,8 @@ public class TurretDemolitionController : MonoBehaviour
 
         GameObject turret = hit.collider.gameObject;
 
-        var placable = turret.GetComponentInParent<PlacableObject>();
-        var behaviour = turret.GetComponentInParent<TurretBehaviour>();
+        var placable = turret.GetComponent<PlacableObject>();
+        var behaviour = turret.GetComponent<TurretBehaviour>();
 
         //Removes the tower from the grid 
         if (placable != null && behaviour != null)
@@ -131,7 +131,7 @@ public class TurretDemolitionController : MonoBehaviour
         }
 
         // Remove from TurretPlacementController list
-        TurretPlacementController.Instance.RemoveTurret(turret);
+        TurretPlacementController.Instance.RemoveTurret(turret.transform.parent.gameObject);
         Destroy(turret);
         Debug.Log($"[TurretDemolition] Turret:{turret.name} destroyed!");
     }
