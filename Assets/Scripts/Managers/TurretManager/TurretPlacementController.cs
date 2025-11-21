@@ -257,6 +257,15 @@ public class TurretPlacementController : MonoBehaviour
         if (IsBlueprintOnCooldown(currentSelectedBlueprint))
             canPlace = false;
 
+        // Check capacity limit
+        int currentCapacity = GetUsedCapacity();
+        int cost = currentSelectedBlueprint.buildCapacityValue;
+
+        if (currentCapacity + cost > maxTurretCapacity)
+        {
+            canPlace = false;
+        }
+
         UpdatePreviewColor(canPlace);
     }
     private void MakePreviewTransparent(GameObject obj)
