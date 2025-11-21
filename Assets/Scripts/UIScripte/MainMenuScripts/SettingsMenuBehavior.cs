@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public class SettingsMenuBehavior : MonoBehaviour, IMenu
 {
-    [SerializeField] SettingDataSO settingDataSO;
+    [SerializeField] GameDataSO gameDataSO;
 
     private Button backBtn;
     private Label headline;
@@ -54,7 +54,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     {
         ConnectingEverything();
 
-        SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
+        SetAllMusicVolume(gameDataSO.musicVolume * gameDataSO.masterVolume);
         PlayThisMusic(2);
     }
 
@@ -96,19 +96,19 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
         masterVolumeSlider = root.Q<Slider>("masterVolumeSlider");
         masterVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMasterVolume"));
-        masterVolumeSlider.value = settingDataSO.masterVolume;
+        masterVolumeSlider.value = gameDataSO.masterVolume;
 
         musicVolumeSlider = root.Q<Slider>("musicVolumeSlider");
         musicVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicVolume"));
-        musicVolumeSlider.value = settingDataSO.musicVolume;
+        musicVolumeSlider.value = gameDataSO.musicVolume;
 
         soundVolumeSlider = root.Q<Slider>("soundVolumeSlider");
         soundVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderSoundVolume"));
-        soundVolumeSlider.value = settingDataSO.soundVolume;
+        soundVolumeSlider.value = gameDataSO.soundVolume;
 
         musicTrackSlider = root.Q<SliderInt>("musicTrackSlider");
         musicTrackSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicTrack"));
-        musicTrackSlider.value = settingDataSO.musicTrack;
+        musicTrackSlider.value = gameDataSO.musicTrack;
     }
 
     private void Update()
@@ -155,29 +155,29 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
     void SettingVolume()
     {
-        if (masterVolumeSlider.value != settingDataSO.masterVolume)
+        if (masterVolumeSlider.value != gameDataSO.masterVolume)
         {
-            settingDataSO.masterVolume = masterVolumeSlider.value;
-            Debug.Log($"{settingDataSO.masterVolume}");
-            SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
+            gameDataSO.masterVolume = masterVolumeSlider.value;
+            Debug.Log($"{gameDataSO.masterVolume}");
+            SetAllMusicVolume(gameDataSO.musicVolume * gameDataSO.masterVolume);
         }
 
-        if (musicVolumeSlider.value != settingDataSO.musicVolume)
+        if (musicVolumeSlider.value != gameDataSO.musicVolume)
         {
-            settingDataSO.musicVolume = musicVolumeSlider.value;
-            Debug.Log($"{settingDataSO.musicVolume}");
-            SetAllMusicVolume(settingDataSO.musicVolume * settingDataSO.masterVolume);
+            gameDataSO.musicVolume = musicVolumeSlider.value;
+            Debug.Log($"{gameDataSO.musicVolume}");
+            SetAllMusicVolume(gameDataSO.musicVolume * gameDataSO.masterVolume);
         }
 
-        if (soundVolumeSlider.value != settingDataSO.soundVolume)
+        if (soundVolumeSlider.value != gameDataSO.soundVolume)
         {
-            settingDataSO.soundVolume = soundVolumeSlider.value;
-            Debug.Log($"{settingDataSO.soundVolume * settingDataSO.masterVolume}");
+            gameDataSO.soundVolume = soundVolumeSlider.value;
+            Debug.Log($"{gameDataSO.soundVolume * gameDataSO.masterVolume}");
         }
 
-        if (musicTrackSlider.value != settingDataSO.musicTrack)
+        if (musicTrackSlider.value != gameDataSO.musicTrack)
         {
-            settingDataSO.musicTrack = musicTrackSlider.value;
+            gameDataSO.musicTrack = musicTrackSlider.value;
             PlayThisMusic(musicTrackSlider.value);
         }
     }
@@ -202,42 +202,42 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
         {
             case 1:
                 BGMusicTrack_1.Play();
-                settingDataSO.musicTrack = 1;
+                gameDataSO.musicTrack = 1;
                 break;
 
             case 2:
                 BGMusicTrack_2.Play();
-                settingDataSO.musicTrack = 2;
+                gameDataSO.musicTrack = 2;
                 break;
 
             case 3:
                 BGMusicTrack_3.Play();
-                settingDataSO.musicTrack = 3;
+                gameDataSO.musicTrack = 3;
                 break;
 
             case 4:
                 BGMusicTrack_4.Play();
-                settingDataSO.musicTrack = 4;
+                gameDataSO.musicTrack = 4;
                 break;
 
             case 5:
                 BGMusicTrack_5.Play();
-                settingDataSO.musicTrack = 5;
+                gameDataSO.musicTrack = 5;
                 break;
 
             case 6:
                 BGMusicTrack_6.Play();
-                settingDataSO.musicTrack = 6;
+                gameDataSO.musicTrack = 6;
                 break;
 
             case 7:
                 BGMusicTrack_7.Play();
-                settingDataSO.musicTrack = 7;
+                gameDataSO.musicTrack = 7;
                 break;
 
             case 8:
                 BGMusicTrack_8.Play();
-                settingDataSO.musicTrack = 8;
+                gameDataSO.musicTrack = 8;
                 break;
         }
     }

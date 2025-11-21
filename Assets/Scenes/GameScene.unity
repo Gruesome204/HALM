@@ -4478,7 +4478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335f346350bb80d4a98d5fc3141405a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingDataSO: {fileID: 11400000, guid: e24106bc6f9bdd24cabe39f4921532f1, type: 2}
+  gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
   BGMusicTrack_1: {fileID: 816791903}
   BGMusicTrack_2: {fileID: 1205734189}
   BGMusicTrack_3: {fileID: 306942961}
@@ -4994,6 +4994,11 @@ MonoBehaviour:
   gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
   gameData:
     saveVersion: 1
+    localSelected: 
+    musicTrack: 0
+    masterVolume: 0
+    musicVolume: 0
+    soundVolume: 0
     gameCurrency: 0
     currentPlayerLevel: 0
     currentClass: 0

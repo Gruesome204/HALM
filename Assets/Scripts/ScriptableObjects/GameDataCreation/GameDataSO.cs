@@ -5,6 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New GameDataSO", menuName = "Game/GameData/New GameDataSO")]
 public class GameDataSO : ScriptableObject
 {
+    //All Settings Data
+    public string localSelected;
+
+    public int musicTrack;
+    public float masterVolume;
+    public float musicVolume;
+    public float soundVolume;
+    //Settings Data end
+
     public int gameCurrency = 0;
 
     public int limitOfUnlockableTurrets = 10;

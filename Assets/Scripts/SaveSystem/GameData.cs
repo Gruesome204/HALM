@@ -5,6 +5,15 @@ public class GameData
 {
     public int saveVersion = 1;
 
+    //All Settings Data
+    public string localSelected;
+
+    public int musicTrack;
+    public float masterVolume;
+    public float musicVolume;
+    public float soundVolume;
+    //Settings Data end
+
     public int gameCurrency;
     public int currentPlayerLevel;
     public GameDataSO.Class currentClass;
