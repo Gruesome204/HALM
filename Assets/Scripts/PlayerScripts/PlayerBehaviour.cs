@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -21,5 +22,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Debug.Log($"Player died from {damageData.type} damage.");
 
+    }
+
+    private void OnDestroy()
+    {
+        // Prevent memory leaks / orphaned event handlers
+        health.OnDeath -= HandleDeath;
     }
 }
