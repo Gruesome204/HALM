@@ -932,9 +932,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellSize: 1
-  gridWidth: 36
-  gridHeight: 21
-  originPosition: {x: -14, y: -9.91, z: 0}
+  gridWidth: 37
+  gridHeight: 22
+  originPosition: {x: -16, y: -10.6, z: 0}
   gridZPosition: 0
 --- !u!1 &410087039
 GameObject:
