@@ -14,7 +14,6 @@ public class GameDataSO : ScriptableObject
     public float soundVolume;
     //Settings Data end
 
-    public int gameCurrency = 0;
 
     public int limitOfUnlockableTurrets = 10;
     public  int limitOfSelectableTurrets = 5;
@@ -56,5 +55,11 @@ public class GameDataSO : ScriptableObject
             .Where(t => unlockedTurrets.Contains(t.turretType))
             .ToList();
     }
+
+    public int gameCurrency = 0;
+    public int woodRessource;
+    public int steinRessource;
+    public int metallRessource;
+    public int schieﬂpulver;
 
 }
