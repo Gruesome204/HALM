@@ -22,6 +22,11 @@ public class HubInteractable : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         }
+
+        if (interactionName == "Werkstatt")
+        {
+            InGameMenuManager.Instance.OpenOrCloseOneMenu("", true);
+        }
     }
 
     //Activate after Implementation of HubUIController
