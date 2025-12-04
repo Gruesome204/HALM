@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class GameData
@@ -14,9 +15,22 @@ public class GameData
     public float soundVolume;
     //Settings Data end
 
-    public int gameCurrency;
     public int currentPlayerLevel;
     public GameDataSO.Class currentClass;
+
+
+    public int gameCurrency;
+    public int woodResource;
+    public int steinResource;
+    public int metallResource;
+    public int schieﬂpulverResource;
+
+    public float additionalHealth;
+    public float additionalMaxHealth;
+    public float additionalRegen;
+    public float additionalArmor;
+    public float additionalMagicResistance;
+
 
     public List<TurretType> unlockedTurrets;
     public List<TurretType> selectedTurrets;
@@ -29,7 +43,7 @@ public class GameData
 
     public GameData(GameDataSO so)
     {
-        gameCurrency = so.gameCurrency;
+
         currentPlayerLevel = so.currentPlayerLevel;
         currentClass = so.currentClass;
 
@@ -37,5 +51,19 @@ public class GameData
         selectedTurrets = new List<TurretType>(so.selectedTurrets);
 
         saveVersion = 1;
-    }
+
+        gameCurrency = so.gameCurrency;
+        woodResource = so.woodResource;
+        steinResource = so.steinResource;
+        metallResource = so.metallResource;
+        schieﬂpulverResource = so.schieﬂpulverResource;
+
+        additionalHealth = so.additionalHealth;
+        additionalMaxHealth = so.woodResource;
+        additionalRegen = so.additionalRegen;
+        additionalArmor = so.additionalArmor;
+        additionalMagicResistance = so.additionalMagicResistance;
+
+
+}
 }

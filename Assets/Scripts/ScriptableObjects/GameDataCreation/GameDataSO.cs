@@ -59,12 +59,17 @@ public class GameDataSO : ScriptableObject
 
     [Header("Ressources")]
     public int gameCurrency = 0;
-    public int woodRessource;
-    public int steinRessource;
-    public int metallRessource;
-    public int schieﬂpulver;
+    public int woodResource;
+    public int steinResource;
+    public int metallResource;
+    public int schieﬂpulverResource;
 
-  //  [Header("PlayerStatsUpgrades")]
+    [Header("PlayerStatsUpgrades")]
+    public float additionalHealth;
+    public float additionalMaxHealth;
+    public float additionalRegen;
+    public float additionalArmor;
+    public float additionalMagicResistance;
 
 
 

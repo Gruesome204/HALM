@@ -7300,11 +7300,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseHealth: 100
+  baseRegen: 1
   baseArmor: 0
   baseMagicResistance: 0
   moveSpeed: 5
   currentHealth: 0
   currentMaxHealth: 0
+  currentRegen: 0
   currentArmor: 0
   currentMagicResistance: 0
 --- !u!114 &2135666365

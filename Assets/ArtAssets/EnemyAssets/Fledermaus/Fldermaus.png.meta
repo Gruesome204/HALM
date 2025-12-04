@@ -112,12 +112,12 @@ TextureImporter:
       name: Fldermaus_1
       rect:
         serializedVersion: 2
-        x: 20
-        y: 601
-        width: 657
-        height: 298
+        x: 0
+        y: 300
+        width: 800
+        height: 300
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,12 +134,12 @@ TextureImporter:
       name: Fldermaus_2
       rect:
         serializedVersion: 2
-        x: 16
-        y: 335
-        width: 784
-        height: 230
+        x: 0
+        y: 0
+        width: 800
+        height: 300
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -153,23 +153,23 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fldermaus_3
+      name: Fldermaus_0
       rect:
         serializedVersion: 2
-        x: 98
-        y: 2
-        width: 548
-        height: 308
+        x: 0
+        y: 600
+        width: 800
+        height: 300
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1368d04fb05edc74496002fd5dc376b4
-      internalID: 1852887351
+      spriteID: 13e6270e77903c54fb19f411888b4dc4
+      internalID: 1687941740
       vertices: []
       indices: 
       edges: []
@@ -191,7 +191,6 @@ TextureImporter:
       Fldermaus_0: 1687941740
       Fldermaus_1: -188912900
       Fldermaus_2: -164405388
-      Fldermaus_3: 1852887351
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
