@@ -13,14 +13,14 @@
 .settingsMenuSlideOut {
     translate: 0 1000px;
     transition-timing-function: ease-in-out;
-    transition-duration: 1s;
+    transition-duration: 0.5s;
     opacity: 0;
 }
 
 .actionRowSlideOut {
     translate: 0 0;
     transition-timing-function: ease-in-out;
-    transition-duration: 1s;
+    transition-duration: 0.5s;
     opacity: 0;
     scale: 1 2;
 }
@@ -28,7 +28,7 @@
 .turretChoiceMenuSlideOut {
     translate: 1200px 0;
     transition-timing-function: ease-in-out;
-    transition-duration: 1s;
+    transition-duration: 0.5s;
     opacity: 0;
     scale: 0.5 0.5;
 }
