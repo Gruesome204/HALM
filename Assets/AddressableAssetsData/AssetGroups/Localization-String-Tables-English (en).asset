@@ -68,6 +68,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91a38e79d97c9e746be7df5c0ccfb30b
+    m_Address: EnterDungeonTranslationTable_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b30284c54e155c3459fe4f502ded0f73
     m_Address: TurretUpgradeTranslationTable_en
     m_ReadOnly: 1

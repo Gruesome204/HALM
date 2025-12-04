@@ -33,6 +33,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7aa78df79a2b7524497af3ab510eb39c
+    m_Address: Assets/Localization/TranslationTables/EnterDungeonTranslationTable
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 876715ad6ad1c284d9fdbd6b5cce36ab
     m_Address: Assets/Localization/TranslationTables/PauseMenuTranslationTable Shared
       Data.asset

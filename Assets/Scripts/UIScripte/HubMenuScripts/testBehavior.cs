@@ -36,6 +36,6 @@ public class testBehavior : MonoBehaviour, IMenu
 
     void OnTestButtonClicked(ClickEvent evt)
     {
-        InGameMenuManager.Instance.OpenOrCloseOneMenu("", false);
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("TestDoc", false);
     }
 }

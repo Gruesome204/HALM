@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-German (Germany) (de-DE)
   m_GUID: 9a8477400ee2cab4f91e957647a45b61
   m_SerializeEntries:
+  - m_GUID: 0cc487e79bf223340ba2f02e99cf0040
+    m_Address: EnterDungeonTranslationTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0df4cb6d0fba2d249a7cdc4ae7aad887
     m_Address: GameOverTranslationaTable_de-DE
     m_ReadOnly: 1

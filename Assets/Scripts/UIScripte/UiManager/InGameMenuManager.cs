@@ -88,6 +88,7 @@ public class InGameMenuManager : MonoBehaviour
             if (_menu != null)
             {
                 _menu.OpenOrClose(false);
+                Debug.Log($"{menu.name} was closed");
             }
         }
     }

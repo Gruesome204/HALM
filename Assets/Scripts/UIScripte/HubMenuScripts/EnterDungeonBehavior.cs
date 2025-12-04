@@ -1,16 +1,57 @@
+using System;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
-public class EnterDungeonBehavior : MonoBehaviour
+public class EnterDungeonBehavior : MonoBehaviour, IMenu
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Label headline;
+
+    private Button enterDungeonButton;
+    private Button stayInHubButton;
+
+    public void OpenOrClose(Boolean open)
     {
-        
+        //Gets the UiDocument and checks weather the Menu should opened or closed
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        if (open)
+        {
+            //Open the SettingsMenu and adds it to openMenu List
+            root.Q<VisualElement>("mainContainer").RemoveFromClassList("settingsMenuSlideOut");
+            InGameMenuManager.Instance.openMenus.Add(this.gameObject);
+        }
+        else
+        {
+            //Closes SettingsMenu and removes from openMenu List
+            root.Q<VisualElement>("mainContainer").AddToClassList("settingsMenuSlideOut");
+            InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnEnable()
     {
-        
+        var root = GetComponent<UIDocument>().rootVisualElement;
+
+        headline = root.Q<Label>("headline");
+        headline.SetBinding("text", new LocalizedString("EnterDungeonTranslationTable", "headline"));
+
+        enterDungeonButton = root.Q<Button>("enterDungeonButton");
+        enterDungeonButton.SetBinding("text", new LocalizedString("EnterDungeonTranslationTable", "enterDungeonButton"));
+        enterDungeonButton.RegisterCallback<ClickEvent>(OnEnterDungeonBtnClicked);
+
+        stayInHubButton = root.Q<Button>("stayInHubButton");
+        stayInHubButton.SetBinding("text", new LocalizedString("EnterDungeonTranslationTable", "stayInHubButton"));
+        stayInHubButton.RegisterCallback<ClickEvent>(OnStayInHubBtnClicked);
+    }
+
+    void OnEnterDungeonBtnClicked(ClickEvent evt)
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
+    void OnStayInHubBtnClicked(ClickEvent evt)
+    {
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("EnterDungeonDoc", false);
     }
 }

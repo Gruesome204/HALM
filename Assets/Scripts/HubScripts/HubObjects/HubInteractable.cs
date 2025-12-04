@@ -20,12 +20,12 @@ public class HubInteractable : MonoBehaviour
 
         if (interactionName == "DungeonEntrance")
         {
-            SceneManager.LoadScene("GameScene");
+            InGameMenuManager.Instance.OpenOrCloseOneMenu("EnterDungeonDoc", true);
         }
 
         if (interactionName == "Werkstatt")
         {
-            InGameMenuManager.Instance.OpenOrCloseOneMenu("", true);
+            InGameMenuManager.Instance.OpenOrCloseOneMenu("TestDoc", true);
         }
     }
 

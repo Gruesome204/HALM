@@ -28,6 +28,12 @@ MonoBehaviour:
     - Locale-de
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2bc2a0f23b9a2ad45885dc3bad641008
+    m_Address: EnterDungeonTranslationTable_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3a540370ed0df8a4198f882ebc63295d
     m_Address: ClassTranslationCommon_de
     m_ReadOnly: 1
