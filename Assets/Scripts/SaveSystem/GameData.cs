@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+
+//File that is saved into a JSON
 public class GameData
 {
     public int saveVersion = 1;
@@ -17,7 +19,6 @@ public class GameData
 
     public int currentPlayerLevel;
     public GameDataSO.Class currentClass;
-
 
     public int gameCurrency;
     public int woodResource;
@@ -59,11 +60,11 @@ public class GameData
         schieﬂpulverResource = so.schieﬂpulverResource;
 
         additionalHealth = so.additionalHealth;
-        additionalMaxHealth = so.woodResource;
+        additionalMaxHealth = so.additionalMaxHealth;
         additionalRegen = so.additionalRegen;
         additionalArmor = so.additionalArmor;
         additionalMagicResistance = so.additionalMagicResistance;
 
 
-}
+    }
 }

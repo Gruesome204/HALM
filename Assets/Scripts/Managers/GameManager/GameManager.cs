@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public GameDataSO gameDataSO;
     public GameData gameData;
+    public PlayerStats playerStats;
     public enum GameState
     {
         MainMenu,
@@ -45,7 +46,21 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameData = SaveSystem.Load();
+
+        playerStats = FindObjectOfType<PlayerStats>();
+
         ApplyRuntimeDataToSO();
+        ApplyPlayerUpgrades();
+    }
+
+    private void ApplyPlayerUpgrades()
+    {
+        var so = gameDataSO;
+        playerStats.currentHealth += so.additionalHealth;
+        playerStats.currentMaxHealth += so.additionalHealth;
+        playerStats.currentRegen += so.additionalRegen;
+        playerStats.currentArmor += so.additionalArmor;
+        playerStats.currentMagicResistance += so.additionalMagicResistance;
     }
 
     private void Update()

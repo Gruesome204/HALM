@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+//Runtime Data that is only changed and is then saved into Data
+
 [CreateAssetMenu(fileName = "New GameDataSO", menuName = "Game/GameData/New GameDataSO")]
 public class GameDataSO : ScriptableObject
 {
@@ -56,7 +58,6 @@ public class GameDataSO : ScriptableObject
             .ToList();
     }
 
-
     [Header("Ressources")]
     public int gameCurrency = 0;
     public int woodResource;
@@ -70,7 +71,5 @@ public class GameDataSO : ScriptableObject
     public float additionalRegen;
     public float additionalArmor;
     public float additionalMagicResistance;
-
-
 
 }

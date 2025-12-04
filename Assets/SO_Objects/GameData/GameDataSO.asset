@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e468b7970ef99446ac45fc5a4b2c010, type: 3}
   m_Name: GameDataSO
   m_EditorClassIdentifier: 
-  gameCurrency: 0
+  localSelected: 
+  musicTrack: 0
+  masterVolume: 0
+  musicVolume: 0
+  soundVolume: 0
   limitOfUnlockableTurrets: 10
   limitOfSelectableTurrets: 5
   currentClass: 0
@@ -23,3 +27,13 @@ MonoBehaviour:
   allTurrets: 
   unlockedTurrets: 
   selectedTurrets: 
+  gameCurrency: 0
+  woodResource: 0
+  steinResource: 0
+  metallResource: 0
+  "schie\xDFpulverResource": 0
+  additionalHealth: 10
+  additionalMaxHealth: 0
+  additionalRegen: 0
+  additionalArmor: 0
+  additionalMagicResistance: 0
