@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fledermaus_Animation
+  m_Name: Fledermaus
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -188912900, guid: d13eebe2c42379542b0f945397a3a553, type: 3}
+      value: {fileID: -8317708898524439118, guid: d0d425bfda173584da5085dc6353005b, type: 3}
     - time: 0.083333336
-      value: {fileID: -164405388, guid: d13eebe2c42379542b0f945397a3a553, type: 3}
+      value: {fileID: 4089356363079152306, guid: d0d425bfda173584da5085dc6353005b, type: 3}
     - time: 0.16666667
-      value: {fileID: 1852887351, guid: d13eebe2c42379542b0f945397a3a553, type: 3}
+      value: {fileID: 411892581402478010, guid: d0d425bfda173584da5085dc6353005b, type: 3}
     - time: 0.25
-      value: {fileID: -164405388, guid: d13eebe2c42379542b0f945397a3a553, type: 3}
+      value: {fileID: 4089356363079152306, guid: d0d425bfda173584da5085dc6353005b, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,10 +50,10 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -188912900, guid: d13eebe2c42379542b0f945397a3a553, type: 3}
-    - {fileID: -164405388, guid: d13eebe2c42379542b0f945397a3a553, type: 3}
-    - {fileID: 1852887351, guid: d13eebe2c42379542b0f945397a3a553, type: 3}
-    - {fileID: -164405388, guid: d13eebe2c42379542b0f945397a3a553, type: 3}
+    - {fileID: -8317708898524439118, guid: d0d425bfda173584da5085dc6353005b, type: 3}
+    - {fileID: 4089356363079152306, guid: d0d425bfda173584da5085dc6353005b, type: 3}
+    - {fileID: 411892581402478010, guid: d0d425bfda173584da5085dc6353005b, type: 3}
+    - {fileID: 4089356363079152306, guid: d0d425bfda173584da5085dc6353005b, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

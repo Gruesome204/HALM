@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+//Runtime Data that is only changed and is then saved into Data
+
 [CreateAssetMenu(fileName = "New GameDataSO", menuName = "Game/GameData/New GameDataSO")]
 public class GameDataSO : ScriptableObject
 {
@@ -14,7 +16,6 @@ public class GameDataSO : ScriptableObject
     public float soundVolume;
     //Settings Data end
 
-    public int gameCurrency = 0;
 
     public int limitOfUnlockableTurrets = 10;
     public  int limitOfSelectableTurrets = 5;
@@ -56,5 +57,19 @@ public class GameDataSO : ScriptableObject
             .Where(t => unlockedTurrets.Contains(t.turretType))
             .ToList();
     }
+
+    [Header("Ressources")]
+    public int gameCurrency = 0;
+    public int woodResource;
+    public int steinResource;
+    public int metallResource;
+    public int schieﬂpulverResource;
+
+    [Header("PlayerStatsUpgrades")]
+    public float additionalHealth;
+    public float additionalMaxHealth;
+    public float additionalRegen;
+    public float additionalArmor;
+    public float additionalMagicResistance;
 
 }

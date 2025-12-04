@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: d13eebe2c42379542b0f945397a3a553
+guid: d0d425bfda173584da5085dc6353005b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4630231575779555681
-    second: 20251004_Fledermaus_0
+      213: -8317708898524439118
+    second: 20251204_Fledermaus_0
   - first:
-      213: -219829501491389536
-    second: 20251004_Fledermaus_1
+      213: 4089356363079152306
+    second: 20251204_Fledermaus_1
   - first:
-      213: 6063706236692921342
-    second: 20251004_Fledermaus_2
+      213: 411892581402478010
+    second: 20251204_Fledermaus_2
   - first:
-      213: 2350735888207380678
-    second: 20251004_Fledermaus_3
+      213: -2087898315906964144
+    second: 20251204_Fledermaus_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,67 +109,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fldermaus_1
+      name: 20251204_Fledermaus_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 601
-        width: 657
-        height: 298
+        x: 0
+        y: 800
+        width: 800
+        height: 400
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 459f57ffe8e55814b84e4aea943cf34e
-      internalID: -188912900
+      spriteID: 2bd585e63df819c80800000000000000
+      internalID: -8317708898524439118
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fldermaus_2
+      name: 20251204_Fledermaus_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 335
-        width: 784
-        height: 230
+        x: 0
+        y: 400
+        width: 800
+        height: 400
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 82469e5b28a7e5740b883daae7d22184
-      internalID: -164405388
+      spriteID: 2b2f05522ff40c830800000000000000
+      internalID: 4089356363079152306
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fldermaus_3
+      name: 20251204_Fledermaus_2
       rect:
         serializedVersion: 2
-        x: 98
-        y: 2
-        width: 548
-        height: 308
+        x: 0
+        y: 0
+        width: 800
+        height: 400
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 1368d04fb05edc74496002fd5dc376b4
-      internalID: 1852887351
+      spriteID: ab50d18de1657b500800000000000000
+      internalID: 411892581402478010
       vertices: []
       indices: 
       edges: []
@@ -178,7 +178,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4f378849958a9494ea25404288b1af90
+    spriteID: 0c18661c67d2ecf41ab88e17db972f18
     internalID: 0
     vertices: []
     indices: 
@@ -188,10 +188,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Fldermaus_0: 1687941740
-      Fldermaus_1: -188912900
-      Fldermaus_2: -164405388
-      Fldermaus_3: 1852887351
+      20251204_Fledermaus_0: -8317708898524439118
+      20251204_Fledermaus_1: 4089356363079152306
+      20251204_Fledermaus_2: 411892581402478010
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
