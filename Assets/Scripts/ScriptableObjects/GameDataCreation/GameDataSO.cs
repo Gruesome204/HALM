@@ -56,10 +56,16 @@ public class GameDataSO : ScriptableObject
             .ToList();
     }
 
+
+    [Header("Ressources")]
     public int gameCurrency = 0;
     public int woodRessource;
     public int steinRessource;
     public int metallRessource;
     public int schieﬂpulver;
+
+  //  [Header("PlayerStatsUpgrades")]
+
+
 
 }
