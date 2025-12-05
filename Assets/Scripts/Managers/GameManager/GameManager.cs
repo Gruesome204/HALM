@@ -5,15 +5,11 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager Instance { get; private set; }
 
     [Header("Game Data")]
     public GameDataSO gameDataSO;
     public GameData gameData;
-
-    [Header("Player")]
-    public PlayerStats playerStats;
     public enum GameState
     {
         MainMenu,
@@ -64,8 +60,6 @@ public class GameManager : MonoBehaviour
         // Load Scene Elements (Map)
         MapLoaderManager.Instance?.LoadMap(0);
 
-        // Find the player
-        FindPlayerSafely();
 
         // Apply upgrades AFTER player is found
         ApplyPlayerUpgrades();
@@ -73,19 +67,10 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.Playing);
     }
 
-
-    private void FindPlayerSafely()
-    {
-        playerStats = FindObjectOfType<PlayerStats>();
-
-        if (playerStats == null)
-        {
-            Debug.LogError("[GameManager] No PlayerStats found in the scene.");
-        }
-    }
     private void ApplyPlayerUpgrades()  
     {
         var so = gameDataSO;
+        var playerStats = PlayerManager.Instance.GetComponent<PlayerStats>();
         playerStats.currentHealth += so.additionalHealth;
         playerStats.currentMaxHealth += so.additionalHealth;
         playerStats.currentRegen += so.additionalRegen;
