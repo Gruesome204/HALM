@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb2254af7ab53e943ab30b47ac29e08c, type: 3}
+  m_Name: Test2
+  m_EditorClassIdentifier: 
+  options:
+  - name: Test 2
+    description: Hier testen wir auch sachen
+    icon: {fileID: 0}
+    goldCost: -4
+    additionalHealth: 3
+    additionalMaxHealth: 3
+    additionalRegen: 0
+    additionalArmor: -1
+    additionalMagicResistance: -1

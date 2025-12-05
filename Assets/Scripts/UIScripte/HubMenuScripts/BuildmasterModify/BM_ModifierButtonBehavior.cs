@@ -1,16 +1,16 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class BM_ModifierButtonBehavior : MonoBehaviour
+public class BM_ModifierButtonBehavior
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public BuildMasterModifier representedModifier;
 
-    // Update is called once per frame
-    void Update()
+    private VisualElement icon;
+    private Label name;
+    private Label description;
+
+    public BM_ModifierButtonBehavior(BuildMasterModifier _representedModifier)
     {
-        
+
     }
 }
