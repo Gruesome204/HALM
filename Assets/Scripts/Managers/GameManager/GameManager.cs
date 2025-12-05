@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
 
         ApplyRuntimeDataToSO();
         ApplyPlayerUpgrades();
+
+        //Load First Map
+        MapLoaderManager.Instance.LoadMap(0);
     }
 
     private void ApplyPlayerUpgrades()
