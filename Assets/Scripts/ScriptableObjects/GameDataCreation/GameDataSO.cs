@@ -63,7 +63,7 @@ public class GameDataSO : ScriptableObject
     public int woodResource;
     public int steinResource;
     public int metallResource;
-    public int schieﬂpulverResource;
+    public int pulverResource;
 
     [Header("PlayerStatsUpgrades")]
     public float additionalHealth;
