@@ -27,8 +27,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]private readonly List<IPausable> pausables = new List<IPausable>();
 
+    [Header("Autosave")]
+    [SerializeField] private float autosaveInterval = 60f;
     private float autosaveTimer = 0f;
-    public float autosaveInterval = 60f;
 
 
     private void Awake()
@@ -90,8 +91,6 @@ public class GameManager : MonoBehaviour
         so.selectedTurrets = new List<TurretType>(gameData.selectedTurrets);
     }
 
-
-
     private void Update()
     {
         if (CurrentState != GameState.Playing)
@@ -110,14 +109,14 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        var so = gameDataSO;
+        if (gameData == null) gameData = new GameData();
+        if (gameDataSO == null) return;
 
-        gameData.gameCurrency = so.gameCurrency;
-        gameData.currentPlayerLevel = so.currentPlayerLevel;
-        gameData.currentClass = so.currentClass;
-
-        gameData.unlockedTurrets = so.unlockedTurrets.ToList();
-        gameData.selectedTurrets = so.selectedTurrets.ToList();
+        gameData.gameCurrency = gameDataSO.gameCurrency;
+        gameData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
+        gameData.currentClass = gameDataSO.currentClass;
+        gameData.unlockedTurrets = gameDataSO.unlockedTurrets.ToList();
+        gameData.selectedTurrets = gameDataSO.selectedTurrets.ToList();
 
         SaveSystem.Save(gameData);
     }
