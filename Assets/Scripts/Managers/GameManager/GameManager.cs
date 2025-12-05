@@ -5,18 +5,24 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
+
+    public static GameManager Instance { get; private set; }
+
+    [Header("Game Data")]
     public GameDataSO gameDataSO;
     public GameData gameData;
+
+    [Header("Player")]
     public PlayerStats playerStats;
     public enum GameState
     {
         MainMenu,
         Playing,
+        Loading,
         Paused,
         Stats,
         GameOver
     }
-    public static GameManager Instance { get; private set; }
 
     public GameState CurrentState { get; private set; }
     public GameState PreviousState { get; private set; }
@@ -39,24 +45,45 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject); // survive scene loads
-
-        ChangeState(GameState.MainMenu);
     }
 
     private void Start()
     {
+        LoadGameAtStartup();
+    }
+    private void LoadGameAtStartup()
+    {
+        ChangeState(GameState.Loading);
+
+        // Load save file
         gameData = SaveSystem.Load();
 
-        playerStats = FindObjectOfType<PlayerStats>();
-
+        // Apply runtime data to SO
         ApplyRuntimeDataToSO();
+
+        // Load Scene Elements (Map)
+        MapLoaderManager.Instance?.LoadMap(0);
+
+        // Find the player
+        FindPlayerSafely();
+
+        // Apply upgrades AFTER player is found
         ApplyPlayerUpgrades();
 
-        //Load First Map
-        MapLoaderManager.Instance.LoadMap(0);
+        ChangeState(GameState.Playing);
     }
 
-    private void ApplyPlayerUpgrades()
+
+    private void FindPlayerSafely()
+    {
+        playerStats = FindObjectOfType<PlayerStats>();
+
+        if (playerStats == null)
+        {
+            Debug.LogError("[GameManager] No PlayerStats found in the scene.");
+        }
+    }
+    private void ApplyPlayerUpgrades()  
     {
         var so = gameDataSO;
         playerStats.currentHealth += so.additionalHealth;
@@ -65,6 +92,20 @@ public class GameManager : MonoBehaviour
         playerStats.currentArmor += so.additionalArmor;
         playerStats.currentMagicResistance += so.additionalMagicResistance;
     }
+
+    private void ApplyRuntimeDataToSO()
+    {
+        var so = gameDataSO;
+
+        so.gameCurrency = gameData.gameCurrency;
+        so.currentPlayerLevel = gameData.currentPlayerLevel;
+        so.currentClass = gameData.currentClass;
+
+        so.unlockedTurrets = new List<TurretType>(gameData.unlockedTurrets);
+        so.selectedTurrets = new List<TurretType>(gameData.selectedTurrets);
+    }
+
+
 
     private void Update()
     {
@@ -79,18 +120,6 @@ public class GameManager : MonoBehaviour
             SaveGame();
             Debug.Log("Auto-saved.");
         }
-    }
-
-    private void ApplyRuntimeDataToSO()
-    {
-        var so = gameDataSO;
-
-        so.gameCurrency = gameData.gameCurrency;
-        so.currentPlayerLevel = gameData.currentPlayerLevel;
-        so.currentClass = gameData.currentClass;
-
-        so.unlockedTurrets = new List<TurretType>(gameData.unlockedTurrets);
-        so.selectedTurrets = new List<TurretType>(gameData.selectedTurrets);
     }
 
 
