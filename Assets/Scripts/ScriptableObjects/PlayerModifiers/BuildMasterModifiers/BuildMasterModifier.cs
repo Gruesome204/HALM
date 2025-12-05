@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static TurretUpgradeChoiceSO;
 
 
 [CreateAssetMenu(fileName = "BuildMasterModifier", menuName = "Game/PlayerModifier/NewBuildMasterModifier")]
 public class BuildMasterModifier : ScriptableObject
 {
+    [Tooltip("List of modifier options the player can choose from.")]
     public List<Modifier> options;
     [System.Serializable]
     public class Modifier
@@ -19,5 +19,16 @@ public class BuildMasterModifier : ScriptableObject
         public float additionalRegen;
         public float additionalArmor;
         public float additionalMagicResistance;
+
+        public void ApplyTo(PlayerStats stats)
+        {
+            if (stats == null) return;
+
+            stats.currentHealth += additionalHealth;
+            stats.currentMaxHealth += additionalMaxHealth;
+            stats.currentRegen += additionalRegen;
+            stats.currentArmor += additionalArmor;
+            stats.currentMagicResistance += additionalMagicResistance;
+        }
     }
 }
