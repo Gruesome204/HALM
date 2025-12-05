@@ -24,7 +24,7 @@ public class GameData
     public int woodResource;
     public int steinResource;
     public int metallResource;
-    public int schieﬂpulverResource;
+    public int pulverResource;
 
     public float additionalHealth;
     public float additionalMaxHealth;
@@ -57,7 +57,7 @@ public class GameData
         woodResource = so.woodResource;
         steinResource = so.steinResource;
         metallResource = so.metallResource;
-        schieﬂpulverResource = so.schieﬂpulverResource;
+        pulverResource = so.pulverResource;
 
         additionalHealth = so.additionalHealth;
         additionalMaxHealth = so.additionalMaxHealth;

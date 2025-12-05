@@ -4,6 +4,7 @@ using System;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerHealth playerHealth;
+    private PlayerBehaviour playerBehaviour;
     public event Action OnPlayerDeath;
     public static PlayerManager Instance { get; private set; }
     private void Awake()
@@ -20,6 +21,11 @@ public class PlayerManager : MonoBehaviour
         // Auto-find PlayerHealth if not assigned in inspector
         if (playerHealth == null)
             playerHealth = FindObjectOfType<PlayerHealth>();
+
+        if(playerBehaviour == null)
+        {
+            playerBehaviour = FindAnyObjectByType<PlayerBehaviour>();
+        }
     }
     private void Start()
     {

@@ -19,12 +19,75 @@ public class PlayerStats : MonoBehaviour
      public float currentArmor;
      public float currentMagicResistance;
 
+    /// <summary>
+    /// All currently applied modifiers.
+    /// </summary>
+    private List<BuildMasterModifier.Modifier> appliedModifiers = new List<BuildMasterModifier.Modifier>();
+
     public void Initialize()
     {
+        appliedModifiers.Clear();
+
+        RecalculateStats(fullReheal: true);
+    }
+
+    public void AddModifier(BuildMasterModifier.Modifier modifier)
+    {
+        appliedModifiers.Add(modifier);
+        RecalculateStats();
+    }
+
+    public void RemoveModifier(BuildMasterModifier.Modifier modifier)
+    {
+        appliedModifiers.Remove(modifier);
+        RecalculateStats();
+    }
+
+
+    /// <summary>
+    /// Clears all modifiers (useful when resetting the player).
+    /// </summary>
+    public void ClearModifiers()
+    {
+        appliedModifiers.Clear();
+        RecalculateStats(fullReheal: true);
+    }
+    private void RecalculateStats(bool fullReheal = false)
+    {
+        // Reset to base stats
         currentMaxHealth = baseHealth;
         currentRegen = baseRegen;
-        currentHealth = baseHealth;
         currentArmor = baseArmor;
         currentMagicResistance = baseMagicResistance;
+
+        // Apply all modifiers
+        foreach (var mod in appliedModifiers)
+        {
+            currentMaxHealth += mod.additionalMaxHealth;
+            currentRegen += mod.additionalRegen;
+            currentArmor += mod.additionalArmor;
+            currentMagicResistance += mod.additionalMagicResistance;
+        }
+
+        // Adjust current health depending on type of recalculation
+        if (fullReheal)
+        {
+            currentHealth = currentMaxHealth;
+        }
+        else
+        {
+            // Clamp health if max decreased
+            if (currentHealth > currentMaxHealth)
+                currentHealth = currentMaxHealth;
+        }
     }
+
+    /// <summary>
+    /// Returns a read-only list for UI or debugging.
+    /// </summary>
+    public IReadOnlyList<BuildMasterModifier.Modifier> GetAppliedModifiers()
+    {
+        return appliedModifiers.AsReadOnly();
+    }
+
 }

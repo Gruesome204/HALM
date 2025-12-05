@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static TurretUpgradeChoiceSO;
 
 
 [CreateAssetMenu(fileName = "BuildMasterModifier", menuName = "Game/PlayerModifier/NewBuildMasterModifier")]
 public class BuildMasterModifier : ScriptableObject
 {
+    [Tooltip("List of modifier options the player can choose from.")]
     public List<Modifier> options;
     [System.Serializable]
     public class Modifier
