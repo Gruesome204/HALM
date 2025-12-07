@@ -5,6 +5,7 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerHealth playerHealth;
     private PlayerBehaviour playerBehaviour;
+    public PlayerStats playerStats;
     public event Action OnPlayerDeath;
     public static PlayerManager Instance { get; private set; }
     private void Awake()
@@ -25,6 +26,11 @@ public class PlayerManager : MonoBehaviour
         if(playerBehaviour == null)
         {
             playerBehaviour = FindAnyObjectByType<PlayerBehaviour>();
+        }
+
+        if (playerStats == null)
+        {
+            playerStats = FindAnyObjectByType<PlayerStats>();
         }
     }
     private void Start()

@@ -1111,6 +1111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 0}
+  playerStats: {fileID: 0}
 --- !u!1 &442456134
 GameObject:
   m_ObjectHideFlags: 0

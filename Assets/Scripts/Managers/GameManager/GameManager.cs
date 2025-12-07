@@ -46,9 +46,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        LoadGameAtStartup();
+        StartCoroutine(LoadGameRoutine());
     }
-    private void LoadGameAtStartup()
+
+    private System.Collections.IEnumerator LoadGameRoutine()
     {
         ChangeState(GameState.Loading);
 
@@ -62,16 +63,21 @@ public class GameManager : MonoBehaviour
         MapLoaderManager.Instance?.LoadMap(0);
 
 
-        // Apply upgrades AFTER player is found
-      //  ApplyPlayerUpgrades();
+        // WAIT until the player is spawned and has PlayerStats
+        yield return new WaitUntil(() =>
+            PlayerManager.Instance != null
+        );
+
+        // Apply upgrades now that player exists
+        ApplyPlayerUpgrades();
 
         ChangeState(GameState.Playing);
     }
 
     private void ApplyPlayerUpgrades()  
     {
-        var so = gameDataSO;
-        var playerStats = PlayerManager.Instance.GetComponent<PlayerStats>();
+        var so = gameData;
+        PlayerStats playerStats = PlayerManager.Instance.playerStats;
         playerStats.currentHealth += so.additionalHealth;   
         playerStats.currentMaxHealth += so.additionalHealth;
         playerStats.currentRegen += so.additionalRegen;
