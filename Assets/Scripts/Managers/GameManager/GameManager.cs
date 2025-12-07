@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
 
         // Apply upgrades AFTER player is found
-        ApplyPlayerUpgrades();
+      //  ApplyPlayerUpgrades();
 
         ChangeState(GameState.Playing);
     }
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     {
         var so = gameDataSO;
         var playerStats = PlayerManager.Instance.GetComponent<PlayerStats>();
-        playerStats.currentHealth += so.additionalHealth;
+        playerStats.currentHealth += so.additionalHealth;   
         playerStats.currentMaxHealth += so.additionalHealth;
         playerStats.currentRegen += so.additionalRegen;
         playerStats.currentArmor += so.additionalArmor;
