@@ -39,26 +39,23 @@ public class MapLoaderManager : MonoBehaviour
         currentMap = Instantiate(mapPrefabs[index], mapParent);
 
         Tilemap[] tilemaps = currentMap.GetComponentsInChildren<Tilemap>();
-        Tilemap floorTilemap = null;
+        Tilemap floorTilemap = GetFloorTileMap();
 
+    }
+
+    public Tilemap GetFloorTileMap()
+    {
+        Tilemap[] tilemaps = currentMap.GetComponentsInChildren<Tilemap>();
+        Tilemap floorTilemap;
         foreach (Tilemap t in tilemaps)
         {
             if (t.gameObject.name.ToLower().Contains("floor"))
             {
                 floorTilemap = t;
-                break;
+                return floorTilemap;
             }
         }
-
-        if (floorTilemap != null)
-        {
-            GridManager.Instance.floorTilemap = floorTilemap;
-            Debug.Log($"Floor Tilemap set to: {floorTilemap.name}");
-        }
-        else
-        {
-            Debug.LogWarning("No Floor Tilemap found in map prefab!");
-        }
+        return null;
 
     }
 }

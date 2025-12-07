@@ -232,10 +232,6 @@ public class TurretPlacementController : MonoBehaviour
         if (IsPlacementBlocked(snappedWorldPos, currentSelectedBlueprint.sizeInCells))
             canPlace = false;
 
-        // Tilemap check for multi-cell turrets
-        if (!IsTileMapGround(gridCoords, currentSelectedBlueprint.sizeInCells))
-            canPlace = false;
-
         // Check distance to player
         float distanceToPlayer = playerTransform != null
             ? Vector3.Distance(playerTransform.position, snappedWorldPos)
@@ -465,25 +461,6 @@ public class TurretPlacementController : MonoBehaviour
         return playerHit != null || enemyHit != null;
     }
 
-    private bool IsTileMapGround(Vector2Int gridCoords, Vector2 size)
-    {
-        if (GridManager.Instance == null || GridManager.Instance.floorTilemap == null)
-            return false;
-
-        Vector3Int baseCell = new Vector3Int(gridCoords.x, gridCoords.y, 0);
-
-        for (int x = 0; x < size.x; x++)
-        {
-            for (int y = 0; y < size.y; y++)
-            {
-                Vector3Int cell = baseCell + new Vector3Int(x, y, 0);
-                TileBase tile = GridManager.Instance.floorTilemap.GetTile(cell);
-                if (tile == null) return false; // any missing tile = cannot place
-            }
-        }
-
-        return true; // all tiles exist
-    }
 
 
     private void OnDrawGizmos()

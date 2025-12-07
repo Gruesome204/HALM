@@ -13,8 +13,6 @@ public class GridManager : MonoBehaviour
     public Vector3 originPosition = Vector3.zero; // World origin of the grid
     public float gridZPosition = 0f;
 
-    [Header("Tilemap Settings")]
-    public Tilemap floorTilemap;
 
     [Header("Placement Settings")]
     public LayerMask groundLayer; // Only allow placement on this layer
@@ -36,7 +34,6 @@ public class GridManager : MonoBehaviour
         }
 
         gridOccupancy = new GameObject[gridWidth, gridHeight];
-
     }
 
 
@@ -82,19 +79,6 @@ public class GridManager : MonoBehaviour
                 // 1️⃣ Check occupancy
                 if (gridOccupancy[gx, gy] != null)
                     return false;
-
-                // 2️⃣ Check Tilemap
-                if (floorTilemap != null)
-                {
-                    // Convert grid coordinates to Tilemap position
-                    Vector3Int tilePos = floorTilemap.WorldToCell(GetWorldPosition(new Vector2Int(gx, gy), Vector2Int.one));
-                    TileBase tile = floorTilemap.GetTile(tilePos);
-                    if (tile == null)
-                    {
-                        // No tile here → not floor
-                        return false;
-                    }
-                }
             }
         }
 
