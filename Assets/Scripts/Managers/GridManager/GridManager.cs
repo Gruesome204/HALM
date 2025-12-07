@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
@@ -11,6 +12,13 @@ public class GridManager : MonoBehaviour
     public int gridHeight = 10;
     public Vector3 originPosition = Vector3.zero; // World origin of the grid
     public float gridZPosition = 0f;
+
+    [Header("Tilemap Settings")]
+    public Tilemap floorTilemap;
+
+    [Header("Placement Settings")]
+    public LayerMask groundLayer; // Only allow placement on this layer
+
 
     private GameObject[,] gridOccupancy;
 
@@ -28,7 +36,10 @@ public class GridManager : MonoBehaviour
         }
 
         gridOccupancy = new GameObject[gridWidth, gridHeight];
+
     }
+
+
 
     // Converts world position (e.g., from mouse click) to grid coordinates
     public Vector2Int GetGridCoordinates(Vector3 worldPosition)
@@ -61,29 +72,34 @@ public class GridManager : MonoBehaviour
             return false; // Out of bounds
         }
 
-        // Check for existing objects in the required cells
         for (int x = 0; x < objectSize.x; x++)
         {
             for (int y = 0; y < objectSize.y; y++)
             {
-                // Ensure array access is within bounds after calculating grid coordinates
-                if (startCoords.x + x >= 0 && startCoords.x + x < gridWidth &&
-                    startCoords.y + y >= 0 && startCoords.y + y < gridHeight)
-                {
-                    if (gridOccupancy[startCoords.x + x, startCoords.y + y] != null)
-                    {
-                        return false; // Cell is already occupied
-                    }
-                }
-                else
-                {
-                    // This case should ideally be caught by the initial bounds check,
-                    // but it's a good defensive programming check.
+                int gx = startCoords.x + x;
+                int gy = startCoords.y + y;
+
+                // 1️⃣ Check occupancy
+                if (gridOccupancy[gx, gy] != null)
                     return false;
+
+                // 2️⃣ Check Tilemap
+                if (floorTilemap != null)
+                {
+                    // Convert grid coordinates to Tilemap position
+                    Vector3Int tilePos = floorTilemap.WorldToCell(GetWorldPosition(new Vector2Int(gx, gy), Vector2Int.one));
+                    TileBase tile = floorTilemap.GetTile(tilePos);
+                    if (tile == null)
+                    {
+                        // No tile here → not floor
+                        return false;
+                    }
                 }
             }
         }
+
         return true;
+
     }
     public void PlaceObject(GameObject obj, Vector2Int startCoords, Vector2Int objectSize)
     {
@@ -121,22 +137,6 @@ public class GridManager : MonoBehaviour
             }
         }
     }
-
-    //public void RemoveObject(GameObject obj)
-    //{
-    //    if (obj == null) return;
-
-    //    for (int x = 0; x < gridWidth; x++)
-    //    {
-    //        for (int y = 0; y < gridHeight; y++)
-    //        {
-    //            if (gridOccupancy[x, y] == obj)
-    //            {
-    //                gridOccupancy[x, y] = null;
-    //            }
-    //        }
-    //    }
-    //}
 
     // Show the grid at all times in the editor
     // For debugging: Draw grid lines in the editor

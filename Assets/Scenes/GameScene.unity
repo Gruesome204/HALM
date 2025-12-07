@@ -874,10 +874,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellSize: 1
-  gridWidth: 37
-  gridHeight: 22
-  originPosition: {x: -16, y: -10.6, z: 0}
+  gridWidth: 50
+  gridHeight: 50
+  originPosition: {x: -22.4, y: -23.4, z: 0}
   gridZPosition: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3241,13 +3244,13 @@ GameObject:
   - component: {fileID: 1859117515}
   - component: {fileID: 1859117516}
   - component: {fileID: 1859117517}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1859117515
 Transform:
   m_ObjectHideFlags: 0
@@ -3257,8 +3260,8 @@ Transform:
   m_GameObject: {fileID: 1859117514}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1408, y: 0.0753, z: 0}
-  m_LocalScale: {x: 36.68298, y: 22.528872, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 50, y: 50, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 538459164}
