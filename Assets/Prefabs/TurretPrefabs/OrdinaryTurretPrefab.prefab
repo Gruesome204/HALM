@@ -184,9 +184,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  currentFiringPattern: 0
-  projectilesPerSalve: 3
-  delayBetweenSalveProjectiles: 2
 --- !u!114 &1769220035969220366
 MonoBehaviour:
   m_ObjectHideFlags: 0
