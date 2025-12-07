@@ -22,4 +22,7 @@ public class BuildmasterModifyManager : MonoBehaviour
         gameDataSO.additionalArmor = gameDataSO.additionalArmor + modifier.additionalArmor;
         gameDataSO.additionalMagicResistance = gameDataSO.additionalMagicResistance + modifier.additionalMagicResistance;
     }
+
+    public List<BuildMasterModifier> GetBuildmasterModifiers() => availableBuildmasterModifiers;
+
 }

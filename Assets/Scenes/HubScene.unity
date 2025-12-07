@@ -314,6 +314,7 @@ MonoBehaviour:
   allMenuesInThisScene:
   - {fileID: 1494710915}
   - {fileID: 1581052272}
+  - {fileID: 888852197}
   openMenus: []
 --- !u!1 &328470437
 GameObject:
@@ -564,6 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8384225ae6279164aa6472b499a62d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modifierButtonAsset: {fileID: 9197481963319205126, guid: a19c3f17cf0f3fd47a91d1724acfa94e, type: 3}
 --- !u!1 &960880852
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class HubInteractable : MonoBehaviour
 
         if (interactionName == "Werkstatt")
         {
-            InGameMenuManager.Instance.OpenOrCloseOneMenu("TestDoc", true);
+            InGameMenuManager.Instance.OpenOrCloseOneMenu("BuildmasterModifyDoc", true);
         }
     }
 

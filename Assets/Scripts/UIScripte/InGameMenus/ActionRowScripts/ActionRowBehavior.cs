@@ -6,8 +6,6 @@ using UnityEngine.UIElements;
 
 public class ActionRowBehavior : MonoBehaviour, IMenu
 {
-    private InGameMenuManager gameMenuManager;
-
     private VisualElement turretButtonContainer;
     private VisualElement resourceContainer;
     private VisualElement towerLimitContainer;
@@ -42,7 +40,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
-        gameMenuManager = FindObjectOfType<InGameMenuManager>();
 
 
         turretButtonContainer = root.Q<VisualElement>("turrentButtonContainer");
@@ -111,15 +108,15 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     void PauseBtnClicked(ClickEvent evt)
     {
-        gameMenuManager.CloseAllMenus();
-        gameMenuManager.OpenOrCloseOneMenu("PauseMenuDoc", true);
+        InGameMenuManager.Instance.CloseAllMenus();
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("PauseMenuDoc", true);
 
     }
 
     void StatsBtnClicked(ClickEvent evt)
     {
-        gameMenuManager.CloseAllMenus();
-        gameMenuManager.OpenOrCloseOneMenu("StatsMenuDoc", true);
+        InGameMenuManager.Instance.CloseAllMenus();
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("StatsMenuDoc", true);
     }
 
     void FillTowerLimitBar(int towerLimit)
