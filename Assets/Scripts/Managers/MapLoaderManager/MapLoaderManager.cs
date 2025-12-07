@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MapLoaderManager : MonoBehaviour
 {
@@ -37,7 +38,24 @@ public class MapLoaderManager : MonoBehaviour
         // Load new map prefab
         currentMap = Instantiate(mapPrefabs[index], mapParent);
 
-        // Optional: Update GridManager origin to match map
-        GridManager.Instance.originPosition = currentMap.transform.position;
+        Tilemap[] tilemaps = currentMap.GetComponentsInChildren<Tilemap>();
+        Tilemap floorTilemap = GetFloorTileMap();
+
+    }
+
+    public Tilemap GetFloorTileMap()
+    {
+        Tilemap[] tilemaps = currentMap.GetComponentsInChildren<Tilemap>();
+        Tilemap floorTilemap;
+        foreach (Tilemap t in tilemaps)
+        {
+            if (t.gameObject.name.ToLower().Contains("floor"))
+            {
+                floorTilemap = t;
+                return floorTilemap;
+            }
+        }
+        return null;
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 /// <summary>
 /// Handles turret blueprint selection, placement, previewing, and active turret management.
 /// </summary>
@@ -220,52 +221,37 @@ public class TurretPlacementController : MonoBehaviour
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
 
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
-
-        if (hit.collider == null)
-        {
-            previewObject.SetActive(false);
-            return;
-        }
-
-        previewObject.SetActive(true);
-
-        // Snap to grid using blueprint size
-        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
+        // Snap to grid
+        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(mouseWorldPos);
         Vector3 snappedWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
 
-        previewObject.transform.position = snappedWorldPos;
-
-        // Check if placement is valid
+        // Check if placement is valid on the Tilemap + occupancy
         bool canPlace = GridManager.Instance.CanPlaceObject(gridCoords, currentSelectedBlueprint.sizeInCells);
 
-        Vector3 targetWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
-        if (IsPlacementBlocked(targetWorldPos, currentSelectedBlueprint.sizeInCells))
-        {
+        // Check if blocked by player/enemy
+        if (IsPlacementBlocked(snappedWorldPos, currentSelectedBlueprint.sizeInCells))
             canPlace = false;
-        }
 
+        // Check distance to player
         float distanceToPlayer = playerTransform != null
-        ? Vector3.Distance(playerTransform.position, targetWorldPos)
-        : 0f;
-
-        bool inRange = playerTransform == null || distanceToPlayer <= placementRadius;
-
-        if (!inRange)
+            ? Vector3.Distance(playerTransform.position, snappedWorldPos)
+            : 0f;
+        if (playerTransform != null && distanceToPlayer > placementRadius)
             canPlace = false;
 
+        // Check cooldown
         if (IsBlueprintOnCooldown(currentSelectedBlueprint))
             canPlace = false;
 
-        // Check capacity limit
+        // Check capacity
         int currentCapacity = GetUsedCapacity();
         int cost = currentSelectedBlueprint.buildCapacityValue;
-
         if (currentCapacity + cost > maxTurretCapacity)
-        {
             canPlace = false;
-        }
 
+        // Update preview
+        previewObject.SetActive(true);
+        previewObject.transform.position = snappedWorldPos;
         UpdatePreviewColor(canPlace);
     }
     private void MakePreviewTransparent(GameObject obj)
@@ -340,22 +326,8 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, Mathf.Infinity, groundLayer);
-
-        if (hit.collider == null)
-        {
-            Debug.Log("[TurretPlacement] Cannot place: mouse not over ground.");
-            return;
-        }
-
-        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(hit.point);
-
-        if (!GridManager.Instance.CanPlaceObject(gridCoords, currentSelectedBlueprint.sizeInCells))
-        {
-            Debug.Log("[TurretPlacement] Cannot place: grid occupied or out of bounds.");
-            return;
-        }
-
+        mouseWorldPos.z = 0f;
+        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(mouseWorldPos);
         Vector3 targetWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
 
         float distanceToPlayer = Vector3.Distance(playerTransform.position, targetWorldPos);
@@ -488,6 +460,8 @@ public class TurretPlacementController : MonoBehaviour
 
         return playerHit != null || enemyHit != null;
     }
+
+
 
     private void OnDrawGizmos()
     {

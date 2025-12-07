@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e7cda704781734ebb691b39dac05d3, type: 3}
+  m_Name: CannonTurret
+  m_EditorClassIdentifier: 
+  turretName: CannonTurret
+  towerIcon: {fileID: 7274916224334571485, guid: 74f16a1d77dc72544b1d872b093b4c4a, type: 3}
+  baseLevel: 1
+  description: 
+  turretType: 2
+  previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
+  turretPrefab: {fileID: 7571318827705311655, guid: 1ce6f749031a829468e26f28d04a94b6, type: 3}
+  firingPattern: 1
+  projectilesPerSalve: 1
+  delayBetweenSalveProjectiles: 0.5
+  baseHealth: 250
+  baseAttackDamage: 50
+  baseFireRate: 0.25
+  baseProjectileSpeed: 15
+  baseAttackRange: 20
+  baseKnockbackStrength: 2
+  baseKnockbackDuration: 1
+  baseHealthGrowthFactor: 1.1
+  baseDamageGrowthFactor: 0
+  baseFireRateGrowthFactor: 1.1
+  baseRangeGrowthFlat: 0
+  buildingCost: 0
+  height: 2
+  length: 2
+  buildCapacityValue: 2
+  placementCooldown: 20

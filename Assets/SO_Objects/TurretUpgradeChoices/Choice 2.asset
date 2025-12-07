@@ -15,9 +15,10 @@ MonoBehaviour:
   turretType: 0
   triggerLevel: 2
   options:
-  - name: Choice 2
-    description: Test 2
+  - name: "Gesch\xE4rfte Pfeil Spitzen"
+    description: "Gesch\xE4rfte Pfeil Spitzen"
     damageMultiplier: 2
     fireRateMultiplier: 0
-    rangeBonus: 2
+    rangeBonus: 0
     icon: {fileID: 0}
+    projectileType: {fileID: 0}

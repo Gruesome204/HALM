@@ -19,5 +19,6 @@ public class BuildMasterModifier : ScriptableObject
         public float additionalRegen;
         public float additionalArmor;
         public float additionalMagicResistance;
+        public float additionalMovementSpeed;
     }
 }

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e7cda704781734ebb691b39dac05d3, type: 3}
+  m_Name: Barricade
+  m_EditorClassIdentifier: 
+  turretName: Barricade
+  towerIcon: {fileID: 0}
+  baseLevel: 1
+  description: 
+  turretType: 3
+  previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
+  turretPrefab: {fileID: 0}
+  firingPattern: 0
+  projectilesPerSalve: 0
+  delayBetweenSalveProjectiles: 0
+  baseHealth: 80
+  baseAttackDamage: 0
+  baseFireRate: 0
+  baseProjectileSpeed: 0
+  baseAttackRange: 0
+  baseKnockbackStrength: 0
+  baseKnockbackDuration: 0
+  baseHealthGrowthFactor: 1.2
+  baseDamageGrowthFactor: 0
+  baseFireRateGrowthFactor: 0
+  baseRangeGrowthFlat: 0
+  buildingCost: 0
+  height: 1
+  length: 1
+  buildCapacityValue: 0
+  placementCooldown: 10

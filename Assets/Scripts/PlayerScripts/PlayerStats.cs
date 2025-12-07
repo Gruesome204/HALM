@@ -67,6 +67,7 @@ public class PlayerStats : MonoBehaviour
             currentRegen += mod.additionalRegen;
             currentArmor += mod.additionalArmor;
             currentMagicResistance += mod.additionalMagicResistance;
+            moveSpeed += mod.additionalMovementSpeed;
         }
 
         // Adjust current health depending on type of recalculation

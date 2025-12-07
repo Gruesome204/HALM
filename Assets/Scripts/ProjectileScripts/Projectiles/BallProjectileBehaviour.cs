@@ -12,7 +12,7 @@ public class BallProjectileBehaviour : MonoBehaviour
     public Vector2 direction;
     private Rigidbody2D rb;
 
-    public int piercingHitsRemaining = 0;
+    public int piercingHitsRemaining = 3;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

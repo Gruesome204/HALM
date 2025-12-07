@@ -15,9 +15,10 @@ MonoBehaviour:
   turretType: 0
   triggerLevel: 2
   options:
-  - name: test
-    description: 
-    damageMultiplier: 1
-    fireRateMultiplier: 2
-    rangeBonus: 3
+  - name: "Zus\xE4tzliche Besatzung"
+    description: "Zus\xE4tzliche Besatzung"
+    damageMultiplier: 0
+    fireRateMultiplier: 0
+    rangeBonus: 0
     icon: {fileID: 0}
+    projectileType: {fileID: 0}

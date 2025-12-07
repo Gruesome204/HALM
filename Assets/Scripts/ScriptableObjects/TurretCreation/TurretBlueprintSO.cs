@@ -32,6 +32,7 @@ public class TurretBlueprint : ScriptableObject
 
     public enum FiringPattern
     {
+        None,
         SingleShot,
         FireSalve
     }
