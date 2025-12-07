@@ -35,16 +35,16 @@ public class TurretHealth : MonoBehaviour, IDamagable
         stats.currentMaxHealth = turretBlueprint.baseHealth * TurretModifierManager.Instance.globalHealthMultiplier;
         stats.currentHealth = stats.currentMaxHealth;
 
-
+        RecalculateStatsAfterModifiers();
         UpdateHealthBar();
     }
 
-    public void RecalculateStatsAfterModifiers(TurretBlueprint turretBlueprint)
+    public void RecalculateStatsAfterModifiers()
     {
-        float oldPercent = stats.currentHealth / stats.currentMaxHealth;
+        float healthPercent = stats.currentHealth / stats.currentMaxHealth;
 
-        stats.currentMaxHealth = turretBlueprint.baseHealth * TurretModifierManager.Instance.globalHealthMultiplier;
-        stats.currentHealth = stats.currentMaxHealth * oldPercent;
+        stats.currentMaxHealth = stats.GetBlueprint().baseHealth * TurretModifierManager.Instance.globalHealthMultiplier;
+        stats.currentHealth = Mathf.Max(1, stats.currentMaxHealth * healthPercent);
     }
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)

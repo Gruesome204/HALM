@@ -79,6 +79,16 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         currentFiringPattern = turretBlueprint.firingPattern;
         projectilesPerSalve = turretBlueprint.projectilesPerSalve * TurretModifierManager.Instance.globalProjectilesPerSalve;
         delayBetweenSalveProjectiles = turretBlueprint.delayBetweenSalveProjectiles;
+
+
+    }
+
+    public void RecalculateAfterModifiers()
+    {
+        currentAttackDamage = turretBlueprint.baseAttackDamage * TurretModifierManager.Instance.globalDamageMultiplier;
+        currentFireCountdown = turretBlueprint.baseFireRate * TurretModifierManager.Instance.globalFireRateMultiplier;
+        currentProjectileSpeed = turretBlueprint.baseProjectileSpeed * TurretModifierManager.Instance.globalProjectileSpeed;
+        projectilesPerSalve = turretBlueprint.projectilesPerSalve * TurretModifierManager.Instance.globalProjectilesPerSalve;
     }
 
     void Update()
