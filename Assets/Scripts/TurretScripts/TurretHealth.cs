@@ -1,4 +1,4 @@
-using System;
+    using System;
 using UnityEngine;
 using UnityEngine.UI;
 using static DamageData;
@@ -32,9 +32,19 @@ public class TurretHealth : MonoBehaviour, IDamagable
     {
         if (turretBlueprint == null || stats == null) return;
 
+        stats.currentMaxHealth = turretBlueprint.baseHealth * TurretModifierManager.Instance.globalHealthMultiplier;
         stats.currentHealth = stats.currentMaxHealth;
 
+
         UpdateHealthBar();
+    }
+
+    public void RecalculateStatsAfterModifiers(TurretBlueprint turretBlueprint)
+    {
+        float oldPercent = stats.currentHealth / stats.currentMaxHealth;
+
+        stats.currentMaxHealth = turretBlueprint.baseHealth * TurretModifierManager.Instance.globalHealthMultiplier;
+        stats.currentHealth = stats.currentMaxHealth * oldPercent;
     }
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)

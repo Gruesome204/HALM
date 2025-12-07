@@ -67,15 +67,17 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     }
     public void InitializeFromBlueprint()
     {
+        currentAttackDamage = turretBlueprint.baseAttackDamage * TurretModifierManager.Instance.globalDamageMultiplier;
+
         currentFireCountdown = turretBlueprint.BaseFireCountdown;
         currentAttackRange = turretBlueprint.baseAttackRange;
-        currentFireRate = turretBlueprint.baseFireRate;
-        currentProjectileSpeed = turretBlueprint.baseProjectileSpeed;
+        currentFireRate = turretBlueprint.baseFireRate * TurretModifierManager.Instance.globalFireRateMultiplier;
+        currentProjectileSpeed = turretBlueprint.baseProjectileSpeed * TurretModifierManager.Instance.globalProjectileSpeed;
         currentKnockbackStrength = turretBlueprint.baseKnockbackStrength;
         currentKnockbackDuration = turretBlueprint.baseKnockbackDuration;
 
         currentFiringPattern = turretBlueprint.firingPattern;
-        projectilesPerSalve = turretBlueprint.projectilesPerSalve;
+        projectilesPerSalve = turretBlueprint.projectilesPerSalve * TurretModifierManager.Instance.globalProjectilesPerSalve;
         delayBetweenSalveProjectiles = turretBlueprint.delayBetweenSalveProjectiles;
     }
 
