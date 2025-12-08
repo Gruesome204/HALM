@@ -2543,7 +2543,7 @@ GameObject:
   - component: {fileID: 1357217368}
   - component: {fileID: 1357217369}
   m_Layer: 0
-  m_Name: -TurretModifierManager-
+  m_Name: -TurretGlobalModifierManager-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

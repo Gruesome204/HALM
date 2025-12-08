@@ -383,7 +383,7 @@ public class TurretPlacementController : MonoBehaviour
         OnTurretsChanged?.Invoke();
 
         float cd = currentSelectedBlueprint.placementCooldown *
-                   TurretModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
+        TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
 
         float endTime = Time.time + cd;
         cooldownEndTimes[currentSelectedBlueprint] = endTime;

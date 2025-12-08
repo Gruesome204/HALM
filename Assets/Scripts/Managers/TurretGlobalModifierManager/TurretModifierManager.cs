@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretModifierManager: MonoBehaviour
+public class TurretGlobalModifierManager : MonoBehaviour
 {
-    public static TurretModifierManager Instance { get; private set; }
+    public static TurretGlobalModifierManager Instance { get; private set; }
 
     // Fired whenever any modifier changes (optional)
     public event System.Action OnModifiersChanged;

@@ -6,9 +6,9 @@ using UnityEngine;
 public class BuildMasterModifier : ScriptableObject
 {
     [Tooltip("List of modifier options the player can choose from.")]
-    public List<Modifier> options;
+    public Modifier options;
     [System.Serializable]
-    public class Modifier
+    public struct Modifier
     {
         public string name;
         [TextArea] public string description;

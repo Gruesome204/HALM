@@ -33,7 +33,7 @@ public class TurretGlobalModifierSO : ScriptableObject
             projectilesPerSalve = projectilesPerSalve
         };
 
-        TurretModifierManager.Instance.ApplyModifier(modifier);
+        TurretGlobalModifierManager.Instance.ApplyModifier(modifier);
     }
 }
 

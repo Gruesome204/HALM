@@ -110,6 +110,12 @@ public class GameManager : MonoBehaviour
             SaveGame();
             Debug.Log("Auto-saved.");
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SaveGame();
+            Debug.Log("Auto-saved.");
+        }
     }
 
 

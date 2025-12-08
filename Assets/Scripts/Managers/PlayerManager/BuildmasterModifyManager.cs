@@ -7,6 +7,19 @@ public class BuildmasterModifyManager : MonoBehaviour
 
     [SerializeField] GameDataSO gameDataSO;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("[BuildmasterModifyManager] Duplicate instance detected. Destroying this object.");
+            Destroy(gameObject);
+        }
+    }
+
     public List<BuildMasterModifier> availableBuildmasterModifiers = new List<BuildMasterModifier>();
 
 

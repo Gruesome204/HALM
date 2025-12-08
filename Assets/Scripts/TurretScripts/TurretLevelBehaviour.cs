@@ -11,8 +11,8 @@ public class TurretLevelBehaviour : MonoBehaviour
             SyncWithCurrentLevel();
 
 
-        if (TurretModifierManager.Instance != null)
-            TurretModifierManager.Instance.OnModifiersChanged += HandleGlobalModifiersChanged;
+        if (TurretGlobalModifierManager.Instance != null)
+            TurretGlobalModifierManager.Instance.OnModifiersChanged += HandleGlobalModifiersChanged;
     }
 
     private void OnDisable()
@@ -20,8 +20,8 @@ public class TurretLevelBehaviour : MonoBehaviour
         if (TurretLevelManager.Instance != null)
             TurretLevelManager.Instance.OnLevelUp -= HandleLevelUp;
 
-        if (TurretModifierManager.Instance != null)
-            TurretModifierManager.Instance.OnModifiersChanged -= HandleGlobalModifiersChanged;
+        if (TurretGlobalModifierManager.Instance != null)
+            TurretGlobalModifierManager.Instance.OnModifiersChanged -= HandleGlobalModifiersChanged;
     }
 
     private void HandleGlobalModifiersChanged()
@@ -81,7 +81,7 @@ public class TurretLevelBehaviour : MonoBehaviour
         float turretProjectileSpeed = TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(blueprint.turretType);
 
         // --- GLOBAL MODIFIERS ---
-        var global = TurretModifierManager.Instance;
+        var global = TurretGlobalModifierManager.Instance;
         float globalDamageMult = global?.globalDamageMultiplier ?? 1f;
         float globalFireRateMult = global?.globalFireRateMultiplier ?? 1f;
         float globalRangeBonus = 0f; // Add if needed
