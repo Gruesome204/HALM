@@ -87,12 +87,19 @@ public class TurretPlacementController : MonoBehaviour
   
     private void HandleBlueprintSelectionInput()
     {
-        // Example: hotkeys 1 and 2 for selecting blueprints
-        if (Input.GetKeyDown(KeyCode.Alpha1) && turretBlueprintList.Count > 0)
-            SelectTurretBlueprint(turretBlueprintList[0]);
+        // Loop through all possible blueprint indices
+        for (int i = 0; i < turretBlueprintList.Count; i++)
+        {
+            // KeyCode.Alpha1 corresponds to 1, Alpha2 to 2, etc.
+            // So we use (i + 1) to match the keys
+            KeyCode key = KeyCode.Alpha1 + i;
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && turretBlueprintList.Count > 1)
-            SelectTurretBlueprint(turretBlueprintList[1]);
+            if (Input.GetKeyDown(key))
+            {
+                SelectTurretBlueprint(turretBlueprintList[i]);
+                break; // Stop after selecting one blueprint
+            }
+        }
     }
 
 
