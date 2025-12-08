@@ -22,6 +22,10 @@ MonoBehaviour:
     m_Localized: Smithy
     m_Metadata:
       m_Items: []
+  - m_Id: 75229977776128
+    m_Localized: Applied modifiers
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

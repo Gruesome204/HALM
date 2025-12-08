@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 307297390592
-    m_Localized: Jo, die basics halt n?
+    m_Localized: "bls r\xFCstung, weniger Tempo"
     m_Metadata:
       m_Items: []
   - m_Id: 304961163264
-    m_Localized: Der erste seiner Art
+    m_Localized: schweres Metall
     m_Metadata:
       m_Items: []
   references:

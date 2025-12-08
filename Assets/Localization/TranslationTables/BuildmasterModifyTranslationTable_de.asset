@@ -22,6 +22,10 @@ MonoBehaviour:
     m_Localized: Der Ort, an dem der Hammer auf den Amboss trifft
     m_Metadata:
       m_Items: []
+  - m_Id: 75229977776128
+    m_Localized: Angewantes Essen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

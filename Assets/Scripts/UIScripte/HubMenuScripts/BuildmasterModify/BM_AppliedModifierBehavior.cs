@@ -15,6 +15,9 @@ public class BM_AppliedModifierBehavior
 
     public BM_AppliedModifierBehavior(VisualTreeAsset asset, BuildMasterModifier _representedModifier)
     {
+
+        representedModifier = _representedModifier;
+
         TemplateContainer modifierButton = asset.Instantiate();
 
         mainContainer = modifierButton.Q<VisualElement>("mainContainer");

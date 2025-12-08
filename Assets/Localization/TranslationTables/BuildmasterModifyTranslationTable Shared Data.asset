@@ -19,6 +19,10 @@ MonoBehaviour:
     m_Key: headline
     m_Metadata:
       m_Items: []
+  - m_Id: 75229977776128
+    m_Key: subHeadline
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

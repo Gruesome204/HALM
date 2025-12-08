@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 94855892992
-    m_Localized: Modifier Two
+    m_Localized: Light Buildingmaterials
     m_Metadata:
       m_Items: []
   - m_Id: 114560733184
-    m_Localized: Raises all Stats by 2
+    m_Localized: "-20% Bauabklingzeit\n-30% Lebenspunkte von T\xFCrmen"
     m_Metadata:
       m_Items: []
   references:

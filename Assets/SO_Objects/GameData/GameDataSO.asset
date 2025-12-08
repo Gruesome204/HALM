@@ -34,4 +34,5 @@ MonoBehaviour:
   steinResource: 0
   metallResource: 0
   pulverResource: 0
-  buildMasterModifiers: []
+  buildMasterModifiers:
+  - {fileID: 11400000, guid: 63aefb47f4843d545918393963ca342d, type: 2}

@@ -19,11 +19,13 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 307297390592
-    m_Localized: "Erh\xF6t alle Stats um 1"
+    m_Localized: '+2 Armor
+
+      -0.5 Movement Speed'
     m_Metadata:
       m_Items: []
   - m_Id: 304961163264
-    m_Localized: Modifier One
+    m_Localized: "Schwere R\xFCstung"
     m_Metadata:
       m_Items: []
   references:

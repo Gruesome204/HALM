@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
@@ -60,16 +61,22 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
         ClearMenu();
         foreach (var modifier in BuildmasterModifyManager.Instance.GetBuildmasterModifiers())
         {
-            var btn = new BM_ModifierButtonBehavior(modifierButtonAsset, modifier);
-            var uiDocument = this.gameObject.GetComponent<UIDocument>();
-            uiDocument.rootVisualElement.Q("unity-content-container").Add(btn.mainContainer);
+            if (BuildmasterModifyManager.Instance.GetAppliedBuildmasterModifiers().Contains<BuildMasterModifier>(modifier))
+            {
+
+            }
+            else
+            {
+                var btn = new BM_ModifierButtonBehavior(modifierButtonAsset, modifier);
+                var uiDocument = this.gameObject.GetComponent<UIDocument>();
+                uiDocument.rootVisualElement.Q("unity-content-container").Add(btn.mainContainer);
+            }         
         }
 
         foreach (var _modifier in BuildmasterModifyManager.Instance.GetAppliedBuildmasterModifiers())
         {
             var btn = new BM_AppliedModifierBehavior(modifierButtonAsset, _modifier);
-            var uiDocument = this.gameObject.GetComponent<UIDocument>();
-            uiDocument.rootVisualElement.Q("unity-content-container").Add(btn.mainContainer);
+            appliedModifierContainer.Add(btn.mainContainer);
         }
     }
     private void ClearMenu()
