@@ -71,7 +71,6 @@ public class TurretLevelManager : MonoBehaviour
     private void ApplyUpgradesForLevel(TurretType type, int level)
     {
         var options = TurretUpgradeChoiceManager.Instance.GetAllOptionsForLevel(type, level);
-        bool milestoneTriggered = false;
 
         foreach (var option in options)
         {
@@ -79,7 +78,6 @@ public class TurretLevelManager : MonoBehaviour
             Debug.Log($"[LevelManager] Upgrade Option: {option.name} | " +
                       $"Damage x{mod.damageMultiplier} | FireRate x{mod.fireRateMultiplier} | " +
                       $"Range +{mod.rangeBonus} | Projectiles +{mod.projectilesPerSalve} | Speed x{mod.projectileSpeed}");
-            milestoneTriggered = true;
         }
 
         if (options.Any())
