@@ -39,7 +39,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         knockback = GetComponent<EnemyKnockback>();
         attack = GetComponent<EnemyAttack>();
         abilityBehaviour = GetComponent<EnemyAbilityBehaviour>();
-
         stats.Initialize();
         health.OnDeath += HandleDeath;
         health.OnDamaged += HandleDamaged;
@@ -192,7 +191,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {
         Debug.Log($"Enemy {enemyHealth.gameObject.name} died from {damageData.type} damage.");
-
+        DropResources();
         // Check if the source still exists before accessing
         if (damageData.source != null)
         {
@@ -217,4 +216,52 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         EnemySpawnManager.Instance.UnregisterEnemy(gameObject);
         Destroy(gameObject);
     }
+
+    private void AddResourceToGameData(ResourceTypeData.ResourceType type, int amount)
+    {
+       GameDataSO gameDataSO = GameManager.Instance.gameDataSO;
+
+        switch (type)
+        {
+            case ResourceTypeData.ResourceType.WoodResource:
+                gameDataSO.woodResource += amount;
+                break;
+
+            case ResourceTypeData.ResourceType.StoneResource:
+                gameDataSO.steinResource += amount;
+                break;
+
+            case ResourceTypeData.ResourceType.MetalResource:
+                gameDataSO.metallResource += amount;
+                break;
+
+            case ResourceTypeData.ResourceType.PulverResource:
+                gameDataSO.pulverResource += amount;
+                break;
+
+            default:
+                Debug.LogWarning($"Unhandled resource type: {type}");
+                break;
+        }
+
+        Debug.Log($"Added {amount}x {type} to GameDataSO.");
+    }
+    private void DropResources()
+    {
+        var drops = stats.baseStats.resourceDrops;
+        if (drops == null || drops.Length == 0) return;
+
+        foreach (var drop in drops)
+        {
+            if (Random.value > drop.dropChance)
+                continue;
+
+            int amount = Random.Range(drop.minAmount, drop.maxAmount + 1);
+            if (amount <= 0)
+                continue;
+
+            AddResourceToGameData(drop.resourceType, amount);
+        }
+    }
+
 }

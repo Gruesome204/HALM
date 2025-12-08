@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
-    [SerializeField] private EnemyBaseStats baseStats;
+    [SerializeField] public EnemyBaseStats baseStats;
 
     [Header("Level")]
     public int currentLevel = 1;

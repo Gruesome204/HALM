@@ -1,4 +1,5 @@
 using UnityEngine;
+using static ResourceTypeData;
 
 [CreateAssetMenu(fileName = "New EnemyBaseStats", menuName = "Game/Enemy/New EnemyBaseStats")]
 public class EnemyBaseStats : ScriptableObject
@@ -38,6 +39,10 @@ public class EnemyBaseStats : ScriptableObject
 
     [Header("Progression")]
     public float experienceYield = 2f;
+    public int goldYield = 0;
+
+    [Header("Resource Drops")]
+    public ResourceDrop[] resourceDrops;
 
     [Header("Scaling Factors")]
     public float baseHealthScaleFactor;
