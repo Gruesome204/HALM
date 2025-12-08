@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: GameDataSO
   m_EditorClassIdentifier: 
   localSelected: 
-  musicTrack: 1
+  musicTrack: 7
   masterVolume: 0.02
-  musicVolume: 0.06
-  soundVolume: 0.089999996
+  musicVolume: 0.01
+  soundVolume: 0.08
   limitOfUnlockableTurrets: 10
   limitOfSelectableTurrets: 5
   currentClass: 0
@@ -34,4 +34,6 @@ MonoBehaviour:
   steinResource: 0
   metallResource: 0
   pulverResource: 0
-  buildMasterModifiers: []
+  buildMasterModifiers:
+  - {fileID: 11400000, guid: 63aefb47f4843d545918393963ca342d, type: 2}
+  - {fileID: 11400000, guid: d4924574ebd4e1c4ca8537cf0f6dcf11, type: 2}
