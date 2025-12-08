@@ -103,8 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24c24d78ff92d5459d25a13edd1de93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackStrength: 10
-  knockbackDuration: 0.5
+  knockbackStrength: 0
+  knockbackDuration: 0
   direction: {x: 0, y: 0}
   piercingHitsRemaining: 1
 --- !u!50 &5522442266733711567

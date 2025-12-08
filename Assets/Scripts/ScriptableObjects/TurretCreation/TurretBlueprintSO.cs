@@ -30,6 +30,9 @@ public class TurretBlueprint : ScriptableObject
     [Tooltip("Prefab instantiated when the turret is placed in the world.")]
     public GameObject turretPrefab;
 
+    [Tooltip("Prefab instantiated when the turret is placed in the world.")]
+    public GameObject turretProjectileType;
+
     public enum FiringPattern
     {
         None,

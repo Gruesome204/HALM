@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turretBlueprint: {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
-  projectilePrefab: {fileID: 8178398497672007796, guid: d3df5105a70605c43a377002780ecfe3, type: 3}
+  currentProjectileType: {fileID: 1397600981807428680, guid: d3df5105a70605c43a377002780ecfe3, type: 3}
   firePoint: {fileID: 961634893544453137}
   healthBarPrefab: {fileID: 4822189033948548198, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
   currentAttackDamage: 0

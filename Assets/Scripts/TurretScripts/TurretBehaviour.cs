@@ -8,8 +8,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 {
     [Header("References")]
     public TurretBlueprint turretBlueprint;
-    public List<ProjectileTypeSO> projectileTypes;
-    private ProjectileTypeSO currentProjectileType;
+    public GameObject currentProjectileType;
     public Transform firePoint;
     [SerializeField] private GameObject healthBarPrefab;
 
@@ -82,11 +81,12 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         currentFireCountdown = turretBlueprint.BaseFireCountdown / globalFireRateMult;
         currentAttackRange = turretBlueprint.baseAttackRange;
         currentProjectileSpeed = turretBlueprint.baseProjectileSpeed
-                                 * (TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType) - 1f + 1f)
-                                 * (TurretGlobalModifierManager.Instance.globalProjectileSpeed - 1f + 1f);
+                                * TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType)
+                                * TurretGlobalModifierManager.Instance.globalProjectileSpeed;
 
         projectilesPerSalve = turretBlueprint.projectilesPerSalve + globalExtraProjectiles;
 
+        currentProjectileType = turretBlueprint.turretProjectileType;
 
         currentKnockbackStrength = turretBlueprint.baseKnockbackStrength;
         currentKnockbackDuration = turretBlueprint.baseKnockbackDuration;
@@ -170,8 +170,12 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     // Coroutine for shooting a fire salve
     IEnumerator ShootFireSalve()
     {
-        if (isShootingSalve) yield break;
+        if (isShootingSalve)
+            yield break;
+
         isShootingSalve = true;
+        // normal cooldown after salve
+        currentFireCountdown = turretBlueprint.BaseFireCountdown;
 
         float delay = delayBetweenSalveProjectiles;
 
@@ -224,8 +228,6 @@ public class TurretBehaviour : MonoBehaviour, IPausable
             }
         }
 
-        // normal cooldown after salve
-        currentFireCountdown = turretBlueprint.BaseFireCountdown;
 
         isShootingSalve = false;
     }
@@ -236,7 +238,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
             return;
 
         GameObject projectileObj = Instantiate(
-            currentProjectileType.prefab,
+            currentProjectileType,
             firePoint.position,
             firePoint.rotation
         );
@@ -265,10 +267,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         if (targetEnemy != null)
             ShootProjectileAt(targetEnemy);
     }
-    public void SetProjectile(ProjectileTypeSO newType)
-    {
-        currentProjectileType = newType;
-    }
+
 
     // This method will always draw the Gizmo in the Scene view
     //void OnDrawGizmos()
