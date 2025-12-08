@@ -186,5 +186,9 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlaying() => CurrentState == GameState.Playing;
     public bool IsPaused() => CurrentState == GameState.Paused;
-
+    private void OnApplicationQuit()
+    {
+        Debug.Log("[GameManager] Application quitting → Saving game.");
+        SaveGame();
+    }
 }
