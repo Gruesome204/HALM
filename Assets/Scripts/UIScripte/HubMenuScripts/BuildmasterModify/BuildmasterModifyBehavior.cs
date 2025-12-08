@@ -50,11 +50,13 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     private void FillMenu()
     {
         Debug.Log("FillingMenu");
-        //foreach (var _modifier in BuildmasterModifyManager.Instance.GetBuildmasterModifiers())
-        //{
-        //    BM_ModifierButtonBehavior _modifierButton = new BM_ModifierButtonBehavior(modifierButtonAsset, _modifier);
-        //    btnContainer.Add(_modifierButton.mainContainer);
-        //}
+        var modifiers = BuildmasterModifyManager.Instance.GetBuildmasterModifiers();
+
+        foreach (var modifier in modifiers)
+        {
+            var btn = new BM_ModifierButtonBehavior(modifierButtonAsset, modifier);
+            btnContainer.Add(btn.mainContainer);
+        }
     }
     private void ClearMenu()
     {

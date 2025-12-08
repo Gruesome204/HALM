@@ -6,19 +6,18 @@ using UnityEngine.UI;
 
 public class TurretBehaviour : MonoBehaviour, IPausable
 {
+    [Header("References")]
     public TurretBlueprint turretBlueprint;
     public GameObject projectilePrefab;
-
-    public Transform firePoint; // A point on the turret where projectiles spawn
-
+    public Transform firePoint;
     [SerializeField] private GameObject healthBarPrefab;
 
     [Header("Values")]
+    public float currentAttackDamage;
     public float currentFireRate;
     public float currentFireCountdown;
     public float currentProjectileSpeed;
     public float currentAttackRange;
-    public float currentAttackDamage;
     public float currentKnockbackStrength;
     public float currentKnockbackDuration;
 
@@ -29,34 +28,36 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     private TurretBlueprint.FiringPattern currentFiringPattern;
     private bool isShootingSalve;
-    private int projectilesPerSalve; // Number of projectiles in a salve
+    public int projectilesPerSalve; // Number of projectiles in a salve
     private float delayBetweenSalveProjectiles; // Delay between each projectile in a salve
 
     private bool isPaused;
 
 
-    private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
-    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
-
-    public void OnPause()
+    private void OnEnable()
     {
-        isPaused = true;
-        // Stop moving, stop attacking, etc.
+        GameManager.Instance?.RegisterPausable(this);
+        if (TurretGlobalModifierManager.Instance != null)
+            TurretGlobalModifierManager.Instance.OnModifiersChanged += RecalculateStats;
+        RecalculateStats();
     }
 
-    public void OnResume()
+    private void OnDisable()
     {
-        isPaused = false;
-        // Resume AI
+        GameManager.Instance?.UnregisterPausable(this);
+        if (TurretGlobalModifierManager.Instance != null)
+            TurretGlobalModifierManager.Instance.OnModifiersChanged -= RecalculateStats;
     }
+
+    // Pause system
+    public void OnPause() => isPaused = true;
+    public void OnResume() => isPaused = false;
 
 
     void Start()
     {
-        if (turretBlueprint != null)
-        {
-            InitializeFromBlueprint();
-        }
+        currentFiringPattern = turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
+        delayBetweenSalveProjectiles = turretBlueprint?.delayBetweenSalveProjectiles ?? 0.1f;
 
         var health = GetComponent<TurretHealth>();
         if (health != null)
@@ -65,18 +66,29 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         }
 
     }
-    public void InitializeFromBlueprint()
+    public void RecalculateStats()
     {
-        currentFireCountdown = turretBlueprint.BaseFireCountdown;
+        if (turretBlueprint == null) return;
+        var global = TurretGlobalModifierManager.Instance;
+
+        float globalFireRateMult = global?.globalFireRateMultiplier ?? 1f;
+        float globalDamageMult = global?.globalDamageMultiplier ?? 1f;
+        float globalProjectileSpeed = Mathf.Max(0.01f, global?.globalProjectileSpeed ?? 1f);
+        int globalExtraProjectiles = global?.globalProjectilesPerSalve ?? 0;
+
+        currentAttackDamage = turretBlueprint.baseAttackDamage * globalDamageMult;
+        currentFireRate = turretBlueprint.baseFireRate * globalFireRateMult;
+        currentFireCountdown = turretBlueprint.BaseFireCountdown / globalFireRateMult;
         currentAttackRange = turretBlueprint.baseAttackRange;
-        currentFireRate = turretBlueprint.baseFireRate;
-        currentProjectileSpeed = turretBlueprint.baseProjectileSpeed;
+        currentProjectileSpeed = turretBlueprint.baseProjectileSpeed
+                                 * (TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType) - 1f + 1f)
+                                 * (TurretGlobalModifierManager.Instance.globalProjectileSpeed - 1f + 1f);
+
+        projectilesPerSalve = turretBlueprint.projectilesPerSalve + globalExtraProjectiles;
+
+
         currentKnockbackStrength = turretBlueprint.baseKnockbackStrength;
         currentKnockbackDuration = turretBlueprint.baseKnockbackDuration;
-
-        currentFiringPattern = turretBlueprint.firingPattern;
-        projectilesPerSalve = turretBlueprint.projectilesPerSalve;
-        delayBetweenSalveProjectiles = turretBlueprint.delayBetweenSalveProjectiles;
     }
 
     void Update()

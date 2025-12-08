@@ -59,4 +59,9 @@ public class TurretStats : MonoBehaviour
     {
         return ((currentLevel - 1) * factor) + 1;
     }
+
+    public TurretBlueprint GetBlueprint()
+    {
+        return baseStats;
+    }
 }

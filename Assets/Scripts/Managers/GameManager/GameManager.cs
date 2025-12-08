@@ -110,6 +110,12 @@ public class GameManager : MonoBehaviour
             SaveGame();
             Debug.Log("Auto-saved.");
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SaveGame();
+            Debug.Log("Auto-saved.");
+        }
     }
 
 
@@ -186,5 +192,9 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlaying() => CurrentState == GameState.Playing;
     public bool IsPaused() => CurrentState == GameState.Paused;
-
+    private void OnApplicationQuit()
+    {
+        Debug.Log("[GameManager] Application quitting → Saving game.");
+        SaveGame();
+    }
 }

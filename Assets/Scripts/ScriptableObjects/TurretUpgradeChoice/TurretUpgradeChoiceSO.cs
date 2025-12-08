@@ -14,11 +14,7 @@ public class TurretUpgradeChoiceSO : ScriptableObject
     {
         public string name;
         [TextArea] public string description;
-        public float damageMultiplier = 1f;
-        public float fireRateMultiplier = 1f;
-        public float rangeBonus = 0f;
         public Sprite icon; // for UI
-        public GameObject projectileType;
-        public int projectilesPerSalve;
+        public TurretModifier modifier;
     }
 }
