@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class BossEnemy : MonoBehaviour
 {
-    public EnemyStats stats;
+    private EnemyStats stats;
+    private EnemyHealth health;
+    private EnemyMovement movement;
+    private EnemyKnockback knockback;
+    private EnemyAttack attack;
 
     public void SpecialAbility()
     {
-        // Example: deal AoE damage, summon minions, etc.
-        Debug.Log($"{stats.enemyName} uses a special attack!");
     }
 }
