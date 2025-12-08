@@ -44,6 +44,13 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.LogWarning("[PlayerManager] No PlayerHealth found!");
         }
+
+        //Add Modifiers to Player
+        foreach (BuildMasterModifier modifier in GameManager.Instance.gameDataSO.buildMasterModifiers)
+        {
+            playerStats.AddModifier(modifier.options);
+        }
+
     }
 
 

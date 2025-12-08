@@ -34,7 +34,7 @@ public class PlayerStats : MonoBehaviour
     public void AddModifier(BuildMasterModifier.Modifier modifier)
     {
         appliedModifiers.Add(modifier);
-        RecalculateStats();
+        RecalculateStats(fullReheal: true);
     }
 
     public void RemoveModifier(BuildMasterModifier.Modifier modifier)

@@ -7,6 +7,7 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
 
     //List of possible Upgrades(Added in Inspector as Scriptable Objects)
     [SerializeField] private List<TurretUpgradeChoiceSO> upgradeChoices;
+
     //Dictionary that saves all picked upgrades
     private Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption> chosenUpgrades;
 

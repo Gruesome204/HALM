@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BallProjectileBehaviour : MonoBehaviour
+public class ProjectileBehaviour : MonoBehaviour
 {
     private DamageData damageData;
     private GameObject owner; // The turret that fired this projectile
