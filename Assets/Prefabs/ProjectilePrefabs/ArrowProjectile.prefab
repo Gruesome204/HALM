@@ -301,4 +301,4 @@ MonoBehaviour:
   knockbackStrength: 0
   knockbackDuration: 0
   direction: {x: 0, y: 0}
-  piercingHitsRemaining: 3
+  piercingHitsRemaining: 1

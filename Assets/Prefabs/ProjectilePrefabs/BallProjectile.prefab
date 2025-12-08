@@ -106,7 +106,7 @@ MonoBehaviour:
   knockbackStrength: 0
   knockbackDuration: 0
   direction: {x: 0, y: 0}
-  piercingHitsRemaining: 1
+  piercingHitsRemaining: 3
 --- !u!50 &5522442266733711567
 Rigidbody2D:
   serializedVersion: 5
