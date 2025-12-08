@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+
 /// <summary>
 /// Handles turret blueprint selection, placement, previewing, and active turret management.
 /// </summary>
@@ -12,6 +12,7 @@ public class TurretPlacementController : MonoBehaviour
     public static TurretPlacementController Instance { get; private set; }
 
     public event Action OnTurretsChanged;
+    public event Action<TurretBlueprint, bool> OnPlacementCooldownStateChanged;
 
     [Header("Turret Blueprints")]
     [Tooltip("List of available turret blueprints.")]
@@ -52,24 +53,11 @@ public class TurretPlacementController : MonoBehaviour
     [Tooltip("Reference to the player transform.")]
     public Transform playerTransform;
 
-    //Currently Active Turrets
-    [SerializeField]private List<GameObject> activeTurrets = new List<GameObject>();
-    [SerializeField]private List<TurretHealth> placedTurrets = new List<TurretHealth>();
+    // Active turret tracking
+    private List<GameObject> activeTurrets = new();
+    private List<TurretHealth> placedTurrets = new();
     private Dictionary<TurretBlueprint, float> cooldownEndTimes = new();
 
-    public event Action<TurretBlueprint, bool> OnPlacementCooldownStateChanged;
-
-
-    private void OnEnable()
-    {
-        OnPlacementCooldownStateChanged += HandleCooldownEvent;
-
-    }
-    private void OnDisable()
-    {
-       OnPlacementCooldownStateChanged -= HandleCooldownEvent;
-
-    }
 
     private void Awake()
     {
@@ -86,44 +74,17 @@ public class TurretPlacementController : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    private void OnEnable() => OnPlacementCooldownStateChanged += HandleCooldownEvent;
+    private void OnDisable() => OnPlacementCooldownStateChanged -= HandleCooldownEvent;
+
+
     private void Update()
     {
         HandleBlueprintSelectionInput();
         HandlePlacementInput();
     }
 
-    public void RegisterTurret(TurretHealth turret)
-    {
-        if (!placedTurrets.Contains(turret))
-            placedTurrets.Add(turret);
-    }
-
-    public void UnregisterTurret(TurretHealth turret)
-    {
-        placedTurrets.Remove(turret);
-    }
-
-    public bool IsBlueprintOnCooldown(TurretBlueprint blueprint)
-    {
-        if (!cooldownEndTimes.TryGetValue(blueprint, out float endTime))
-            return false;
-
-        return Time.time < endTime;
-    }
-    private void HandleCooldownEvent(TurretBlueprint blueprint, bool active)
-    {
-        if (currentSelectedBlueprint == blueprint)
-            Debug.Log($"Cooldown changed: {blueprint.name} active={active}");
-    }
-
-    public float GetCooldownRemaining(TurretBlueprint blueprint)
-    {
-        if (!cooldownEndTimes.TryGetValue(blueprint, out float endTime))
-            return 0f;
-
-        return Mathf.Max(0f, endTime - Time.time);
-    }
-
+  
     private void HandleBlueprintSelectionInput()
     {
         // Example: hotkeys 1 and 2 for selecting blueprints
@@ -306,93 +267,74 @@ public class TurretPlacementController : MonoBehaviour
     {
         if (playerTransform == null)
         {
-            Debug.LogWarning("[TurretPlacement] No player transform assigned. Please set it in the inspector.");
+            Debug.LogWarning("[TurretPlacement] Player transform not assigned.");
             return;
         }
 
-        int currentCapacity = GetUsedCapacity();
-        int cost = currentSelectedBlueprint.buildCapacityValue;
+        Vector3 worldPos = GetMouseWorldPosition();
+        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(worldPos);
+        Vector3 snappedPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
 
-        if (currentCapacity + cost > maxTurretCapacity)
+        if (!CanPlaceTurretAtPosition(snappedPos, gridCoords)) return;
+
+        GameObject turret = Instantiate(currentSelectedBlueprint.turretPrefab, snappedPos, Quaternion.identity, turretContainer);
+        RegisterPlacedTurret(turret, gridCoords);
+
+        float cd = currentSelectedBlueprint.placementCooldown * TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
+        cooldownEndTimes[currentSelectedBlueprint] = Time.time + cd;
+        StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint));
+
+        DeselectTurretBlueprint();
+        OnTurretsChanged?.Invoke();
+
+        Debug.Log($"[TurretPlacement] Turret placed. Used Capacity: {GetUsedCapacity()}/{maxTurretCapacity}");
+    }
+
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = 0f;
+        return pos;
+    }
+
+    private bool CanPlaceTurretAtPosition(Vector3 worldPos, Vector2Int gridCoords)
+    {
+        // Check blocked layers, grid occupancy, distance, capacity, cooldown
+        if (!GridManager.Instance.CanPlaceObject(gridCoords, currentSelectedBlueprint.sizeInCells)) return false;
+        if (IsPlacementBlocked(worldPos, currentSelectedBlueprint.sizeInCells)) return false;
+        if (Vector3.Distance(playerTransform.position, worldPos) > placementRadius) return false;
+        if (GetUsedCapacity() + currentSelectedBlueprint.buildCapacityValue > maxTurretCapacity) return false;
+        if (IsBlueprintOnCooldown(currentSelectedBlueprint)) return false;
+        return true;
+    }
+
+    private void RegisterPlacedTurret(GameObject turret, Vector2Int gridCoords)
+    {
+        // Place in grid
+        var placable = turret.GetComponentInChildren<PlacableObject>();
+        if (placable != null)
         {
-            Debug.Log($"[TurretPlacement] Not enough capacity. Current: {currentCapacity}/{maxTurretCapacity}, Cost: {cost}");
-            return;
+            placable.currentGridCoordinates = gridCoords;
+            GridManager.Instance.PlaceObject(turret, gridCoords, currentSelectedBlueprint.sizeInCells);
         }
 
-        if (IsBlueprintOnCooldown(currentSelectedBlueprint))
-        {
-            Debug.Log($"[TurretPlacement] {currentSelectedBlueprint.name} is on cooldown ({GetCooldownRemaining(currentSelectedBlueprint):F2}s left).");
-            return;
-        }
-
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPos.z = 0f;
-        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(mouseWorldPos);
-        Vector3 targetWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
-
-        float distanceToPlayer = Vector3.Distance(playerTransform.position, targetWorldPos);
-        if (distanceToPlayer > placementRadius)
-        {
-            Debug.Log($"[TurretPlacement] Too far from player! Distance: {distanceToPlayer:F2}, Max: {placementRadius}");
-            return;
-        }
-
-
-        if (IsPlacementBlocked(targetWorldPos, currentSelectedBlueprint.sizeInCells))
-        {
-            Debug.Log("[TurretPlacement] Cannot place: blocked by enemy or player.");
-            return;
-        }
-
-        // Instantiate turret at centered position
-        GameObject newTurret = Instantiate(
-            currentSelectedBlueprint.turretPrefab,
-            GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells),
-            Quaternion.identity,
-            turretContainer
-        );
-
-        // Register turret in grid and give the turret its coordiantes
-        PlacableObject turretPlacable = newTurret.GetComponentInChildren<PlacableObject>();
-        if (turretPlacable != null)
-        {
-            GridManager.Instance.PlaceObject(newTurret, gridCoords, currentSelectedBlueprint.sizeInCells);
-            turretPlacable.currentGridCoordinates = gridCoords;
-        }
-
-        TurretBehaviour behaviour = newTurret.GetComponentInChildren<TurretBehaviour>();
+        // Assign behaviour and stats
+        var behaviour = turret.GetComponentInChildren<TurretBehaviour>();
         if (behaviour != null)
         {
             behaviour.turretBlueprint = currentSelectedBlueprint;
             behaviour.RecalculateStats();
         }
 
-        // Setup TurretHealth
-        TurretHealth turretHealth = newTurret.GetComponentInChildren<TurretHealth>();
-        if (turretHealth != null)
+        var health = turret.GetComponentInChildren<TurretHealth>();
+        if (health != null)
         {
-            // Assign stats from blueprint (clone if ScriptableObject)
-            if (currentSelectedBlueprint != null)
-                turretHealth.Initialize(currentSelectedBlueprint);
-                
-            // Register turret for tracking and cleanup
-            turretHealth.OnDeath += OnTurretDeath;
-            RegisterTurret(turretHealth);
+            health.Initialize(currentSelectedBlueprint);
+            health.OnDeath += OnTurretDeath;
+            RegisterTurret(health);
         }
-        activeTurrets.Add(newTurret);
-        OnTurretsChanged?.Invoke();
 
-        float cd = currentSelectedBlueprint.placementCooldown *
-        TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
-
-        float endTime = Time.time + cd;
-        cooldownEndTimes[currentSelectedBlueprint] = endTime;
-
-        StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint));
-
-        DeselectTurretBlueprint();
-        //DestroyPreview();
-        Debug.Log($"[TurretPlacement] Turret placed. Used Capacity: {GetUsedCapacity()}/{maxTurretCapacity}");
+        activeTurrets.Add(turret);
     }
 
     private IEnumerator HandleCooldown(TurretBlueprint blueprint)
@@ -463,6 +405,39 @@ public class TurretPlacementController : MonoBehaviour
 
         return playerHit != null || enemyHit != null;
     }
+
+    public void RegisterTurret(TurretHealth turret)
+    {
+        if (!placedTurrets.Contains(turret))
+            placedTurrets.Add(turret);
+    }
+
+    public void UnregisterTurret(TurretHealth turret)
+    {
+        placedTurrets.Remove(turret);
+    }
+
+    public bool IsBlueprintOnCooldown(TurretBlueprint blueprint)
+    {
+        if (!cooldownEndTimes.TryGetValue(blueprint, out float endTime))
+            return false;
+
+        return Time.time < endTime;
+    }
+    private void HandleCooldownEvent(TurretBlueprint blueprint, bool active)
+    {
+        if (currentSelectedBlueprint == blueprint)
+            Debug.Log($"Cooldown changed: {blueprint.name} active={active}");
+    }
+
+    public float GetCooldownRemaining(TurretBlueprint blueprint)
+    {
+        if (!cooldownEndTimes.TryGetValue(blueprint, out float endTime))
+            return 0f;
+
+        return Mathf.Max(0f, endTime - Time.time);
+    }
+
 
 
 
