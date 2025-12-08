@@ -55,16 +55,17 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1759283730849935406, guid: 35da1b0dcddb8ae4aba1d2ccafe97370, type: 3}
   firePoint: {fileID: 5845866127659064707}
   healthBarPrefab: {fileID: 4822189033948548198, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
+  currentAttackDamage: 0
   currentFireRate: 0
   currentFireCountdown: 0
   currentProjectileSpeed: 0
   currentAttackRange: 0
-  currentAttackDamage: 0
   currentKnockbackStrength: 0
   currentKnockbackDuration: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  projectilesPerSalve: 0
 --- !u!114 &3115784510726600488
 MonoBehaviour:
   m_ObjectHideFlags: 0

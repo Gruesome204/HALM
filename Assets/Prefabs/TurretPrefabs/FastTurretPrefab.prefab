@@ -84,19 +84,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turretBlueprint: {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
-  projectilePrefab: {fileID: 1759283730849935406, guid: 35da1b0dcddb8ae4aba1d2ccafe97370, type: 3}
+  projectilePrefab: {fileID: 8178398497672007796, guid: d3df5105a70605c43a377002780ecfe3, type: 3}
   firePoint: {fileID: 961634893544453137}
   healthBarPrefab: {fileID: 4822189033948548198, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
+  currentAttackDamage: 0
   currentFireRate: 0
   currentFireCountdown: 0
   currentProjectileSpeed: 0
   currentAttackRange: 0
-  currentAttackDamage: 0
   currentKnockbackStrength: 0
   currentKnockbackDuration: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  projectilesPerSalve: 0
 --- !u!114 &7158522242924221709
 MonoBehaviour:
   m_ObjectHideFlags: 0

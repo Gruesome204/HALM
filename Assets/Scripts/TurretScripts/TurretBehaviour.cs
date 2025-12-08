@@ -8,7 +8,8 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 {
     [Header("References")]
     public TurretBlueprint turretBlueprint;
-    public GameObject projectilePrefab;
+    public List<ProjectileTypeSO> projectileTypes;
+    private ProjectileTypeSO currentProjectileType;
     public Transform firePoint;
     [SerializeField] private GameObject healthBarPrefab;
 
@@ -231,10 +232,15 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     void ShootProjectileAt(Transform target)
     {
-        if (!projectilePrefab || !firePoint || target == null) return;
+        if (currentProjectileType == null || target == null || firePoint == null)
+            return;
 
-        GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-        var projectile = projectileObj.GetComponent<BallProjectileBehaviour>();
+        GameObject projectileObj = Instantiate(
+            currentProjectileType.prefab,
+            firePoint.position,
+            firePoint.rotation
+        );
+        var projectile = projectileObj.GetComponent<ProjectileBehaviour>();
         var rb = projectileObj.GetComponent<Rigidbody2D>();
 
         if (projectile == null || rb == null)
@@ -258,6 +264,10 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     {
         if (targetEnemy != null)
             ShootProjectileAt(targetEnemy);
+    }
+    public void SetProjectile(ProjectileTypeSO newType)
+    {
+        currentProjectileType = newType;
     }
 
     // This method will always draw the Gizmo in the Scene view

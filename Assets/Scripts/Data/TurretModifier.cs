@@ -11,5 +11,5 @@ public class TurretModifier
     public float projectileSpeed = 1f;
     public float rangeBonus = 0f;
 
-    public GameObject projectileType;
+    public ProjectileTypeSO projectileType;
 }

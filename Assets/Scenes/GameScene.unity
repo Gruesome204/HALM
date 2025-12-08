@@ -3658,6 +3658,7 @@ MonoBehaviour:
     additionalMagicResistance: 0
     unlockedTurrets: 
     selectedTurrets: 
+    buildMasterModifiers: []
   autosaveInterval: 60
 --- !u!1 &2051609381
 GameObject:

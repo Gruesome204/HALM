@@ -98,10 +98,10 @@ public class TurretLevelBehaviour : MonoBehaviour
                                                              * globalProjectileSpeed);
 
         // --- Change projectile prefab if upgrade provides one ---
-        GameObject newProjectile = TurretUpgradeChoiceManager.Instance.GetCombinedModifier(blueprint.turretType).projectileType;
+        ProjectileTypeSO newProjectile = TurretUpgradeChoiceManager.Instance.GetCombinedModifier(blueprint.turretType).projectileType;
         if (newProjectile != null)
         {
-            turretBehaviour.projectilePrefab = newProjectile;
+            turretBehaviour.SetProjectile(newProjectile);
         }
 
         Debug.Log($"{blueprint.turretType} turret upgraded! Level {level} | " +
