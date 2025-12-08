@@ -66,10 +66,6 @@ public class GameDataSO : ScriptableObject
     public int pulverResource;
 
     [Header("PlayerStatsUpgrades")]
-    public float additionalHealth;
-    public float additionalMaxHealth;
-    public float additionalRegen;
-    public float additionalArmor;
-    public float additionalMagicResistance;
+    public List<BuildMasterModifier> buildMasterModifiers;
 
 }

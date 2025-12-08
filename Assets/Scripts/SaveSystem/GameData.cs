@@ -35,6 +35,7 @@ public class GameData
 
     public List<TurretType> unlockedTurrets;
     public List<TurretType> selectedTurrets;
+    public List<BuildMasterModifier> buildMasterModifiers;
 
     public GameData()
     {
@@ -59,12 +60,7 @@ public class GameData
         metallResource = so.metallResource;
         pulverResource = so.pulverResource;
 
-        additionalHealth = so.additionalHealth;
-        additionalMaxHealth = so.additionalMaxHealth;
-        additionalRegen = so.additionalRegen;
-        additionalArmor = so.additionalArmor;
-        additionalMagicResistance = so.additionalMagicResistance;
-
+        buildMasterModifiers = new List<BuildMasterModifier>();
 
     }
 }
