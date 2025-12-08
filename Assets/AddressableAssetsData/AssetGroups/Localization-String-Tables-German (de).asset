@@ -60,6 +60,12 @@ MonoBehaviour:
     - Locale-de
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a4c226552f20974d8097d7d5b5b7851
+    m_Address: BuildmasterModifyTranslationTable_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7e79707219cc96c46b00cbc283e0b9cb
     m_Address: ActionRowTranslationTable_de
     m_ReadOnly: 1
