@@ -2532,6 +2532,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 747619962}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1357217367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1357217368}
+  - component: {fileID: 1357217369}
+  m_Layer: 0
+  m_Name: -TurretModifierManager-
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1357217368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357217367}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1512055815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1357217369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357217367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f565ded3eadc648b948e3801d25c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalTurretPlacementCooldownMultiplier: 1
+  globalHealthMultiplier: 1
+  globalDamageMultiplier: 1
+  globalFireRateMultiplier: 1
+  globalProjectilesPerSalve: 1
+  globalProjectileSpeed: 1
 --- !u!1 &1379736038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,6 +2811,7 @@ Transform:
   - {fileID: 1066720071}
   - {fileID: 406684504}
   - {fileID: 368292586}
+  - {fileID: 1357217368}
   - {fileID: 825843165}
   - {fileID: 726615953}
   - {fileID: 427538120}

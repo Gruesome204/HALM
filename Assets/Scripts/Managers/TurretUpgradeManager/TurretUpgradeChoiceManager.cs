@@ -69,41 +69,42 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         return option;
     }
 
-    public float GetDamageMultiplier(TurretType type)
+    // Aggregate modifiers from all chosen upgrades
+    public TurretModifier GetCombinedModifier(TurretType type)
     {
-        float multiplier = 1f;
+        TurretModifier combined = new TurretModifier();
+
         foreach (var kvp in chosenUpgrades)
         {
             if (kvp.Key.Item1 == type)
             {
-                multiplier *= kvp.Value.damageMultiplier;
+                var mod = kvp.Value.modifier;
+                combined.damageMultiplier *= mod.damageMultiplier;
+                combined.fireRateMultiplier *= mod.fireRateMultiplier;
+                combined.projectileSpeed *= mod.projectileSpeed;
+                combined.projectilesPerSalve += mod.projectilesPerSalve;
+                combined.healthMultiplier *= mod.healthMultiplier;
+                combined.turretPlacementCooldownMultiplier *= mod.turretPlacementCooldownMultiplier;
             }
         }
-        return multiplier;
+
+        return combined;
     }
 
-    public float GetFireRateMultiplier(TurretType type)
-    {
-        float multiplier = 1f;
-        foreach (var kvp in chosenUpgrades)
-        {
-            if (kvp.Key.Item1 == type)
-            {
-                multiplier *= kvp.Value.fireRateMultiplier;
-            }
-        }
-        return multiplier;
-    }
-
+    // Convenience getters
+    public float GetDamageMultiplier(TurretType type) => GetCombinedModifier(type).damageMultiplier;
+    public float GetFireRateMultiplier(TurretType type) => GetCombinedModifier(type).fireRateMultiplier;
+    public float GetProjectileSpeedMultiplier(TurretType type) => GetCombinedModifier(type).projectileSpeed;
+    public int GetProjectilesPerSalve(TurretType type) => GetCombinedModifier(type).projectilesPerSalve;
+    public float GetHealthMultiplier(TurretType type) => GetCombinedModifier(type).healthMultiplier;
+    public float GetTurretPlacementCooldownMultiplier(TurretType type) => GetCombinedModifier(type).turretPlacementCooldownMultiplier;
     public float GetRangeBonus(TurretType type)
     {
         float bonus = 0f;
         foreach (var kvp in chosenUpgrades)
         {
             if (kvp.Key.Item1 == type)
-            {
-                bonus += kvp.Value.rangeBonus;
-            }
+                bonus += kvp.Value.modifier.rangeBonus;
         }
         return bonus;
     }

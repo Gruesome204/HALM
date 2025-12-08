@@ -364,7 +364,7 @@ public class TurretPlacementController : MonoBehaviour
         if (behaviour != null)
         {
             behaviour.turretBlueprint = currentSelectedBlueprint;
-            behaviour.InitializeFromBlueprint();
+            behaviour.RecalculateStats();
         }
 
         // Setup TurretHealth
@@ -382,7 +382,10 @@ public class TurretPlacementController : MonoBehaviour
         activeTurrets.Add(newTurret);
         OnTurretsChanged?.Invoke();
 
-        float endTime = Time.time + currentSelectedBlueprint.placementCooldown;
+        float cd = currentSelectedBlueprint.placementCooldown *
+                   TurretModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
+
+        float endTime = Time.time + cd;
         cooldownEndTimes[currentSelectedBlueprint] = endTime;
 
         StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint));
