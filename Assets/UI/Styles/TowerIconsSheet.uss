@@ -1,4 +1,5 @@
 .ArcherTowerIcon {
     background-color: rgba(0, 0, 0, 0);
     background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/ArcherTower_Icon.png?fileID=2800000&guid=a8c81774cdfd55b46b00e047a78ba8ca&type=3#ArcherTower_Icon");
+    flex-grow: 1;
 }

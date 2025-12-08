@@ -15,7 +15,7 @@ public class AR_ResourceBehavior
         border = resourceElemente.Q<VisualElement>("border");
 
         resourceIcon = resourceElemente.Q<VisualElement>("resourceIcon");
-        resourceIcon.style.backgroundColor = new Color(Random.Range(1,255), Random.Range(1, 255), Random.Range(1, 255),255);
+        resourceIcon.AddToClassList($"ArcherTowerIcon");
 
         resourceAmount = resourceElemente.Q<Label>("resourceAmount");
         resourceAmount.text = $"{itemAmount}";
