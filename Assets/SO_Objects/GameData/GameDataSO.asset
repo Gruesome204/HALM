@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: GameDataSO
   m_EditorClassIdentifier: 
   localSelected: 
-  musicTrack: 0
-  masterVolume: 0.07
-  musicVolume: 0.07
+  musicTrack: 2
+  masterVolume: 0.06
+  musicVolume: 0.089999996
   soundVolume: 0.08
   limitOfUnlockableTurrets: 10
   limitOfSelectableTurrets: 5

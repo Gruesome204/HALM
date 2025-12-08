@@ -33,6 +33,12 @@ MonoBehaviour:
   baseHearingRange: 2
   pursueRange: 10
   experienceYield: 10
+  goldYield: 0
+  resourceDrops:
+  - resourceType: 0
+    minAmount: 5
+    maxAmount: 5
+    dropChance: 1
   baseHealthScaleFactor: 0.1
   baseDamageScaleFactor: 0.1
   baseSpeedScaleFactor: 0
