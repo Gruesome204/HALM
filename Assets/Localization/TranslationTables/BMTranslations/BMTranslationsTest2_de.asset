@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 94855892992
-    m_Localized: Der zweite seiner Art
+    m_Localized: Leichtes Holz und so
     m_Metadata:
       m_Items: []
   - m_Id: 114560733184
-    m_Localized: "Nicht die basics, aber \xE4hnlich"
+    m_Localized: "bls mehr T\xFCrmer, bsl weniger Turm leben"
     m_Metadata:
       m_Items: []
   references:

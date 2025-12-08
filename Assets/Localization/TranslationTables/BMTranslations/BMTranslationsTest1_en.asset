@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 304961163264
-    m_Localized: Modifier One
+    m_Localized: Heavy Armor
     m_Metadata:
       m_Items: []
   - m_Id: 307297390592
-    m_Localized: Raises all Stats by 1
+    m_Localized: "+2 R\xFCstung\n-0,5 Laufgeschwindigkeit"
     m_Metadata:
       m_Items: []
   references:

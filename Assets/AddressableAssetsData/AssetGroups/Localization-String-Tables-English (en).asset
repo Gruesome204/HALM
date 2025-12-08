@@ -107,6 +107,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f4630720c2fd1b84f9b5f4346eb6f810
     m_Address: ActionRowTranslationTable_en

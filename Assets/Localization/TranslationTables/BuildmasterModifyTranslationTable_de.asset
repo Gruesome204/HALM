@@ -17,7 +17,15 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: d1e6a7f303ad1044d82355a4ea223c74, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 5520607547392
+    m_Localized: Der Ort, an dem der Hammer auf den Amboss trifft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75229977776128
+    m_Localized: Angewantes Essen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

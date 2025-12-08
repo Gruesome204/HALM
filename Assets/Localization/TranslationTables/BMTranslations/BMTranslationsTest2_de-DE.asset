@@ -19,11 +19,13 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 94855892992
-    m_Localized: Modifier Two
+    m_Localized: 'Leichte Baumaterialien '
     m_Metadata:
       m_Items: []
   - m_Id: 114560733184
-    m_Localized: "Erh\xF6t alle Stats um 2"
+    m_Localized: '-20% Building Cooldown
+
+      -30% Turrets Hit Points'
     m_Metadata:
       m_Items: []
   references:
