@@ -15,6 +15,13 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-German (Germany) (de-DE)
   m_GUID: 9a8477400ee2cab4f91e957647a45b61
   m_SerializeEntries:
+  - m_GUID: 0249ed222d49d1f49abfa2ed3b47fa85
+    m_Address: BMTranslationsTest1_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0cc487e79bf223340ba2f02e99cf0040
     m_Address: EnterDungeonTranslationTable_de-DE
     m_ReadOnly: 1
@@ -50,6 +57,13 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 490a71be3f9ce5445a3fa3b696bbe638
     m_Address: GameWonTranslationaTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58cd7450e0b1c1f45b99c657b177f5b6
+    m_Address: BMTranslationsTest2_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE

@@ -40,7 +40,7 @@ public class MainMenuBehavior : MonoBehaviour
 
     void OnPlayBtnClicked(ClickEvent clicked)
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("HubScene");
     }
     void OnSettingsBtnClicked(ClickEvent clicked)
     {

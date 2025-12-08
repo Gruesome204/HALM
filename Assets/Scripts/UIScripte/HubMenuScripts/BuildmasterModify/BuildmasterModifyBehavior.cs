@@ -37,22 +37,19 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         headline = root.Q<Label>("headline");
-        headline.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "pauseMenuButton"));
+        headline.SetBinding("text", new LocalizedString("BuildmasterModifyTranslationTable", "headline"));
 
         btnContainer = root.Q<VisualElement>("btnContainer");
 
         backBtn = root.Q<Button>("backBtn");
-        backBtn.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "pauseMenuButton"));
+        backBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "backBtnText"));
         backBtn.RegisterCallback<ClickEvent>(OnBackBtnClicked);
     }
 
 
     private void FillMenu()
     {
-        Debug.Log("FillingMenu");
-        var modifiers = BuildmasterModifyManager.Instance.GetBuildmasterModifiers();
-
-        foreach (var modifier in modifiers)
+        foreach (var modifier in BuildmasterModifyManager.Instance.GetBuildmasterModifiers())
         {
             var btn = new BM_ModifierButtonBehavior(modifierButtonAsset, modifier);
             btnContainer.Add(btn.mainContainer);

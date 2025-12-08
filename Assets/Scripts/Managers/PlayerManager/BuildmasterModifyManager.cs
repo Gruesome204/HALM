@@ -23,17 +23,10 @@ public class BuildmasterModifyManager : MonoBehaviour
     public List<BuildMasterModifier> availableBuildmasterModifiers = new List<BuildMasterModifier>();
 
 
-    public void UseABuildmasterModifier(BuildMasterModifier.Modifier modifier)
+    public void UseABuildmasterModifier(BuildMasterModifier modifier)
     {
-        ////Retracts Gold cost
-        //gameDataSO.gameCurrency = gameDataSO.gameCurrency + ((int)modifier.goldCost);
-
-        ////Add gained stats
-        //gameDataSO.additionalHealth = gameDataSO.additionalHealth + modifier.additionalHealth;
-        //gameDataSO.additionalMaxHealth = gameDataSO.additionalMaxHealth + modifier.additionalMaxHealth;
-        //gameDataSO.additionalRegen = gameDataSO.additionalRegen + modifier.additionalRegen;
-        //gameDataSO.additionalArmor = gameDataSO.additionalArmor + modifier.additionalArmor;
-        //gameDataSO.additionalMagicResistance = gameDataSO.additionalMagicResistance + modifier.additionalMagicResistance;
+        gameDataSO.buildMasterModifiers.Add(modifier);
+        Debug.Log("Joy");
     }
 
     public List<BuildMasterModifier> GetBuildmasterModifiers() => availableBuildmasterModifiers;
