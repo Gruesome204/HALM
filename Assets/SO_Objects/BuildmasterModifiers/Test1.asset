@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Test1
   m_EditorClassIdentifier: 
   options:
-  - name: Test 1
-    description: Hier testen wir sachen
+    name: Test1
+    description: 
     icon: {fileID: 0}
-    goldCost: -2
+    goldCost: 0
     additionalHealth: 1
     additionalMaxHealth: 1
     additionalRegen: 1
     additionalArmor: 1
     additionalMagicResistance: 1
+    additionalMovementSpeed: 1

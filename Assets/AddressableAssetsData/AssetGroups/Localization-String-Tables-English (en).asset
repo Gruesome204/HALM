@@ -34,6 +34,13 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a39437d7d833d2408d6452b5cd0174f
+    m_Address: BMTranslationsTest2_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 58e70a0be6ac5d1439d6af1a7a15f786
     m_Address: TurretTranslationArcherTower_en
     m_ReadOnly: 1
@@ -73,6 +80,13 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a640f8d5a6ba9dd4780b90e28f797d2d
+    m_Address: BMTranslationsTest1_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b30284c54e155c3459fe4f502ded0f73
     m_Address: TurretUpgradeTranslationTable_en

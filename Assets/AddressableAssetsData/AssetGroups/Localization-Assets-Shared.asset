@@ -27,6 +27,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 620bc351ac75a8e49b04dfd3cb12eb5e
+    m_Address: Assets/Localization/TranslationTables/BMTranslations/BMTranslationTest1
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6a812b1621131fe49afe6cc2d70b16b3
     m_Address: Assets/Localization/TranslationTables/CommonTranslationaTable Shared
       Data.asset
@@ -53,6 +59,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 90ca13a0f67bb494ebb46e945e8dd23a
     m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretTranslationFastTurret
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9373c65a754783c47aaf88f08f938a9d
+    m_Address: Assets/Localization/TranslationTables/BMTranslations/BMTranslationsTest2
       Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
