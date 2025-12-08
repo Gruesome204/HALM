@@ -5,6 +5,8 @@ public class TurretModifierManager: MonoBehaviour
 {
     public static TurretModifierManager Instance { get; private set; }
 
+    // Fired whenever any modifier changes (optional)
+    public event System.Action OnModifiersChanged;
     // List of all modifiers the player has acquired
     private readonly List<TurretModifier> appliedModifiers = new List<TurretModifier>();
     private void Awake()
@@ -14,12 +16,14 @@ public class TurretModifierManager: MonoBehaviour
     }
 
     // ---------------- GLOBAL MODIFIERS -------------------
+    // 1 == 100%
+    // 1.1 == 110%
 
-    public float globalTurretPlacementCooldownMultiplier = 1f;       // < 1 = reduced cooldown
-    public float globalHealthMultiplier = 1f;         // boosts max health
-    public float globalDamageMultiplier = 1f;         // boosts turret damage
-    public float globalFireRateMultiplier = 1f;    // reduces firing delay
-    public int globalProjectilesPerSalve = 1;
+    public float globalTurretPlacementCooldownMultiplier = 1f;
+    public float globalHealthMultiplier = 1f;
+    public float globalDamageMultiplier = 1f;
+    public float globalFireRateMultiplier = 1f;
+    public int globalProjectilesPerSalve = 0;
     public float globalProjectileSpeed = 1f;
 
     // Expand as needed...
@@ -27,37 +31,40 @@ public class TurretModifierManager: MonoBehaviour
     // Called by upgrades, research, player stats, etc.
     public void ApplyModifier(TurretModifier modifier)
     {
-        globalTurretPlacementCooldownMultiplier *= modifier.turretPlacementCooldownMultiplier;
-        globalHealthMultiplier *= modifier.healthMultiplier;
-        globalDamageMultiplier *= modifier.damageMultiplier;
-        globalFireRateMultiplier *= modifier.fireRateMultiplier;
-        globalProjectileSpeed *= modifier.projectileSpeed;
-        globalProjectilesPerSalve *= modifier.projectilesPerSalve;
+        appliedModifiers.Add(modifier);
+
+        globalTurretPlacementCooldownMultiplier *= Mathf.Max(0.01f, modifier.turretPlacementCooldownMultiplier);
+        globalHealthMultiplier *= Mathf.Max(0.01f, modifier.healthMultiplier);
+        globalDamageMultiplier *= Mathf.Max(0.01f, modifier.damageMultiplier);
+        globalFireRateMultiplier *= Mathf.Max(0.01f, modifier.fireRateMultiplier);
+        globalProjectileSpeed *= Mathf.Max(0.01f, modifier.projectileSpeed);
+        globalProjectilesPerSalve += modifier.projectilesPerSalve;
 
         // Apply changes to all existing turrets
         ApplyModifiersToAllExistingTurrets();
+
+        // Notify UI or save systems
+        OnModifiersChanged?.Invoke();   
+    }
+
+    // Prevent 0 / negative numbers from breaking the system
+    private float MultiplySafe(float current, float modifier)
+    {
+        return current * Mathf.Max(0.01f, modifier);
     }
 
     // ---------------- AUTO-APPLY TO ALL EXISTING TURRETS -------------------
     public void ApplyModifiersToAllExistingTurrets()
     {
-        foreach (GameObject turret in TurretPlacementController.Instance.GetActiveTurrets())
+        var tc = TurretPlacementController.Instance;
+        if (tc == null) return;
+
+        foreach (GameObject turret in tc.GetActiveTurrets())
         {
             if (turret == null) continue;
 
-            // Update HP
-            TurretHealth health = turret.GetComponentInChildren<TurretHealth>();
-            if (health != null)
-            {
-                health.RecalculateStatsAfterModifiers();
-            }
-
-            // Update behavior (damage, fire rate, projectiles, speed)
-            TurretBehaviour behaviour = turret.GetComponentInChildren<TurretBehaviour>();
-            if (behaviour != null)
-            {
-                behaviour.RecalculateAfterModifiers();
-            }
+            turret.GetComponentInChildren<TurretHealth>()?.RecalculateStatsAfterModifiers();
+            turret.GetComponentInChildren<TurretBehaviour>()?.RecalculateAfterModifiers();
         }
     }
 
