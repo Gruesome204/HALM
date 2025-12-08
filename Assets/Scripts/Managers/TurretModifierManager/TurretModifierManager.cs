@@ -40,6 +40,8 @@ public class TurretModifierManager: MonoBehaviour
         globalProjectileSpeed *= Mathf.Max(0.01f, modifier.projectileSpeed);
         globalProjectilesPerSalve += modifier.projectilesPerSalve;
 
+
+
         // Apply changes to all existing turrets
         ApplyModifiersToAllExistingTurrets();
 
@@ -64,7 +66,7 @@ public class TurretModifierManager: MonoBehaviour
             if (turret == null) continue;
 
             turret.GetComponentInChildren<TurretHealth>()?.RecalculateStatsAfterModifiers();
-            turret.GetComponentInChildren<TurretBehaviour>()?.RecalculateAfterModifiers();
+            turret.GetComponentInChildren<TurretBehaviour>()?.RecalculateStats();
         }
     }
 

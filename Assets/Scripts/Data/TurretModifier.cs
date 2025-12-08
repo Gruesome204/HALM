@@ -1,3 +1,5 @@
+using UnityEngine;
+
 [System.Serializable]
 public class TurretModifier
 {
@@ -7,4 +9,7 @@ public class TurretModifier
     public float fireRateMultiplier = 1f;
     public int projectilesPerSalve = 1;
     public float projectileSpeed = 1f;
+    public float rangeBonus = 0f;
+
+    public GameObject projectileType;
 }

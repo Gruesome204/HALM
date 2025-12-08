@@ -364,7 +364,7 @@ public class TurretPlacementController : MonoBehaviour
         if (behaviour != null)
         {
             behaviour.turretBlueprint = currentSelectedBlueprint;
-            behaviour.InitializeFromBlueprint();
+            behaviour.RecalculateStats();
         }
 
         // Setup TurretHealth
