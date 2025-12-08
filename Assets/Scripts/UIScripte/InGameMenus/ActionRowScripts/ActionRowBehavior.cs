@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 
 public class ActionRowBehavior : MonoBehaviour, IMenu
 {
+    [SerializeField] GameDataSO gameDataSO;
+
     private VisualElement turretButtonContainer;
     private VisualElement resourceContainer;
     private VisualElement towerLimitContainer;
@@ -99,11 +101,18 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     void FillResourceRow()
     {
-        for (int i = 0; i < UnityEngine.Random.Range(1,6); i++)
-        {
-            AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, UnityEngine.Random.Range(5,50));
-            resourceContainer.Add(aR_Resource.border);
-        }
+        CreateRessourceRowElement(gameDataSO.gameCurrency, "CurrencyIcon");
+        CreateRessourceRowElement(gameDataSO.woodResource, "WoodIcon");
+        CreateRessourceRowElement(gameDataSO.steinResource, "StoneIcon");
+        CreateRessourceRowElement(gameDataSO.metallResource, "MetallIcon");
+        CreateRessourceRowElement(gameDataSO.pulverResource, "BlackpowderIcon");
+
+    }
+
+    private void CreateRessourceRowElement(int amountOfRessource, string ressourceIcon)
+    {
+        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, amountOfRessource, ressourceIcon);
+        resourceContainer.Add(aR_Resource.border);
     }
 
     void PauseBtnClicked(ClickEvent evt)

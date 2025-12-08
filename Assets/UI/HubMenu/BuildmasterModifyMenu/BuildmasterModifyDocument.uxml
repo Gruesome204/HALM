@@ -1,11 +1,17 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
-    <ui:VisualElement name="mainContainer" class="SlideIn" style="flex-grow: 1; justify-content: space-around; flex-shrink: 1; align-items: center;">
-        <ui:VisualElement style="flex-grow: 0; width: 40%; height: 95%; flex-shrink: 0; background-color: rgba(7, 17, 53, 0.47); justify-content: space-around; background-size: 100% 100%;">
+    <ui:VisualElement name="mainContainer" class="SlideIn" style="flex-grow: 1; justify-content: center; flex-shrink: 1; align-items: center; flex-direction: row;">
+        <ui:VisualElement name="possibleModifierList" style="flex-grow: 0; width: 40%; height: 95%; flex-shrink: 0; background-color: rgba(7, 17, 53, 0.47); justify-content: space-around; background-size: 100% 100%; margin-right: 20px;">
             <ui:Label text="Label" name="headline" class="headline" />
-            <ui:VisualElement name="btnContainer" style="flex-grow: 0; height: 70%; width: 80%; flex-shrink: 0; align-self: center;" />
+            <ui:VisualElement name="btnContainer" style="flex-grow: 0; height: 70%; width: 80%; flex-shrink: 0; align-self: center;">
+                <ui:ScrollView name="ScrollView" style="flex-grow: 1;" />
+            </ui:VisualElement>
             <ui:Button text="Button" name="backBtn" class="backBtnClass mainMenuBtnClass" style="position: relative; top: auto; left: auto; align-self: flex-end; width: 20%; right: 5%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="appliedModifierList" style="flex-grow: 0; flex-shrink: 0; width: 35%; height: 80%; background-color: rgba(7, 17, 53, 0.47);">
+            <ui:Label text="Label" name="subHeadline" class="sub-headline" style="-unity-text-align: upper-center;" />
+            <ui:VisualElement name="appliedModifierContainer" style="flex-grow: 1;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

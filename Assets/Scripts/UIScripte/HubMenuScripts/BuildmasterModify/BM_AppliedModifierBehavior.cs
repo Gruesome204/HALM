@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
 
-public class BM_ModifierButtonBehavior
+public class BM_AppliedModifierBehavior
 {
     public BuildMasterModifier representedModifier;
 
@@ -13,7 +13,7 @@ public class BM_ModifierButtonBehavior
 
     private Button button;
 
-    public BM_ModifierButtonBehavior(VisualTreeAsset asset, BuildMasterModifier _representedModifier)
+    public BM_AppliedModifierBehavior(VisualTreeAsset asset, BuildMasterModifier _representedModifier)
     {
         TemplateContainer modifierButton = asset.Instantiate();
 
@@ -32,7 +32,7 @@ public class BM_ModifierButtonBehavior
 
     private void OnButtonClicked(ClickEvent evt)
     {
-        BuildmasterModifyManager.Instance.UseABuildmasterModifier(representedModifier);
+        BuildmasterModifyManager.Instance.RemoveABuildmasterModifier(representedModifier);
         InGameMenuManager.Instance.OpenOrCloseOneMenu("BuildmasterModifyDoc", true);
     }
 }

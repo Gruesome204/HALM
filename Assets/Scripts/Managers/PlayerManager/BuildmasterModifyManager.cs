@@ -7,6 +7,9 @@ public class BuildmasterModifyManager : MonoBehaviour
 
     [SerializeField] GameDataSO gameDataSO;
 
+    public List<BuildMasterModifier> availableBuildmasterModifiers = new List<BuildMasterModifier>();
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -20,15 +23,20 @@ public class BuildmasterModifyManager : MonoBehaviour
         }
     }
 
-    public List<BuildMasterModifier> availableBuildmasterModifiers = new List<BuildMasterModifier>();
 
 
     public void UseABuildmasterModifier(BuildMasterModifier modifier)
     {
         gameDataSO.buildMasterModifiers.Add(modifier);
-        Debug.Log("Joy");
+    }
+
+    public void RemoveABuildmasterModifier(BuildMasterModifier modifier)
+    {
+        gameDataSO.buildMasterModifiers.Remove(modifier);
     }
 
     public List<BuildMasterModifier> GetBuildmasterModifiers() => availableBuildmasterModifiers;
+    public List<BuildMasterModifier> GetAppliedBuildmasterModifiers() => gameDataSO.buildMasterModifiers;
+
 
 }

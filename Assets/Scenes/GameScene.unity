@@ -498,6 +498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1706a925414a4cb49b75e7295348dc38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
   actionRowElementAsset: {fileID: 9197481963319205126, guid: 5916de780a3544940be1967023788fce, type: 3}
   resourceElementAsset: {fileID: 9197481963319205126, guid: 4bd58734194a10b4688b9fb12f1f84e8, type: 3}
   towerLimitElement: {fileID: 9197481963319205126, guid: a2a1667563322e34993c63c6a9e84bb5, type: 3}
@@ -3658,6 +3659,7 @@ MonoBehaviour:
     additionalMagicResistance: 0
     unlockedTurrets: 
     selectedTurrets: 
+    buildMasterModifiers: []
   autosaveInterval: 60
 --- !u!1 &2051609381
 GameObject:

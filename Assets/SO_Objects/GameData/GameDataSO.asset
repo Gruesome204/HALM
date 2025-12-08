@@ -16,7 +16,7 @@ MonoBehaviour:
   musicTrack: 0
   masterVolume: 0
   musicVolume: 0
-  soundVolume: 0
+  soundVolume: 0.08
   limitOfUnlockableTurrets: 10
   limitOfSelectableTurrets: 5
   currentClass: 0
@@ -31,9 +31,5 @@ MonoBehaviour:
   woodResource: 0
   steinResource: 0
   metallResource: 0
-  "schie\xDFpulverResource": 0
-  additionalHealth: 10
-  additionalMaxHealth: 0
-  additionalRegen: 0
-  additionalArmor: 0
-  additionalMagicResistance: 0
+  pulverResource: 0
+  buildMasterModifiers: []

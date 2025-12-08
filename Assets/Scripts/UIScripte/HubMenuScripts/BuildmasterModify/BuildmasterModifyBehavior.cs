@@ -2,11 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
+using static BuildMasterModifier;
 
 public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
 {
     public Label headline;
+    public Label subHeadline;
     public VisualElement btnContainer;
+    public VisualElement appliedModifierContainer;
     public Button backBtn;
 
     public VisualTreeAsset modifierButtonAsset;
@@ -39,7 +42,12 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
         headline = root.Q<Label>("headline");
         headline.SetBinding("text", new LocalizedString("BuildmasterModifyTranslationTable", "headline"));
 
+        subHeadline = root.Q<Label>("subHeadline");
+        subHeadline.SetBinding("text", new LocalizedString("BuildmasterModifyTranslationTable", "subHeadline"));
+
         btnContainer = root.Q<VisualElement>("btnContainer");
+
+        appliedModifierContainer = root.Q<VisualElement>("appliedModifierContainer");
 
         backBtn = root.Q<Button>("backBtn");
         backBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "backBtnText"));
@@ -49,15 +57,27 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
 
     private void FillMenu()
     {
+        ClearMenu();
         foreach (var modifier in BuildmasterModifyManager.Instance.GetBuildmasterModifiers())
         {
             var btn = new BM_ModifierButtonBehavior(modifierButtonAsset, modifier);
-            btnContainer.Add(btn.mainContainer);
+            var uiDocument = this.gameObject.GetComponent<UIDocument>();
+            uiDocument.rootVisualElement.Q("unity-content-container").Add(btn.mainContainer);
+        }
+
+        foreach (var _modifier in BuildmasterModifyManager.Instance.GetAppliedBuildmasterModifiers())
+        {
+            var btn = new BM_AppliedModifierBehavior(modifierButtonAsset, _modifier);
+            var uiDocument = this.gameObject.GetComponent<UIDocument>();
+            uiDocument.rootVisualElement.Q("unity-content-container").Add(btn.mainContainer);
         }
     }
     private void ClearMenu()
     {
-        btnContainer.Clear();
+        var uiDocument = this.gameObject.GetComponent<UIDocument>();
+        uiDocument.rootVisualElement.Q("unity-content-container").Clear();
+
+        appliedModifierContainer.Clear();
     }
 
     private void OnBackBtnClicked(ClickEvent evt)

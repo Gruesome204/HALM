@@ -25,7 +25,7 @@ public class AR_ElementBehavior
         cooldownCover = rowElement.Q<VisualElement>("cooldownCover");
 
         turretIcon = rowElement.Q<VisualElement>("icon");
-        turretIcon.AddToClassList($"ArcherTowerIcon");
+        turretIcon.AddToClassList($"{_turret.turretName}Icon");
 
         turretNumber = _turretNumber;
         turretNumbertxt = rowElement.Q<Label>("turretNumber");
