@@ -23,9 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 114560733184
-    m_Localized: '-20% Building Cooldown
-
-      -30% Turrets Hit Points'
+    m_Localized: "-20% Bauabklingzeit\n-30% Lebenspunkte von T\xFCrmen"
     m_Metadata:
       m_Items: []
   references:

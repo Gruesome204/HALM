@@ -1,15 +1,15 @@
 .ArcherTowerIcon {
-    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerImages/20251103_Bogensch%C3%BCtzenturm.png?fileID=2800000&guid=74f16a1d77dc72544b1d872b093b4c4a&type=3#20251103_Bogenschützenturm");
+    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/ArcherTower_Icon.png?fileID=2800000&guid=a8c81774cdfd55b46b00e047a78ba8ca&type=3#ArcherTower_Icon");
 }
 
 .CannonTurretIcon {
-    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerImages/20251103_Bogensch%C3%BCtzenturm.png?fileID=2800000&guid=74f16a1d77dc72544b1d872b093b4c4a&type=3#20251103_Bogenschützenturm");
-    -unity-background-image-tint-color: rgb(209, 0, 76);
+    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/CannonTurretIcon.png?fileID=2800000&guid=b9be343fdf857404f9f37aa77422947b&type=3#CannonTurretIcon");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .FastTurretIcon {
-    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerImages/20251103_Bogensch%C3%BCtzenturm.png?fileID=2800000&guid=74f16a1d77dc72544b1d872b093b4c4a&type=3#20251103_Bogenschützenturm");
-    -unity-background-image-tint-color: rgb(209, 0, 76);
+    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/FastTurretIcon.png?fileID=2800000&guid=d3efb326e50aa80448845a63e91d45ed&type=3#FastTurretIcon");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .CurrencyIcon {
@@ -30,4 +30,8 @@
 
 .BlackpowderIcon {
     background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/PulverRessourceIcon.png?fileID=2800000&guid=9037814008b566d46b62f234e9ceb0c1&type=3#PulverRessourceIcon");
+}
+
+.BarricadeIcon {
+    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/BarricadeIcon.png?fileID=2800000&guid=b3f3e4ce66739754f8d401e160d93016&type=3#BarricadeIcon");
 }
