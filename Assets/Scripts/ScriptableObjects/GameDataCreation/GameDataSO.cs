@@ -29,9 +29,8 @@ public class GameDataSO : ScriptableObject
 
     [Header("Turrets")]
     public List<TurretBlueprint> allTurretBlueprints;
-    public List<TurretType> allTurrets;          // All turrets in the game
-    public List<TurretType> unlockedTurrets;     // Turrets player has unlocked
-    public List<TurretType> selectedTurrets;     // Turrets currently selected
+    public List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
+    public List<TurretBlueprint> selectedBlueprints;  // Blueprints currently selected
 
     public TurretBlueprint GetBlueprintByType(TurretType type)
     {
@@ -41,21 +40,32 @@ public class GameDataSO : ScriptableObject
     {
         return allTurretBlueprints.Find(t => t.turretType == type);
     }
-    public bool IsUnlocked(TurretType type)
+    // Check if blueprint is unlocked
+    public bool IsUnlocked(TurretBlueprint blueprint)
     {
-        return unlockedTurrets.Contains(type);
+        return unlockedBlueprints.Contains(blueprint);
     }
 
-    public bool IsSelected(TurretType type)
+    // Check if blueprint is selected
+    public bool IsSelected(TurretBlueprint blueprint)
     {
-        return selectedTurrets.Contains(type);
+        return selectedBlueprints.Contains(blueprint);
     }
 
+    // Get all unlocked blueprints
     public List<TurretBlueprint> GetUnlockedBlueprints()
     {
-        return allTurretBlueprints
-            .Where(t => unlockedTurrets.Contains(t.turretType))
-            .ToList();
+        return unlockedBlueprints.ToList();
+    }
+
+    // Optional: add blueprint to selection
+    public bool TrySelectBlueprint(TurretBlueprint blueprint)
+    {
+        if (!IsUnlocked(blueprint)) return false; // Cannot select locked
+        if (selectedBlueprints.Count >= limitOfSelectableTurrets) return false;
+
+        selectedBlueprints.Add(blueprint);
+        return true;
     }
 
     [Header("Ressources")]

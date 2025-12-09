@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,81 +32,74 @@ public class HubManager : MonoBehaviour
         maxSelectedTurrets = gameData.limitOfSelectableTurrets;
     }
 
-    public bool UnlockTurret(TurretType type)
+    // --- Refactored to use TurretBlueprint ---
+    public bool UnlockTurret(TurretBlueprint blueprint)
     {
-        if (!gameData.unlockedTurrets.Contains(type))
+        if (blueprint == null) return false;
+
+        if (!gameData.unlockedBlueprints.Contains(blueprint))
         {
-            gameData.unlockedTurrets.Add(type);
-            TurretBlueprint bp = gameData.GetBlueprint(type);
-            if (bp != null)
-                OnTurretUnlocked?.Invoke(bp);
-            Debug.Log($"Unlocked turret type: {type}");
+            gameData.unlockedBlueprints.Add(blueprint);
+            OnTurretUnlocked?.Invoke(blueprint);
+            Debug.Log($"Unlocked turret: {blueprint.name}");
             return true;
         }
         return false;
     }
 
-    public bool SelectTurret(TurretType type)
+    public bool SelectTurret(TurretBlueprint blueprint)
     {
-        if (!gameData.unlockedTurrets.Contains(type))
+        if (blueprint == null) return false;
+
+        if (!gameData.unlockedBlueprints.Contains(blueprint))
         {
-            Debug.LogWarning($"Turret type {type} is not unlocked!");
+            Debug.LogWarning($"Turret {blueprint.name} is not unlocked!");
             return false;
         }
-        if (gameData.selectedTurrets.Contains(type))
+        if (gameData.selectedBlueprints.Contains(blueprint))
         {
-            Debug.LogWarning($"{type} is already selected!");
+            Debug.LogWarning($"{blueprint.name} is already selected!");
             return false;
         }
-        if (gameData.selectedTurrets.Count >= maxSelectedTurrets)
+        if (gameData.selectedBlueprints.Count >= maxSelectedTurrets)
         {
             Debug.LogWarning("Max selected turrets reached!");
             return false;
         }
 
-        gameData.selectedTurrets.Add(type);
-        TurretBlueprint bp = gameData.GetBlueprint(type);
-        if (bp != null)
-            OnTurretSelected?.Invoke(bp);
+        gameData.selectedBlueprints.Add(blueprint);
+        OnTurretSelected?.Invoke(blueprint);
         return true;
     }
 
-    public void DeselectTurret(TurretType type)
+    public void DeselectTurret(TurretBlueprint blueprint)
     {
-        if (gameData.selectedTurrets.Contains(type))
+        if (blueprint == null) return;
+
+        if (gameData.selectedBlueprints.Contains(blueprint))
         {
-            gameData.selectedTurrets.Remove(type);
-            TurretBlueprint bp = gameData.GetBlueprint(type);
-            if (bp != null)
-                OnTurretDeselected?.Invoke(bp);
+            gameData.selectedBlueprints.Remove(blueprint);
+            OnTurretDeselected?.Invoke(blueprint);
         }
     }
 
-    public bool IsUnlocked(TurretType type) => gameData.unlockedTurrets.Contains(type);
-    public bool IsSelected(TurretType type) => gameData.selectedTurrets.Contains(type);
+    public bool IsUnlocked(TurretBlueprint blueprint) => blueprint != null && gameData.unlockedBlueprints.Contains(blueprint);
+    public bool IsSelected(TurretBlueprint blueprint) => blueprint != null && gameData.selectedBlueprints.Contains(blueprint);
 
     public List<TurretBlueprint> GetAvailableTurrets()
     {
-        return gameData.unlockedTurrets
-            .Where(t => !gameData.selectedTurrets.Contains(t))
-            .Select(t => gameData.GetBlueprint(t))
-            .Where(bp => bp != null)
+        return gameData.unlockedBlueprints
+            .Where(bp => !gameData.selectedBlueprints.Contains(bp))
             .ToList();
     }
 
     public List<TurretBlueprint> GetSelectedTurrets()
     {
-        return gameData.selectedTurrets
-            .Select(t => gameData.GetBlueprint(t))
-            .Where(bp => bp != null)
-            .ToList();
+        return new List<TurretBlueprint>(gameData.selectedBlueprints);
     }
 
     public List<TurretBlueprint> GetUnlockedTurrets()
     {
-        return gameData.unlockedTurrets
-            .Select(t => gameData.GetBlueprint(t))
-            .Where(bp => bp != null)
-            .ToList();
+        return new List<TurretBlueprint>(gameData.unlockedBlueprints);
     }
 }
