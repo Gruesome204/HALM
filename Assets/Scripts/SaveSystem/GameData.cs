@@ -49,7 +49,7 @@ public class GameData
         currentPlayerLevel = so.currentPlayerLevel;
         currentClass = so.currentClass;
 
-        unlockedBlueprints = new List<TurretBlueprint>(so.unlockedBlueprints);
+        unlockedBlueprints = new List<TurretBlueprint>(so.GetUnlockedBlueprints());
         selectedBlueprints = new List<TurretBlueprint>(so.selectedBlueprints);
 
         saveVersion = 1;

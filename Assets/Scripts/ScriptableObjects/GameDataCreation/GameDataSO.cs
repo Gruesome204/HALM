@@ -29,7 +29,7 @@ public class GameDataSO : ScriptableObject
 
     [Header("Turrets")]
     public List<TurretBlueprint> allTurretBlueprints;
-    public List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
+    [SerializeField]private List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
     public List<TurretBlueprint> selectedBlueprints;  // Blueprints currently selected
 
     public TurretBlueprint GetBlueprintByType(TurretType type)

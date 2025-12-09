@@ -37,9 +37,9 @@ public class HubManager : MonoBehaviour
     {
         if (blueprint == null) return false;
 
-        if (!gameData.unlockedBlueprints.Contains(blueprint))
+        if (!gameData.GetUnlockedBlueprints().Contains(blueprint))
         {
-            gameData.unlockedBlueprints.Add(blueprint);
+            gameData.GetUnlockedBlueprints().Add(blueprint);
             OnTurretUnlocked?.Invoke(blueprint);
             Debug.Log($"Unlocked turret: {blueprint.name}");
             return true;
@@ -51,12 +51,12 @@ public class HubManager : MonoBehaviour
     {
         if (blueprint == null) return false;
 
-        if (!gameData.unlockedBlueprints.Contains(blueprint))
+        if (!gameData.GetUnlockedBlueprints().Contains(blueprint))
         {
             Debug.LogWarning($"Turret {blueprint.name} is not unlocked!");
             return false;
         }
-        if (gameData.selectedBlueprints.Contains(blueprint))
+        if (gameData.GetUnlockedBlueprints().Contains(blueprint))
         {
             Debug.LogWarning($"{blueprint.name} is already selected!");
             return false;
@@ -83,12 +83,12 @@ public class HubManager : MonoBehaviour
         }
     }
 
-    public bool IsUnlocked(TurretBlueprint blueprint) => blueprint != null && gameData.unlockedBlueprints.Contains(blueprint);
+    public bool IsUnlocked(TurretBlueprint blueprint) => blueprint != null && gameData.GetUnlockedBlueprints().Contains(blueprint);
     public bool IsSelected(TurretBlueprint blueprint) => blueprint != null && gameData.selectedBlueprints.Contains(blueprint);
 
     public List<TurretBlueprint> GetAvailableTurrets()
     {
-        return gameData.unlockedBlueprints
+        return gameData.GetUnlockedBlueprints()
             .Where(bp => !gameData.selectedBlueprints.Contains(bp))
             .ToList();
     }
@@ -100,6 +100,6 @@ public class HubManager : MonoBehaviour
 
     public List<TurretBlueprint> GetUnlockedTurrets()
     {
-        return new List<TurretBlueprint>(gameData.unlockedBlueprints);
+        return new List<TurretBlueprint>(gameData.GetUnlockedBlueprints());
     }
 }

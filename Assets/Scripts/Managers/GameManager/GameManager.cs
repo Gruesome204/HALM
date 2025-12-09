@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             gameCurrency = gameDataSO.gameCurrency,
             currentPlayerLevel = gameDataSO.currentPlayerLevel,
             currentClass = gameDataSO.currentClass,
-            unlockedBlueprints = new List<TurretBlueprint>(gameDataSO.unlockedBlueprints),
+            unlockedBlueprints = new List<TurretBlueprint>(gameDataSO.GetUnlockedBlueprints()),
             selectedBlueprints = new List<TurretBlueprint>(gameDataSO.selectedBlueprints)
         };
     }
@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
         gameData.gameCurrency = gameDataSO.gameCurrency;
         gameData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
         gameData.currentClass = gameDataSO.currentClass;
-        gameData.unlockedBlueprints = gameDataSO.unlockedBlueprints.ToList();
+        gameData.unlockedBlueprints = gameDataSO.GetUnlockedBlueprints().ToList();
         gameData.selectedBlueprints = gameDataSO.selectedBlueprints.ToList();
 
         SaveSystem.Save(gameData);
