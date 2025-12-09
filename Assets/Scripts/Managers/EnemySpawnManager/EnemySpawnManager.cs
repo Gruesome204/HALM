@@ -8,7 +8,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     public static EnemySpawnManager Instance { get; private set; }
 
     [Header("Spawn Settings")]
-    public GameObject enemyPrefab;
+    public List<GameObject> enemyPrefabs = new List<GameObject>(); // Multiple enemy types
     public float spawnInterval = 3f;
     public int spawnAmount = 1; // Total number of enemies this spawner will spawn
 
@@ -33,6 +33,8 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     private bool allEnemiesSpawned = false; // Tracks if we've spawned all enemies
 
     public event System.Action OnAllEnemiesDefeated;
+
+    public event System.Action OnBossDefeated;
 
     [SerializeField]private bool isPaused;
 
@@ -120,16 +122,20 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     void SpawnAtPoint(Vector3 position)
     {
-        if (enemyPrefab == null)
+        if (enemyPrefabs == null || enemyPrefabs.Count == 0)
         {
-            Debug.LogError("EnemyPrefab not assigned!");
+            Debug.LogError("No enemy prefabs assigned!");
             return;
         }
 
         Vector2 offset = Random.insideUnitCircle * spawnRadius;
         Vector3 spawnPos = position + new Vector3(offset.x, offset.y, 0f);
 
-        GameObject spawnedEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        // Pick random prefab
+        GameObject chosenPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+
+        GameObject spawnedEnemy = Instantiate(chosenPrefab, spawnPos, Quaternion.identity);
+
         if (spawnedEnemy == null)
         {
             Debug.LogError("Failed to instantiate enemyPrefab!");
@@ -170,9 +176,22 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     public void UnregisterEnemy(GameObject enemy)
     {
+        bool wasBoss = enemy.CompareTag("Boss"); // Make sure your boss prefab has the "Boss" tag!
+
         activeEnemies.Remove(enemy);
         activeEnemies.RemoveAll(e => e == null);
 
+        // If it was a boss, trigger boss defeated event
+        if (wasBoss)
+        {
+            Debug.Log("[Spawner] Boss defeated!");
+            OnBossDefeated?.Invoke();
+
+            // Reset boss room flag
+            isBossRoom = false;
+        }
+
+        // Check normal enemies
         CheckIfAllEnemiesDefeated();
     }
     private void CheckIfAllEnemiesDefeated()

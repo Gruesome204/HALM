@@ -1831,13 +1831,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47769b2c793f1314bb9ce22cad59ad5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4040261046768777757, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
+  enemyPrefabs:
+  - {fileID: 4040261046768777757, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
   spawnInterval: 1
   spawnAmount: 1
   spawnRadius: 5
   spawnPoints: []
   useRandomSpawnPoint: 1
-  bossPrefab: {fileID: 3367656670818576859, guid: 4d97ad3e0380f7847bcfabb16ebd1c22, type: 3}
+  isBossRoom: 0
+  bossPrefab: {fileID: 1562781743598442605, guid: ed50963be9f6da648a1163d27d16de88, type: 3}
   totalSpawned: 0
   isPaused: 0
 --- !u!1 &816791901

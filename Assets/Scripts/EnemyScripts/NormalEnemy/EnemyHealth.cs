@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour, IDamagable
@@ -21,7 +22,6 @@ public class EnemyHealth : MonoBehaviour, IDamagable
         }
     }
     public bool IsInvulnerable { get; set; }
-
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
         if (IsInvulnerable || stats == null) return;
