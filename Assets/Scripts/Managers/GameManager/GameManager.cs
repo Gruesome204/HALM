@@ -53,11 +53,29 @@ public class GameManager : MonoBehaviour
     {
         ChangeState(GameState.Loading);
 
-        // Load save file
-        gameData = SaveSystem.Load();
-
-        // Apply runtime data to SO
+        GameData loadedData = SaveSystem.Load();
+    if (loadedData != null)
+    {
+        gameData = loadedData;
         ApplyRuntimeDataToSO();
+    }
+    else
+    {
+        Debug.Log("[GameManager] No save found → creating new GameData from SO defaults");
+        gameData = new GameData
+        {
+            gameCurrency = gameDataSO.gameCurrency,
+            currentPlayerLevel = gameDataSO.currentPlayerLevel,
+            currentClass = gameDataSO.currentClass,
+            unlockedBlueprints = new List<TurretBlueprint>(gameDataSO.unlockedBlueprints),
+            selectedBlueprints = new List<TurretBlueprint>(gameDataSO.selectedBlueprints)
+        };
+    }
+
+
+        // Setup turret placement system
+        TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
+
 
         // Load Scene Elements (Map)
         MapLoaderManager.Instance?.LoadMap(0);
@@ -87,14 +105,24 @@ public class GameManager : MonoBehaviour
 
     private void ApplyRuntimeDataToSO()
     {
-        var so = gameDataSO;
+        if (gameDataSO == null)
+        {
+            Debug.LogWarning("[GameManager] Cannot apply runtime data: gameDataSO is null.");
+            return;
+        }
 
-        so.gameCurrency = gameData.gameCurrency;
-        so.currentPlayerLevel = gameData.currentPlayerLevel;
-        so.currentClass = gameData.currentClass;
+        if (gameData == null)
+        {
+            Debug.Log("[GameManager] No save data found, keeping defaults from GameDataSO.");
+            return; // don't overwrite defaults
+        }
 
-        so.unlockedBlueprints = new List<TurretBlueprint>(gameData.unlockedBlueprints);
-        so.selectedBlueprints = new List<TurretBlueprint>(gameData.selectedBlueprints);
+        // Copy basic fields
+        gameDataSO.gameCurrency = gameData.gameCurrency;
+        gameDataSO.currentPlayerLevel = gameData.currentPlayerLevel;
+        gameDataSO.currentClass = gameData.currentClass;
+
+        Debug.Log("[GameManager] Runtime data applied to GameDataSO.");
     }
 
     private void Update()
@@ -183,9 +211,6 @@ public class GameManager : MonoBehaviour
         if (pausable == null) return;
         pausables.Remove(pausable);
     }
-
-
-
 
     public void PauseGame() => ChangeState(GameState.Paused);
     public void ResumeGame() => ChangeState(GameState.Playing);

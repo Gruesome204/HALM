@@ -78,6 +78,13 @@ public class TurretPlacementController : MonoBehaviour
     private void OnDisable() => OnPlacementCooldownStateChanged -= HandleCooldownEvent;
 
 
+    public void SetupFromGameData(GameDataSO gameData)
+    {
+        turretBlueprintList = new List<TurretBlueprint>(gameData.unlockedBlueprints);
+        Debug.Log($"[TurretPlacement] Loaded {turretBlueprintList.Count} unlocked turrets from GameDataSO.");
+        OnTurretsChanged?.Invoke();
+    }
+
     private void Update()
     {
         HandleBlueprintSelectionInput();
@@ -391,13 +398,6 @@ public class TurretPlacementController : MonoBehaviour
     public List<TurretBlueprint> GetTurretBlueprintList() => turretBlueprintList;
 
 
-    public void SetupFromGameData(GameDataSO gameData)
-    {
-        turretBlueprintList = new List<TurretBlueprint>(gameData.unlockedBlueprints);
-
-        Debug.Log($"[TurretPlacement] Loaded {turretBlueprintList.Count} unlocked turrets from GameDataSO.");
-        OnTurretsChanged?.Invoke();
-    }
 
     private bool IsPlacementBlocked(Vector3 position, Vector2 size)
     {

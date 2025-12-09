@@ -791,11 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01346e348d18f8a49a08499c0146d695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretBlueprintList:
-  - {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
-  - {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
-  - {fileID: 11400000, guid: d57e7534158189347baee79ed9fa3fc1, type: 2}
-  - {fileID: 11400000, guid: 78b5b99b66001634584825f663397a90, type: 2}
+  turretBlueprintList: []
   currentSelectedBlueprint: {fileID: 0}
   groundLayer:
     serializedVersion: 2
@@ -3614,8 +3610,8 @@ MonoBehaviour:
     additionalRegen: 0
     additionalArmor: 0
     additionalMagicResistance: 0
-    unlockedTurrets: 
-    selectedTurrets: 
+    unlockedBlueprints: []
+    selectedBlueprints: []
     buildMasterModifiers: []
   autosaveInterval: 60
 --- !u!1 &2051609381
