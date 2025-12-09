@@ -8,7 +8,7 @@ public static class SaveSystem
     private static readonly string PathMain = System.IO.Path.Combine(Folder, "player.json");
     private static readonly string PathBackup = System.IO.Path.Combine(Folder, "player_backup.json");
 
-    public static GameData Load()
+    public static TempSaveData Load()
     {
         try
         {
@@ -18,7 +18,7 @@ public static class SaveSystem
             if (File.Exists(PathMain))
             {
                 string json = File.ReadAllText(PathMain);
-                GameData data = JsonUtility.FromJson<GameData>(json);
+                TempSaveData data = JsonUtility.FromJson<TempSaveData>(json);
 
                 if (data != null)
                     return data;
@@ -35,7 +35,7 @@ public static class SaveSystem
             if (File.Exists(PathBackup))
             {
                 string json = File.ReadAllText(PathBackup);
-                GameData data = JsonUtility.FromJson<GameData>(json);
+                TempSaveData data = JsonUtility.FromJson<TempSaveData>(json);
 
                 if (data != null)
                 {
@@ -47,11 +47,11 @@ public static class SaveSystem
         catch { }
 
         Debug.LogWarning("No valid save found. Using new default GameData.");
-        return new GameData();
+        return new TempSaveData();
     }
 
 
-    public static void Save(GameData data)
+    public static void Save(TempSaveData data)
     {
         try
         {

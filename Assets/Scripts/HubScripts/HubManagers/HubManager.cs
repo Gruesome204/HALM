@@ -8,13 +8,11 @@ public class HubManager : MonoBehaviour
     public static HubManager Instance;
 
     [Header("Data References")]
-    public GameDataSO gameData;          // Reference to your ScriptableObject
+    public GameDataSO gameDataSO;          // Reference to your ScriptableObject
 
     public int maxSelectedTurrets;
 
     public event Action<TurretBlueprint> OnTurretUnlocked;
-    public event Action<TurretBlueprint> OnTurretSelected;
-    public event Action<TurretBlueprint> OnTurretDeselected;
 
     private void Awake()
     {
@@ -29,7 +27,7 @@ public class HubManager : MonoBehaviour
 
     private void Start()
     {
-        maxSelectedTurrets = gameData.limitOfSelectableTurrets;
+        maxSelectedTurrets = gameDataSO.limitOfSelectableTurrets;
     }
 
     // --- Refactored to use TurretBlueprint ---
@@ -37,9 +35,9 @@ public class HubManager : MonoBehaviour
     {
         if (blueprint == null) return false;
 
-        if (!gameData.GetUnlockedBlueprints().Contains(blueprint))
+        if (!gameDataSO.GetUnlockedBlueprints().Contains(blueprint))
         {
-            gameData.GetUnlockedBlueprints().Add(blueprint);
+            gameDataSO.GetUnlockedBlueprints().Add(blueprint);
             OnTurretUnlocked?.Invoke(blueprint);
             Debug.Log($"Unlocked turret: {blueprint.name}");
             return true;
@@ -47,59 +45,10 @@ public class HubManager : MonoBehaviour
         return false;
     }
 
-    public bool SelectTurret(TurretBlueprint blueprint)
-    {
-        if (blueprint == null) return false;
-
-        if (!gameData.GetUnlockedBlueprints().Contains(blueprint))
-        {
-            Debug.LogWarning($"Turret {blueprint.name} is not unlocked!");
-            return false;
-        }
-        if (gameData.GetUnlockedBlueprints().Contains(blueprint))
-        {
-            Debug.LogWarning($"{blueprint.name} is already selected!");
-            return false;
-        }
-        if (gameData.selectedBlueprints.Count >= maxSelectedTurrets)
-        {
-            Debug.LogWarning("Max selected turrets reached!");
-            return false;
-        }
-
-        gameData.selectedBlueprints.Add(blueprint);
-        OnTurretSelected?.Invoke(blueprint);
-        return true;
-    }
-
-    public void DeselectTurret(TurretBlueprint blueprint)
-    {
-        if (blueprint == null) return;
-
-        if (gameData.selectedBlueprints.Contains(blueprint))
-        {
-            gameData.selectedBlueprints.Remove(blueprint);
-            OnTurretDeselected?.Invoke(blueprint);
-        }
-    }
-
-    public bool IsUnlocked(TurretBlueprint blueprint) => blueprint != null && gameData.GetUnlockedBlueprints().Contains(blueprint);
-    public bool IsSelected(TurretBlueprint blueprint) => blueprint != null && gameData.selectedBlueprints.Contains(blueprint);
-
-    public List<TurretBlueprint> GetAvailableTurrets()
-    {
-        return gameData.GetUnlockedBlueprints()
-            .Where(bp => !gameData.selectedBlueprints.Contains(bp))
-            .ToList();
-    }
-
-    public List<TurretBlueprint> GetSelectedTurrets()
-    {
-        return new List<TurretBlueprint>(gameData.selectedBlueprints);
-    }
+    public bool IsUnlocked(TurretBlueprint blueprint) => blueprint != null && gameDataSO.GetUnlockedBlueprints().Contains(blueprint);
 
     public List<TurretBlueprint> GetUnlockedTurrets()
     {
-        return new List<TurretBlueprint>(gameData.GetUnlockedBlueprints());
+        return new List<TurretBlueprint>(gameDataSO.GetUnlockedBlueprints());
     }
 }

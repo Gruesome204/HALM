@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Data")]
     public GameDataSO gameDataSO;
-    public GameData gameData;
+    public TempSaveData tempSaveData;
     public enum GameState
     {
         MainMenu,
@@ -53,22 +53,21 @@ public class GameManager : MonoBehaviour
     {
         ChangeState(GameState.Loading);
 
-        GameData loadedData = SaveSystem.Load();
+        TempSaveData loadedData = SaveSystem.Load();
     if (loadedData != null)
     {
-        gameData = loadedData;
+            tempSaveData = loadedData;
         ApplyRuntimeDataToSO();
     }
     else
     {
         Debug.Log("[GameManager] No save found → creating new GameData from SO defaults");
-        gameData = new GameData
+            tempSaveData = new TempSaveData
         {
             gameCurrency = gameDataSO.gameCurrency,
             currentPlayerLevel = gameDataSO.currentPlayerLevel,
             currentClass = gameDataSO.currentClass,
             unlockedBlueprints = new List<TurretBlueprint>(gameDataSO.GetUnlockedBlueprints()),
-            selectedBlueprints = new List<TurretBlueprint>(gameDataSO.selectedBlueprints)
         };
     }
 
@@ -94,7 +93,7 @@ public class GameManager : MonoBehaviour
 
     private void ApplyPlayerUpgrades()  
     {
-        var so = gameData;
+        var so = tempSaveData;
         PlayerStats playerStats = PlayerManager.Instance.playerStats;
         playerStats.currentHealth += so.additionalHealth;   
         playerStats.currentMaxHealth += so.additionalHealth;
@@ -111,16 +110,16 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (gameData == null)
+        if (tempSaveData == null)
         {
             Debug.Log("[GameManager] No save data found, keeping defaults from GameDataSO.");
             return; // don't overwrite defaults
         }
 
         // Copy basic fields
-        gameDataSO.gameCurrency = gameData.gameCurrency;
-        gameDataSO.currentPlayerLevel = gameData.currentPlayerLevel;
-        gameDataSO.currentClass = gameData.currentClass;
+        gameDataSO.gameCurrency = tempSaveData.gameCurrency;
+        gameDataSO.currentPlayerLevel = tempSaveData.currentPlayerLevel;
+        gameDataSO.currentClass = tempSaveData.currentClass;
 
         Debug.Log("[GameManager] Runtime data applied to GameDataSO.");
     }
@@ -149,16 +148,15 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        if (gameData == null) gameData = new GameData();
+        if (tempSaveData == null) tempSaveData = new TempSaveData();
         if (gameDataSO == null) return;
 
-        gameData.gameCurrency = gameDataSO.gameCurrency;
-        gameData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
-        gameData.currentClass = gameDataSO.currentClass;
-        gameData.unlockedBlueprints = gameDataSO.GetUnlockedBlueprints().ToList();
-        gameData.selectedBlueprints = gameDataSO.selectedBlueprints.ToList();
+        tempSaveData.gameCurrency = gameDataSO.gameCurrency;
+        tempSaveData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
+        tempSaveData.currentClass = gameDataSO.currentClass;
+        tempSaveData.unlockedBlueprints = gameDataSO.GetUnlockedBlueprints().ToList();
 
-        SaveSystem.Save(gameData);
+        SaveSystem.Save(tempSaveData);
     }
 
     public void ChangeState(GameState newState)

@@ -30,7 +30,6 @@ public class GameDataSO : ScriptableObject
     [Header("Turrets")]
     public List<TurretBlueprint> allTurretBlueprints;
     [SerializeField]private List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
-    public List<TurretBlueprint> selectedBlueprints;  // Blueprints currently selected
 
     public TurretBlueprint GetBlueprintByType(TurretType type)
     {
@@ -46,26 +45,11 @@ public class GameDataSO : ScriptableObject
         return unlockedBlueprints.Contains(blueprint);
     }
 
-    // Check if blueprint is selected
-    public bool IsSelected(TurretBlueprint blueprint)
-    {
-        return selectedBlueprints.Contains(blueprint);
-    }
 
     // Get all unlocked blueprints
     public List<TurretBlueprint> GetUnlockedBlueprints()
     {
         return unlockedBlueprints.ToList();
-    }
-
-    // Optional: add blueprint to selection
-    public bool TrySelectBlueprint(TurretBlueprint blueprint)
-    {
-        if (!IsUnlocked(blueprint)) return false; // Cannot select locked
-        if (selectedBlueprints.Count >= limitOfSelectableTurrets) return false;
-
-        selectedBlueprints.Add(blueprint);
-        return true;
     }
 
     [Header("Ressources")]
