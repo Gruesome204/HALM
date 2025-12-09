@@ -1837,7 +1837,6 @@ MonoBehaviour:
   spawnRadius: 5
   spawnPoints: []
   useRandomSpawnPoint: 1
-  playerSpawnPoint: {fileID: 0}
   isPaused: 0
 --- !u!1 &816791901
 GameObject:
@@ -2096,6 +2095,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1619348963}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &874175430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 874175431}
+  m_Layer: 0
+  m_Name: -MapProgressionManager-
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &874175431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874175430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1512055815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &935072170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2206,8 +2236,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapPrefabs:
   - {fileID: 5085846882595726355, guid: 19d2ffbe8aa8d6c41b4e870fd9803276, type: 3}
+  - {fileID: 8897411324710292980, guid: 2d6e84168c43aff40be9099a45442bb7, type: 3}
   mapParent: {fileID: 855785565}
   playerSpawnPoint: {fileID: 0}
+  bossSpawnPoint: {fileID: 0}
 --- !u!1 &1105641864
 GameObject:
   m_ObjectHideFlags: 0
@@ -2712,6 +2744,7 @@ Transform:
   m_Children:
   - {fileID: 2019150953}
   - {fileID: 1066720071}
+  - {fileID: 874175431}
   - {fileID: 406684504}
   - {fileID: 368292586}
   - {fileID: 1357217368}

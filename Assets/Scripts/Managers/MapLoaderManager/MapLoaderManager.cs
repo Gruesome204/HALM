@@ -14,7 +14,9 @@ public class MapLoaderManager : MonoBehaviour
 
     private GameObject currentMap;
 
+    [Header("Spawn Points (auto-detected)")]
     public Transform playerSpawnPoint;
+    public Transform bossSpawnPoint;
 
     private void Awake()
     {
@@ -41,6 +43,8 @@ public class MapLoaderManager : MonoBehaviour
         // Load new map prefab
         currentMap = Instantiate(mapPrefabs[index], mapParent);
 
+
+        EnemySpawnManager.Instance.ResetSpawner();
         // Send spawn points to EnemySpawnManager
         AssignSpawnPointsToEnemyManager();
 
@@ -74,6 +78,7 @@ public class MapLoaderManager : MonoBehaviour
 
         EnemySpawnManager.Instance.spawnPoints = spawnPoints;
 
+
         Debug.Log($"Loaded {spawnPoints.Length} enemy spawn points from current map.");
 
         // Player spawn point
@@ -89,5 +94,14 @@ public class MapLoaderManager : MonoBehaviour
             playerSpawnPoint = pSpawn;
             Debug.Log($"Player spawn point loaded at {playerSpawnPoint.position}");
         }
+
+        // Assign BossSpawnPoint
+        bossSpawnPoint = currentMap.transform.Find("BossSpawnPoint");
+        if (bossSpawnPoint == null)
+            Debug.LogWarning("BossSpawnPoint missing.");
+        else
+            Debug.Log($"Boss Spawn = {bossSpawnPoint.position}");
     }
+
+
 }

@@ -15,19 +15,17 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     [Header("Spawn Randomization")]
     public float spawnRadius = 5f;
 
-
     [Header("Spawn Points")]
     public Transform[] spawnPoints;
     public bool useRandomSpawnPoint = true;
 
-    public Transform playerSpawnPoint;
 
     [Header("Global Enemy Limit")]
     public static int maxEnemies = 20; // Shared across all spawners
     public static List<GameObject> activeEnemies = new List<GameObject>();
 
     private float spawnTimer = 0f; 
-    private int totalSpawned = 0; // How many enemies this spawner has spawned
+    public int totalSpawned = 0; // How many enemies this spawner has spawned
     private bool allEnemiesSpawned = false; // Tracks if we've spawned all enemies
 
     public event System.Action OnAllEnemiesDefeated;
@@ -64,14 +62,12 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         }
     }
 
-        private void TrySpawnEnemy()
-        {
-    
-        // Clean up destroyed enemies
+    private void TrySpawnEnemy()
+    {
+        // Clean up destroyed enemies from global list
         activeEnemies.RemoveAll(e => e == null);
 
-        // Respect global and local limits
-        if (activeEnemies.Count >= maxEnemies) return;
+        // Check if all local enemies spawned
         if (totalSpawned >= spawnAmount)
         {
             allEnemiesSpawned = true;
@@ -79,7 +75,22 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
             return;
         }
 
+        // Check global enemy limit (subtract this spawner's active enemies)
+        int spawnerActiveCount = 0;
+        foreach (var e in activeEnemies)
+        {
+            if (e != null && e.transform.parent == transform)
+                spawnerActiveCount++;
+        }
+
+        if (activeEnemies.Count >= maxEnemies)
+            return;
+
+        // Spawn enemy
         SpawnEnemy();
+
+        // Reset timer only if we actually spawned
+        spawnTimer = 0f;
     }
 
     void SpawnEnemy()
@@ -101,22 +112,51 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     void SpawnAtPoint(Vector3 position)
     {
-        // 2D random offset — X/Y plane
-        Vector2 offset = UnityEngine.Random.insideUnitCircle * spawnRadius;
-        Vector3 spawnPos = position + new Vector3(offset.x, offset.y, 0f); // Z = 0 for 2D
+        if (enemyPrefab == null)
+        {
+            Debug.LogError("EnemyPrefab not assigned!");
+            return;
+        }
+
+        Vector2 offset = Random.insideUnitCircle * spawnRadius;
+        Vector3 spawnPos = position + new Vector3(offset.x, offset.y, 0f);
 
         GameObject spawnedEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        if (spawnedEnemy == null)
+        {
+            Debug.LogError("Failed to instantiate enemyPrefab!");
+            return;
+        }
 
-        // Assign player target if EnemyMovement exists
-        EnemyMovement enemyMovement = spawnedEnemy.GetComponentInChildren<EnemyMovement>();
-        if (enemyMovement != null)
+        // Apply enemy level scaling
+        EnemyStats stats = spawnedEnemy.GetComponent<EnemyStats>();
+        if (stats != null)
+        {
+            if (MapProgressionManager.Instance != null)
+                stats.SetLevel(MapProgressionManager.Instance.CurrentEnemyLevel);
+            else
+                Debug.LogWarning("MapProgressionManager.Instance is null!");
+        }
+        else
+        {
+            Debug.LogWarning("EnemyStats component missing on prefab!");
+        }
+
+        // Assign target
+        EnemyMovement movement = spawnedEnemy.GetComponentInChildren<EnemyMovement>();
+        if (movement != null)
         {
             PlayerMovement player = FindAnyObjectByType<PlayerMovement>();
             if (player != null)
-                enemyMovement.target = player.gameObject;
+                movement.target = player.gameObject;
+            else
+                Debug.LogWarning("PlayerMovement not found in scene!");
         }
 
+        // Track globally
         activeEnemies.Add(spawnedEnemy);
+
+        // Track per-spawner
         totalSpawned++;
     }
 
@@ -146,5 +186,11 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     {
         isPaused = false;
         Debug.Log("Spawner resumed");
+    }
+
+    public void ResetSpawner()
+    {
+        totalSpawned = 0;
+        allEnemiesSpawned = false;
     }
 }

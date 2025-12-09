@@ -89,4 +89,18 @@ public class EnemyStats : MonoBehaviour
         float result = ((currentLevel - 1) * factor) + 1;
         return result;
     }
+
+    public void SetLevel(int level)
+    {
+        currentLevel = Mathf.Max(1, level);
+
+        // Update max stats
+        currentMaxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
+        currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
+        currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
+        currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
+
+        // Optional: keep currentHealth relative to new max
+        currentHealth = Mathf.Min(currentHealth, currentMaxHealth);
+    }
 }
