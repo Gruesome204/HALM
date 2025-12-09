@@ -20,6 +20,8 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     public Transform[] spawnPoints;
     public bool useRandomSpawnPoint = true;
 
+    public Transform playerSpawnPoint;
+
     [Header("Global Enemy Limit")]
     public static int maxEnemies = 20; // Shared across all spawners
     public static List<GameObject> activeEnemies = new List<GameObject>();

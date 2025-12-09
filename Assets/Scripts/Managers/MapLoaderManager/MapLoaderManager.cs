@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,6 +13,8 @@ public class MapLoaderManager : MonoBehaviour
     public Transform mapParent;
 
     private GameObject currentMap;
+
+    public Transform playerSpawnPoint;
 
     private void Awake()
     {
@@ -38,24 +41,53 @@ public class MapLoaderManager : MonoBehaviour
         // Load new map prefab
         currentMap = Instantiate(mapPrefabs[index], mapParent);
 
-        Tilemap[] tilemaps = currentMap.GetComponentsInChildren<Tilemap>();
-        Tilemap floorTilemap = GetFloorTileMap();
+        // Send spawn points to EnemySpawnManager
+        AssignSpawnPointsToEnemyManager();
+
+        SetPlayerPosition();
 
     }
 
-    public Tilemap GetFloorTileMap()
+    private void SetPlayerPosition()
     {
-        Tilemap[] tilemaps = currentMap.GetComponentsInChildren<Tilemap>();
-        Tilemap floorTilemap;
-        foreach (Tilemap t in tilemaps)
-        {
-            if (t.gameObject.name.ToLower().Contains("floor"))
-            {
-                floorTilemap = t;
-                return floorTilemap;
-            }
-        }
-        return null;
+        PlayerMovement player = FindAnyObjectByType<PlayerMovement>();
+        if (player != null && playerSpawnPoint != null)
+            player.transform.position = playerSpawnPoint.position;
+    }
 
+    private void AssignSpawnPointsToEnemyManager()
+    {
+        Transform spawnRoot = currentMap.transform.Find("EnemySpawnPoints");
+
+        if (spawnRoot == null)
+        {
+            Debug.LogWarning("No 'SpawnPoints' child found in map prefab!");
+            EnemySpawnManager.Instance.spawnPoints = new Transform[0];
+            return;
+        }
+
+        Transform[] spawnPoints = new Transform[spawnRoot.childCount];
+        for (int i = 0; i < spawnRoot.childCount; i++)
+        {
+            spawnPoints[i] = spawnRoot.GetChild(i);
+        }
+
+        EnemySpawnManager.Instance.spawnPoints = spawnPoints;
+
+        Debug.Log($"Loaded {spawnPoints.Length} enemy spawn points from current map.");
+
+        // Player spawn point
+        Transform pSpawn = currentMap.transform.Find("PlayerSpawnPoint");
+
+        if (pSpawn == null)
+        {
+            Debug.LogError("PlayerSpawnPoint missing in map prefab!");
+            playerSpawnPoint = null;
+        }
+        else
+        {
+            playerSpawnPoint = pSpawn;
+            Debug.Log($"Player spawn point loaded at {playerSpawnPoint.position}");
+        }
     }
 }
