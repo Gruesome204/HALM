@@ -79,7 +79,7 @@ public class MapLoaderManager : MonoBehaviour
         EnemySpawnManager.Instance.spawnPoints = spawnPoints;
 
 
-        Debug.Log($"Loaded {spawnPoints.Length} enemy spawn points from current map.");
+        //Debug.Log($"Loaded {spawnPoints.Length} enemy spawn points from current map.");
 
         // Player spawn point
         Transform pSpawn = currentMap.transform.Find("PlayerSpawnPoint");

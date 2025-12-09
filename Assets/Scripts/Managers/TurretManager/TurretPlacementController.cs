@@ -460,8 +460,6 @@ public class TurretPlacementController : MonoBehaviour
 
         // Destroy any active preview
         DestroyPreview();
-
-        Debug.Log("[TurretPlacement] All turrets cleared.");
     }
 
 

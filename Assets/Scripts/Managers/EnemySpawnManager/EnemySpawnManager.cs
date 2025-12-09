@@ -266,13 +266,11 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     public void OnPause()
     {
         isPaused = true;
-        Debug.Log("Spawner paused");
     }
 
     public void OnResume()
     {
         isPaused = false;
-        Debug.Log("Spawner resumed");
     }
 
     public void ResetSpawner()
