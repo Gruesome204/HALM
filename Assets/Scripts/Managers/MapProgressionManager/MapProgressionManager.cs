@@ -7,7 +7,6 @@ public class MapProgressionManager : MonoBehaviour
     [Header("Progression Settings")]
     public int mapsBeforeBoss = 3;
 
-
     [Header("Runtime")]
     public int currentMapIndex = 0;
     private int mapsClearedSinceBoss = 0;
@@ -16,8 +15,14 @@ public class MapProgressionManager : MonoBehaviour
     [Header("Enemy Level Scaling")]
     public int baseEnemyLevel = 1;
     public int enemyLevelIncreasePerMap = 1;
-
     public int CurrentEnemyLevel { get; private set; }
+
+    [Header("Progression Options")]
+    [Tooltip("If true, rooms auto-load after clearing. If false, player must interact to proceed.")]
+    public bool autoProgress = true;
+
+    private bool roomClearedWaitingForPlayer = false;
+
 
     private void Awake()
     {
@@ -63,13 +68,33 @@ public class MapProgressionManager : MonoBehaviour
 
         currentMapIndex++;
     }
-        private void OnRoomCleared()
+    private void OnRoomCleared()
     {
         // Prevent multiple fires
         EnemySpawnManager.Instance.OnAllEnemiesDefeated -= OnRoomCleared;
 
-        Debug.Log("[Progression] Room cleared → loading next room...");
+        Debug.Log("[Progression] Room cleared!");
+
+        if (autoProgress)
+        {
+            Debug.Log("[Progression] Auto-loading next room...");
+            LoadNextRoom();
+        }
+        else
+        {
+            // Wait for player to interact
+            roomClearedWaitingForPlayer = true;
+            Debug.Log("[Progression] Waiting for player to proceed to next room...");
+        }
+    }
+    public void PlayerTriggerNextRoom()
+    {
+        if (!roomClearedWaitingForPlayer) return;
+
+        roomClearedWaitingForPlayer = false;
+        Debug.Log("[Progression] Player triggered next room.");
         LoadNextRoom();
     }
+
 
 }
