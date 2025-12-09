@@ -19,6 +19,10 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     public Transform[] spawnPoints;
     public bool useRandomSpawnPoint = true;
 
+    [Header("Boss Settings")]
+    public bool isBossRoom = false; // new flag
+    public GameObject bossPrefab;
+
 
     [Header("Global Enemy Limit")]
     public static int maxEnemies = 20; // Shared across all spawners
@@ -53,6 +57,10 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     void Update()
     {
         if (isPaused) return;
+
+        // Don't spawn normal enemies in boss rooms
+        if (isBossRoom)
+            return;
 
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= spawnInterval)
@@ -174,6 +182,66 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         {
             OnAllEnemiesDefeated?.Invoke();
         }
+    }
+
+    public void SpawnBoss()
+    {
+        if (MapLoaderManager.Instance == null)
+        {
+            Debug.LogError("Cannot spawn boss: MapLoaderManager missing!");
+            return;
+        }
+
+        // Get spawn points
+        Transform bSpawn = MapLoaderManager.Instance.bossSpawnPoint;
+        Transform pSpawn = MapLoaderManager.Instance.playerSpawnPoint;
+        Transform[] enemySpawns = spawnPoints;
+
+        Vector3 spawnPos;
+
+        if (bSpawn != null)
+        {
+            spawnPos = bSpawn.position;
+            Debug.Log("[Spawner] Boss spawning at BossSpawnPoint.");
+        }
+        else if (enemySpawns != null && enemySpawns.Length > 0)
+        {
+            spawnPos = enemySpawns[0].position;
+            Debug.Log("[Spawner] Boss spawn fallback: EnemySpawnPoint[0].");
+        }
+        else if (pSpawn != null)
+        {
+            spawnPos = pSpawn.position + new Vector3(3f, 0, 0);
+            Debug.Log("[Spawner] Boss spawn fallback: PlayerSpawnPoint.");
+        }
+        else
+        {
+            spawnPos = Vector3.zero;
+            Debug.LogWarning("[Spawner] No spawn points found! Boss at (0,0,0).");
+        }
+
+        if (bossPrefab == null)
+        {
+            Debug.LogError("BossPrefab not assigned in EnemySpawnManager!");
+            return;
+        }
+
+        GameObject boss = Instantiate(bossPrefab, spawnPos, Quaternion.identity);
+
+        // Optionally scale boss stats
+        EnemyStats stats = boss.GetComponent<EnemyStats>();
+        if (stats != null && MapProgressionManager.Instance != null)
+        {
+            stats.SetLevel(MapProgressionManager.Instance.CurrentEnemyLevel);
+        }
+
+        // Mark as boss room so normal enemies won't spawn
+        isBossRoom = true;
+
+        // Reset spawner counters
+        ResetSpawner();
+        // Track globally
+        activeEnemies.Add(boss);
     }
 
     public void OnPause()

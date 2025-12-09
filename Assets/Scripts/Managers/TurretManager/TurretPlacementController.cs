@@ -444,7 +444,27 @@ public class TurretPlacementController : MonoBehaviour
 
         return Mathf.Max(0f, endTime - Time.time);
     }
+    public void ClearAllTurrets()
+    {
+        // Destroy all turret GameObjects
+        foreach (var turret in activeTurrets)
+        {
+            if (turret != null)
+                Destroy(turret);
+        }
 
+        // Clear tracking lists
+        activeTurrets.Clear();
+        placedTurrets.Clear();
+
+        // Notify any listeners that turrets changed
+        OnTurretsChanged?.Invoke();
+
+        // Destroy any active preview
+        DestroyPreview();
+
+        Debug.Log("[TurretPlacement] All turrets cleared.");
+    }
 
 
 

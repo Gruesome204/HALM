@@ -7,8 +7,6 @@ public class MapProgressionManager : MonoBehaviour
     [Header("Progression Settings")]
     public int mapsBeforeBoss = 3;
 
-    [Header("Boss Settings")]
-    public GameObject bossPrefab;
 
     [Header("Runtime")]
     public int currentMapIndex = 0;
@@ -39,31 +37,33 @@ public class MapProgressionManager : MonoBehaviour
 
     public void LoadNextRoom()
     {
-        mapsClearedSinceBoss++;
+        // Clear all towers before loading a new map
+        TurretPlacementController.Instance?.ClearAllTurrets();
+
+        // Clamp map index
+        int safeMapIndex = Mathf.Min(currentMapIndex, MapLoaderManager.Instance.mapPrefabs.Length - 1);
+
+        // Load map normally
+        MapLoaderManager.Instance.LoadMap(safeMapIndex);
 
         bool shouldSpawnBoss = mapsClearedSinceBoss >= mapsBeforeBoss;
 
-        // Clamp map index for safe access
-        int safeMapIndex = Mathf.Min(currentMapIndex, MapLoaderManager.Instance.mapPrefabs.Length - 1);
-
         if (shouldSpawnBoss)
         {
-            SpawnBossRoom(safeMapIndex);
+            bossActive = true;
+            EnemySpawnManager.Instance.SpawnBoss();
+            mapsClearedSinceBoss = 0; // reset after boss
         }
         else
         {
             bossActive = false;
-
-            MapLoaderManager.Instance.LoadMap(safeMapIndex);
-
             EnemySpawnManager.Instance.OnAllEnemiesDefeated += OnRoomCleared;
+            mapsClearedSinceBoss++; // increment only if not boss
         }
 
-        // Increment currentMapIndex only after map is safely loaded
         currentMapIndex++;
     }
-
-    private void OnRoomCleared()
+        private void OnRoomCleared()
     {
         // Prevent multiple fires
         EnemySpawnManager.Instance.OnAllEnemiesDefeated -= OnRoomCleared;
@@ -72,32 +72,4 @@ public class MapProgressionManager : MonoBehaviour
         LoadNextRoom();
     }
 
-
-    private void SpawnBossRoom(int safeMapIndex)
-    {
-        Debug.Log("[Progression] BOSS ROOM!");
-        bossActive = true;
-
-        // Load map safely
-        MapLoaderManager.Instance.LoadMap(safeMapIndex);
-
-        Transform bSpawn = MapLoaderManager.Instance.bossSpawnPoint;
-        Transform pSpawn = MapLoaderManager.Instance.playerSpawnPoint;
-        Transform[] enemySpawns = EnemySpawnManager.Instance.spawnPoints;
-
-        Vector3 spawnPos;
-
-        if (bSpawn != null)
-            spawnPos = bSpawn.position;
-        else if (enemySpawns != null && enemySpawns.Length > 0)
-            spawnPos = enemySpawns[0].position;
-        else if (pSpawn != null)
-            spawnPos = pSpawn.position + new Vector3(3f, 0, 0);
-        else
-            spawnPos = Vector3.zero;
-
-        Instantiate(bossPrefab, spawnPos, Quaternion.identity);
-
-        mapsClearedSinceBoss = 0;
-    }
 }

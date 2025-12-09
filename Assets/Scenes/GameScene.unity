@@ -1837,6 +1837,7 @@ MonoBehaviour:
   spawnRadius: 5
   spawnPoints: []
   useRandomSpawnPoint: 1
+  bossPrefab: {fileID: 3367656670818576859, guid: 4d97ad3e0380f7847bcfabb16ebd1c22, type: 3}
   totalSpawned: 0
   isPaused: 0
 --- !u!1 &816791901
@@ -2141,7 +2142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapsBeforeBoss: 2
-  bossPrefab: {fileID: 0}
   currentMapIndex: 0
   baseEnemyLevel: 1
   enemyLevelIncreasePerMap: 1
