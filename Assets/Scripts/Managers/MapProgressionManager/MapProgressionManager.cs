@@ -6,8 +6,6 @@ public class MapProgressionManager : MonoBehaviour
 
     [Header("Progression Settings")]
     public int mapsBeforeBoss = 3;
-    public float enemyHealthMultiplierPerMap = 1.2f;
-    public float enemyDamageMultiplierPerMap = 1.15f;
 
     [Header("Boss Settings")]
     public GameObject bossPrefab;
@@ -41,30 +39,28 @@ public class MapProgressionManager : MonoBehaviour
 
     public void LoadNextRoom()
     {
-        currentMapIndex++;
         mapsClearedSinceBoss++;
-
-        Debug.Log($"[Progression] Loading room {currentMapIndex}...");
 
         bool shouldSpawnBoss = mapsClearedSinceBoss >= mapsBeforeBoss;
 
+        // Clamp map index for safe access
+        int safeMapIndex = Mathf.Min(currentMapIndex, MapLoaderManager.Instance.mapPrefabs.Length - 1);
+
         if (shouldSpawnBoss)
         {
-            SpawnBossRoom();
+            SpawnBossRoom(safeMapIndex);
         }
         else
         {
             bossActive = false;
 
-            // Increase enemy level
-            CurrentEnemyLevel += enemyLevelIncreasePerMap;
-            Debug.Log($"[Progression] Enemy Level increased → {CurrentEnemyLevel}");
+            MapLoaderManager.Instance.LoadMap(safeMapIndex);
 
-            MapLoaderManager.Instance.LoadMap(currentMapIndex);
-
-            // Listen for room completion
             EnemySpawnManager.Instance.OnAllEnemiesDefeated += OnRoomCleared;
         }
+
+        // Increment currentMapIndex only after map is safely loaded
+        currentMapIndex++;
     }
 
     private void OnRoomCleared()
@@ -76,50 +72,32 @@ public class MapProgressionManager : MonoBehaviour
         LoadNextRoom();
     }
 
-    private void SpawnBossRoom()
+
+    private void SpawnBossRoom(int safeMapIndex)
     {
         Debug.Log("[Progression] BOSS ROOM!");
-
         bossActive = true;
 
-        // Load map for boss
-        MapLoaderManager.Instance.LoadMap(currentMapIndex);
+        // Load map safely
+        MapLoaderManager.Instance.LoadMap(safeMapIndex);
 
-        // Grab all possible spawn references
         Transform bSpawn = MapLoaderManager.Instance.bossSpawnPoint;
         Transform pSpawn = MapLoaderManager.Instance.playerSpawnPoint;
         Transform[] enemySpawns = EnemySpawnManager.Instance.spawnPoints;
 
-
         Vector3 spawnPos;
 
         if (bSpawn != null)
-        {
-            // 1️⃣ Preferred: boss spawn point
             spawnPos = bSpawn.position;
-            Debug.Log("[Progression] Boss spawning at BossSpawnPoint.");
-        }
         else if (enemySpawns != null && enemySpawns.Length > 0)
-        {
-            // 2️⃣ Fallback #1: normal enemy spawn
             spawnPos = enemySpawns[0].position;
-            Debug.Log("[Progression] Boss spawn fallback: EnemySpawnPoint[0].");
-        }
         else if (pSpawn != null)
-        {
-            // 3️⃣ Fallback #2: near player
             spawnPos = pSpawn.position + new Vector3(3f, 0, 0);
-            Debug.Log("[Progression] Boss spawn fallback: PlayerSpawnPoint.");
-        }
         else
-        {
-            // 4️⃣ Last fallback: origin
             spawnPos = Vector3.zero;
-            Debug.LogWarning("[Progression] No spawn points found! Boss at (0,0,0).");
-        }
 
-        // Spawn boss
         Instantiate(bossPrefab, spawnPos, Quaternion.identity);
+
         mapsClearedSinceBoss = 0;
     }
 }

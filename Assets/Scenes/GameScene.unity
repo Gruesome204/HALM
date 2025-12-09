@@ -1833,10 +1833,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4040261046768777757, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
   spawnInterval: 1
-  spawnAmount: 15
+  spawnAmount: 1
   spawnRadius: 5
   spawnPoints: []
   useRandomSpawnPoint: 1
+  totalSpawned: 0
   isPaused: 0
 --- !u!1 &816791901
 GameObject:
@@ -2104,6 +2105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 874175431}
+  - component: {fileID: 874175432}
   m_Layer: 0
   m_Name: -MapProgressionManager-
   m_TagString: Untagged
@@ -2126,6 +2128,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1512055815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &874175432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874175430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31df0c8649677fa4e8fa3d0a0c4da7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapsBeforeBoss: 2
+  bossPrefab: {fileID: 0}
+  currentMapIndex: 0
+  baseEnemyLevel: 1
+  enemyLevelIncreasePerMap: 1
 --- !u!1 &935072170
 GameObject:
   m_ObjectHideFlags: 0
