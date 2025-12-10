@@ -17,9 +17,7 @@ public class GridManager : MonoBehaviour
     [Header("Placement Settings")]
     public LayerMask groundLayer; // Only allow placement on this layer
 
-
     private GameObject[,] gridOccupancy;
-
 
     private void Awake()
     {
@@ -66,9 +64,6 @@ public class GridManager : MonoBehaviour
         {
             return false; // Out of bounds
         }
-
-
-
 
         for (int x = 0; x < objectSize.x; x++)
         {

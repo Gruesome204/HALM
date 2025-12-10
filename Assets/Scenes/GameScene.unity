@@ -805,6 +805,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   previewObject: {fileID: 0}
   maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}
@@ -873,7 +876,7 @@ MonoBehaviour:
   cellSize: 1
   gridWidth: 100
   gridHeight: 100
-  originPosition: {x: -22.4, y: -23.4, z: 0}
+  originPosition: {x: -25, y: -25, z: 0}
   gridZPosition: 0
   groundLayer:
     serializedVersion: 2

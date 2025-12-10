@@ -43,7 +43,6 @@ public class MapLoaderManager : MonoBehaviour
         // Load new map prefab
         currentMap = Instantiate(mapPrefabs[index], mapParent);
 
-
         EnemySpawnManager.Instance.ResetSpawner();
         // Send spawn points to EnemySpawnManager
         AssignSpawnPointsToEnemyManager();
@@ -51,6 +50,7 @@ public class MapLoaderManager : MonoBehaviour
         SetPlayerPosition();
 
     }
+
 
 
     private void SetPlayerPosition()
