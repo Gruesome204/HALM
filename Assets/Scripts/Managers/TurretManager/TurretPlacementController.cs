@@ -301,7 +301,7 @@ public class TurretPlacementController : MonoBehaviour
 
         Vector3 worldPos = GetMouseWorldPosition();
 
-        // --- NEW: check if the mouse is on the ground ---
+        // --- NEW: check if the mouse is on the ground for tilemap---
         RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero, 0f, groundLayer);
         if (hit.collider == null)
         {
