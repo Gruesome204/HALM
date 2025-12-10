@@ -17,6 +17,10 @@ public class GridManager : MonoBehaviour
     [Header("Placement Settings")]
     public LayerMask groundLayer; // Only allow placement on this layer
 
+    [Header("Tilemaps")]
+    public Tilemap groundTilemap;
+    public Tilemap wallTilemap;
+
 
     private GameObject[,] gridOccupancy;
 
@@ -36,6 +40,34 @@ public class GridManager : MonoBehaviour
         gridOccupancy = new GameObject[gridWidth, gridHeight];
     }
 
+
+    //Checks for building on GroundTilemap
+    public bool IsTileBuildable(Vector2Int gridCoords)
+    {
+        Vector3Int cellPos = new Vector3Int(gridCoords.x, gridCoords.y, 0);
+
+        TileBase wall = wallTilemap.GetTile(cellPos);
+        if (wall != null)
+            return false; // Wall = forbidden
+
+        TileBase ground = groundTilemap.GetTile(cellPos);
+        if (ground != null)
+            return true;  // Ground = allowed
+
+        return false; // Empty space = not allowed
+    }
+
+    public void BuildGridFromTilemapBounds()
+    {
+        BoundsInt bounds = groundTilemap.cellBounds;
+
+        gridWidth = bounds.size.x;
+        gridHeight = bounds.size.y;
+
+        gridOccupancy = new GameObject[gridWidth, gridHeight];
+
+        originPosition = groundTilemap.CellToWorld(bounds.min);
+    }
 
 
     // Converts world position (e.g., from mouse click) to grid coordinates
@@ -61,6 +93,7 @@ public class GridManager : MonoBehaviour
     // Checks if a placable object of a given size can be placed at a specific grid coordinate
     public bool CanPlaceObject(Vector2Int startCoords, Vector2Int objectSize)
     {
+
         // Check bounds
         if (startCoords.x < 0 || startCoords.y < 0 ||
             startCoords.x + objectSize.x > gridWidth ||
@@ -78,6 +111,10 @@ public class GridManager : MonoBehaviour
 
                 // 1️⃣ Check occupancy
                 if (gridOccupancy[gx, gy] != null)
+                    return false;
+
+                // 2️⃣ Check if tile is valid ground
+                if (!IsTileBuildable(new Vector2Int(gx, gy)))
                     return false;
             }
         }

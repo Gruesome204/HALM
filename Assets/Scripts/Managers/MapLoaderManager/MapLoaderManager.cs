@@ -43,6 +43,14 @@ public class MapLoaderManager : MonoBehaviour
         // Load new map prefab
         currentMap = Instantiate(mapPrefabs[index], mapParent);
 
+        // Assign tilemaps to GridManager
+        Tilemap ground = currentMap.transform.Find("FloorTilemap").GetComponent<Tilemap>();
+        Tilemap walls = currentMap.transform.Find("WallTilemap").GetComponent<Tilemap>();
+        GridManager.Instance.groundTilemap = ground.GetComponent<Tilemap>();
+        GridManager.Instance.wallTilemap = walls.GetComponent<Tilemap>();
+
+        // rebuild grid
+        GridManager.Instance.BuildGridFromTilemapBounds();
 
         EnemySpawnManager.Instance.ResetSpawner();
         // Send spawn points to EnemySpawnManager
