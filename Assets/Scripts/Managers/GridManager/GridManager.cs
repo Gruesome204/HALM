@@ -7,7 +7,7 @@ public class GridManager : MonoBehaviour
     public static GridManager Instance { get; private set; } // Singleton pattern
 
     [Header("Grid Settings")]
-    public float cellSize = 1f;
+    public float cellSize = 0.5f;
     public int gridWidth = 10;
     public int gridHeight = 10;
     public Vector3 originPosition = Vector3.zero; // World origin of the grid
@@ -17,14 +17,9 @@ public class GridManager : MonoBehaviour
     [Header("Placement Settings")]
     public LayerMask groundLayer; // Only allow placement on this layer
 
-    [Header("Tilemaps")]
-    public Tilemap groundTilemap;
-    public Tilemap wallTilemap;
-
 
     private GameObject[,] gridOccupancy;
 
-    private Vector2 gridOffset; // To store the offset for centering
 
     private void Awake()
     {
@@ -39,36 +34,6 @@ public class GridManager : MonoBehaviour
 
         gridOccupancy = new GameObject[gridWidth, gridHeight];
     }
-
-
-    //Checks for building on GroundTilemap
-    public bool IsTileBuildable(Vector2Int gridCoords)
-    {
-        Vector3Int cellPos = new Vector3Int(gridCoords.x, gridCoords.y, 0);
-
-        TileBase wall = wallTilemap.GetTile(cellPos);
-        if (wall != null)
-            return false; // Wall = forbidden
-
-        TileBase ground = groundTilemap.GetTile(cellPos);
-        if (ground != null)
-            return true;  // Ground = allowed
-
-        return false; // Empty space = not allowed
-    }
-
-    public void BuildGridFromTilemapBounds()
-    {
-        BoundsInt bounds = groundTilemap.cellBounds;
-
-        gridWidth = bounds.size.x;
-        gridHeight = bounds.size.y;
-
-        gridOccupancy = new GameObject[gridWidth, gridHeight];
-
-        originPosition = groundTilemap.CellToWorld(bounds.min);
-    }
-
 
     // Converts world position (e.g., from mouse click) to grid coordinates
     public Vector2Int GetGridCoordinates(Vector3 worldPosition)
@@ -102,6 +67,9 @@ public class GridManager : MonoBehaviour
             return false; // Out of bounds
         }
 
+
+
+
         for (int x = 0; x < objectSize.x; x++)
         {
             for (int y = 0; y < objectSize.y; y++)
@@ -111,10 +79,6 @@ public class GridManager : MonoBehaviour
 
                 // 1️⃣ Check occupancy
                 if (gridOccupancy[gx, gy] != null)
-                    return false;
-
-                // 2️⃣ Check if tile is valid ground
-                if (!IsTileBuildable(new Vector2Int(gx, gy)))
                     return false;
             }
         }

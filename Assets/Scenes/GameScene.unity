@@ -871,8 +871,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellSize: 1
-  gridWidth: 50
-  gridHeight: 50
+  gridWidth: 100
+  gridHeight: 100
   originPosition: {x: -22.4, y: -23.4, z: 0}
   gridZPosition: 0
   groundLayer:
@@ -3591,7 +3591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
-  gameData:
+  tempSaveData:
     saveVersion: 1
     localSelected: 
     musicTrack: 0
