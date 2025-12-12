@@ -84,6 +84,11 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         }
     }
 
+    private void Start()
+    {
+        FillActionRow();
+    }
+
     void FillActionRow()
     {
         turretBtnList.Clear();

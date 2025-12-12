@@ -7,7 +7,7 @@ public class GridManager : MonoBehaviour
     public static GridManager Instance { get; private set; } // Singleton pattern
 
     [Header("Grid Settings")]
-    public float cellSize = 1f;
+    public float cellSize = 0.5f;
     public int gridWidth = 10;
     public int gridHeight = 10;
     public Vector3 originPosition = Vector3.zero; // World origin of the grid
@@ -17,10 +17,7 @@ public class GridManager : MonoBehaviour
     [Header("Placement Settings")]
     public LayerMask groundLayer; // Only allow placement on this layer
 
-
     private GameObject[,] gridOccupancy;
-
-    private Vector2 gridOffset; // To store the offset for centering
 
     private void Awake()
     {
@@ -35,8 +32,6 @@ public class GridManager : MonoBehaviour
 
         gridOccupancy = new GameObject[gridWidth, gridHeight];
     }
-
-
 
     // Converts world position (e.g., from mouse click) to grid coordinates
     public Vector2Int GetGridCoordinates(Vector3 worldPosition)
@@ -61,6 +56,7 @@ public class GridManager : MonoBehaviour
     // Checks if a placable object of a given size can be placed at a specific grid coordinate
     public bool CanPlaceObject(Vector2Int startCoords, Vector2Int objectSize)
     {
+
         // Check bounds
         if (startCoords.x < 0 || startCoords.y < 0 ||
             startCoords.x + objectSize.x > gridWidth ||

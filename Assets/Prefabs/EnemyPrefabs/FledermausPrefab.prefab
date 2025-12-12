@@ -213,6 +213,7 @@ MonoBehaviour:
   stats: {fileID: 7339260930082218373}
   movement: {fileID: 0}
   healthBar: {fileID: 2813460744261295979}
+  levelText: {fileID: 2632586964065340299}
 --- !u!114 &8681205700299939639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,6 +445,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
+--- !u!114 &2632586964065340299 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4312815260115176719, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
+  m_PrefabInstance: {fileID: 2257114052561782404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2813460744261295979 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4060429260896049647, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}

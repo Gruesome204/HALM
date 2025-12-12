@@ -27,9 +27,10 @@ public class InGameMenuManager : MonoBehaviour
         {
             TurretLevelManager.Instance.OnMilestoneReached += OpenTurretUpgradeChoice;
             PlayerManager.Instance.OnPlayerDeath += GameOver;
-            EnemySpawnManager.Instance.OnAllEnemiesDefeated += GameWon;
+            EnemySpawnManager.Instance.OnBossDefeated += GameWon;
         }
     }
+
 
     void Update()
     {

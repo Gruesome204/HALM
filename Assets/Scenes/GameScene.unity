@@ -791,11 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01346e348d18f8a49a08499c0146d695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretBlueprintList:
-  - {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
-  - {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
-  - {fileID: 11400000, guid: d57e7534158189347baee79ed9fa3fc1, type: 2}
-  - {fileID: 11400000, guid: 78b5b99b66001634584825f663397a90, type: 2}
+  turretBlueprintList: []
   currentSelectedBlueprint: {fileID: 0}
   groundLayer:
     serializedVersion: 2
@@ -809,6 +805,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   previewObject: {fileID: 0}
   maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}
@@ -875,9 +874,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellSize: 1
-  gridWidth: 50
-  gridHeight: 50
-  originPosition: {x: -22.4, y: -23.4, z: 0}
+  gridWidth: 100
+  gridHeight: 100
+  originPosition: {x: -25, y: -25, z: 0}
   gridZPosition: 0
   groundLayer:
     serializedVersion: 2
@@ -1816,10 +1815,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 3.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1383891467}
-  - {fileID: 1379736039}
-  - {fileID: 1269977298}
+  m_Children: []
   m_Father: {fileID: 1512055815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &747619963
@@ -1834,15 +1830,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47769b2c793f1314bb9ce22cad59ad5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4040261046768777757, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
+  enemyPrefabs:
+  - {fileID: 4040261046768777757, guid: e699846b633cd1647950dc64fe25a9eb, type: 3}
   spawnInterval: 1
   spawnAmount: 15
   spawnRadius: 5
-  spawnPoints:
-  - {fileID: 1383891467}
-  - {fileID: 1379736039}
-  - {fileID: 1269977298}
+  spawnPoints: []
   useRandomSpawnPoint: 1
+  isBossRoom: 0
+  bossPrefab: {fileID: 1562781743598442605, guid: ed50963be9f6da648a1163d27d16de88, type: 3}
+  totalSpawned: 0
   isPaused: 0
 --- !u!1 &816791901
 GameObject:
@@ -2101,6 +2098,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1619348963}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &874175430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 874175431}
+  - component: {fileID: 874175432}
+  m_Layer: 0
+  m_Name: -MapProgressionManager-
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &874175431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874175430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1512055815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &874175432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874175430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31df0c8649677fa4e8fa3d0a0c4da7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapsBeforeBoss: 2
+  currentMapIndex: 0
+  baseEnemyLevel: 1
+  enemyLevelIncreasePerMap: 1
+  autoProgress: 1
 --- !u!1 &935072170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,7 +2257,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapPrefabs:
   - {fileID: 5085846882595726355, guid: 19d2ffbe8aa8d6c41b4e870fd9803276, type: 3}
+  - {fileID: 8897411324710292980, guid: 2d6e84168c43aff40be9099a45442bb7, type: 3}
   mapParent: {fileID: 855785565}
+  playerSpawnPoint: {fileID: 0}
+  bossSpawnPoint: {fileID: 0}
 --- !u!1 &1105641864
 GameObject:
   m_ObjectHideFlags: 0
@@ -2501,37 +2550,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1619348963}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1269977297
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1269977298}
-  m_Layer: 0
-  m_Name: SpawnPoint3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1269977298
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269977297}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.22, y: -6.89, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 747619962}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1357217367
 GameObject:
   m_ObjectHideFlags: 0
@@ -2582,68 +2600,6 @@ MonoBehaviour:
   globalFireRateMultiplier: 1
   globalProjectilesPerSalve: 1
   globalProjectileSpeed: 1
---- !u!1 &1379736038
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1379736039}
-  m_Layer: 0
-  m_Name: SpawnPoint2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1379736039
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379736038}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.11, y: -2.41, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 747619962}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1383891466
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1383891467}
-  m_Layer: 0
-  m_Name: SpawnPoint1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1383891467
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383891466}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.58, y: 1.78, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 747619962}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1463319342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2809,6 +2765,7 @@ Transform:
   m_Children:
   - {fileID: 2019150953}
   - {fileID: 1066720071}
+  - {fileID: 874175431}
   - {fileID: 406684504}
   - {fileID: 368292586}
   - {fileID: 1357217368}
@@ -3637,7 +3594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
-  gameData:
+  tempSaveData:
     saveVersion: 1
     localSelected: 
     musicTrack: 0
@@ -3656,8 +3613,8 @@ MonoBehaviour:
     additionalRegen: 0
     additionalArmor: 0
     additionalMagicResistance: 0
-    unlockedTurrets: 
-    selectedTurrets: 
+    unlockedBlueprints: []
+    selectedBlueprints: []
     buildMasterModifiers: []
   autosaveInterval: 60
 --- !u!1 &2051609381
@@ -4031,8 +3988,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.007957518, y: 0.0042762756}
-  m_Size: {x: 1.1, y: 2.1}
+  m_Offset: {x: -0.009048104, y: 0.009048104}
+  m_Size: {x: 1.1633368, y: 2.0049946}
   m_Direction: 0
 --- !u!1 &2140789119
 GameObject:

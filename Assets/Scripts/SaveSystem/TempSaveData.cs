@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 
 //File that is saved into a JSON
-public class GameData
+public class TempSaveData
 {
     public int saveVersion = 1;
 
@@ -33,24 +33,23 @@ public class GameData
     public float additionalMagicResistance;
 
 
-    public List<TurretType> unlockedTurrets;
-    public List<TurretType> selectedTurrets;
+    public List<TurretBlueprint> unlockedBlueprints;
+    public List<TurretBlueprint> selectedBlueprints;
     public List<BuildMasterModifier> buildMasterModifiers;
 
-    public GameData()
+    public TempSaveData()
     {
-        unlockedTurrets = new List<TurretType>();
-        selectedTurrets = new List<TurretType>();
+        unlockedBlueprints = new List<TurretBlueprint>();
+        selectedBlueprints = new List<TurretBlueprint>();
     }
 
-    public GameData(GameDataSO so)
+    public TempSaveData(GameDataSO so)
     {
 
         currentPlayerLevel = so.currentPlayerLevel;
         currentClass = so.currentClass;
 
-        unlockedTurrets = new List<TurretType>(so.unlockedTurrets);
-        selectedTurrets = new List<TurretType>(so.selectedTurrets);
+        unlockedBlueprints = new List<TurretBlueprint>(so.GetUnlockedBlueprints());
 
         saveVersion = 1;
 

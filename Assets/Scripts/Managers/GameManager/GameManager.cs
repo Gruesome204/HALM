@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Data")]
     public GameDataSO gameDataSO;
-    public GameData gameData;
+    public TempSaveData tempSaveData;
     public enum GameState
     {
         MainMenu,
@@ -53,11 +53,28 @@ public class GameManager : MonoBehaviour
     {
         ChangeState(GameState.Loading);
 
-        // Load save file
-        gameData = SaveSystem.Load();
-
-        // Apply runtime data to SO
+        TempSaveData loadedData = SaveSystem.Load();
+    if (loadedData != null)
+    {
+            tempSaveData = loadedData;
         ApplyRuntimeDataToSO();
+    }
+    else
+    {
+        Debug.Log("[GameManager] No save found → creating new GameData from SO defaults");
+            tempSaveData = new TempSaveData
+        {
+            gameCurrency = gameDataSO.gameCurrency,
+            currentPlayerLevel = gameDataSO.currentPlayerLevel,
+            currentClass = gameDataSO.currentClass,
+            unlockedBlueprints = new List<TurretBlueprint>(gameDataSO.GetUnlockedBlueprints()),
+        };
+    }
+
+
+        // Setup turret placement system
+        TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
+
 
         // Load Scene Elements (Map)
         MapLoaderManager.Instance?.LoadMap(0);
@@ -76,7 +93,7 @@ public class GameManager : MonoBehaviour
 
     private void ApplyPlayerUpgrades()  
     {
-        var so = gameData;
+        var so = tempSaveData;
         PlayerStats playerStats = PlayerManager.Instance.playerStats;
         playerStats.currentHealth += so.additionalHealth;   
         playerStats.currentMaxHealth += so.additionalHealth;
@@ -87,14 +104,24 @@ public class GameManager : MonoBehaviour
 
     private void ApplyRuntimeDataToSO()
     {
-        var so = gameDataSO;
+        if (gameDataSO == null)
+        {
+            Debug.LogWarning("[GameManager] Cannot apply runtime data: gameDataSO is null.");
+            return;
+        }
 
-        so.gameCurrency = gameData.gameCurrency;
-        so.currentPlayerLevel = gameData.currentPlayerLevel;
-        so.currentClass = gameData.currentClass;
+        if (tempSaveData == null)
+        {
+            Debug.Log("[GameManager] No save data found, keeping defaults from GameDataSO.");
+            return; // don't overwrite defaults
+        }
 
-        so.unlockedTurrets = new List<TurretType>(gameData.unlockedTurrets);
-        so.selectedTurrets = new List<TurretType>(gameData.selectedTurrets);
+        // Copy basic fields
+        gameDataSO.gameCurrency = tempSaveData.gameCurrency;
+        gameDataSO.currentPlayerLevel = tempSaveData.currentPlayerLevel;
+        gameDataSO.currentClass = tempSaveData.currentClass;
+
+        Debug.Log("[GameManager] Runtime data applied to GameDataSO.");
     }
 
     private void Update()
@@ -121,16 +148,15 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        if (gameData == null) gameData = new GameData();
+        if (tempSaveData == null) tempSaveData = new TempSaveData();
         if (gameDataSO == null) return;
 
-        gameData.gameCurrency = gameDataSO.gameCurrency;
-        gameData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
-        gameData.currentClass = gameDataSO.currentClass;
-        gameData.unlockedTurrets = gameDataSO.unlockedTurrets.ToList();
-        gameData.selectedTurrets = gameDataSO.selectedTurrets.ToList();
+        tempSaveData.gameCurrency = gameDataSO.gameCurrency;
+        tempSaveData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
+        tempSaveData.currentClass = gameDataSO.currentClass;
+        tempSaveData.unlockedBlueprints = gameDataSO.GetUnlockedBlueprints().ToList();
 
-        SaveSystem.Save(gameData);
+        SaveSystem.Save(tempSaveData);
     }
 
     public void ChangeState(GameState newState)
@@ -183,9 +209,6 @@ public class GameManager : MonoBehaviour
         if (pausable == null) return;
         pausables.Remove(pausable);
     }
-
-
-
 
     public void PauseGame() => ChangeState(GameState.Paused);
     public void ResumeGame() => ChangeState(GameState.Playing);

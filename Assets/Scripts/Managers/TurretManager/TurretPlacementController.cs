@@ -34,6 +34,9 @@ public class TurretPlacementController : MonoBehaviour
     [Tooltip("Layer for enemies (placement blocked).")]
     public LayerMask enemyLayer;
 
+    [Tooltip("Layer for walls (placement blocked).")]
+    public LayerMask wallLayer;
+
     [Header("Placement Preview")]
     [Tooltip("Prefab used to show placement preview (optional).")]
     public GameObject previewObject; // Optional: Prefab for placement preview
@@ -77,6 +80,13 @@ public class TurretPlacementController : MonoBehaviour
     private void OnEnable() => OnPlacementCooldownStateChanged += HandleCooldownEvent;
     private void OnDisable() => OnPlacementCooldownStateChanged -= HandleCooldownEvent;
 
+
+    public void SetupFromGameData(GameDataSO gameData)
+    {
+        turretBlueprintList = new List<TurretBlueprint>(gameData.GetUnlockedBlueprints());
+        Debug.Log($"[TurretPlacement] Loaded {turretBlueprintList.Count} unlocked turrets from GameDataSO.");
+        OnTurretsChanged?.Invoke();
+    }
 
     private void Update()
     {
@@ -189,6 +199,14 @@ public class TurretPlacementController : MonoBehaviour
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
 
+        // --- NEW: only show preview if on ground ---
+        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 0f, groundLayer);
+        if (hit.collider == null)
+        {
+            previewObject.SetActive(false);
+            return;
+        }
+
         // Snap to grid
         Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(mouseWorldPos);
         Vector3 snappedWorldPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
@@ -198,6 +216,9 @@ public class TurretPlacementController : MonoBehaviour
 
         // Check if blocked by player/enemy
         if (IsPlacementBlocked(snappedWorldPos, currentSelectedBlueprint.sizeInCells))
+            canPlace = false;
+
+        if (!IsPlacementOnGround(gridCoords, currentSelectedBlueprint.sizeInCells))
             canPlace = false;
 
         // Check distance to player
@@ -279,6 +300,16 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         Vector3 worldPos = GetMouseWorldPosition();
+
+        // --- NEW: check if the mouse is on the ground for tilemap---
+        RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero, 0f, groundLayer);
+        if (hit.collider == null)
+        {
+            Debug.Log("Cannot place turret: not on ground tilemap.");
+            return;
+        }
+
+
         Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(worldPos);
         Vector3 snappedPos = GridManager.Instance.GetWorldPosition(gridCoords, currentSelectedBlueprint.sizeInCells);
 
@@ -297,6 +328,36 @@ public class TurretPlacementController : MonoBehaviour
         Debug.Log($"[TurretPlacement] Turret placed. Used Capacity: {GetUsedCapacity()}/{maxTurretCapacity}");
     }
 
+    private bool IsPlacementOnGround(Vector2Int startCoords, Vector2Int size)
+    {
+        // Check each cell the turret would occupy
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                Vector2Int cellCoords = startCoords + new Vector2Int(x, y);
+                Vector3 worldPos = GridManager.Instance.GetWorldPosition(cellCoords, Vector2Int.one);
+
+                // Raycast down from the center of each cell to check for ground
+                RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero, 0f, groundLayer);
+                if (hit.collider == null)
+                {
+                    // This cell is not on the ground -> cannot place
+                    return false;
+                }
+
+                // Optional: also check walls specifically
+                Collider2D wallHit = Physics2D.OverlapBox(worldPos, Vector2.one * GridManager.Instance.cellSize * 0.9f, 0f, wallLayer);
+                if (wallHit != null)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
     private Vector3 GetMouseWorldPosition()
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -308,6 +369,8 @@ public class TurretPlacementController : MonoBehaviour
     {
         // Check blocked layers, grid occupancy, distance, capacity, cooldown
         if (!GridManager.Instance.CanPlaceObject(gridCoords, currentSelectedBlueprint.sizeInCells)) return false;
+        if (!IsPlacementOnGround(gridCoords, currentSelectedBlueprint.sizeInCells))
+            return false;
         if (IsPlacementBlocked(worldPos, currentSelectedBlueprint.sizeInCells)) return false;
         if (Vector3.Distance(playerTransform.position, worldPos) > placementRadius) return false;
         if (GetUsedCapacity() + currentSelectedBlueprint.buildCapacityValue > maxTurretCapacity) return false;
@@ -391,15 +454,6 @@ public class TurretPlacementController : MonoBehaviour
     public List<TurretBlueprint> GetTurretBlueprintList() => turretBlueprintList;
 
 
-    public void SetupFromGameData(GameDataSO gameData)
-    {
-        turretBlueprintList = gameData.allTurretBlueprints
-            .Where(b => gameData.unlockedTurrets.Contains(b.turretType))
-            .ToList();
-
-        Debug.Log($"[TurretPlacement] Loaded {turretBlueprintList.Count} unlocked turrets from GameDataSO.");
-        OnTurretsChanged?.Invoke();
-    }
 
     private bool IsPlacementBlocked(Vector3 position, Vector2 size)
     {
@@ -444,7 +498,25 @@ public class TurretPlacementController : MonoBehaviour
 
         return Mathf.Max(0f, endTime - Time.time);
     }
+    public void ClearAllTurrets()
+    {
+        // Destroy all turret GameObjects
+        foreach (var turret in activeTurrets)
+        {
+            if (turret != null)
+                Destroy(turret);
+        }
 
+        // Clear tracking lists
+        activeTurrets.Clear();
+        placedTurrets.Clear();
+
+        // Notify any listeners that turrets changed
+        OnTurretsChanged?.Invoke();
+
+        // Destroy any active preview
+        DestroyPreview();
+    }
 
 
 

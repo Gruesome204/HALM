@@ -29,9 +29,7 @@ public class GameDataSO : ScriptableObject
 
     [Header("Turrets")]
     public List<TurretBlueprint> allTurretBlueprints;
-    public List<TurretType> allTurrets;          // All turrets in the game
-    public List<TurretType> unlockedTurrets;     // Turrets player has unlocked
-    public List<TurretType> selectedTurrets;     // Turrets currently selected
+    [SerializeField]private List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
 
     public TurretBlueprint GetBlueprintByType(TurretType type)
     {
@@ -41,21 +39,17 @@ public class GameDataSO : ScriptableObject
     {
         return allTurretBlueprints.Find(t => t.turretType == type);
     }
-    public bool IsUnlocked(TurretType type)
+    // Check if blueprint is unlocked
+    public bool IsUnlocked(TurretBlueprint blueprint)
     {
-        return unlockedTurrets.Contains(type);
+        return unlockedBlueprints.Contains(blueprint);
     }
 
-    public bool IsSelected(TurretType type)
-    {
-        return selectedTurrets.Contains(type);
-    }
 
+    // Get all unlocked blueprints
     public List<TurretBlueprint> GetUnlockedBlueprints()
     {
-        return allTurretBlueprints
-            .Where(t => unlockedTurrets.Contains(t.turretType))
-            .ToList();
+        return unlockedBlueprints.ToList();
     }
 
     [Header("Ressources")]
