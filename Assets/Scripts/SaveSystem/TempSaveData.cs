@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 
@@ -10,56 +9,80 @@ public class TempSaveData
 
     //All Settings Data
     public string localSelected;
-
     public int musicTrack;
     public float masterVolume;
     public float musicVolume;
     public float soundVolume;
-    //Settings Data end
 
+    // Player
     public int currentPlayerLevel;
     public GameDataSO.Class currentClass;
 
+    // Resources
     public int gameCurrency;
     public int woodResource;
     public int steinResource;
     public int metallResource;
     public int pulverResource;
 
+
+    // --- Player upgrades ---
     public float additionalHealth;
     public float additionalMaxHealth;
     public float additionalRegen;
     public float additionalArmor;
     public float additionalMagicResistance;
 
-
-    public List<TurretBlueprint> unlockedBlueprints;
-    public List<TurretBlueprint> selectedBlueprints;
+    // --- Turrets ---
+    public List<string> unlockedBlueprintNames; // store by unique name/ID
     public List<BuildMasterModifier> buildMasterModifiers;
 
-    public TempSaveData()
-    {
-        unlockedBlueprints = new List<TurretBlueprint>();
-        selectedBlueprints = new List<TurretBlueprint>();
-    }
+
 
     public TempSaveData(GameDataSO so)
     {
+        saveVersion = 1;
 
+        // Settings
+        localSelected = so.localSelected;
+        musicTrack = so.musicTrack;
+        masterVolume = so.masterVolume;
+        musicVolume = so.musicVolume;
+        soundVolume = so.soundVolume;
+
+        // Player
         currentPlayerLevel = so.currentPlayerLevel;
         currentClass = so.currentClass;
 
-        unlockedBlueprints = new List<TurretBlueprint>(so.GetUnlockedBlueprints());
-
-        saveVersion = 1;
-
+        // Resources
         gameCurrency = so.gameCurrency;
         woodResource = so.woodResource;
         steinResource = so.steinResource;
         metallResource = so.metallResource;
         pulverResource = so.pulverResource;
 
-        buildMasterModifiers = new List<BuildMasterModifier>();
+        // Player upgrades
+        additionalHealth = 0f;
+        additionalMaxHealth = 0f;
+        additionalRegen = 0f;
+        additionalArmor = 0f;
+        additionalMagicResistance = 0f;
 
+        // Turrets
+        unlockedBlueprintNames = new List<string>();
+        foreach (var blueprint in so.GetUnlockedBlueprints())
+        {
+            if (blueprint != null)
+                unlockedBlueprintNames.Add(blueprint.name);
+        }
+
+        buildMasterModifiers = new List<BuildMasterModifier>(so.buildMasterModifiers);
+    }
+
+    // Default constructor for new saves
+    public TempSaveData()
+    {
+        unlockedBlueprintNames = new List<string>();
+        buildMasterModifiers = new List<BuildMasterModifier>();
     }
 }

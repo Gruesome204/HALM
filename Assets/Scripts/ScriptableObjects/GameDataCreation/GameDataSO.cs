@@ -7,6 +7,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New GameDataSO", menuName = "Game/GameData/New GameDataSO")]
 public class GameDataSO : ScriptableObject
 {
+    public int saveVersion = 1;
+
     //All Settings Data
     public string localSelected;
 
@@ -15,7 +17,6 @@ public class GameDataSO : ScriptableObject
     public float musicVolume;
     public float soundVolume;
     //Settings Data end
-
 
     public int limitOfUnlockableTurrets = 10;
     public  int limitOfSelectableTurrets = 5;
@@ -83,6 +84,43 @@ public class GameDataSO : ScriptableObject
         unlockedBlueprints = new List<TurretBlueprint>(defaults.defaultUnlockedBlueprints);
         buildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers);
     }
+
+    public GameDataSO ApplySave(TempSaveData save)
+    {
+        // Settings
+        localSelected = save.localSelected;
+        musicTrack = save.musicTrack;
+        masterVolume = save.masterVolume;
+        musicVolume = save.musicVolume;
+        soundVolume = save.soundVolume;
+
+        // Player
+        currentPlayerLevel = save.currentPlayerLevel;
+        currentClass = save.currentClass;
+
+        // Resources
+        gameCurrency = save.gameCurrency;
+        woodResource = save.woodResource;
+        steinResource = save.steinResource;
+        metallResource = save.metallResource;
+        pulverResource = save.pulverResource;
+
+        // Player upgrades
+        buildMasterModifiers = new List<BuildMasterModifier>(save.buildMasterModifiers);
+
+        // Turrets
+        unlockedBlueprints = allTurretBlueprints
+            .Where(b => save.unlockedBlueprintNames.Contains(b.name))
+            .ToList();
+
+        return this;
+    }
+
+    public TempSaveData ToSaveData()
+    {
+        return new TempSaveData(this);
+    }
+
 
 
 }
