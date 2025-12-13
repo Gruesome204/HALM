@@ -114,11 +114,13 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (isAggroed) return;
 
-        AcquirePlayerTarget();
-        if (target == null) return;
-
         isAggroed = true;
-        movement.target = target;
+        AcquirePlayerTarget();
+        movement.target = newTarget;
+
+
+        if (abilityBehaviour != null)
+            abilityBehaviour.SetTarget(newTarget);
     }
 
 
@@ -273,8 +275,11 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         isPaused = true;
         movement.SetPaused(true);
+        if (abilityBehaviour != null)
+            abilityBehaviour.OnPause();
         Animator animator = GetComponent<Animator>();
         animator.enabled = false;
+
         // Stop moving, stop attacking, etc.
     }
 
@@ -282,6 +287,9 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         isPaused = false;
         movement.SetPaused(false);
+
+        if (abilityBehaviour != null)
+            abilityBehaviour.OnResume();
         // Reset attack & ability timers
         nextAttackTime = Time.time;
         nextAbilityTime = Time.time;

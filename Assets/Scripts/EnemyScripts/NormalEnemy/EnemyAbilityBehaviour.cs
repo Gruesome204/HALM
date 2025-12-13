@@ -66,6 +66,14 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
                     maxPriority = ab.ability.priority;
                 }
             }
+
+            var stats = GetComponent<EnemyStats>();
+            if (stats != null)
+            {
+                float hpPercent = stats.currentHealth / stats.currentMaxHealth;
+                if (hpPercent > ab.ability.useBelowHealthPercent)
+                    continue;
+            }
         }
 
         if (selectedAbility == null)
@@ -81,6 +89,11 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
         {
             Debug.Log($"{name} tried to use ability but failed (cooldown or invalid target).");
         }
+    }
+
+    public void SetTarget(GameObject newTarget)
+    {
+        target = newTarget;
     }
 
 
