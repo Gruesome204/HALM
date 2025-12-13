@@ -4,8 +4,14 @@ public class BlockadeObject : MonoBehaviour, IInteractable
 {
     public void Interact()
     {
-        Debug.Log("Player clicked the blockade!");
+        // Only allow interaction if the room is cleared
+        if (!MapProgressionManager.Instance.roomClearedWaitingForPlayer)
+            return;
+
+        Debug.Log("[Blockade] Player clicked exit blocker.");
+
         MapProgressionManager.Instance.PlayerClickedExitBlocker();
+
         gameObject.SetActive(false);
     }
 }

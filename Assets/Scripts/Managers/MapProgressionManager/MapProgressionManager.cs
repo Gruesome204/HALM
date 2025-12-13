@@ -21,7 +21,7 @@ public class MapProgressionManager : MonoBehaviour
     [Tooltip("If true, rooms auto-load after clearing. If false, player must interact to proceed.")]
     public bool autoProgress = false;
 
-    private bool roomClearedWaitingForPlayer = false;
+    public bool roomClearedWaitingForPlayer = false;
 
     private void Awake()
     {
