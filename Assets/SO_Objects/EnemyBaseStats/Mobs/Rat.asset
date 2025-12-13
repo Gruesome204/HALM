@@ -12,28 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4be238d9b295624192c160bdbfda97a, type: 3}
   m_Name: Rat
   m_EditorClassIdentifier: 
-  baseName: 
-  baseDescription: 
+  baseName: Ratte
+  baseDescription: Eine kleiner Fellball ohne Beine.
+  enemyType: 0
   baseLevel: 1
-  baseMovementSpeed: 2
-  baseMaxHealth: 100
-  baseHealth: 100
-  baseArmor: 0
+  baseMovementSpeed: 3
+  baseMaxHealth: 40
+  baseHealth: 40
+  baseArmor: 1
   baseMagicResistance: 0
   baseKnockbackReduction: 0
   baseknockbackForce: 0
   baseknockbackDuration: 0
-  baseDamage: 0
-  baseAttackSpeed: 0
+  baseDamage: 7
+  baseAttackSpeed: 1
   baseCritChance: 0
   baseCritHitMultiplier: 0
-  baseAttackRange: 0
+  baseAttackRange: 1
   baseDetectionRange: 2
   pursueRange: 2
-  experienceYield: 2
+  experienceYield: 100
   goldYield: 0
   resourceDrops: []
-  baseHealthScaleFactor: 0
-  baseDamageScaleFactor: 0
+  baseHealthScaleFactor: 0.1
+  baseDamageScaleFactor: 0.1
   baseSpeedScaleFactor: 0
-  baseArmorScaleFactor: 0
+  baseArmorScaleFactor: 0.1
+  bossBarName: 
+  bossBarColor: {r: 1, g: 0, b: 0, a: 1}
+  bossPortrait: {fileID: 0}
+  bossBarHeight: 20
+  isMultiStageBoss: 0
+  numberOfPhases: 1
