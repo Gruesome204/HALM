@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 774559568760895709}
   - component: {fileID: 2930898726614823518}
   m_Layer: 8
-  m_Name: TestBossPrefab
+  m_Name: SpiderPrefab
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,6 +322,14 @@ PrefabInstance:
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 5957283304282456991}
+    - target: {fileID: 1391700383588653365, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 15.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391700383588653365, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 27.79999
+      objectReference: {fileID: 0}
     - target: {fileID: 1962380653209367030, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -416,7 +424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7735048978614131839, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
       propertyPath: m_text
-      value: T
+      value: Spider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
