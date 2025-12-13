@@ -10,7 +10,7 @@ public class BlockadeObject : MonoBehaviour, IInteractable
 
         Debug.Log("[Blockade] Player clicked exit blocker.");
 
-        MapProgressionManager.Instance.PlayerClickedExitBlocker();
+        MapProgressionManager.Instance.PlayerClickedExitBlocker(gameObject);
 
         gameObject.SetActive(false);
     }

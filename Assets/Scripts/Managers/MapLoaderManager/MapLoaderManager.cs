@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -20,7 +21,7 @@ public class MapLoaderManager : MonoBehaviour
     public Transform bossSpawnPoint;
 
     [Header("Objects(auto-detected)")]
-    public GameObject ExitBlockerObject; // The clickable blocker
+    public List<GameObject> ExitBlockerObjects = new List<GameObject>(); // Multiple clickable blockers
     public GameObject ExitTriggerObject; // The trigger the player can walk into
 
     private void Awake()
@@ -49,10 +50,10 @@ public class MapLoaderManager : MonoBehaviour
         currentMap = Instantiate(mapPrefabs[index], mapParent);
 
         // Auto-assign exit objects by tag
-        ExitBlockerObject = FindObjectInChildrenWithTag(currentMap, "ExitBlocker");
+        ExitBlockerObjects = FindAllObjectsInChildrenWithTag(currentMap, "ExitBlocker");
         ExitTriggerObject = FindObjectInChildrenWithTag(currentMap, "ExitTrigger");
 
-        if (ExitBlockerObject == null)
+        if (ExitBlockerObjects == null)
             Debug.LogWarning("ExitBlockerObject not found in the map!");
         if (ExitTriggerObject == null)
             Debug.LogWarning("ExitTriggerObject not found in the map!");
@@ -62,10 +63,7 @@ public class MapLoaderManager : MonoBehaviour
         AssignSpawnPointsToEnemyManager();
 
         SetPlayerPosition();
-
     }
-
-
 
     private void SetPlayerPosition()
     {
@@ -126,5 +124,16 @@ public class MapLoaderManager : MonoBehaviour
                 return child.gameObject;
         }
         return null;
+    }
+
+    private List<GameObject> FindAllObjectsInChildrenWithTag(GameObject parent, string tag)
+    {
+        List<GameObject> result = new List<GameObject>();
+        foreach (Transform child in parent.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.CompareTag(tag))
+                result.Add(child.gameObject);
+        }
+        return result;
     }
 }

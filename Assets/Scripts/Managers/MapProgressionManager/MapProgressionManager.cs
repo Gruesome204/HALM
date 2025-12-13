@@ -83,9 +83,12 @@ public class MapProgressionManager : MonoBehaviour
         else
         {
             roomClearedWaitingForPlayer = true;
-            // Enable ExitBlocker so player can click it
-            if (MapLoaderManager.Instance.ExitBlockerObject != null)
-                MapLoaderManager.Instance.ExitBlockerObject.SetActive(true);
+            // Enable all blockers when room is cleared
+            foreach (var blocker in MapLoaderManager.Instance.ExitBlockerObjects)
+            {
+                if (blocker != null)
+                    blocker.SetActive(true);
+            }
 
             // Disable trigger until blocker is removed
             if (MapLoaderManager.Instance.ExitTriggerObject != null)
@@ -102,9 +105,10 @@ public class MapProgressionManager : MonoBehaviour
         LoadNextRoom();
     }
 
-    public void PlayerClickedExitBlocker()
+    public void PlayerClickedExitBlocker(GameObject clickedBlocker)
     {
         if (!roomClearedWaitingForPlayer) return;
+        clickedBlocker.SetActive(false);
 
         Debug.Log("[Progression] Exit Blocker removed, activating ExitTrigger.");
 
