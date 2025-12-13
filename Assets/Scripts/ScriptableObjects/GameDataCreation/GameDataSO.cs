@@ -62,4 +62,27 @@ public class GameDataSO : ScriptableObject
     [Header("PlayerStatsUpgrades")]
     public List<BuildMasterModifier> buildMasterModifiers;
 
+
+    public void ResetToDefaults(GameDataDefaultsSO defaults)
+    {
+        localSelected = defaults.localSelected;
+        musicTrack = defaults.musicTrack;
+        masterVolume = defaults.masterVolume;
+        musicVolume = defaults.musicVolume;
+        soundVolume = defaults.soundVolume;
+
+        currentPlayerLevel = defaults.currentPlayerLevel;
+        currentClass = defaults.currentClass;
+
+        gameCurrency = defaults.gameCurrency;
+        woodResource = defaults.woodResource;
+        steinResource = defaults.steinResource;
+        metallResource = defaults.metallResource;
+        pulverResource = defaults.pulverResource;
+
+        unlockedBlueprints = new List<TurretBlueprint>(defaults.defaultUnlockedBlueprints);
+        buildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers);
+    }
+
+
 }

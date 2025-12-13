@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Data")]
     public GameDataSO gameDataSO;
+    [SerializeField] private GameDataDefaultsSO defaultData;
+
     public TempSaveData tempSaveData;
     public enum GameState
     {
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
     public GameState PreviousState { get; private set; }
 
     public event Action<GameState, GameState> OnGameStateChanged;
+    public event Action OnSaveReset;
+    public event System.Action OnGameReset;
 
     [SerializeField]private readonly List<IPausable> pausables = new List<IPausable>();
 
@@ -54,21 +58,23 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.Loading);
 
         TempSaveData loadedData = SaveSystem.Load();
-    if (loadedData != null)
-    {
-            tempSaveData = loadedData;
-        ApplyRuntimeDataToSO();
-    }
-    else
-    {
-        Debug.Log("[GameManager] No save found → creating new GameData from SO defaults");
-            tempSaveData = new TempSaveData
+        if (loadedData != null)
         {
-            gameCurrency = gameDataSO.gameCurrency,
-            currentPlayerLevel = gameDataSO.currentPlayerLevel,
-            currentClass = gameDataSO.currentClass,
-            unlockedBlueprints = new List<TurretBlueprint>(gameDataSO.GetUnlockedBlueprints()),
-        };
+                tempSaveData = loadedData;
+            ApplyRuntimeDataToSO();
+        }
+        else
+        {
+            Debug.Log("[GameManager] No save found → creating new GameData from SO defaults");
+                tempSaveData = new TempSaveData
+            {
+                gameCurrency = gameDataSO.gameCurrency,
+                currentPlayerLevel = gameDataSO.currentPlayerLevel,
+                currentClass = gameDataSO.currentClass,
+                unlockedBlueprints = new List<TurretBlueprint>(gameDataSO.GetUnlockedBlueprints()),
+            };
+
+
     }
 
 
@@ -95,8 +101,8 @@ public class GameManager : MonoBehaviour
     {
         var so = tempSaveData;
         PlayerStats playerStats = PlayerManager.Instance.playerStats;
-        playerStats.currentHealth += so.additionalHealth;   
-        playerStats.currentMaxHealth += so.additionalHealth;
+        playerStats.currentHealth += so.additionalHealth;
+        playerStats.currentMaxHealth += so.additionalMaxHealth;
         playerStats.currentRegen += so.additionalRegen;
         playerStats.currentArmor += so.additionalArmor;
         playerStats.currentMagicResistance += so.additionalMagicResistance;
@@ -159,6 +165,7 @@ public class GameManager : MonoBehaviour
         SaveSystem.Save(tempSaveData);
     }
 
+
     public void ChangeState(GameState newState)
     {
         if (newState == CurrentState) return;
@@ -215,9 +222,38 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlaying() => CurrentState == GameState.Playing;
     public bool IsPaused() => CurrentState == GameState.Paused;
+
+    public void ResetGame()
+    {
+        Debug.Log("[GameManager] FULL GAME RESET");
+
+        // 1. Delete save files
+        SaveSystem.DeleteSaveFiles();
+
+        // 2. Reset SO to defaults
+        gameDataSO.ResetToDefaults(defaultData);
+
+        // 3. Create fresh runtime save
+        tempSaveData = new TempSaveData(gameDataSO);
+
+        // 4. Notify listeners
+        OnGameReset?.Invoke();
+
+        // 5. Go to main menu or reload
+        ChangeState(GameState.MainMenu);
+    }
+
+
     private void OnApplicationQuit()
     {
         Debug.Log("[GameManager] Application quitting → Saving game.");
+        SaveGame();
+    }
+
+    [ContextMenu("RESET SAVE DATA")]
+    private void ResetSaveFromEditor()
+    {
+        ResetGame();
         SaveGame();
     }
 }
