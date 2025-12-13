@@ -1,15 +1,28 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class BossEnemy : MonoBehaviour
+public class BossEnemyBehaviour : EnemyBehaviour
 {
-    private EnemyStats stats;
-    private EnemyHealth health;
-    private EnemyMovement movement;
-    private EnemyKnockback knockback;
-    private EnemyAttack attack;
-    private EnemyAbilityBehaviour ability;
+    [Header("Boss Specific Settings")]
+    [SerializeField] private float enrageHealthThreshold = 0.3f;
 
-    public void SpecialAbility()
+    private bool isEnraged = false;
+
+    protected override void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
+        base.HandleDamaged(damageData, knockbackData); // call default behaviour
+
+        // Boss-specific logic: Enrage at low health
+        if (!isEnraged && stats.currentHealth / stats.currentMaxHealth <= enrageHealthThreshold)  
+        {
+            Enrage();
+        }
     }
+
+    private void Enrage()
+    {
+        isEnraged = true;
+        Debug.Log($"{name} is enraged!");
+    }
+
 }

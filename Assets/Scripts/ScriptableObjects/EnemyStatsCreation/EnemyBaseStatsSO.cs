@@ -8,6 +8,9 @@ public class EnemyBaseStats : ScriptableObject
     public string baseName;
     public string baseDescription;
 
+    [Header("Type")]
+    public EnemyType enemyType = EnemyType.Mob;
+
     [Header("Base Level")]
     public int baseLevel = 1;
 
@@ -47,5 +50,15 @@ public class EnemyBaseStats : ScriptableObject
     public float baseDamageScaleFactor;
     public float baseSpeedScaleFactor;
     public float baseArmorScaleFactor;
+
+    [Header("Boss Properties")]
+    [Tooltip("Only relevant if this enemy is a boss")]
+    public bool hasBossBar = false; // Will show a UI boss bar if true
+    public string bossBarName;
+    public Color bossBarColor = Color.red;
+    public Sprite bossPortrait;
+    public float bossBarHeight = 20f; // UI height in pixels
+    public bool isMultiStageBoss = false; // For bosses with phases
+    public int numberOfPhases = 1;
 
 }

@@ -6,12 +6,12 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour, IPausable
 {
     [Header("References")]
-    private EnemyStats stats;
-    private EnemyHealth health;
-    private EnemyMovement movement;
-    private EnemyKnockback knockback;
-    private EnemyAttack attack;
-    private EnemyAbilityBehaviour abilityBehaviour;
+    protected EnemyStats stats;
+    protected EnemyHealth health;
+    protected EnemyMovement movement;
+    protected EnemyKnockback knockback;
+    protected EnemyAttack attack;
+    protected EnemyAbilityBehaviour abilityBehaviour;
 
 
     [Header("Targeting")]
@@ -135,7 +135,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     }
 
 
-    private void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
+    protected virtual void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
         if (isPaused) return;
 

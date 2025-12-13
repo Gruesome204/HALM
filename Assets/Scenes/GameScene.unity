@@ -2142,13 +2142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31df0c8649677fa4e8fa3d0a0c4da7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapsBeforeBoss: 2
+  mapsBeforeBoss: 0
   currentMapIndex: 0
   baseEnemyLevel: 1
   enemyLevelIncreasePerMap: 1
   autoProgress: 0
-  ExitBlockerObject: {fileID: 0}
-  ExitTriggerObject: {fileID: 0}
+  roomClearedWaitingForPlayer: 0
 --- !u!1 &935072170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,6 +2262,8 @@ MonoBehaviour:
   mapParent: {fileID: 855785565}
   playerSpawnPoint: {fileID: 0}
   bossSpawnPoint: {fileID: 0}
+  ExitBlockerObjects: []
+  ExitTriggerObject: {fileID: 0}
 --- !u!1 &1105641864
 GameObject:
   m_ObjectHideFlags: 0
