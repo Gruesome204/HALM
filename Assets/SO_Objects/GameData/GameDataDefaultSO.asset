@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e80919b0ae8db4881630cbd05e9935, type: 3}
   m_Name: GameDataDefaultSO
   m_EditorClassIdentifier: 
-  localSelected: 
+  localSelected: 0
   musicTrack: 0
   masterVolume: 0
-  musicVolume: 0
-  soundVolume: 0
-  currentPlayerLevel: 0
+  musicVolume: 0.05
+  soundVolume: 0.09999999
+  currentPlayerLevel: 1
   currentClass: 0
   gameCurrency: 0
   woodResource: 0

@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Data")]
     public GameDataSO gameDataSO;
     [SerializeField] private GameDataDefaultsSO defaultData;
-
-    public TempSaveData tempSaveData;
+    private TempSaveData tempSaveData;
     public enum GameState
     {
         MainMenu,
@@ -26,8 +25,6 @@ public class GameManager : MonoBehaviour
     public GameState PreviousState { get; private set; }
 
     public event Action<GameState, GameState> OnGameStateChanged;
-    public event Action OnSaveReset;
-    public event Action OnGameReset;
 
     [SerializeField]private readonly List<IPausable> pausables = new List<IPausable>();
 
@@ -216,9 +213,6 @@ public class GameManager : MonoBehaviour
 
         // 3. Create fresh runtime save
         tempSaveData = new TempSaveData(gameDataSO);
-
-        // 4. Notify listeners
-        OnGameReset?.Invoke();
 
         // 5. Go to main menu or reload
         ChangeState(GameState.MainMenu);
