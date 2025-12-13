@@ -256,17 +256,16 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         var drops = stats.baseStats.resourceDrops;
         if (drops == null || drops.Length == 0) return;
 
+        // Subscribe to the static event
+        ResourceTypeData.OnResourceDropped += AddResourceToGameData;
+
         foreach (var drop in drops)
         {
-            if (Random.value > drop.dropChance)
-                continue;
-
-            int amount = Random.Range(drop.minAmount, drop.maxAmount + 1);
-            if (amount <= 0)
-                continue;
-
-            AddResourceToGameData(drop.resourceType, amount);
+            ResourceTypeData.TryDrop(drop); // handles chance & triggers event
         }
+
+        // Unsubscribe after dropping
+        ResourceTypeData.OnResourceDropped -= AddResourceToGameData;
     }
 
     public void OnPause()

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ResourceTypeData : MonoBehaviour
@@ -23,6 +24,26 @@ public class ResourceTypeData : MonoBehaviour
 
         [Range(0f, 1f)]
         public float dropChance; // 0.0 = 0%, 1.0 = 100%
+    }
+
+    public static event Action<ResourceType, int> OnResourceDropped;
+
+    public static void TryDrop(ResourceDrop drop)
+    {
+        float roll = UnityEngine.Random.Range(0f, 1f);
+        if (roll <= drop.dropChance)
+        {
+            int amount = UnityEngine.Random.Range(drop.minAmount, drop.maxAmount + 1);
+            if (amount > 0)
+            {
+                OnResourceDropped?.Invoke(drop.resourceType, amount);
+                Debug.Log($"Dropped {amount} of {drop.resourceType}");
+            }
+        }
+        else
+        {
+            Debug.Log($"{drop.resourceType} did not drop (roll: {roll})");
+        }
     }
 
 }
