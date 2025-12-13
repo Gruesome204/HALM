@@ -53,7 +53,6 @@ public class EnemyBaseStats : ScriptableObject
 
     [Header("Boss Properties")]
     [Tooltip("Only relevant if this enemy is a boss")]
-    public bool hasBossBar = false; // Will show a UI boss bar if true
     public string bossBarName;
     public Color bossBarColor = Color.red;
     public Sprite bossPortrait;

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseName: Fledermaus
   baseDescription: Nerviger kleiner Gegner der
+  enemyType: 0
   baseLevel: 1
   baseMovementSpeed: 3.5
   baseMaxHealth: 33
@@ -29,8 +30,6 @@ MonoBehaviour:
   baseCritHitMultiplier: 0
   baseAttackRange: 1
   baseDetectionRange: 15
-  baseVisionRange: 2
-  baseHearingRange: 2
   pursueRange: 10
   experienceYield: 10
   goldYield: 0
@@ -43,3 +42,10 @@ MonoBehaviour:
   baseDamageScaleFactor: 0.1
   baseSpeedScaleFactor: 0
   baseArmorScaleFactor: 0
+  hasBossBar: 0
+  bossBarName: 
+  bossBarColor: {r: 1, g: 0, b: 0, a: 1}
+  bossPortrait: {fileID: 0}
+  bossBarHeight: 20
+  isMultiStageBoss: 0
+  numberOfPhases: 1

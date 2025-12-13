@@ -38,8 +38,8 @@ MonoBehaviour:
   baseDamageScaleFactor: 0
   baseSpeedScaleFactor: 0
   baseArmorScaleFactor: 0
-  hasBossBar: 0
-  bossBarName: 
+  hasBossBar: 1
+  bossBarName: Spider
   bossBarColor: {r: 1, g: 0, b: 0, a: 1}
   bossPortrait: {fileID: 0}
   bossBarHeight: 20

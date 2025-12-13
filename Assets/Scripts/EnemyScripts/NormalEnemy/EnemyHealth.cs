@@ -23,7 +23,15 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     private void Start()
     {
         movement = GetComponent<EnemyMovement>();
-        stats.currentHealth = stats.currentMaxHealth; // Ensure health is full at start
+
+        // Make sure stats are valid
+        if (stats == null || stats.baseStats == null)
+        {
+            Debug.LogError($"{gameObject.name} has no stats assigned!");
+            return;
+        }
+
+        stats.currentHealth = stats.currentMaxHealth;
 
         canvas = FindObjectOfType<Canvas>();
 

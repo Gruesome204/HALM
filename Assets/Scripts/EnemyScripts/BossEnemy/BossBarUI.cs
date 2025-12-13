@@ -39,12 +39,32 @@ public class BossBarUI : MonoBehaviour
     // Call this to initialize the boss bar
     public void SetupBossBar(EnemyBaseStats bossStats)
     {
-        if (bossNameText != null)
-            bossNameText.text = bossStats.bossBarName;
+        if (bossStats == null) return;
 
+        // Set health first
+        maxHealth = bossStats.baseMaxHealth;
+        SetHealthInstant(maxHealth);
+
+        // Name
+        if (bossNameText != null) {
+            bossNameText.text = base.name;
+        }
+
+        // Portrait
         if (bossPortraitImage != null && bossStats.bossPortrait != null)
             bossPortraitImage.sprite = bossStats.bossPortrait;
 
+        // Health bar color
+        if (healthSlider != null)
+            healthSlider.fillRect.GetComponent<Image>().color = bossStats.bossBarColor;
+
+        // Multi-stage bosses (optional)
+        if (bossStats.isMultiStageBoss)
+        {
+            // Example: show phase indicators if you have a UI for phases
+        }
+
+        // Set health
         maxHealth = bossStats.baseMaxHealth;
         SetHealth(maxHealth);
 
