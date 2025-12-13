@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Enemy/Effects/Status")]
+[CreateAssetMenu(menuName = "Game/Enemy/AbilityEffects/Status")]
 public class StatusEffect : AbilityEffect
 {
     public string statusName;

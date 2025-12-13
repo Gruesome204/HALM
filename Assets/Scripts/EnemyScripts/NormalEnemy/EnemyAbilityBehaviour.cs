@@ -5,9 +5,10 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
 {
     public EnemyAbilityBlueprint[] abilities;
     public GameObject target;
-
+    private float maxAbilityRange;
     private bool isPaused;
     private float abilityTimer = 0f; // deltaTime-based timer
+    [SerializeField] private float abilityCheckInterval = 1f;
 
     private void Start()
     {
@@ -17,6 +18,7 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
             return;
         }
         AbilityManager.Instance.Register(gameObject, abilities);
+        maxAbilityRange = abilities.Max(a => a.range);
     }
 
     private void OnDestroy()
@@ -27,64 +29,68 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
 
     private void Update()
     {
-        if (abilities == null || abilities.Length == 0)
-            return;
-        if (AbilityManager.Instance == null)
+        if (abilities == null || abilities.Length == 0 || AbilityManager.Instance == null || isPaused)
             return;
 
-        // Increment pause-aware timer
         abilityTimer += Time.deltaTime;
-        float abilityCheckInterval = 1f; // default interval between attempts
         if (abilityTimer < abilityCheckInterval)
             return;
 
         if (target == null)
-            return; 
+            return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        float maxAbilityRange = abilities.Max(a => a.range); 
-
         if (distance > maxAbilityRange)
         {
             target = null;
             return;
         }
-        
+
         var runtimeList = AbilityManager.Instance.GetAbilities(gameObject);
-        if (runtimeList == null) return;
-        if (target == null)
+        if (runtimeList == null)
             return;
 
+        AbilityRuntime selectedAbility = null;
+        int selectedIndex = -1;
+        int maxPriority = int.MinValue;
 
-        // Filter abilities that can currently be used
-        var usable = runtimeList
-            .Select((a, i) => new { ability = a, index = i })
-            .Where(x => x.ability != null && x.ability.CanUse(gameObject, target.gameObject))
-            .OrderByDescending(x => x.ability.ability.priority)
-            .FirstOrDefault();
+        for (int i = 0; i < runtimeList.Count; i++)
+        {
+            var ab = runtimeList[i];
+            if (ab != null && ab.CanUse(gameObject, target))
+            {
+                if (ab.ability.priority > maxPriority)
+                {
+                    selectedAbility = ab;
+                    selectedIndex = i;
+                    maxPriority = ab.ability.priority;
+                }
+            }
+        }
 
-        if (usable == null)
+        if (selectedAbility == null)
             return;
 
-        // Try using it via the manager (respects cooldowns, conditions)
-        bool used = AbilityManager.Instance.TryUseAbility(gameObject, usable.index, target.gameObject);
-
+        bool used = AbilityManager.Instance.TryUseAbility(gameObject, selectedIndex, target);
         if (used)
         {
             abilityTimer = 0f;
-            Debug.Log($"{name} used ability: {usable.ability.ability.abilityName}");
+            Debug.Log($"{name} used ability: {selectedAbility.ability.abilityName}");
         }
         else
+        {
             Debug.Log($"{name} tried to use ability but failed (cooldown or invalid target).");
+        }
     }
+
 
     public void OnPause()
     {
-        throw new System.NotImplementedException();
+        isPaused = true;
     }
 
     public void OnResume()
     {
-        throw new System.NotImplementedException();
+        isPaused = false;
     }
 }

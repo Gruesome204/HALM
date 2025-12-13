@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Enemy/Effects/Projectile")]
+[CreateAssetMenu(menuName = "Game/Enemy/AbilityEffects/Projectile")]
 public class ProjectileEffect : AbilityEffect
 {
     public GameObject projectilePrefab;

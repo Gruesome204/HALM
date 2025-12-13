@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035e3b6bd4589d4498e6065340ae1316, type: 3}
+  m_Name: TestNet
+  m_EditorClassIdentifier: 
+  netPrefab: {fileID: 8883776714824667679, guid: 29828085a2b504241b91837ae7a16438, type: 3}
+  duration: 5
+  radius: 2
+  slowMultiplier: 0.5
+  slowDuration: 3

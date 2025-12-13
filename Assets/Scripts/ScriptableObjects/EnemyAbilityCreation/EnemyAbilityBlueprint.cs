@@ -3,7 +3,7 @@ using UnityEngine;
 public enum AbilityTargetType { Self, SingleTarget, AreaOfEffect }
 public enum TargetSelection { Self, ClosestEnemy, LowestHPEnemy, RandomEnemy }
 
-[CreateAssetMenu(menuName = "Game/Enemy/Ability")]
+[CreateAssetMenu(menuName = "Game/Enemy/New AbilityBlueprint")]
 public class EnemyAbilityBlueprint : ScriptableObject
 {
     [Header("General Settings")]

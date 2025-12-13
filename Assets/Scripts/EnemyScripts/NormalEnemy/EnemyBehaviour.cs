@@ -72,6 +72,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         HandleMovementTarget(target);
         TryAttack(target);
+        TryUseAbilities(target);
     }
 
     private void AcquirePlayerTarget()

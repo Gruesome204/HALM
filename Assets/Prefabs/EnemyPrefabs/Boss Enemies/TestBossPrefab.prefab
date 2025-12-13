@@ -207,9 +207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ffd5b0590513e409c7b7b089b126e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groupAggroRadius: 30
   target: {fileID: 0}
   abilityCheckInterval: 1
-  aggroRange: 8
 --- !u!58 &7112271831136500605
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -362,14 +362,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1562781743598442605}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e87815e6b4e8fbc48b5c2334ac77c188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 11400000, guid: 3797d01a1286c7448b80efbfda99dbab, type: 2}
+  - {fileID: 11400000, guid: 6aad712815f070d428d52aa61ecbbf3b, type: 2}
   target: {fileID: 0}
+  abilityCheckInterval: 1
 --- !u!114 &774559568760895709
 MonoBehaviour:
   m_ObjectHideFlags: 0

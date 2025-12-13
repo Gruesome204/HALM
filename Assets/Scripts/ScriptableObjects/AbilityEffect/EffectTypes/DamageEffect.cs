@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Enemy/Ability/Effects/Damage")]
+[CreateAssetMenu(menuName = "Game/Enemy/AbilityEffects/Damage")]
 public class DamageEffect : AbilityEffect
 {
     public float amount = 10f;
