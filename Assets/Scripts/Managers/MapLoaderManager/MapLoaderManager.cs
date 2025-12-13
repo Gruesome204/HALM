@@ -13,10 +13,15 @@ public class MapLoaderManager : MonoBehaviour
     public Transform mapParent;
 
     private GameObject currentMap;
+    public GameObject CurrentMap => currentMap;
 
     [Header("Spawn Points (auto-detected)")]
     public Transform playerSpawnPoint;
     public Transform bossSpawnPoint;
+
+    [Header("Objects(auto-detected)")]
+    public GameObject ExitBlockerObject; // The clickable blocker
+    public GameObject ExitTriggerObject; // The trigger the player can walk into
 
     private void Awake()
     {
@@ -42,6 +47,15 @@ public class MapLoaderManager : MonoBehaviour
 
         // Load new map prefab
         currentMap = Instantiate(mapPrefabs[index], mapParent);
+
+        // Auto-assign exit objects by tag
+        ExitBlockerObject = FindObjectInChildrenWithTag(currentMap, "ExitBlocker");
+        ExitTriggerObject = FindObjectInChildrenWithTag(currentMap, "ExitTrigger");
+
+        if (ExitBlockerObject == null)
+            Debug.LogWarning("ExitBlockerObject not found in the map!");
+        if (ExitTriggerObject == null)
+            Debug.LogWarning("ExitTriggerObject not found in the map!");
 
         EnemySpawnManager.Instance.ResetSpawner();
         // Send spawn points to EnemySpawnManager
@@ -104,5 +118,13 @@ public class MapLoaderManager : MonoBehaviour
             Debug.Log($"Boss Spawn = {bossSpawnPoint.position}");
     }
 
-
+    private GameObject FindObjectInChildrenWithTag(GameObject parent, string tag)
+    {
+        foreach (Transform child in parent.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.CompareTag(tag))
+                return child.gameObject;
+        }
+        return null;
+    }
 }

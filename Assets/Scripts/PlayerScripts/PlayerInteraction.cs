@@ -2,29 +2,24 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    private IInteractable currentInteractable;
+    public float interactDistance = 5f; // Max distance for clicking
+    public LayerMask interactableLayer; // Only interactable objects
 
     private void Update()
     {
-        if (currentInteractable != null && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetMouseButtonDown(0)) // Left click
         {
-            currentInteractable.Interact();
-        }
-    }
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.TryGetComponent(out IInteractable interactable))
-        {
-            currentInteractable = interactable;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.TryGetComponent(out IInteractable interactable) && interactable == currentInteractable)
-        {
-            currentInteractable = null;
+            // 2D raycast at mouse position
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 0f, interactableLayer);
+            if (hit.collider != null)
+            {
+                if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable))
+                {
+                    interactable.Interact();
+                }
+            }
         }
     }
 }

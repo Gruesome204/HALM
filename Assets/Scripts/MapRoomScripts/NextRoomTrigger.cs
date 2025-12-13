@@ -6,7 +6,11 @@ public class NextRoomTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("[ExitTrigger] Player entered, loading next room.");
             MapProgressionManager.Instance.PlayerTriggerNextRoom();
+
+            // Optional: disable trigger to prevent multiple triggers
+            gameObject.SetActive(false);
         }
     }
 }

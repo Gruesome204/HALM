@@ -19,10 +19,9 @@ public class MapProgressionManager : MonoBehaviour
 
     [Header("Progression Options")]
     [Tooltip("If true, rooms auto-load after clearing. If false, player must interact to proceed.")]
-    public bool autoProgress = true;
+    public bool autoProgress = false;
 
     private bool roomClearedWaitingForPlayer = false;
-
 
     private void Awake()
     {
@@ -42,6 +41,7 @@ public class MapProgressionManager : MonoBehaviour
 
     public void LoadNextRoom()
     {
+
         // Clear all towers before loading a new map
         TurretPlacementController.Instance?.ClearAllTurrets();
 
@@ -82,9 +82,16 @@ public class MapProgressionManager : MonoBehaviour
         }
         else
         {
-            // Wait for player to interact
             roomClearedWaitingForPlayer = true;
-            Debug.Log("[Progression] Waiting for player to proceed to next room...");
+            // Enable ExitBlocker so player can click it
+            if (MapLoaderManager.Instance.ExitBlockerObject != null)
+                MapLoaderManager.Instance.ExitBlockerObject.SetActive(true);
+
+            // Disable trigger until blocker is removed
+            if (MapLoaderManager.Instance.ExitTriggerObject != null)
+                MapLoaderManager.Instance.ExitTriggerObject.SetActive(false);
+
+            Debug.Log("[Progression] Waiting for player to interact with exit...");
         }
     }
     public void PlayerTriggerNextRoom()
@@ -92,9 +99,17 @@ public class MapProgressionManager : MonoBehaviour
         if (!roomClearedWaitingForPlayer) return;
 
         roomClearedWaitingForPlayer = false;
-        Debug.Log("[Progression] Player triggered next room.");
         LoadNextRoom();
     }
 
+    public void PlayerClickedExitBlocker()
+    {
+        if (!roomClearedWaitingForPlayer) return;
 
+        Debug.Log("[Progression] Exit Blocker removed, activating ExitTrigger.");
+
+        // Activate trigger so player can walk through
+        if (MapLoaderManager.Instance.ExitTriggerObject != null)
+            MapLoaderManager.Instance.ExitTriggerObject.SetActive(true);
+    }
 }

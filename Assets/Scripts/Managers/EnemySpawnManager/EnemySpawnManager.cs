@@ -27,6 +27,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     [Header("Global Enemy Limit")]
     public static int maxEnemies = 20; // Shared across all spawners
     public static List<GameObject> activeEnemies = new List<GameObject>();
+    public bool AreEnemiesAlive => activeEnemies.Count > 0;
 
     private float spawnTimer = 0f; 
     public int totalSpawned = 0; // How many enemies this spawner has spawned
