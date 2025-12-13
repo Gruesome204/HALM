@@ -75,8 +75,6 @@ public class EnemyStats : MonoBehaviour
         // Movement / Detection
         currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
         currentDetectionRange = baseStats.baseDetectionRange;
-        currentVisionRange = baseStats.baseVisionRange;
-        currentHearingRange = baseStats.baseHearingRange;
         currentPursueRange = baseStats.pursueRange;
 
         // Experience

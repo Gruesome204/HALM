@@ -15,8 +15,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
 
     [Header("Targeting")]
-    public GameObject target;
+    [SerializeField] private float groupAggroRadius = 30f;
 
+    public GameObject target;
+    private bool isAggroed;
 
     [Header("Ability Settings")]
     [Tooltip("Time between ability usage attempts (seconds).")]
@@ -26,11 +28,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private float nextAbilityTime = 0f;
     private bool isPaused;
 
-    private bool isAggroed = false;
-    [SerializeField] private float aggroRange = 8f;
-
-    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
-
     private void Awake()
     {
         stats = GetComponent<EnemyStats>();
@@ -39,7 +36,9 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         knockback = GetComponent<EnemyKnockback>();
         attack = GetComponent<EnemyAttack>();
         abilityBehaviour = GetComponent<EnemyAbilityBehaviour>();
+
         stats.Initialize();
+
         health.OnDeath += HandleDeath;
         health.OnDamaged += HandleDamaged;
     }
@@ -51,80 +50,92 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             GameManager.Instance.RegisterPausable(this);
         else
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
-        target = GameObject.FindGameObjectWithTag("Player");
-        if (target == null)
-            Debug.LogWarning($"{name} could not find a GameObject with tag 'Player'");
-    }
-    public void OnPause()
-    {
-        isPaused = true;
-        movement.SetPaused(true);
-        Animator animator = GetComponent<Animator>();
-        animator.enabled = false;
-        // Stop moving, stop attacking, etc.
+        AcquirePlayerTarget();
     }
 
-    public void OnResume()
-    {
-        isPaused = false;
-        movement.SetPaused(false);
-        // Reset attack & ability timers
-        nextAttackTime = Time.time;
-        nextAbilityTime = Time.time;
-        if (movement != null)
-        {
-            movement.target = null;
-            movement.MoveTowardTarget();
-        }
-        Animator animator = GetComponent<Animator>();
-        animator.enabled = true;
-    }
 
+    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
     private void FixedUpdate()
     {
-        if (isPaused || (knockback != null && knockback.IsKnockedBack)) return;
+        if (isPaused || (knockback != null && knockback.IsKnockedBack))
+            return;
 
-       // DropTargetIfTooFar();
+        if (!isAggroed)
+        {
+            CheckProximityAggro();
+            return;
+        }
 
-        if (target == null) return;
+
+        if (target == null)
+            return;
 
         HandleMovementTarget(target);
         TryAttack(target);
-        TryUseAbilities(target);
-
     }
+
+    private void AcquirePlayerTarget()
+    {
+        if (target != null) return;
+
+        target = GameObject.FindGameObjectWithTag("Player");
+
+        if (target == null)
+            Debug.LogWarning($"{name} could not find Player");
+    }
+
+    private void CheckProximityAggro()
+    {
+        AcquirePlayerTarget();
+        if (target == null) return;
+
+        if (Vector2.Distance(transform.position, target.transform.position) <= stats.currentDetectionRange)
+            SetAggro(target);
+    }
+
+    private void AlertNearbyEnemies()
+    {
+        AcquirePlayerTarget();
+        if (target == null) return;
+
+        var hits = Physics2D.OverlapCircleAll(transform.position, groupAggroRadius);
+
+        foreach (var hit in hits)
+        {
+            if (hit.TryGetComponent(out EnemyBehaviour enemy) && enemy != this)
+            {
+                enemy.SetAggro(target);
+            }
+        }
+    }
+
+    private void SetAggro(GameObject newTarget)
+    {
+        if (isAggroed) return;
+
+        isAggroed = true;
+        target = newTarget;
+        movement.target = target;
+    }
+
 
     private void HandleMovementTarget(GameObject target)
     {
-        if (movement.target == null || movement.target.gameObject != target)
-            movement.target = target;
-
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        bool inAttackRange = distance <= stats.currentAttackRange;
 
-        if (!inAttackRange)
-            //  movement.MoveTowardTarget();
-            movement.target = target;
-        else
+        if (distance <= stats.currentAttackRange)
             movement.Stop();
+        else
+            movement.target = target;
     }
+
 
     private void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
         if (isPaused) return;
-        AggroPlayer();
-    }
-    private void AggroPlayer()
-    {
-        if (target == null)
-            target = GameObject.FindGameObjectWithTag("Player");
+        SetAggro(target);
+        AlertNearbyEnemies();
 
-        if (target == null) return;
-
-        isAggroed = true;
-
-        // Lock onto the player
-        movement.target = target;
     }
 
     private void TryAttack(GameObject target)
@@ -172,26 +183,14 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             nextAbilityTime = Time.time + abilityCheckInterval;
             Debug.Log($"{name} used ability: {usable.ability.ability.name}");
         }
-
-
-    }
-    private void DropTargetIfTooFar()
-    {
-        if (target == null) return;
-
-        float distance = Vector2.Distance(transform.position, target.transform.position);
-
-        if (distance > stats.currentDetectionRange)
-         //   movement.target = null;
-
-        if (distance > stats.currentAttackRange && abilityBehaviour != null)
-            abilityBehaviour.target = null;
     }
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {
         Debug.Log($"Enemy {enemyHealth.gameObject.name} died from {damageData.type} damage.");
+
         DropResources();
+
         // Check if the source still exists before accessing
         if (damageData.source != null)
         {
@@ -262,6 +261,31 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
             AddResourceToGameData(drop.resourceType, amount);
         }
+    }
+
+    public void OnPause()
+    {
+        isPaused = true;
+        movement.SetPaused(true);
+        Animator animator = GetComponent<Animator>();
+        animator.enabled = false;
+        // Stop moving, stop attacking, etc.
+    }
+
+    public void OnResume()
+    {
+        isPaused = false;
+        movement.SetPaused(false);
+        // Reset attack & ability timers
+        nextAttackTime = Time.time;
+        nextAbilityTime = Time.time;
+        if (movement != null)
+        {
+            movement.target = null;
+            movement.MoveTowardTarget();
+        }
+        Animator animator = GetComponent<Animator>();
+        animator.enabled = true;
     }
 
 }
