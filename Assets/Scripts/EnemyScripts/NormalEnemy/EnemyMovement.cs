@@ -3,13 +3,12 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
-    public EnemyStats stats;
+    [SerializeField] private EnemyStats stats;
     public GameObject target;
     public EnemyKnockback knockback;
 
     private Rigidbody2D rb;
     private bool isPaused;
-    private bool hasForcedTarget;
 
     private void Awake()
     {
@@ -43,7 +42,8 @@ public class EnemyMovement : MonoBehaviour
         if (target == null || stats == null) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (!hasForcedTarget && distance > stats.currentPursueRange) return;
+        if (distance > stats.currentPursueRange)
+            return;
 
         Vector2 dir = (target.transform.position - transform.position).normalized;
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, dir * stats.currentMovementSpeed, 10 * Time.fixedDeltaTime);

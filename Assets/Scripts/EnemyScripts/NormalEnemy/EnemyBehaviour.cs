@@ -16,7 +16,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     [Header("Targeting")]
     [SerializeField] private float groupAggroRadius = 30f;
-
+    private static GameObject cachedPlayer;
     public GameObject target;
     private bool isAggroed;
 
@@ -78,10 +78,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (target != null) return;
 
-        target = GameObject.FindGameObjectWithTag("Player");
+        if (cachedPlayer == null)
+            cachedPlayer = GameObject.FindGameObjectWithTag("Player");
 
-        if (target == null)
-            Debug.LogWarning($"{name} could not find Player");
+        target = cachedPlayer;
     }
 
     private void CheckProximityAggro()
@@ -113,8 +113,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (isAggroed) return;
 
+        AcquirePlayerTarget();
+        if (target == null) return;
+
         isAggroed = true;
-        target = newTarget;
         movement.target = target;
     }
 
@@ -133,6 +135,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
         if (isPaused) return;
+
+        AcquirePlayerTarget();
+        if (target == null) return;
+
         SetAggro(target);
         AlertNearbyEnemies();
 
