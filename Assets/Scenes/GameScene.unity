@@ -2144,7 +2144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31df0c8649677fa4e8fa3d0a0c4da7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapsBeforeBoss: 0
+  mapsBeforeBoss: 2
   currentMapIndex: 0
   baseEnemyLevel: 1
   enemyLevelIncreasePerMap: 1
