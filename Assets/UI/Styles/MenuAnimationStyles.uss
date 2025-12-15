@@ -1,5 +1,5 @@
 .pauseMenuSlideOut {
-    translate: -1600px 0;
+    translate: -100% 0;
     transition-timing-function: ease-in-out;
     transition-duration: 1s;
     opacity: 0;
@@ -11,7 +11,7 @@
 }
 
 .settingsMenuSlideOut {
-    translate: 0 1000px;
+    translate: 0 100%;
     transition-timing-function: ease-in-out;
     transition-duration: 0.5s;
     opacity: 0;
@@ -26,7 +26,7 @@
 }
 
 .turretChoiceMenuSlideOut {
-    translate: 1200px 0;
+    translate: 100% 0;
     transition-timing-function: ease-in-out;
     transition-duration: 0.5s;
     opacity: 0;
