@@ -31,27 +31,7 @@ public class GameDataSO : ScriptableObject
     [Header("Turrets")]
     public List<TurretBlueprint> allTurretBlueprints;
     [SerializeField]private List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
-
-    public TurretBlueprint GetBlueprintByType(TurretType type)
-    {
-        return allTurretBlueprints.FirstOrDefault(t => t.turretType == type);
-    }
-    public TurretBlueprint GetBlueprint(TurretType type)
-    {
-        return allTurretBlueprints.Find(t => t.turretType == type);
-    }
-    // Check if blueprint is unlocked
-    public bool IsUnlocked(TurretBlueprint blueprint)
-    {
-        return unlockedBlueprints.Contains(blueprint);
-    }
-
-
-    // Get all unlocked blueprints
-    public List<TurretBlueprint> GetUnlockedBlueprints()
-    {
-        return unlockedBlueprints.ToList();
-    }
+    [SerializeField] private List<TurretBlueprint> selectedBlueprints;
 
     [Header("Ressources")]
     public int gameCurrency = 0;
@@ -62,7 +42,7 @@ public class GameDataSO : ScriptableObject
 
     [Header("PlayerStatsUpgrades")]
     public List<BuildMasterModifier> buildMasterModifiers;
-
+    
 
     public void ResetToDefaults(GameDataDefaultsSO defaults)
     {
@@ -120,7 +100,69 @@ public class GameDataSO : ScriptableObject
     {
         return new TempSaveData(this);
     }
+    public TurretBlueprint GetBlueprintByType(TurretType type)
+    {
+        return allTurretBlueprints.FirstOrDefault(t => t.turretType == type);
+    }
+    public TurretBlueprint GetBlueprint(TurretType type)
+    {
+        return allTurretBlueprints.Find(t => t.turretType == type);
+    }
+    // Check if blueprint is unlocked
+    public bool IsUnlocked(TurretBlueprint blueprint)
+    {
+        return unlockedBlueprints.Contains(blueprint);
+    }
 
+    // Get all unlocked blueprints
+    public List<TurretBlueprint> GetUnlockedBlueprints()
+    {
+        return unlockedBlueprints.ToList();
+    }
 
+    // Check if blueprint is selected
+    public bool IsSelected(TurretBlueprint blueprint)
+    {
+        return selectedBlueprints.Contains(blueprint);
+    }
 
+    // Get all selected blueprints
+    public List<TurretBlueprint> GetSelectedBlueprints()
+    {
+        return selectedBlueprints.ToList();
+    }
+
+    // Add a blueprint to selected list
+    public bool SelectBlueprint(TurretBlueprint blueprint)
+    {
+        if (selectedBlueprints.Count >= limitOfSelectableTurrets)
+            return false; // Can't select more than allowed
+
+        if (!IsUnlocked(blueprint))
+            return false; // Can only select unlocked turrets
+
+        if (!selectedBlueprints.Contains(blueprint))
+        {
+            selectedBlueprints.Add(blueprint);
+            return true;
+        }
+
+        return false; // Already selected
+    }
+
+    // Remove a blueprint from selected list
+    public bool DeselectBlueprint(TurretBlueprint blueprint)
+    {
+        return selectedBlueprints.Remove(blueprint);
+    }
+
+    // Set the selected blueprints all at once (e.g., from save)
+    public void SetSelectedBlueprints(List<TurretBlueprint> blueprints)
+    {
+        // Only keep unlocked blueprints and respect selection limit
+        selectedBlueprints = blueprints
+            .Where(b => IsUnlocked(b))
+            .Take(limitOfSelectableTurrets)
+            .ToList();
+    }
 }

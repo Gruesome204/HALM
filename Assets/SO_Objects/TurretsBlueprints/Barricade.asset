@@ -39,3 +39,4 @@ MonoBehaviour:
   length: 1
   buildCapacityValue: 0
   placementCooldown: 10
+  unlockCost: 10
