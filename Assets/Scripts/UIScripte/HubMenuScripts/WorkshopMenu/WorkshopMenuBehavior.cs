@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
@@ -53,19 +54,28 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
 
     private void Fill()
     {
-        foreach (var turret in allTurretsList)
+        foreach (var turret in GameManager.Instance.gameDataSO.allTurretBlueprints)
         {
-            //Create one Button in available Turrets,
-            W_AvailableTurretsButtonBejavior availableTurret = new W_AvailableTurretsButtonBejavior(turretButtons, turret);
-            availableTurrets.Add(availableTurret.turretBorder);
-            Debug.Log("Filling");
+            if (GameManager.Instance.gameDataSO.GetSelectedBlueprints().Contains<TurretBlueprint>(turret))
+            {
+                //Fill Space with all selected Turrets
+                W_EquippedTurretsButtonBehavior availableTurret = new W_EquippedTurretsButtonBehavior(turretButtons, turret);
+                equippedTurrets.Add(availableTurret.turretBorder);
+            }
+            else if (GameManager.Instance.gameDataSO.GetUnlockedBlueprints().Contains<TurretBlueprint>(turret))
+            {
+                //Fill Space with all unlocked Turrets
+                W_AvailableTurretsButtonBejavior availableTurret = new W_AvailableTurretsButtonBejavior(turretButtons, turret);
+                availableTurrets.Add(availableTurret.turretBorder);
+            }
+            else
+            {
+                //Fill Space with all locked turrets and mark them accordingly
+                W_AvailableTurretsButtonBejavior availableTurret = new W_AvailableTurretsButtonBejavior(turretButtons, turret);
+                availableTurrets.Add(availableTurret.turretBorder);
+                availableTurret.cooldownCover.style.height = new Length(100, LengthUnit.Percent);
+            }
         }
-
-        foreach (var turret in equippedTurretsList)
-        {
-            //Create one Button in equipped Turrets
-        }
-
     }
     private void Clear()
     {

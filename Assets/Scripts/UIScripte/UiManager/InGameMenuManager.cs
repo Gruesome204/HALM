@@ -133,6 +133,10 @@ public class InGameMenuManager : MonoBehaviour
     }
     public Boolean CheckForAnOpenMenu(string menu)
     {
+        if (menu == "one" && openMenus.Count != 0)
+        {
+            return true;
+        }
         foreach (var _menu in openMenus)
         {
             if (menu == _menu.name)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -120,6 +121,12 @@ public class GameDataSO : ScriptableObject
         return unlockedBlueprints.ToList();
     }
 
+    //Add a Blueprint to the unlocked List
+    public void AddUnlockedBlueprint(TurretBlueprint blueprint)
+    {
+        unlockedBlueprints.Add(blueprint);
+    }
+
     // Check if blueprint is selected
     public bool IsSelected(TurretBlueprint blueprint)
     {
@@ -130,6 +137,18 @@ public class GameDataSO : ScriptableObject
     public List<TurretBlueprint> GetSelectedBlueprints()
     {
         return selectedBlueprints.ToList();
+    }
+
+    public void AddRemoveSelectedBlueprint(TurretBlueprint blueprint, Boolean add)
+    {
+        if (add)
+        {
+            selectedBlueprints.Add(blueprint);
+        }
+        else
+        {
+            selectedBlueprints.Remove(blueprint);
+        }
     }
 
     // Add a blueprint to selected list
