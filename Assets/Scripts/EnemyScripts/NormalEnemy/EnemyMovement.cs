@@ -10,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody2D rb;
     private bool isPaused;
     private bool ignorePursueRange;
+    public bool isAggroed = false;
 
     private void Awake()
     {
@@ -17,16 +18,6 @@ public class EnemyMovement : MonoBehaviour
         stats = GetComponent<EnemyStats>();
         knockback = GetComponent<EnemyKnockback>();
     }
-    public void EnableForcedChase()
-    {
-        ignorePursueRange = true;
-    }
-
-    public void DisableForcedChase()
-    {
-        ignorePursueRange = false;
-    }
-
 
     private void FixedUpdate()
     {
@@ -48,21 +39,19 @@ public class EnemyMovement : MonoBehaviour
     }
 
     // Moves the enemy toward the current target if within pursue range
+
     public void MoveTowardTarget()
     {
         if (target == null || stats == null) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
 
-        if (!ignorePursueRange && distance > stats.currentPursueRange)
+        // Move if aggroed OR within pursue range
+        if (!isAggroed && !ignorePursueRange && distance > stats.currentPursueRange)
             return;
 
         Vector2 dir = (target.transform.position - transform.position).normalized;
-        rb.linearVelocity = Vector2.Lerp(
-            rb.linearVelocity,
-            dir * stats.currentMovementSpeed,
-            10 * Time.fixedDeltaTime
-        );
+        rb.linearVelocity = dir * stats.currentMovementSpeed; // simpler and more reliable than Lerp
     }
 
 
