@@ -16,6 +16,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     [Header("Targeting")]
     [SerializeField] private float groupAggroRadius = 30f;
+    [SerializeField] private float loseAggroMultiplier = 1.3f;
     private static GameObject cachedPlayer;
     public GameObject target;
     private bool isAggroed;
@@ -55,17 +56,27 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
 
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
-    private void FixedUpdate()
+    private void Update()
     {
         if (isPaused || (knockback != null && knockback.IsKnockedBack))
             return;
+
+        if (isAggroed && target != null)
+        {
+            float distance = Vector2.Distance(transform.position, target.transform.position);
+
+            if (distance > stats.currentDetectionRange * loseAggroMultiplier)
+            {
+                ClearAggro();
+                return;
+            }
+        }
 
         if (!isAggroed)
         {
             CheckProximityAggro();
             return;
         }
-
 
         if (target == null)
             return;
@@ -74,7 +85,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         TryAttack(target);
         TryUseAbilities(target);
     }
-
     private void AcquirePlayerTarget()
     {
         if (target != null) return;
@@ -116,24 +126,43 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         isAggroed = true;
         AcquirePlayerTarget();
-        movement.target = newTarget;
+        SetMovementTarget(newTarget);
 
 
         if (abilityBehaviour != null)
             abilityBehaviour.SetTarget(newTarget);
     }
 
+    private void ClearAggro()
+    {
+        isAggroed = false;
+        movement.Stop();
+        movement.target = null;
 
+        if (abilityBehaviour != null)
+            abilityBehaviour.SetTarget(null);
+    }
+
+    [SerializeField] private float stopBuffer = 0.2f;
     private void HandleMovementTarget(GameObject target)
     {
         float distance = Vector2.Distance(transform.position, target.transform.position);
 
-        if (distance <= stats.currentAttackRange)
+        if (distance <= stats.currentAttackRange - stopBuffer)
+        {
             movement.Stop();
+        }
         else
-            movement.target = target;
+        {
+            SetMovementTarget(target);
+        }
     }
 
+    private void SetMovementTarget(GameObject newTarget)
+    {
+        if (movement.target == newTarget) return;
+        movement.target = newTarget;
+    }
 
     protected virtual void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
@@ -290,14 +319,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         if (abilityBehaviour != null)
             abilityBehaviour.OnResume();
-        // Reset attack & ability timers
+
         nextAttackTime = Time.time;
         nextAbilityTime = Time.time;
-        if (movement != null)
-        {
-            movement.target = null;
-            movement.MoveTowardTarget();
-        }
+
         Animator animator = GetComponent<Animator>();
         animator.enabled = true;
     }

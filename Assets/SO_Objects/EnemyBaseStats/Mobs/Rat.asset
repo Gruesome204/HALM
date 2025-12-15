@@ -29,8 +29,8 @@ MonoBehaviour:
   baseCritChance: 0
   baseCritHitMultiplier: 0
   baseAttackRange: 1
-  baseDetectionRange: 2
-  pursueRange: 2
+  baseDetectionRange: 20
+  pursueRange: 10
   experienceYield: 100
   goldYield: 0
   resourceDrops: []

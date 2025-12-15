@@ -54,6 +54,7 @@ public class EnemyMovement : MonoBehaviour
     public void Stop()
     {
         rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
     }
 
     private void PauseMovement()
