@@ -20,7 +20,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public bool IsInvulnerable { get; set; }
 
 
-    private void Start()
+    private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
 
@@ -43,23 +43,26 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     /// </summary>
     private void SetupHealthUI()
     {
+
         if (stats.baseStats.enemyType == EnemyType.Boss && bossBarUIPrefab != null)
         {
             bossBarUIInstance = Instantiate(bossBarUIPrefab, canvas.transform);
-            bossBarUIInstance.target = transform;
+            bossBarUIInstance.healthSlider = healthBar;
             bossBarUIInstance.SetupBossBar(stats.baseStats);
         }
 
         // Update health dynamically
         if (bossBarUIInstance != null)
-            bossBarUIInstance.SetHealth(stats.currentHealth);
-
+        { 
+            healthBar.minValue = 0f;
+            healthBar.maxValue = 1f;
+            healthBar.value = 1f;
+        }
         else if (healthBar != null)
         {
-            // Standard health bar for normal enemies
-            healthBar.minValue = 0;
-            healthBar.maxValue = stats.currentMaxHealth;
-            healthBar.value = stats.currentHealth;
+            healthBar.minValue = 0f;
+            healthBar.maxValue = 1f;
+            healthBar.value = 1f;
         }
     }
 
@@ -77,7 +80,11 @@ public class EnemyHealth : MonoBehaviour, IDamagable
         if (bossBarUIInstance != null)
             bossBarUIInstance.SetHealth(stats.currentHealth);
         else if (healthBar != null)
-            healthBar.SetValueWithoutNotify(stats.currentHealth);
+        {
+            healthBar.SetValueWithoutNotify(
+                stats.currentHealth / stats.currentMaxHealth
+            );
+        }
 
         Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage with {knockbackData.knockbackStrength} knockback.");
 
