@@ -111,4 +111,7 @@ public class TurretBlueprint : ScriptableObject
     [Header("Placement Cooldown")]
     [Tooltip("Cooldown time in seconds after placing this turret.")]
     public float placementCooldown = 1.0f;
+
+    [Header("UI")]
+    public int unlockCost;
 }

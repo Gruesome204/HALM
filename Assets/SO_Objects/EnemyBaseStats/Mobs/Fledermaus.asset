@@ -42,7 +42,6 @@ MonoBehaviour:
   baseDamageScaleFactor: 0.1
   baseSpeedScaleFactor: 0
   baseArmorScaleFactor: 0
-  hasBossBar: 0
   bossBarName: 
   bossBarColor: {r: 1, g: 0, b: 0, a: 1}
   bossPortrait: {fileID: 0}
