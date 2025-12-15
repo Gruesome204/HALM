@@ -29,6 +29,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private float nextAbilityTime = 0f;
     private bool isPaused;
 
+
     private void Awake()
     {
         stats = GetComponent<EnemyStats>();
@@ -43,7 +44,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         health.OnDeath += HandleDeath;
         health.OnDamaged += HandleDamaged;
     }
-
 
     private void Start()
     {
@@ -64,12 +64,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         if (isAggroed && target != null)
         {
             float distance = Vector2.Distance(transform.position, target.transform.position);
-
-            if (distance > stats.currentDetectionRange * loseAggroMultiplier)
-            {
-                ClearAggro();
-                return;
-            }
         }
 
         if (!isAggroed)
@@ -85,6 +79,42 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         TryAttack(target);
         TryUseAbilities(target);
     }
+
+
+    [SerializeField] private float stopBuffer = 0.2f;
+    private void HandleMovementTarget(GameObject target)
+    {
+        float distance = Vector2.Distance(transform.position, target.transform.position);
+
+        if (distance <= stats.currentAttackRange - stopBuffer)
+        {
+            movement.Stop();
+        }
+        else
+        {
+            SetMovementTarget(target);
+        }
+    }
+
+    private void SetMovementTarget(GameObject newTarget)
+    {
+        if (movement.target == newTarget) return;
+        movement.target = newTarget;
+    }
+
+    protected virtual void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
+    {
+        if (isPaused) return;
+
+        AcquirePlayerTarget();
+        if (target == null) return;
+        SetAggro(target);
+        movement.EnableForcedChase();
+        AlertNearbyEnemies();
+
+    }
+
+
     private void AcquirePlayerTarget()
     {
         if (target != null) return;
@@ -136,6 +166,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private void ClearAggro()
     {
         isAggroed = false;
+        movement.DisableForcedChase(); // important
         movement.Stop();
         movement.target = null;
 
@@ -143,38 +174,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             abilityBehaviour.SetTarget(null);
     }
 
-    [SerializeField] private float stopBuffer = 0.2f;
-    private void HandleMovementTarget(GameObject target)
-    {
-        float distance = Vector2.Distance(transform.position, target.transform.position);
 
-        if (distance <= stats.currentAttackRange - stopBuffer)
-        {
-            movement.Stop();
-        }
-        else
-        {
-            SetMovementTarget(target);
-        }
-    }
-
-    private void SetMovementTarget(GameObject newTarget)
-    {
-        if (movement.target == newTarget) return;
-        movement.target = newTarget;
-    }
-
-    protected virtual void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
-    {
-        if (isPaused) return;
-
-        AcquirePlayerTarget();
-        if (target == null) return;
-
-        SetAggro(target);
-        AlertNearbyEnemies();
-
-    }
 
     private void TryAttack(GameObject target)
     {
