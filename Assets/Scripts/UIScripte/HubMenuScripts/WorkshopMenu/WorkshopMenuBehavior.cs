@@ -66,6 +66,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
             {
                 //Fill Space with all unlocked Turrets
                 W_AvailableTurretsButtonBejavior availableTurret = new W_AvailableTurretsButtonBejavior(turretButtons, turret);
+                availableTurret.turretUnlocked = true;
                 availableTurrets.Add(availableTurret.turretBorder);
             }
             else

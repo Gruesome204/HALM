@@ -12,6 +12,9 @@ public class W_AvailableTurretsButtonBejavior
     public Label turretNumbertxt;
     public Button turretButton;
 
+    public Boolean turretUnlocked = false;
+    public Boolean turretSelected = false;
+
     public W_AvailableTurretsButtonBejavior(VisualTreeAsset asset, TurretBlueprint _turret)
     {
         TemplateContainer rowElement = asset.Instantiate();
@@ -34,6 +37,9 @@ public class W_AvailableTurretsButtonBejavior
 
     void OnButtonClicked(ClickEvent evt)
     {
-        //GameManager.Instance.gameDataSO.
+        if (turretUnlocked)
+        {
+
+        }
     }
 }
