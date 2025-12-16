@@ -34,6 +34,6 @@ public class W_AvailableTurretsButtonBejavior
 
     void OnButtonClicked(ClickEvent evt)
     {
-        GameManager.Instance.gameDataSO.
+        //GameManager.Instance.gameDataSO.
     }
 }
