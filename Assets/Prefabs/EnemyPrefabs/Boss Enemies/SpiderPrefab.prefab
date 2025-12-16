@@ -108,7 +108,7 @@ Animator:
   m_GameObject: {fileID: 1562781743598442605}
   m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0e03e167ed62f06489ccb4b85aa58720, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -230,6 +230,7 @@ MonoBehaviour:
   stats: {fileID: 7836832524356826099}
   target: {fileID: 0}
   knockback: {fileID: 0}
+  isAggroed: 0
 --- !u!114 &7836832524356826099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,8 +308,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groupAggroRadius: 30
+  loseAggroMultiplier: 1.3
   target: {fileID: 0}
   abilityCheckInterval: 1
+  stopBuffer: 0.2
   enrageHealthThreshold: 0.3
 --- !u!1001 &5801625886424175857
 PrefabInstance:
