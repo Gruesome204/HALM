@@ -30,19 +30,22 @@ public class W_TurretDetailsBehavior
         if (turretSelected)
         {
             //This Turrets is Selected and can only be removed from the List
-            buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretSelected"));
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretSelected"));
+            buySelectButton.text = "selected";
             buySelectButton.RegisterCallback<ClickEvent>(TurretSelected);
         }
         else if (turretUnlocked)
         {
             //This Turret ist Unlocked, but not selected. If there is open space it can be added to the Selected Turrets
-            buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretUnlocked"));
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretUnlocked"));
+            buySelectButton.text = "unlocked";
             buySelectButton.RegisterCallback<ClickEvent>(TurretUnlocked);
         }
         else
         {
             //This Turret isn't unlocked. It has to be bought
-            buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretLocked"));
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretLocked"));
+            buySelectButton.text = "locked";
             buySelectButton.RegisterCallback<ClickEvent>(TurretLocked);
         }
     }

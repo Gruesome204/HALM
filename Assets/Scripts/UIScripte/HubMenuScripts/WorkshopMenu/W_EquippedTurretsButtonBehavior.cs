@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 public class W_EquippedTurretsButtonBehavior
 {
     public TurretBlueprint representedTurret;
+    private WorkshopMenuBehavior workshop;
 
     public VisualElement turretBorder;
     public VisualElement turretIcon;
@@ -11,7 +12,7 @@ public class W_EquippedTurretsButtonBehavior
     public Label turretNumbertxt;
     public Button turretButton;
 
-    public W_EquippedTurretsButtonBehavior(VisualTreeAsset asset, TurretBlueprint _turret)
+    public W_EquippedTurretsButtonBehavior(VisualTreeAsset asset, TurretBlueprint _turret, WorkshopMenuBehavior _workshop)
     {
         TemplateContainer rowElement = asset.Instantiate();
 
@@ -29,10 +30,11 @@ public class W_EquippedTurretsButtonBehavior
 
 
         representedTurret = _turret;
+        workshop = _workshop;
     }
 
     void OnButtonClicked(ClickEvent evt)
     {
-
+        workshop.FillTurretDetails(representedTurret, true, true);
     }
 }

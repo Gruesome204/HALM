@@ -25,6 +25,9 @@ public class SM_TowerListElementBehavior
         Debug.Log($"This turret is called {turret.name}");
         towerDetails.Q<Label>("name").SetBinding("text", new LocalizedString($"TurretTranslation{turret.turretName}",$"name"));
 
+        var turretIcon = towerDetails.Q<VisualElement>("icon");
+        turretIcon.AddToClassList($"{turret.turretName}Icon");
+
         FillDetailValue("buildingCost", turret.buildingCost);
         FillDetailValue("fireRate", turret.baseFireRate);
         FillDetailValue("fireCountdown", turret.BaseFireCountdown);

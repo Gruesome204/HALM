@@ -10,14 +10,20 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     private Label headline;
     private VisualElement availableTurrets;
     private VisualElement equippedTurrets;
-    private VisualElement towerDetailsContainer;
 
-    public VisualTreeAsset turretDetails;
+    //UI Elements Turret Details
+    private VisualElement detailsMainContainer;
+    private VisualElement statsContainer;
+    private Label informationTxt;
+    private Button buySelectButton;
+    private TurretBlueprint openTurretDetails;
+
+    private Boolean turretUnlocked = false;
+    private Boolean turretSelected = false;
+
+
     public VisualTreeAsset turretButtons;
-
-
-    public List<TurretBlueprint> allTurretsList = new List<TurretBlueprint>();
-    public List<TurretBlueprint> equippedTurretsList = new List<TurretBlueprint>();
+    public VisualTreeAsset turretDetailsStats;
 
     public void OpenOrClose(Boolean open)
     {
@@ -48,8 +54,16 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
 
         availableTurrets = root.Q<VisualElement>("availableTurrets");
         equippedTurrets = root.Q<VisualElement>("equippedTurrets");
-        towerDetailsContainer = root.Q<VisualElement>("towerDetailsContainer");
 
+        detailsMainContainer = root.Q<VisualElement>("detailsMainContainer");
+        //detailsMainContainer.AddToClassList("turretChoiceMenuSlideOut");
+
+        statsContainer = root.Q<VisualElement>("statsContainer");
+
+        informationTxt = root.Q<Label>("informationTxt");
+        informationTxt.text = "";
+
+        buySelectButton = root.Q<Button>("buySelectButton");
     }
 
     private void Fill()
@@ -59,20 +73,20 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
             if (GameManager.Instance.gameDataSO.GetSelectedBlueprints().Contains<TurretBlueprint>(turret))
             {
                 //Fill Space with all selected Turrets
-                W_EquippedTurretsButtonBehavior availableTurret = new W_EquippedTurretsButtonBehavior(turretButtons, turret);
+                W_EquippedTurretsButtonBehavior availableTurret = new W_EquippedTurretsButtonBehavior(turretButtons, turret, this);
                 equippedTurrets.Add(availableTurret.turretBorder);
             }
             else if (GameManager.Instance.gameDataSO.GetUnlockedBlueprints().Contains<TurretBlueprint>(turret))
             {
                 //Fill Space with all unlocked Turrets
-                W_AvailableTurretsButtonBejavior availableTurret = new W_AvailableTurretsButtonBejavior(turretButtons, turret);
+                W_AvailableTurretsButtonBejavior availableTurret = new W_AvailableTurretsButtonBejavior(turretButtons, turret, this);
                 availableTurret.turretUnlocked = true;
                 availableTurrets.Add(availableTurret.turretBorder);
             }
             else
             {
                 //Fill Space with all locked turrets and mark them accordingly
-                W_AvailableTurretsButtonBejavior availableTurret = new W_AvailableTurretsButtonBejavior(turretButtons, turret);
+                W_AvailableTurretsButtonBejavior availableTurret = new W_AvailableTurretsButtonBejavior(turretButtons, turret, this);
                 availableTurrets.Add(availableTurret.turretBorder);
                 availableTurret.cooldownCover.style.height = new Length(100, LengthUnit.Percent);
             }
@@ -83,11 +97,77 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         availableTurrets.Clear();
         equippedTurrets.Clear();
         ClearTurretDetails();
-        Debug.Log("Clearing");
-
     }
+
+    public void FillTurretDetails(TurretBlueprint turretToBeDetailed,Boolean _turretUnlocked, Boolean _turretSelected)
+    {
+        ClearTurretDetails();
+        openTurretDetails = turretToBeDetailed;
+        turretUnlocked = _turretUnlocked;
+        turretSelected = _turretSelected;
+
+        if (turretSelected)
+        {
+            //This Turrets is Selected and can only be removed from the List
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretSelected"));
+            buySelectButton.text = "selected";
+            buySelectButton.RegisterCallback<ClickEvent>(TurretSelected);
+        }
+        else if (turretUnlocked)
+        {
+            //This Turret ist Unlocked, but not selected. If there is open space it can be added to the Selected Turrets
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretUnlocked"));
+            buySelectButton.text = "unlocked";
+            buySelectButton.RegisterCallback<ClickEvent>(TurretUnlocked);
+        }
+        else
+        {
+            //This Turret isn't unlocked. It has to be bought
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretLocked"));
+            buySelectButton.text = "locked";
+            buySelectButton.RegisterCallback<ClickEvent>(TurretLocked);
+        }
+
+        TemplateContainer turretStats = turretDetailsStats.Instantiate();
+        statsContainer.Add(turretStats);
+        turretStats.Q<Label>("name").SetBinding("text", new LocalizedString($"TurretTranslation{openTurretDetails.turretName}", $"name"));
+
+        var turretIcon = turretStats.Q<VisualElement>("icon");
+        turretIcon.AddToClassList($"{openTurretDetails.turretName}Icon");
+
+        //FillDetailValue("buildingCost", openTurretDetails.buildingCost, ref turretStats);
+        //FillDetailValue("fireRate", openTurretDetails.baseFireRate, ref turretStats);
+        //FillDetailValue("fireCountdown", openTurretDetails.BaseFireCountdown, ref turretStats);
+        //FillDetailValue("projectileSpeed", openTurretDetails.baseProjectileSpeed, ref turretStats);
+        //FillDetailValue("attackRange", openTurretDetails.baseAttackRange, ref turretStats);
+        //FillDetailValue("damage", openTurretDetails.baseAttackDamage, ref turretStats);
+        //FillDetailValue("knockbackStrength", openTurretDetails.baseKnockbackStrength, ref turretStats);
+        //FillDetailValue("knockbackDuration", openTurretDetails.baseKnockbackDuration, ref turretStats);
+
+        detailsMainContainer.RemoveFromClassList("turretChoiceMenuSlideOut");
+    }
+
     private void ClearTurretDetails()
     {
-        towerDetailsContainer.Clear();
+        detailsMainContainer.AddToClassList("turretChoiceMenuSlideOut");
+        statsContainer.Clear();
+        openTurretDetails = null;
+    }
+    void TurretSelected(ClickEvent evt)
+    {
+        Debug.Log("Turret selected");
+    }
+    void TurretUnlocked(ClickEvent evt)
+    {
+        Debug.Log("Turret Unlocked");
+    }
+    void TurretLocked(ClickEvent evt)
+    {
+        Debug.Log("Turret Locked");
+    }
+    void FillDetailValue(string value, float turretValue, ref TemplateContainer container)
+    {
+        container.Q<Label>($"{value}Name").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
+        container.Q<Label>($"{value}").text = $"{turretValue}";
     }
 }

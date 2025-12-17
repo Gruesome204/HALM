@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public class W_AvailableTurretsButtonBejavior
 {
     public TurretBlueprint representedTurret;
+    private WorkshopMenuBehavior workshop;
 
     public VisualElement turretBorder;
     public VisualElement turretIcon;
@@ -15,7 +16,7 @@ public class W_AvailableTurretsButtonBejavior
     public Boolean turretUnlocked = false;
     public Boolean turretSelected = false;
 
-    public W_AvailableTurretsButtonBejavior(VisualTreeAsset asset, TurretBlueprint _turret)
+    public W_AvailableTurretsButtonBejavior(VisualTreeAsset asset, TurretBlueprint _turret,  WorkshopMenuBehavior _workshop)
     {
         TemplateContainer rowElement = asset.Instantiate();
 
@@ -33,13 +34,11 @@ public class W_AvailableTurretsButtonBejavior
 
 
         representedTurret = _turret;
+        workshop = _workshop;
     }
 
     void OnButtonClicked(ClickEvent evt)
     {
-        if (turretUnlocked)
-        {
-
-        }
+        workshop.FillTurretDetails(representedTurret, turretUnlocked, turretSelected);
     }
 }

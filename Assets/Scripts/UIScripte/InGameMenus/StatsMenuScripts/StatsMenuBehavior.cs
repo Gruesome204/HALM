@@ -121,7 +121,6 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
         //and adding the created Button to the scroll List
         foreach (var turret in TurretPlacementController.Instance.GetActiveTurrets())
         {
-            Debug.Log("Hello there");
             SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret.GetComponentInChildren<TurretBehaviour>().turretBlueprint, listElementAsset, ref turretDetails);
             uIDocument.rootVisualElement.Q("unity-content-container").Add(towerElement.listButton);
         }
