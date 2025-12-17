@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,14 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     private BossBarUI bossBarUIInstance;    // Runtime instance of boss bar
     private Canvas canvas;
 
+    [Header("Damage Flash")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Color damageColor = Color.red;
+    [SerializeField] private float flashDuration = 0.3f;
+
+    private MaterialPropertyBlock mpb;
+    private Coroutine flashRoutine;
+
     public event Action<EnemyHealth, DamageData> OnDeath;
     public event Action<DamageData, KnockbackData> OnDamaged;
 
@@ -23,6 +32,10 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
+
+        spriteRenderer ??= GetComponentInChildren<SpriteRenderer>();
+
+        mpb = new MaterialPropertyBlock();
 
         // Make sure stats are valid
         if (stats == null || stats.baseStats == null)
@@ -76,6 +89,8 @@ public class EnemyHealth : MonoBehaviour, IDamagable
         stats.currentHealth -= damage;
         stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0f, stats.currentMaxHealth);
 
+        PlayDamageFlash();
+
         // Update the correct health UI
         if (bossBarUIInstance != null)
             bossBarUIInstance.SetHealth(stats.currentHealth);
@@ -118,6 +133,26 @@ public class EnemyHealth : MonoBehaviour, IDamagable
 
     public void OnDamageTaken(float amount)
     {
+    }
+
+    private void PlayDamageFlash()
+    {
+        if (spriteRenderer == null)
+            return;
+
+        if (flashRoutine != null)
+            StopCoroutine(flashRoutine);
+
+        flashRoutine = StartCoroutine(DamageFlashRoutine());
+    }
+
+    private IEnumerator DamageFlashRoutine()
+    {
+        spriteRenderer.color = damageColor;
+        yield return new WaitForSeconds(flashDuration);
+        spriteRenderer.color = Color.white;
+
+        flashRoutine = null;
     }
 
     public bool IsAlive()
