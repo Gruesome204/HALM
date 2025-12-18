@@ -16,7 +16,29 @@ public class AbilityRuntime
         if (ability == null) return false;
         if (cooldownTimer > 0f) return false;
 
-        // Add additional conditions as needed (range, status effects, etc.)
+        if (ability.targetType != AbilityTargetType.Self && target == null)
+            return false;
+
+        // Range check
+        if (target != null)
+        {
+            float distance = Vector3.Distance(user.transform.position, target.transform.position);
+            if (distance > ability.range)
+                return false;
+        }
+
+        // Health check
+        if (target != null)
+        {
+            var targetHealth = target.GetComponent<EnemyStats>();
+            if (targetHealth != null)
+            {
+                float hpPercent = targetHealth.currentHealth / targetHealth.currentMaxHealth;
+                if (hpPercent > ability.useBelowHealthPercent)
+                    return false;
+            }
+        }
+
         return true;
     }
 

@@ -285,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities:
   - {fileID: 11400000, guid: 6aad712815f070d428d52aa61ecbbf3b, type: 2}
+  - {fileID: 11400000, guid: b24774f44c06b0f4dacedf4a20cf7766, type: 2}
   target: {fileID: 0}
   abilityCheckInterval: 1
 --- !u!114 &6084492941970660590

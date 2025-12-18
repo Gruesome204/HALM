@@ -56,6 +56,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private void Start()
     {
         GameManager.Instance?.RegisterPausable(this);
+        //Auto register in enemySpawnManager
+        EnemySpawnManager.Instance.RegisterEnemy(this.gameObject);
         if (GameManager.Instance == null)
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
 
@@ -100,7 +102,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         movement.target = newTarget;
     }
 
-    private void AcquirePlayerTarget()
+    public void AcquirePlayerTarget()
     {
         if (target != null) return;
         cachedPlayer ??= GameObject.FindGameObjectWithTag("Player");

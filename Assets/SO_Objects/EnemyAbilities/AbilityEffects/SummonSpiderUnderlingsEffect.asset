@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 035e3b6bd4589d4498e6065340ae1316, type: 3}
-  m_Name: TestNet
+  m_Script: {fileID: 11500000, guid: a73fce3ad04689b43b7c415b4e26ed4b, type: 3}
+  m_Name: SummonSpiderUnderlingsEffect
   m_EditorClassIdentifier: 
-  netPrefab: {fileID: 8883776714824667679, guid: 29828085a2b504241b91837ae7a16438, type: 3}
-  duration: 5
-  radius: 2
-  slowMultiplier: 0.5
-  slowDuration: 3
+  underlingPrefab: {fileID: 3645313828594104337, guid: ebc166d083370cb4e9388f2fdf2300a9, type: 3}
+  count: 3
+  spawnRadius: 10

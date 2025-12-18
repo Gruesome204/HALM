@@ -167,12 +167,25 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
             else
                 Debug.LogWarning("PlayerMovement not found in scene!");
         }
-
-        // Track globally
-        activeEnemies.Add(spawnedEnemy);
-
         // Track per-spawner
         totalSpawned++;
+    }
+
+    public void RegisterEnemy(GameObject enemy, Transform owner = null)
+    {
+        if (enemy == null)
+            return;
+
+        // Prevent duplicates
+        if (!activeEnemies.Contains(enemy))
+            activeEnemies.Add(enemy);
+
+        // Optional: parent to spawner for per-spawner tracking
+        if (owner != null)
+            enemy.transform.SetParent(owner);
+
+        // Clean up null references
+        activeEnemies.RemoveAll(e => e == null);
     }
 
     public void UnregisterEnemy(GameObject enemy)
