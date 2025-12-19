@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class EnemyHealth : MonoBehaviour, IDamagable
+public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 {
     [Header("Stats & Movement")]
     public EnemyStats stats;
@@ -168,5 +168,18 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public TargetType GetTargetType()
     {
         return TargetType.Enemy;
+    }
+    public void OnParried(GameObject source, float counterDamage)
+    {
+        // Take counter damage
+        TakeDamage(new DamageData
+        {
+            amount = counterDamage,
+            type = DamageData.DamageType.Physical,
+            source = source
+        }, new KnockbackData { knockbackStrength = 0 });
+
+        // Optional: play parry hit effect
+        Debug.Log($"{gameObject.name} was parried and took {counterDamage} damage!");
     }
 }

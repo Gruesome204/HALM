@@ -3940,7 +3940,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 2135666364}
   healthBar: {fileID: 2094854300}
-  sr: {fileID: 442456136}
 --- !u!70 &2135666368
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -4006,9 +4005,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf394151979c3c4098c5dc837f1dff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilitySlots: []
   dashAbility: {fileID: 11400000, guid: 99a2466cf9e169547a21a27cd44fb045, type: 2}
-  target: {fileID: 0}
+  parryAbility: {fileID: 11400000, guid: e3e0089a40a412c47ba31d8b50b60df8, type: 2}
 --- !u!1 &2140789119
 GameObject:
   m_ObjectHideFlags: 0

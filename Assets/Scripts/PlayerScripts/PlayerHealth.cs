@@ -11,14 +11,23 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
     //Event does nothing yet
     public event Action<PlayerHealth, DamageData> OnDeath;
     public event Action<float> OnHealthChanged;
+    public event Action<DamageData, KnockbackData> OnDamageTakenEvent;
+    public event Action OnParrySuccess;
     public bool IsInvulnerable { get; set; }
     private float invulnTimer;
-    public SpriteRenderer sr;
+
+    public SpriteRenderer sr { get; set; }
 
     private void Awake()
     {
         if (stats == null)
             stats = GetComponent<PlayerStats>();
+
+        if (sr == null)
+            sr = GetComponentInChildren<SpriteRenderer>();
+
+        if (sr == null)
+            Debug.LogWarning("No SpriteRenderer found on player or its children!");
     }
 
     private void Start()
@@ -42,6 +51,9 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
         if (IsInvulnerable || stats == null) return;
+
+        // Fire parry/damage callbacks
+        OnDamageTakenEvent?.Invoke(damageData, knockbackData);
 
         float damage = CalculateTakenDamage(damageData);
         ApplyDamage(damage, damageData);
@@ -110,6 +122,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
         return Mathf.Max(dmg, 0f);
     }
 
+    //Show UI effects upon taking Damage
     public void OnDamageTaken(float amount)
     {
   
@@ -128,6 +141,10 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
     public TargetType GetTargetType()
     {
         return TargetType.Player;
+    }
+    public void CallParrySuccess()
+    {
+        OnParrySuccess?.Invoke();
     }
 
     public void SetInvulnerable(float duration)
