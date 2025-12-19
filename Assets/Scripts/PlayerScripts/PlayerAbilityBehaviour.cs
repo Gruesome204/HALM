@@ -69,6 +69,9 @@ public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
         if (isPaused)
             return;
 
+        dashRuntime?.Tick(Time.deltaTime);
+        parryRuntime?.Tick(Time.deltaTime);
+
         // Dash on Space
         if (Input.GetKeyDown(KeyCode.Space) && dashRuntime != null)
             TryUseAbility(dashRuntime);
@@ -90,34 +93,42 @@ public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
         else if (spriteRenderer != null)
             spriteRenderer.enabled = true;
     }
+
     private void TryUseAbility(AbilityRuntime runtime)
     {
         if (runtime == null || AbilityManager.Instance == null)
             return;
 
-        GameObject resolvedTarget = gameObject;
-        if (resolvedTarget == null)
+        // Check if ability can be used (cooldown, range, etc.)
+        if (!runtime.CanUse(gameObject, gameObject))
             return;
+        GameObject target = gameObject;
 
         var runtimes = AbilityManager.Instance.GetAbilities(gameObject);
         if (runtimes == null)
             return;
+
         int index = runtimes.IndexOf(runtime);
         if (index >= 0)
-            AbilityManager.Instance.TryUseAbility(gameObject, index, resolvedTarget);
+            AbilityManager.Instance.TryUseAbility(gameObject, index, target);
 
-
-        // Check if this was a parry ability
-        if (runtime.ability == parryAbility)
+        // Sync parry visuals with actual ParryAbilityEffect duration
+        if (runtime.ability == parryAbility && runtime.ability.effects != null)
         {
-            StartParryVisual(runtime.ability);
+            foreach (var effect in runtime.ability.effects)
+            {
+                if (effect is ParryAbilityEffect parryEffect)
+                {
+                    StartParryVisual(parryEffect.parryDuration);
+                    break; // only use the first parry effect
+                }
+            }
         }
-    
     }
-    private void StartParryVisual(AbilityBlueprint parry)
+    private void StartParryVisual(float duration)
     {
         isParrying = true;
-        parryTimer = parry.visualDuration;
+        parryTimer = duration;
     }
 
     private void UpdateParryVisual()

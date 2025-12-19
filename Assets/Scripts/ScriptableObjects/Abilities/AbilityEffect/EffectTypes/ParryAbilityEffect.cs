@@ -5,6 +5,7 @@ public class ParryAbilityEffect : AbilityEffect
 {
     public float parryDuration = 0.25f;  // i-frame
     public float counterDamage = 20f;
+    public float visualDuration = 0.25f;
 
     public override void Apply(GameObject user, GameObject target)
     {
