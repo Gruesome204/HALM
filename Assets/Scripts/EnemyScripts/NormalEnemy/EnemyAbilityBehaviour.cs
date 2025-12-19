@@ -3,7 +3,7 @@ using System.Linq;
 
 public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
 {
-    public EnemyAbilityBlueprint[] abilities;
+    public AbilityBlueprint[] abilities;
     public GameObject target;
     private float maxAbilityRange;
     private bool isPaused;
@@ -65,14 +65,6 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
                     selectedIndex = i;
                     maxPriority = ab.ability.priority;
                 }
-            }
-
-            var stats = GetComponent<EnemyStats>();
-            if (stats != null)
-            {
-                float hpPercent = stats.currentHealth / stats.currentMaxHealth;
-                if (hpPercent > ab.ability.useBelowHealthPercent)
-                    continue;
             }
         }
 

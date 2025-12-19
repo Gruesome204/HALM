@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour, IDamagable
+public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
 {
     [Header("References")]
     public PlayerStats stats;
@@ -11,12 +11,23 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     //Event does nothing yet
     public event Action<PlayerHealth, DamageData> OnDeath;
     public event Action<float> OnHealthChanged;
+    public event Action<DamageData, KnockbackData> OnDamageTakenEvent;
+    public event Action OnParrySuccess;
     public bool IsInvulnerable { get; set; }
+    private float invulnTimer;
+
+    public SpriteRenderer sr { get; set; }
 
     private void Awake()
     {
         if (stats == null)
             stats = GetComponent<PlayerStats>();
+
+        if (sr == null)
+            sr = GetComponentInChildren<SpriteRenderer>();
+
+        if (sr == null)
+            Debug.LogWarning("No SpriteRenderer found on player or its children!");
     }
 
     private void Start()
@@ -24,9 +35,25 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         UpdateHealthBar();
     }
 
+    private void Update()
+    {
+        if (!IsInvulnerable) return;
+        invulnTimer -= Time.deltaTime;
+        if (invulnTimer <= 0f)
+            IsInvulnerable = false;
+
+        if (IsInvulnerable)
+            sr.enabled = Mathf.FloorToInt(Time.time * 15) % 2 == 0;
+        else
+            sr.enabled = true;
+    }
+
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
         if (IsInvulnerable || stats == null) return;
+
+        // Fire parry/damage callbacks
+        OnDamageTakenEvent?.Invoke(damageData, knockbackData);
 
         float damage = CalculateTakenDamage(damageData);
         ApplyDamage(damage, damageData);
@@ -95,6 +122,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         return Mathf.Max(dmg, 0f);
     }
 
+    //Show UI effects upon taking Damage
     public void OnDamageTaken(float amount)
     {
   
@@ -113,5 +141,17 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     public TargetType GetTargetType()
     {
         return TargetType.Player;
+    }
+    public void CallParrySuccess()
+    {
+        OnParrySuccess?.Invoke();
+    }
+
+    public void SetInvulnerable(float duration)
+    {
+        if (duration <= 0f) return;
+
+        IsInvulnerable = true;
+        invulnTimer = duration;
     }
 }

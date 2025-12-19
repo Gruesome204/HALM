@@ -5,7 +5,6 @@ public class AbilityManager : MonoBehaviour
 {
     public static AbilityManager Instance;
 
-    // user → list of ability runtimes
     private Dictionary<GameObject, List<AbilityRuntime>> runtimeAbilities = new();
 
     private void Awake()
@@ -30,57 +29,58 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
-
-    public void Register(GameObject user, EnemyAbilityBlueprint[] abilities)
-{
-    if (!runtimeAbilities.ContainsKey(user))
+    public void Register(GameObject user, AbilityBlueprint[] abilities)
     {
-        runtimeAbilities[user] = new List<AbilityRuntime>();
-    }
-    else
-    {
-        runtimeAbilities[user].Clear();
-    }
+        if (!runtimeAbilities.ContainsKey(user))
+            runtimeAbilities[user] = new List<AbilityRuntime>();
+        else
+            runtimeAbilities[user].Clear();
 
-    foreach (var ability in abilities)
-        runtimeAbilities[user].Add(new AbilityRuntime(ability));
-}
-
+        foreach (var ability in abilities)
+            runtimeAbilities[user].Add(new AbilityRuntime(ability));
+    }
 
     public void Unregister(GameObject user)
     {
         if (runtimeAbilities.ContainsKey(user))
-        {
             runtimeAbilities.Remove(user);
-        }
     }
 
     public bool TryUseAbility(GameObject user, int abilityIndex, GameObject target)
     {
-        if (!runtimeAbilities.ContainsKey(user))
-        {
-            Debug.LogWarning($"{user.name} is not registered with AbilityManager.");
-            return false;
-        }
-        if (abilityIndex < 0 || abilityIndex >= runtimeAbilities[user].Count)
-        {
-            Debug.LogWarning($"Invalid abilityIndex {abilityIndex} for {user.name}.");
-            return false;
-        }
+        if (!runtimeAbilities.ContainsKey(user)) return false;
+        if (abilityIndex < 0 || abilityIndex >= runtimeAbilities[user].Count) return false;
 
-        var ability = runtimeAbilities[user][abilityIndex];
-        if (ability.CanUse(user, target))
+        var runtime = runtimeAbilities[user][abilityIndex];
+        if (runtime.CanUse(user, target))
         {
-            ability.Use(user, target);
+            runtime.Use(user, target);
             return true;
         }
 
         return false;
     }
 
-
     public List<AbilityRuntime> GetAbilities(GameObject user)
     {
         return runtimeAbilities.ContainsKey(user) ? runtimeAbilities[user] : null;
+    }
+
+    /// <summary>
+    /// AI helper: returns first available ability based on priority
+    /// </summary>
+    public AbilityRuntime GetHighestPriorityAbility(GameObject user, GameObject target)
+    {
+        if (!runtimeAbilities.ContainsKey(user)) return null;
+        AbilityRuntime best = null;
+        foreach (var ability in runtimeAbilities[user])
+        {
+            if (ability.CanUse(user, target))
+            {
+                if (best == null || ability.ability.priority > best.ability.priority)
+                    best = ability;
+            }
+        }
+        return best;
     }
 }

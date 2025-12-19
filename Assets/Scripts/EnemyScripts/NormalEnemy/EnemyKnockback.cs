@@ -16,6 +16,14 @@ public class EnemyKnockback : MonoBehaviour
     private Rigidbody2D rb;
     private bool isKnockedBack;
 
+    [Header("Knockback I-Frames")]
+    [SerializeField] private float knockbackIFrameDuration = 0.4f;
+    private bool hasKnockbackIFrames;
+
+    public bool HasKnockbackIFrames => hasKnockbackIFrames;
+    // Indicates whether the enemy is currently affected by knockback.
+    public bool IsKnockedBack => isKnockedBack;
+
     private void OnEnable()
     {
         health = GetComponent<EnemyHealth>();
@@ -24,6 +32,8 @@ public class EnemyKnockback : MonoBehaviour
 
     private void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
+        if (hasKnockbackIFrames)
+            return;
         ApplyKnockback(knockbackData.direction, knockbackData.knockbackStrength);
     }
     private void OnDisable()
@@ -46,6 +56,7 @@ public class EnemyKnockback : MonoBehaviour
     private IEnumerator KnockbackRoutine(Vector2 direction, float strength)
     {
         isKnockedBack = true;
+        hasKnockbackIFrames = true;
         rb.linearVelocity = Vector2.zero;
 
         float adjustedForce =
@@ -57,7 +68,13 @@ public class EnemyKnockback : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
         isKnockedBack = false;
+
+        // Remaining i-frame duration (if any)
+        yield return new WaitForSeconds(
+            Mathf.Max(0f, knockbackIFrameDuration - knockbackDuration)
+        );
+
+
+        hasKnockbackIFrames = false;
     }
-    // Indicates whether the enemy is currently affected by knockback.
-    public bool IsKnockedBack => isKnockedBack;
 }

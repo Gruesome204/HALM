@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9a99ab8985b8a74ab21de8314a4d89e, type: 3}
-  m_Name: Damage
+  m_Script: {fileID: 11500000, guid: 035e3b6bd4589d4498e6065340ae1316, type: 3}
+  m_Name: NetAbilityEffect
   m_EditorClassIdentifier: 
-  amount: 10
-  damageType: 0
+  netPrefab: {fileID: 8883776714824667679, guid: 29828085a2b504241b91837ae7a16438, type: 3}
+  duration: 2
+  radius: 2
+  slowMultiplier: 0.5
+  slowDuration: 0.5
