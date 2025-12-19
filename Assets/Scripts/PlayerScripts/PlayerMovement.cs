@@ -15,10 +15,9 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
     private bool isDashing;
     private float dashTimer;
     private Vector2 dashDirection;
-
     private float dashSpeed;
 
-
+    private readonly List<Slow> activeSlows = new();
 
     private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
@@ -63,9 +62,6 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
     public void ClearSlows() => activeSlows.Clear();
 
 
-    private readonly List<Slow> activeSlows = new();
-
-
 
     void Start()
     {
@@ -83,7 +79,7 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
         movementInput = new Vector2(
         Input.GetAxisRaw("Horizontal"),
         Input.GetAxisRaw("Vertical")
-    ).normalized;
+        ).normalized;
 
         FacingDirection = GetMouseDirection();
     }
@@ -104,6 +100,7 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
         }
 
         if (isPaused) return;
+
         // Update slows
         float deltaTime = Time.fixedDeltaTime;
         for (int i = activeSlows.Count - 1; i >= 0; i--)
@@ -147,7 +144,7 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
         rb.linearVelocity = Vector2.zero;
     }
 
-    public void Dash(Vector2 direction, float force, float duration)
+    public void Dash(Vector2 direction, float force, float duration, float iFrameDuration = -1f)
     {
         if (!CanDash()) return;
 
@@ -159,5 +156,16 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
         dashTimer = duration;
 
         rb.linearVelocity = Vector2.zero;
+
+        // Enable i-frames if PlayerHealth is present
+        if (iFrameDuration != 0f)
+        {
+            PlayerHealth ph = GetComponent<PlayerHealth>();
+            if (ph != null)
+            {
+                ph.SetInvulnerable(iFrameDuration > 0f ? iFrameDuration : duration);
+            }
+        }
     }
+
 }

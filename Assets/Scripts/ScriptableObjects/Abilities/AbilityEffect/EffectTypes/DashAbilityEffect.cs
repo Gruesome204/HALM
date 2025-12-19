@@ -16,10 +16,10 @@ public class DashAbilityEffect : AbilityEffect
         if (!user.TryGetComponent<IDashable>(out var dashable))
             return;
 
-        Vector2 direction = GetDashDirection(user);
+        Vector2 direction = GetDashDirection(user).normalized;
         if (direction.sqrMagnitude < 0.01f)
             return;
-
+            
         dashable.Dash(direction, dashForce, dashDuration);
 
         if (grantIFrames && user.TryGetComponent<IInvulnerable>(out var inv))

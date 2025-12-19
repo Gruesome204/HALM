@@ -2,21 +2,26 @@ using UnityEngine;
 
 public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
 {
-    [Header("Ability Slots")]
-    public AbilityBlueprint[] abilitySlots;
-
-    public GameObject target;
+    [Header("Dash Ability")]
+    public AbilityBlueprint dashAbility;
+    private AbilityRuntime dashRuntime;
     private bool isPaused;
 
     private void Start()
     {
-        if (abilitySlots == null || abilitySlots.Length == 0)
+        if (dashAbility == null)
         {
-            Debug.LogWarning($"{name} has no ability slots assigned.");
+            Debug.LogWarning($"{name} has no Dash ability assigned.");
             return;
         }
 
-        AbilityManager.Instance.Register(gameObject, abilitySlots);
+        // Register only the dash ability with the AbilityManager
+        AbilityManager.Instance.Register(gameObject, new AbilityBlueprint[] { dashAbility });
+
+        // Get the runtime reference for quick use
+        var runtimes = AbilityManager.Instance.GetAbilities(gameObject);
+        if (runtimes != null && runtimes.Count > 0)
+            dashRuntime = runtimes[0];
     }
 
     private void OnDestroy()
@@ -27,51 +32,15 @@ public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
 
     private void Update()
     {
-        if (isPaused || AbilityManager.Instance == null)
+        if (isPaused || dashRuntime == null)
             return;
 
+        // Use Dash on Space
         if (Input.GetKeyDown(KeyCode.Space))
-            TryUseSlot(0);
-
-        if (Input.GetKeyDown(KeyCode.Q))
-            TryUseSlot(2);
-
-        if (Input.GetKeyDown(KeyCode.E))
-            TryUseSlot(3);
-    }
-
-    private void TryUseSlot(int slotIndex)
-    {
-        var runtimes = AbilityManager.Instance.GetAbilities(gameObject);
-        if (runtimes == null) return;
-
-        if (slotIndex < 0 || slotIndex >= runtimes.Count)
-            return;
-
-        AbilityRuntime ability = runtimes[slotIndex];
-        if (ability == null)
-            return;
-
-        GameObject resolvedTarget = ResolveTarget(ability);
-        if (resolvedTarget == null)
-            return;
-
-        AbilityManager.Instance.TryUseAbility(gameObject, slotIndex, resolvedTarget);
-    }
-
-    private GameObject ResolveTarget(AbilityRuntime ability)
-    {
-        switch (ability.ability.targetType)
         {
-            case AbilityTargetType.Self:
-            case AbilityTargetType.Direction:
-                return gameObject;
-
-            case AbilityTargetType.Target:
-                return target;
-
-            default:
-                return null;
+            GameObject resolvedTarget = gameObject;
+            if (resolvedTarget != null)
+                AbilityManager.Instance.TryUseAbility(gameObject, 0, resolvedTarget);
         }
     }
 

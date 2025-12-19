@@ -4006,8 +4006,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf394151979c3c4098c5dc837f1dff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilitySlots:
-  - {fileID: 11400000, guid: 99a2466cf9e169547a21a27cd44fb045, type: 2}
+  abilitySlots: []
+  dashAbility: {fileID: 11400000, guid: 99a2466cf9e169547a21a27cd44fb045, type: 2}
   target: {fileID: 0}
 --- !u!1 &2140789119
 GameObject:
