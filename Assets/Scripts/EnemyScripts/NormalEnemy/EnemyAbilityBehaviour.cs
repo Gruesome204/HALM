@@ -66,14 +66,6 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
                     maxPriority = ab.ability.priority;
                 }
             }
-
-            var stats = GetComponent<EnemyStats>();
-            if (stats != null)
-            {
-                float hpPercent = stats.currentHealth / stats.currentMaxHealth;
-                if (hpPercent > ab.ability.useBelowHealthPercent)
-                    continue;
-            }
         }
 
         if (selectedAbility == null)

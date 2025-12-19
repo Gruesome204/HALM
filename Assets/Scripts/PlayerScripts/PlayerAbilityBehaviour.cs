@@ -15,6 +15,13 @@ public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
     private PlayerHealth playerHealth;
     private SpriteRenderer spriteRenderer;
 
+
+    [Header("Parry Visuals")]
+    public Color parryColor = Color.cyan; // Color when parrying
+    public float parryBlinkFrequency = 20f; // How fast it blinks
+    private bool isParrying = false;
+    private float parryTimer = 0f;
+
     private void Awake()
     {
         playerHealth = GetComponent<PlayerHealth>();
@@ -70,9 +77,11 @@ public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
         if (Input.GetKeyDown(KeyCode.E) && parryRuntime != null)
             TryUseAbility(parryRuntime);
 
-
-        HandleSpriteBlink();
-    }
+        // Visuals
+        HandleSpriteBlink(); // Dash / i-frame
+        UpdateParryVisual(); // Parry-specific
+    
+    }   
 
     private void HandleSpriteBlink()
     {
@@ -96,8 +105,39 @@ public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
         int index = runtimes.IndexOf(runtime);
         if (index >= 0)
             AbilityManager.Instance.TryUseAbility(gameObject, index, resolvedTarget);
+
+
+        // Check if this was a parry ability
+        if (runtime.ability == parryAbility)
+        {
+            StartParryVisual(runtime.ability);
+        }
+    
+    }
+    private void StartParryVisual(AbilityBlueprint parry)
+    {
+        isParrying = true;
+        parryTimer = parry.visualDuration;
+    }
+
+    private void UpdateParryVisual()
+    {
+        if (!isParrying || spriteRenderer == null) return;
+
+        // Blink the sprite in parry color
+        spriteRenderer.color = Mathf.FloorToInt(Time.time * parryBlinkFrequency) % 2 == 0
+            ? parryColor
+            : Color.white;
+
+        // Reduce timer
+        parryTimer -= Time.deltaTime;
+        if (parryTimer <= 0f)
+        {
+            isParrying = false;
+            spriteRenderer.color = Color.white;
+        }
     }
 
     public void OnPause() => isPaused = true;
     public void OnResume() => isPaused = false;
-}
+    }
