@@ -2259,7 +2259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapPrefabs:
-  - {fileID: 5085846882595726355, guid: 19d2ffbe8aa8d6c41b4e870fd9803276, type: 3}
+  - {fileID: 8897411324710292980, guid: 2d6e84168c43aff40be9099a45442bb7, type: 3}
   - {fileID: 8897411324710292980, guid: 2d6e84168c43aff40be9099a45442bb7, type: 3}
   mapParent: {fileID: 855785565}
   playerSpawnPoint: {fileID: 0}
@@ -4007,6 +4007,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashAbility: {fileID: 11400000, guid: 99a2466cf9e169547a21a27cd44fb045, type: 2}
   parryAbility: {fileID: 11400000, guid: e3e0089a40a412c47ba31d8b50b60df8, type: 2}
+  parryColor: {r: 0, g: 1, b: 1, a: 1}
+  parryBlinkFrequency: 20
 --- !u!1 &2140789119
 GameObject:
   m_ObjectHideFlags: 0
