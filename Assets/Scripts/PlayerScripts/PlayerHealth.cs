@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour, IDamagable
+public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
 {
     [Header("References")]
     public PlayerStats stats;
@@ -12,6 +12,8 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     public event Action<PlayerHealth, DamageData> OnDeath;
     public event Action<float> OnHealthChanged;
     public bool IsInvulnerable { get; set; }
+    private float invulnTimer;
+    public SpriteRenderer sr;
 
     private void Awake()
     {
@@ -22,6 +24,19 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     private void Start()
     {
         UpdateHealthBar();
+    }
+
+    private void Update()
+    {
+        if (!IsInvulnerable) return;
+        invulnTimer -= Time.deltaTime;
+        if (invulnTimer <= 0f)
+            IsInvulnerable = false;
+
+        if (IsInvulnerable)
+            sr.enabled = Mathf.FloorToInt(Time.time * 15) % 2 == 0;
+        else
+            sr.enabled = true;
     }
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
@@ -113,5 +128,13 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     public TargetType GetTargetType()
     {
         return TargetType.Player;
+    }
+
+    public void SetInvulnerable(float duration)
+    {
+        if (duration <= 0f) return;
+
+        IsInvulnerable = true;
+        invulnTimer = duration;
     }
 }

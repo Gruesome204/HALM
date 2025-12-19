@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Enemy/Effects/SpawnNet")]
+[CreateAssetMenu(menuName = "Game/Abilities/Effects/SpawnNet")]
 public class SpawnNetEffect : AbilityEffect
 {
     [Tooltip("Prefab of the net/trap to spawn.")]

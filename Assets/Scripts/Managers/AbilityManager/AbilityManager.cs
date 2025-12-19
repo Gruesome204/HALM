@@ -31,7 +31,7 @@ public class AbilityManager : MonoBehaviour
     }
 
 
-    public void Register(GameObject user, EnemyAbilityBlueprint[] abilities)
+    public void Register(GameObject user, AbilityBlueprint[] abilities)
 {
     if (!runtimeAbilities.ContainsKey(user))
     {

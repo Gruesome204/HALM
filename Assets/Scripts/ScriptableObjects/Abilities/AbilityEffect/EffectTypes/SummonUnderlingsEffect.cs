@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Enemy/Effects/Summon Underlings")]
+[CreateAssetMenu(menuName = "Game/Abilities/Effects/Summon Underlings")]
 public class SummonUnderlingsEffect : AbilityEffect
 {
     [Header("Summon Settings")]

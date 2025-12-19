@@ -1,10 +1,8 @@
 using UnityEngine;
-
-public enum AbilityTargetType { Self, SingleTarget, AreaOfEffect }
 public enum TargetSelection { Self, ClosestEnemy, LowestHPEnemy, RandomEnemy }
 
-[CreateAssetMenu(menuName = "Game/Enemy/New AbilityBlueprint")]
-public class EnemyAbilityBlueprint : ScriptableObject
+[CreateAssetMenu(menuName = "Game/Abilities/New AbilityBlueprint")]
+public class AbilityBlueprint : ScriptableObject
 {
     [Header("General Settings")]
     public string abilityName;

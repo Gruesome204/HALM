@@ -9,5 +9,5 @@ public enum TargetType
 {
     Player,
     Turret,
-    Enemy
+    Enemy,
 }

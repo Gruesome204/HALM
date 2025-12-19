@@ -15,6 +15,9 @@ public class EnemyAttack : MonoBehaviour
     {
         if (target == null || stats == null) return;
 
+        if (target.TryGetComponent<IInvulnerable>(out var inv) && inv.IsInvulnerable)
+            return;
+
         IDamagable damagable = target.GetComponentInChildren<IDamagable>();
         if (damagable == null || damagable.IsInvulnerable)
         {

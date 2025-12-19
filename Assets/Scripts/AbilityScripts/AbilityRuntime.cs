@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class AbilityRuntime
 {
-    public EnemyAbilityBlueprint ability;
+    public AbilityBlueprint ability;
     private float cooldownTimer = 0f;
     private bool isPaused = false;
 
-    public AbilityRuntime(EnemyAbilityBlueprint ability)
+    public AbilityRuntime(AbilityBlueprint ability)
     {
         this.ability = ability;
     }
