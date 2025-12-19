@@ -103,26 +103,21 @@ public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
         if (runtimes == null)
             return;
         int index = runtimes.IndexOf(runtime);
-        if (index < 0) return;
+        if (index >= 0)
+            AbilityManager.Instance.TryUseAbility(gameObject, index, resolvedTarget);
 
-        // Try to use the ability and check if it was successful
-        bool usedSuccessfully = AbilityManager.Instance.TryUseAbility(gameObject, index, resolvedTarget);
 
-        if (!usedSuccessfully) return;
-
-        // Only start parry visual & logic if parry was actually used
+        // Check if this was a parry ability
         if (runtime.ability == parryAbility)
+        {
             StartParryVisual(runtime.ability);
+        }
+    
     }
-
     private void StartParryVisual(AbilityBlueprint parry)
     {
         isParrying = true;
         parryTimer = parry.visualDuration;
-
-        // Start actual parry logic
-        if (playerHealth != null)
-            playerHealth.StartParry(parryTimer);
     }
 
     private void UpdateParryVisual()
@@ -140,7 +135,6 @@ public class PlayerAbilityBehaviour : MonoBehaviour, IPausable
         {
             isParrying = false;
             spriteRenderer.color = Color.white;
-            playerHealth.EndParry();
         }
     }
 
