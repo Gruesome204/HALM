@@ -130,21 +130,27 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
 
         TemplateContainer turretStats = turretDetailsStats.Instantiate();
         statsContainer.Add(turretStats);
+        turretStats.style.flexGrow = 1;
         turretStats.Q<Label>("name").SetBinding("text", new LocalizedString($"TurretTranslation{openTurretDetails.turretName}", $"name"));
 
         var turretIcon = turretStats.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{openTurretDetails.turretName}Icon");
 
-        //FillDetailValue("buildingCost", openTurretDetails.buildingCost, ref turretStats);
-        //FillDetailValue("fireRate", openTurretDetails.baseFireRate, ref turretStats);
-        //FillDetailValue("fireCountdown", openTurretDetails.BaseFireCountdown, ref turretStats);
-        //FillDetailValue("projectileSpeed", openTurretDetails.baseProjectileSpeed, ref turretStats);
-        //FillDetailValue("attackRange", openTurretDetails.baseAttackRange, ref turretStats);
-        //FillDetailValue("damage", openTurretDetails.baseAttackDamage, ref turretStats);
-        //FillDetailValue("knockbackStrength", openTurretDetails.baseKnockbackStrength, ref turretStats);
-        //FillDetailValue("knockbackDuration", openTurretDetails.baseKnockbackDuration, ref turretStats);
+        FillDetailValue("cost", openTurretDetails.buildingCost, ref turretStats);
+        FillDetailValue("fireRate", openTurretDetails.baseFireRate, ref turretStats);
+        FillDetailValue("fireCountdown", openTurretDetails.BaseFireCountdown, ref turretStats);
+        FillDetailValue("projectileSpeed", openTurretDetails.baseProjectileSpeed, ref turretStats);
+        FillDetailValue("attackRange", openTurretDetails.baseAttackRange, ref turretStats);
+        FillDetailValue("damage", openTurretDetails.baseAttackDamage, ref turretStats);
+        FillDetailValue("knockbackStrength", openTurretDetails.baseKnockbackStrength, ref turretStats);
+        FillDetailValue("knockbackDuration", openTurretDetails.baseKnockbackDuration, ref turretStats);
 
         detailsMainContainer.RemoveFromClassList("turretChoiceMenuSlideOut");
+    }
+    void FillDetailValue(string value, float turretValue, ref TemplateContainer container)
+    {
+        container.Q<Label>($"{value}Name").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
+        container.Q<Label>($"{value}").text = $"{turretValue}";
     }
 
     private void ClearTurretDetails()
@@ -165,9 +171,5 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     {
         Debug.Log("Turret Locked");
     }
-    void FillDetailValue(string value, float turretValue, ref TemplateContainer container)
-    {
-        container.Q<Label>($"{value}Name").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
-        container.Q<Label>($"{value}").text = $"{turretValue}";
-    }
+
 }

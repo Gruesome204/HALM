@@ -28,7 +28,7 @@ public class SM_TowerListElementBehavior
         var turretIcon = towerDetails.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{turret.turretName}Icon");
 
-        FillDetailValue("buildingCost", turret.buildingCost);
+        FillDetailValue("cost", turret.buildingCost);
         FillDetailValue("fireRate", turret.baseFireRate);
         FillDetailValue("fireCountdown", turret.BaseFireCountdown);
         FillDetailValue("projectileSpeed", turret.baseProjectileSpeed);
