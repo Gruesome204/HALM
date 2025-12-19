@@ -14,19 +14,10 @@ public class ParryAbilityEffect : AbilityEffect
 
         if (user.TryGetComponent<PlayerHealth>(out var health))
         {
-            void OnDamageTaken(DamageData damageData, KnockbackData knock)
-            {
-                if (damageData.source != null && damageData.source.TryGetComponent<IParryable>(out var enemy))
-                {
-                    enemy.OnParried(user, counterDamage);
-                    health.CallParrySuccess();
 
-                    // Unsubscribe after first parry hit
-                    health.OnDamageTakenEvent -= OnDamageTaken;
-                }
-            }
-
-            health.OnDamageTakenEvent += OnDamageTaken;
+            // Trigger timed parry block
+            health.StartParry(parryDuration);
+        
         }
     }
 }

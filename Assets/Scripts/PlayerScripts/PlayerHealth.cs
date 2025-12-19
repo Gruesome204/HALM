@@ -15,6 +15,8 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
     public event Action OnParrySuccess;
     public bool IsInvulnerable { get; set; }
     private float invulnTimer;
+    public bool IsParrying { get; private set; }
+    private float parryTimer = 0f;
 
     public SpriteRenderer sr { get; set; }
 
@@ -37,6 +39,15 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
 
     private void Update()
     {
+        if (IsParrying)
+        {
+            parryTimer -= Time.deltaTime;
+            if (parryTimer <= 0f)
+            {
+                IsParrying = false;
+            }
+        }
+
         if (!IsInvulnerable) return;
         invulnTimer -= Time.deltaTime;
         if (invulnTimer <= 0f)
@@ -50,9 +61,8 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
 
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
-        if (IsInvulnerable || stats == null) return;
 
-        // Fire parry/damage callbacks
+        if (IsInvulnerable || IsParrying || stats == null) return;
         OnDamageTakenEvent?.Invoke(damageData, knockbackData);
 
         float damage = CalculateTakenDamage(damageData);
@@ -153,5 +163,18 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
 
         IsInvulnerable = true;
         invulnTimer = duration;
+    }
+
+    public void StartParry(float duration)
+    {
+        IsParrying = true;
+        parryTimer = duration;
+        SetInvulnerable(duration); // block damage completely
+        CallParrySuccess();
+    }
+
+    public void EndParry()
+    {
+        IsParrying = false;
     }
 }
