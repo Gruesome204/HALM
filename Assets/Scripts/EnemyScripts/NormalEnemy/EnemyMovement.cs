@@ -4,6 +4,7 @@ public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private EnemyStats stats;
+    private EnemyAnimator enemyAnimator;
     public GameObject target;
     public EnemyKnockback knockback;
 
@@ -17,6 +18,7 @@ public class EnemyMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         stats = GetComponent<EnemyStats>();
         knockback = GetComponent<EnemyKnockback>();
+                enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
     private void FixedUpdate()
@@ -52,6 +54,7 @@ public class EnemyMovement : MonoBehaviour
 
         Vector2 dir = (target.transform.position - transform.position).normalized;
         rb.linearVelocity = dir * stats.currentMovementSpeed; // simpler and more reliable than Lerp
+        enemyAnimator.SetMoveSpeed(rb.linearVelocity.magnitude);
     }
 
 
@@ -60,12 +63,14 @@ public class EnemyMovement : MonoBehaviour
     {
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
+        enemyAnimator?.SetMoveSpeed(0f);
     }
 
     private void PauseMovement()
     {
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
+        enemyAnimator?.SetMoveSpeed(0f);
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 

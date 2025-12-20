@@ -4,15 +4,22 @@ using static DamageData;
 public class EnemyAttack : MonoBehaviour
 {
     private EnemyStats stats;
+    private EnemyAnimator enemyAnimator;
     private void Awake()
     {
         stats = GetComponent<EnemyStats>();
         if (stats == null)
             Debug.LogWarning("EnemyStats component missing on enemy!");
+
+        enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
     public void PerformAttack(GameObject target, bool isPaused)
     {
+        if (isPaused) return;
+
+        enemyAnimator?.PlayAttack();
+
         if (target == null || stats == null) return;
 
         if (target.TryGetComponent<IInvulnerable>(out var inv) && inv.IsInvulnerable)

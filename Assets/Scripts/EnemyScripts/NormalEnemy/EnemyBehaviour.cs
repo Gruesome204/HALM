@@ -11,6 +11,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     protected EnemyKnockback knockback;
     protected EnemyAttack attack;
     protected EnemyAbilityBehaviour abilityBehaviour;
+    protected EnemyAnimator enemyAnimator;
     #endregion
 
     #region Targeting
@@ -45,6 +46,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         knockback = GetComponent<EnemyKnockback>();
         attack = GetComponent<EnemyAttack>();
         abilityBehaviour = GetComponent<EnemyAbilityBehaviour>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
 
         stats.Initialize();
 

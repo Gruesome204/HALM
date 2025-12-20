@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
     private Vector2 dashDirection;
     private float dashSpeed;
 
+    public bool IsDashing => isDashing;
+    public bool IsMoving => movementInput.sqrMagnitude > 0.01f;
+
     private readonly List<Slow> activeSlows = new();
 
     private void OnEnable() => GameManager.Instance?.RegisterPausable(this);

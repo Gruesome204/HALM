@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 8457025901324541034}
   - component: {fileID: 6084492941970660590}
   - component: {fileID: 4759108557151856435}
+  - component: {fileID: -3927596024179254936}
   m_Layer: 8
   m_Name: SpiderBossPrefab
   m_TagString: Enemy
@@ -317,6 +318,18 @@ MonoBehaviour:
   abilityCheckInterval: 1
   stopBuffer: 0.2
   enrageHealthThreshold: 0.3
+--- !u!114 &-3927596024179254936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645313828594104337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202c7f090037aaa428895fb24bc39175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7979997110011841826
 PrefabInstance:
   m_ObjectHideFlags: 0
