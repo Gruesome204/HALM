@@ -197,7 +197,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     protected virtual void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
         if (isPaused) return;
-
+        enemyAnimator?.PlayHit();
         AcquirePlayerTarget();
         if (target == null)
         {
@@ -211,6 +211,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {
+        enemyAnimator?.PlayDeath();
         DropResources();
 
         if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out var turret))

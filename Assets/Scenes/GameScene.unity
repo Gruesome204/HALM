@@ -1831,8 +1831,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 3645313828594104337, guid: 7bfd39ed4013ca345a07cf8e4d48ca67, type: 3}
-  - {fileID: 3645313828594104337, guid: 66c98b1852f7c4341b7652af8904ca46, type: 3}
   - {fileID: 3645313828594104337, guid: 308205ce09e88f748958afa4ee758b79, type: 3}
   spawnInterval: 1
   spawnAmount: 15
@@ -2144,7 +2142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31df0c8649677fa4e8fa3d0a0c4da7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapsBeforeBoss: 0
+  mapsBeforeBoss: 2
   currentMapIndex: 0
   baseEnemyLevel: 1
   enemyLevelIncreasePerMap: 1
