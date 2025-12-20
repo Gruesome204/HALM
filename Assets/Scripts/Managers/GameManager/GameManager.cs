@@ -72,12 +72,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("[GameManager] No save found → creating new GameData from SO defaults");
             tempSaveData = gameDataSO.ToSaveData();
-            playTimeSeconds = tempSaveData.playTimeSeconds;
         }
 
         // Ensure lists are not null
         tempSaveData.unlockedBlueprintNames ??= new List<string>();
         tempSaveData.buildMasterModifiers ??= new List<BuildMasterModifier>();
+        playTimeSeconds = tempSaveData.playTimeSeconds;
 
         // Apply to SO
         ApplyRuntimeDataToSO();
