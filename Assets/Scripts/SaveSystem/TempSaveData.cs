@@ -14,6 +14,9 @@ public class TempSaveData
     public float musicVolume;
     public float soundVolume;
 
+    //Game-Timer
+    public float playTimeSeconds;
+
     // Player
     public int currentPlayerLevel;
     public GameDataSO.Class currentClass;

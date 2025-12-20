@@ -11,6 +11,15 @@ public class GameManager : MonoBehaviour
     public GameDataSO gameDataSO;
     [SerializeField] private GameDataDefaultsSO defaultData;
     private TempSaveData tempSaveData;
+
+    [Header("In-Game Timer")]
+    [SerializeField] private float playTimeSeconds;
+    public float PlayTimeSeconds => playTimeSeconds;
+    public TimeSpan PlayTime => TimeSpan.FromSeconds(playTimeSeconds);
+
+    public event Action<float> OnPlayTimeUpdated;
+    private float timerTick;
+
     public enum GameState
     {
         MainMenu,
@@ -63,6 +72,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("[GameManager] No save found → creating new GameData from SO defaults");
             tempSaveData = gameDataSO.ToSaveData();
+            playTimeSeconds = tempSaveData.playTimeSeconds;
         }
 
         // Ensure lists are not null
@@ -108,6 +118,16 @@ public class GameManager : MonoBehaviour
         if (CurrentState != GameState.Playing)
             return;
 
+        //In-game timer
+        playTimeSeconds += Time.deltaTime;
+        timerTick += Time.deltaTime;
+
+        if (timerTick >= 1f)
+        {
+            timerTick = 0f;
+            OnPlayTimeUpdated?.Invoke(playTimeSeconds);
+        }
+
         autosaveTimer += Time.deltaTime;
 
         if (autosaveTimer >= autosaveInterval)
@@ -117,7 +137,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Auto-saved.");
         }
 
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             SaveGame();
             Debug.Log("Auto-saved.");
@@ -131,6 +151,7 @@ public class GameManager : MonoBehaviour
 
         // Convert all current SO runtime values into TempSaveData
         tempSaveData = gameDataSO.ToSaveData();
+        tempSaveData.playTimeSeconds = playTimeSeconds;
 
         SaveSystem.Save(tempSaveData);
     }
@@ -213,6 +234,7 @@ public class GameManager : MonoBehaviour
 
         // 3. Create fresh runtime save
         tempSaveData = new TempSaveData(gameDataSO);
+        playTimeSeconds = 0f;
 
         // 5. Go to main menu or reload
         ChangeState(GameState.MainMenu);
