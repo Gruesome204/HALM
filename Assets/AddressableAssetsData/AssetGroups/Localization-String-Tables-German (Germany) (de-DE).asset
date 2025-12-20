@@ -96,6 +96,12 @@ MonoBehaviour:
     - Locale-de-DE
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92aac1e1fc97bf240ae47ae30fccb602
+    m_Address: WorkshopMenuTranslationTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 97c90257fea56ba4dae0a9abc6a22a6f
     m_Address: StatsMenuTranslationTable_de-DE
     m_ReadOnly: 1

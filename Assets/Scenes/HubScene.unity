@@ -1306,14 +1306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c2efd81dc86804f967fa0dd9986fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretDetails: {fileID: 9197481963319205126, guid: 252538a3acfde364992fbb30756b9938, type: 3}
   turretButtons: {fileID: 9197481963319205126, guid: 5916de780a3544940be1967023788fce, type: 3}
-  allTurretsList:
-  - {fileID: 11400000, guid: 78b5b99b66001634584825f663397a90, type: 2}
-  - {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
-  - {fileID: 11400000, guid: d57e7534158189347baee79ed9fa3fc1, type: 2}
-  - {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
-  equippedTurretsList: []
+  turretDetailsStats: {fileID: 9197481963319205126, guid: e922ef6cfc128ff4d80b6196b13b981f, type: 3}
 --- !u!1 &2023103395
 GameObject:
   m_ObjectHideFlags: 0
