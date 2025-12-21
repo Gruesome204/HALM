@@ -137,7 +137,6 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         var turretIcon = turretStats.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{openTurretDetails.turretName}Icon");
 
-        FillDetailValue("cost", openTurretDetails.buildingCost, ref turretStats);
         FillDetailValue("fireRate", openTurretDetails.baseFireRate, ref turretStats);
         FillDetailValue("fireCountdown", openTurretDetails.BaseFireCountdown, ref turretStats);
         FillDetailValue("projectileSpeed", openTurretDetails.baseProjectileSpeed, ref turretStats);
@@ -145,6 +144,8 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         FillDetailValue("damage", openTurretDetails.baseAttackDamage, ref turretStats);
         FillDetailValue("knockbackStrength", openTurretDetails.baseKnockbackStrength, ref turretStats);
         FillDetailValue("knockbackDuration", openTurretDetails.baseKnockbackDuration, ref turretStats);
+
+        FillBuyCostDetails(ref turretStats);
 
         detailsMainContainer.RemoveFromClassList("turretChoiceMenuSlideOut");
     }
@@ -196,6 +197,29 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         else
         {
             informationTxt.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "cantBuyText"));
+        }
+    }
+
+    private void FillBuyCostDetails(ref TemplateContainer container)
+    {
+        // Make sure your UXML has a container named "buyCostContainer"
+        var costContainer = container.Q<VisualElement>("buyCostContainer");
+        costContainer.Clear();
+
+        if (openTurretDetails.buyCost == null || openTurretDetails.buyCost.Length == 0)
+        {
+            costContainer.Add(new Label("No cost"));
+            return;
+        }
+
+        foreach (var cost in openTurretDetails.buyCost)
+        {
+            // Display amount and resource type
+            var costLabel = new Label($"{cost.amount} {cost.resourceType}");
+            costContainer.Add(costLabel);
+
+            // Optional: Add class for styling per resource type
+            costLabel.AddToClassList($"{cost.resourceType}CostLabel");
         }
     }
 }

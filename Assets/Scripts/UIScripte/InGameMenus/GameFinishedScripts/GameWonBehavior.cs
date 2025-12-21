@@ -54,10 +54,12 @@ public class GameWonBehavior : MonoBehaviour, IMenu
     void OnReturnToHubButtonClicked(ClickEvent evt)
     {
         SceneManager.LoadScene("HubScene");
+        GameManager.Instance.ChangeState(GameManager.GameState.MainMenu);
     }
     void OnReturnToMainMenuButtonClicked(ClickEvent evt)
     {
         SceneManager.LoadScene("MainMenu");
+        GameManager.Instance.ChangeState(GameManager.GameState.MainMenu);
     }
     void OnExitButtonClicked(ClickEvent evt)
     {

@@ -27,8 +27,6 @@ public class SM_TowerListElementBehavior
 
         var turretIcon = towerDetails.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{turret.turretName}Icon");
-
-        FillDetailValue("cost", turret.buildingCost);
         FillDetailValue("fireRate", turret.baseFireRate);
         FillDetailValue("fireCountdown", turret.BaseFireCountdown);
         FillDetailValue("projectileSpeed", turret.baseProjectileSpeed);
@@ -37,6 +35,8 @@ public class SM_TowerListElementBehavior
         FillDetailValue("knockbackStrength", turret.baseKnockbackStrength);
         FillDetailValue("knockbackDuration", turret.baseKnockbackDuration);
 
+        // Fill buy cost
+        FillBuyCostDetails();
     }
 
     void FillDetailValue(string value, float turretValue)
@@ -44,4 +44,25 @@ public class SM_TowerListElementBehavior
         towerDetails.Q<Label>($"{value}Name").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
         towerDetails.Q<Label>($"{value}").text = $"{turretValue}";
     }
+
+    void FillBuyCostDetails()
+    {
+        // Make sure your UXML has a container named "buyCostContainer"
+        var costContainer = towerDetails.Q<VisualElement>("buyCostContainer");
+        costContainer.Clear();
+
+        if (turret.buyCost == null || turret.buyCost.Length == 0)
+        {
+            costContainer.Add(new Label("No cost"));
+            return;
+        }
+
+        foreach (var cost in turret.buyCost)
+        {
+            // You can use an icon or just text
+            var costLabel = new Label($"{cost.amount} {cost.resourceType}");
+            costContainer.Add(costLabel);
+        }
+    }
+
 }
