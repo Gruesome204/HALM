@@ -91,6 +91,8 @@ public static class SaveSystem
                 File.Copy(PathMain, PathBackup, true); // backup before overwrite
 
             File.WriteAllText(PathMain, json);
+
+            Debug.Log($"[SaveSystem] Saved to {PathMain}: {json}");
         }
         catch (Exception e)
         {

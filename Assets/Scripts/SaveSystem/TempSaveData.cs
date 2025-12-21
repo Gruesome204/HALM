@@ -25,14 +25,6 @@ public class TempSaveData
     public int metallResource;
     public int pulverResource;
 
-
-    // --- Player upgrades ---
-    public float additionalHealth;
-    public float additionalMaxHealth;
-    public float additionalRegen;
-    public float additionalArmor;
-    public float additionalMagicResistance;
-
     // --- Turrets ---
     public List<string> unlockedBlueprintNames; // store by unique name/ID
     public List<BuildMasterModifier> buildMasterModifiers;
