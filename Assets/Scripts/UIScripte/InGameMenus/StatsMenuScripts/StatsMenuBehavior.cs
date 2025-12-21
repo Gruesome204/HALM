@@ -119,9 +119,9 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
 
         //Creating List Elements for each Turretkind currently placed, giving them the turret they represent and a reference to the turret Detail Menu,
         //and adding the created Button to the scroll List
-        foreach (var turret in TurretPlacementController.Instance.GetActiveTurrets())
+        foreach (var turret in GameManager.Instance.gameDataSO.GetSelectedBlueprints())
         {
-            SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret.GetComponentInChildren<TurretBehaviour>().turretBlueprint, listElementAsset, ref turretDetails);
+            SM_TowerListElementBehavior towerElement = new SM_TowerListElementBehavior(turret, listElementAsset, ref turretDetails);
             uIDocument.rootVisualElement.Q("unity-content-container").Add(towerElement.listButton);
         }
     }

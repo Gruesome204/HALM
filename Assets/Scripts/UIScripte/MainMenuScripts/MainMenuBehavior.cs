@@ -8,6 +8,7 @@ public class MainMenuBehavior : MonoBehaviour
     private Label mainMenuHeadline;
 
     private Button playBtn;
+    private Button resetGameBtn;
     private Button settingsBtn;
     private Button creditsBtn;
     private Button exitBtn;
@@ -23,6 +24,10 @@ public class MainMenuBehavior : MonoBehaviour
         playBtn = root.Q<Button>("playBtn");
         playBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "playBtn"));
         playBtn.RegisterCallback<ClickEvent>(OnPlayBtnClicked);
+
+        resetGameBtn = root.Q<Button>("resetGameBtn");
+        resetGameBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "resetGameBtn"));
+        resetGameBtn.RegisterCallback<ClickEvent>(OnResetGameBtnClicked);
 
         settingsBtn = root.Q<Button>("settingsBtn");
         settingsBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "settingsButton"));
@@ -41,6 +46,10 @@ public class MainMenuBehavior : MonoBehaviour
     void OnPlayBtnClicked(ClickEvent clicked)
     {
         SceneManager.LoadScene("HubScene");
+    }
+    void OnResetGameBtnClicked(ClickEvent clicked)
+    {
+        GameManager.Instance.ResetGame();
     }
     void OnSettingsBtnClicked(ClickEvent clicked)
     {

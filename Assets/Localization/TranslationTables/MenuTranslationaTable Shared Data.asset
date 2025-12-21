@@ -23,6 +23,10 @@ MonoBehaviour:
     m_Key: playBtn
     m_Metadata:
       m_Items: []
+  - m_Id: 78956426925051904
+    m_Key: resetGameBtn
+    m_Metadata:
+      m_Items: []
   - m_Id: 143518429184
     m_Key: settingsButton
     m_Metadata:

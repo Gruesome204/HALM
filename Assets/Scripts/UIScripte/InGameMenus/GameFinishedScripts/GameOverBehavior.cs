@@ -63,10 +63,12 @@ public class GameOverBehavior : MonoBehaviour, IMenu
     void OnReturnToHubButtonClicked(ClickEvent evt)
     {
         SceneManager.LoadScene("HubScene");
+        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
     }
     void OnReturnToMainMenuButtonClicked(ClickEvent evt)
     {
         SceneManager.LoadScene("MainMenu");
+        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
     }
     void OnExitButtonClicked(ClickEvent evt)
     {
