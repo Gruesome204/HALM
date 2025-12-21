@@ -62,6 +62,10 @@ public class GameManager : MonoBehaviour
         if (activeScene.name == "GameScene") // replace with your gameplay scene name
         {
             StartCoroutine(LoadGameRoutine());
+        }else
+        if (activeScene.name == "HubScene") // replace with your gameplay scene name
+        {
+            ChangeState(GameState.HubMenu);
         }
         else
         {
