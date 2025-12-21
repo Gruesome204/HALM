@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Auto-saved.");
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             SaveGame();
             Debug.Log("Auto-saved.");
@@ -162,11 +162,38 @@ public class GameManager : MonoBehaviour
     {
         if (gameDataSO == null) return;
 
-        // Convert all current SO runtime values into TempSaveData
-        tempSaveData = gameDataSO.ToSaveData();
+        // Sync SO runtime values that can change in gameplay
         tempSaveData.playTimeSeconds = playTimeSeconds;
 
+        // Settings
+        tempSaveData.masterVolume = gameDataSO.masterVolume;
+        tempSaveData.musicVolume = gameDataSO.musicVolume;
+        tempSaveData.soundVolume = gameDataSO.soundVolume;
+        tempSaveData.musicTrack = gameDataSO.musicTrack;
+        tempSaveData.localSelected = gameDataSO.localSelected;
+
+        // Player
+        tempSaveData.currentPlayerLevel = gameDataSO.currentPlayerLevel;
+        tempSaveData.currentClass = gameDataSO.currentClass;
+
+        // Resources
+        tempSaveData.gameCurrency = gameDataSO.gameCurrency;
+        tempSaveData.woodResource = gameDataSO.woodResource;
+        tempSaveData.steinResource = gameDataSO.steinResource;
+        tempSaveData.metallResource = gameDataSO.metallResource;
+        tempSaveData.pulverResource = gameDataSO.pulverResource;    
+
+        // Turrets
+        tempSaveData.unlockedBlueprintNames = gameDataSO.GetUnlockedBlueprints()
+            .Where(b => b != null)
+            .Select(b => b.name)
+            .ToList();
+
+        tempSaveData.buildMasterModifiers = new List<BuildMasterModifier>(gameDataSO.buildMasterModifiers);
+
+        // Save to disk
         SaveSystem.Save(tempSaveData);
+        Debug.Log("[GameManager] Game saved.");
     }
 
     private void ApplyRuntimeDataToSO()

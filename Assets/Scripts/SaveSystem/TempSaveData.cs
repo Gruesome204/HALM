@@ -64,13 +64,6 @@ public class TempSaveData
         metallResource = so.metallResource;
         pulverResource = so.pulverResource;
 
-        // Player upgrades
-        additionalHealth = 0f;
-        additionalMaxHealth = 0f;
-        additionalRegen = 0f;
-        additionalArmor = 0f;
-        additionalMagicResistance = 0f;
-
         // Turrets
         unlockedBlueprintNames = new List<string>();
         foreach (var blueprint in so.GetUnlockedBlueprints())
