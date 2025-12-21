@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: GameDataSO
   m_EditorClassIdentifier: 
   saveVersion: 1
-  localSelected: 
-  musicTrack: 1
-  masterVolume: 0.049999997
-  musicVolume: 0.11
-  soundVolume: 0.32
+  localSelected: 0
+  playTimeSeconds: 0
+  musicTrack: 3
+  masterVolume: 0.465
+  musicVolume: 0.465
+  soundVolume: 0.454
   limitOfUnlockableTurrets: 10
   limitOfSelectableTurrets: 5
   currentClass: 0
-  currentPlayerLevel: 0
+  currentPlayerLevel: 1
   allTurretBlueprints:
   - {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
   - {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
@@ -29,16 +30,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 78b5b99b66001634584825f663397a90, type: 2}
   unlockedBlueprints:
   - {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
-  - {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
-  - {fileID: 11400000, guid: d57e7534158189347baee79ed9fa3fc1, type: 2}
-  - {fileID: 11400000, guid: 78b5b99b66001634584825f663397a90, type: 2}
   selectedBlueprints:
   - {fileID: 11400000, guid: d57e7534158189347baee79ed9fa3fc1, type: 2}
   - {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
-  gameCurrency: 0
+  gameCurrency: 5
   woodResource: 0
   steinResource: 0
   metallResource: 0
   pulverResource: 0
   buildMasterModifiers:
+  - {fileID: 11400000, guid: d4924574ebd4e1c4ca8537cf0f6dcf11, type: 2}
   - {fileID: 11400000, guid: 63aefb47f4843d545918393963ca342d, type: 2}

@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game/GameData/NewGameDataDefaults")]
 public class GameDataDefaultsSO : ScriptableObject
 {
+
     public string localSelected;
     public int musicTrack;
     public float masterVolume;

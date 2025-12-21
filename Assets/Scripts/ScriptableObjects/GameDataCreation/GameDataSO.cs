@@ -13,6 +13,8 @@ public class GameDataSO : ScriptableObject
     //All Settings Data
     public string localSelected;
 
+    public float playTimeSeconds;
+
     public int musicTrack;
     public float masterVolume;
     public float musicVolume;
@@ -43,7 +45,6 @@ public class GameDataSO : ScriptableObject
 
     [Header("PlayerStatsUpgrades")]
     public List<BuildMasterModifier> buildMasterModifiers;
-    
 
     public void ResetToDefaults(GameDataDefaultsSO defaults)
     {

@@ -21,6 +21,22 @@ public class GameManager : MonoBehaviour
     public event Action<float> OnPlayTimeUpdated;
     private float timerTick;
 
+    private void OnEnable()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+        SaveGame(); // optional: save on disable too
+    }
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        Debug.Log($"[GameManager] Scene '{scene.name}' unloaded → saving game.");
+        SaveGame();
+    }
     public enum GameState
     {
         MainMenu,
@@ -42,7 +58,6 @@ public class GameManager : MonoBehaviour
     [Header("Autosave")]
     [SerializeField] private float autosaveInterval = 60f;
     private float autosaveTimer = 0f;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -53,6 +68,12 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject); // survive scene loads
+
+        // Ensure tempSaveData always exists to avoid null reference
+        if (tempSaveData == null)
+        {
+            tempSaveData = gameDataSO != null ? gameDataSO.ToSaveData() : new TempSaveData();
+        }
     }
 
     private void Start()
@@ -91,7 +112,6 @@ public class GameManager : MonoBehaviour
         // Ensure lists are not null
         tempSaveData.unlockedBlueprintNames ??= new List<string>();
         tempSaveData.buildMasterModifiers ??= new List<BuildMasterModifier>();
-        playTimeSeconds = tempSaveData.playTimeSeconds;
 
         // Apply to SO
         ApplyRuntimeDataToSO();
@@ -117,13 +137,6 @@ public class GameManager : MonoBehaviour
 
     private void ApplyPlayerUpgrades()  
     {
-        var so = tempSaveData;
-        PlayerStats playerStats = PlayerManager.Instance.playerStats;
-        playerStats.currentHealth += so.additionalHealth;
-        playerStats.currentMaxHealth += so.additionalMaxHealth;
-        playerStats.currentRegen += so.additionalRegen;
-        playerStats.currentArmor += so.additionalArmor;
-        playerStats.currentMagicResistance += so.additionalMagicResistance;
     }
 
     private void Update()
@@ -161,9 +174,6 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         if (gameDataSO == null) return;
-
-        // Sync SO runtime values that can change in gameplay
-        tempSaveData.playTimeSeconds = playTimeSeconds;
 
         // Settings
         tempSaveData.masterVolume = gameDataSO.masterVolume;
@@ -286,6 +296,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] Application quitting → Saving game.");
         SaveGame();
     }
+
+
 
     [ContextMenu("RESET SAVE DATA")]
     private void ResetSaveFromEditor()
