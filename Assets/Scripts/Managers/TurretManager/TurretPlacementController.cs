@@ -592,8 +592,6 @@ public class TurretPlacementController : MonoBehaviour
 
             radiusLineRenderer.SetPosition(i, pos);
         }
-
-        Debug.Log("Radius created: " + radiusLineRenderer);
     }
 
 
