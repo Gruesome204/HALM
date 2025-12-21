@@ -89,7 +89,6 @@ public class InGameMenuManager : MonoBehaviour
             if (_menu != null)
             {
                 _menu.OpenOrClose(false);
-                Debug.Log($"{menu.name} was closed");
             }
         }
     }
@@ -128,7 +127,6 @@ public class InGameMenuManager : MonoBehaviour
                 return true;
             }
         }
-        Debug.Log("[InGameMenuManager]- CheckForAMenu: No Fitting Menu Found");
         return false;
     }
     public Boolean CheckForAnOpenMenu(string menu)
@@ -144,7 +142,6 @@ public class InGameMenuManager : MonoBehaviour
                 return true;
             }
         }
-        Debug.Log("[InGameMenuManager]- CheckForAnOpenMenu: No Fitting Menu Found or Menu not open");
         return false;
     }
 

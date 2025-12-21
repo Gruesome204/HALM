@@ -58,8 +58,15 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
         settingsButton.RegisterCallback<ClickEvent>(OnSettingsBtnCicked);
 
         cancelRunButton = root.Q<Button>("cancelRunButton");
-        cancelRunButton.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "cancelRunButton"));
-        cancelRunButton.RegisterCallback<ClickEvent>(OnCancelRunBtnCicked);
+        if (SceneManager.GetActiveScene().name != "HubScene")
+        {
+            cancelRunButton.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "cancelRunButton"));
+            cancelRunButton.RegisterCallback<ClickEvent>(OnCancelRunBtnCicked);
+        }
+        else
+        {
+            cancelRunButton.style.maxHeight = 1;
+        }
 
         mainMenuButton = root.Q<Button>("mainMenuButton");
         mainMenuButton.SetBinding("text", new LocalizedString("PauseMenuTranslationTable", "mainMenuButton"));

@@ -70,6 +70,10 @@ MonoBehaviour:
     m_Localized: Hallo, hier sind die Credits!
     m_Metadata:
       m_Items: []
+  - m_Id: 78956426925051904
+    m_Localized: "Spiel zur\xFCcksetzen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -70,6 +70,10 @@ MonoBehaviour:
     m_Localized: Hello, here are the Credits!
     m_Metadata:
       m_Items: []
+  - m_Id: 78956426925051904
+    m_Localized: Reset Game
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

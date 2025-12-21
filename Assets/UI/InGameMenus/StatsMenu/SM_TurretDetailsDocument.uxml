@@ -5,8 +5,8 @@
         <ui:VisualElement name="iconCostContainer" style="width: 90%; flex-direction: row; justify-content: center; margin-bottom: 5%;">
             <ui:VisualElement name="icon" style="width: 100px; height: 100px;" />
             <ui:VisualElement name="costContainer" style="position: absolute; flex-direction: row; right: 0; bottom: 0;">
-                <ui:Label text="Label" name="costName" style="position: relative; right: 0%; align-self: flex-end;" />
-                <ui:Label text="Label" name="cost" style="position: relative; right: 0%; align-self: flex-end;" />
+                <ui:Label text="Label" name="costName" style="position: relative; right: 0%; align-self: flex-end; color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="cost" style="position: relative; right: 0%; align-self: flex-end; color: rgb(255, 255, 255);" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="detailsContainer" style="flex-direction: row-reverse; width: 100%; flex-shrink: 0; flex-grow: 0;">
@@ -16,12 +16,12 @@
                         <UnityEngine.Localization.LocalizedString property="enableRichText" table="GUID:f54ef236fc66be84cbbc728f2dda48fd" entry="Id(11481739264)" />
                     </Bindings>
                 </ui:Label>
-                <ui:Label text="Label" name="fireCountdown" />
-                <ui:Label text="Label" name="projectileSpeed" />
-                <ui:Label text="Label" name="attackRange" />
-                <ui:Label text="Label" name="damage" />
-                <ui:Label text="Label" name="knockbackStrength" />
-                <ui:Label text="Label" name="knockbackDuration" />
+                <ui:Label text="Label" name="fireCountdown" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="projectileSpeed" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="attackRange" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="knockbackStrength" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="knockbackDuration" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="damage" style="color: rgb(255, 255, 255);" />
             </ui:VisualElement>
             <ui:VisualElement name="detailNames" style="width: auto; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
                 <ui:Label name="fireRateName">
@@ -29,12 +29,12 @@
                         <UnityEngine.Localization.LocalizedString property="enableRichText" table="GUID:f54ef236fc66be84cbbc728f2dda48fd" entry="Id(11481739264)" />
                     </Bindings>
                 </ui:Label>
-                <ui:Label text="Label" name="fireCountdownName" />
-                <ui:Label text="Label" name="projectileSpeedName" />
-                <ui:Label text="Label" name="attackRangeName" />
-                <ui:Label text="Label" name="damageName" />
-                <ui:Label text="Label" name="knockbackStrengthName" />
-                <ui:Label text="Label" name="knockbackDurationName" />
+                <ui:Label text="Label" name="fireCountdownName" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="projectileSpeedName" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="attackRangeName" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="damageName" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="knockbackStrengthName" style="color: rgb(255, 255, 255);" />
+                <ui:Label text="Label" name="knockbackDurationName" style="color: rgb(255, 255, 255);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
