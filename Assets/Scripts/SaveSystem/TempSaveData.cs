@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 
@@ -54,20 +55,28 @@ public class TempSaveData
         pulverResource = so.pulverResource;
 
         // Turrets
-        unlockedBlueprintNames = new List<string>();
-        foreach (var blueprint in so.GetUnlockedBlueprints())
-        {
-            if (blueprint != null)
-                unlockedBlueprintNames.Add(blueprint.name);
-        }
-
         buildMasterModifiers = new List<BuildMasterModifier>(so.buildMasterModifiers);
+
+        unlockedBlueprintNames = so.unlockedBlueprints.Select(b => b.name).ToList();
     }
 
-    // Default constructor for new saves
+    //Constructor
     public TempSaveData()
     {
-        unlockedBlueprintNames = new List<string>();
+        localSelected = "Default";
+        musicTrack = 0;
+        masterVolume = 1f;
+        musicVolume = 1f;
+        soundVolume = 1f;
+        currentPlayerLevel = 1;
+        currentClass = GameDataSO.Class.Mechanic;
+        gameCurrency = 0;
+        woodResource = 0;
+        steinResource = 0;
+        metallResource = 0;
+        pulverResource = 0;
         buildMasterModifiers = new List<BuildMasterModifier>();
+        unlockedBlueprintNames = new List<string>();
     }
+
 }

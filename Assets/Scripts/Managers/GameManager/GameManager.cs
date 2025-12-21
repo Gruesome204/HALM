@@ -12,10 +12,6 @@ public class GameManager : MonoBehaviour
     public GameDataSO gameDataSO;                 // Asset reference (defaults)
     [SerializeField] private GameDataDefaultsSO defaultData;
 
-    // Runtime clone for gameplay
-    public GameDataSO RuntimeGameData { get; private set; }
-    private TempSaveData tempSaveData;
-
     [Header("In-Game Timer")]
     [SerializeField] private float playTimeSeconds;
     public float PlayTimeSeconds => playTimeSeconds;
@@ -35,6 +31,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float autosaveInterval = 60f;
     private float autosaveTimer = 0f;
 
+    public bool IsSaveLoaded { get; private set; } = false;
+
     #region Unity Callbacks
 
     private void Awake()
@@ -47,9 +45,6 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        // Create a runtime clone of the ScriptableObject to store loaded values
-        RuntimeGameData = Instantiate(gameDataSO);
 
         LoadOrCreateSave();
     }
@@ -98,72 +93,43 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Save / Load
-
     private void LoadOrCreateSave()
     {
-        TempSaveData loadedData = SaveSystem.Load();
-        Debug.Log("Loaded TempSaveData: " + JsonUtility.ToJson(loadedData));
-        if (loadedData != null)
+        TempSaveData saveData = SaveSystem.Load();
+
+        if (saveData != null)
         {
-            tempSaveData = loadedData;
-            Debug.Log("[GameManager] Save file loaded.");
+            // Apply loaded data
+            gameDataSO.ApplySave(saveData);
+            Debug.Log("[GameManager] Save loaded successfully.");
         }
         else
         {
-            Debug.Log("[GameManager] No save found → using defaults.");
-            RuntimeGameData.ResetToDefaults(defaultData);
-            tempSaveData = RuntimeGameData.ToSaveData();
-            SaveSystem.Save(tempSaveData);
+            // No save found → reset to defaults
+            gameDataSO.ResetToDefaults(defaultData);
+            playTimeSeconds = 0f;
+
+            // Save initial data
+            SaveGame();
+            Debug.Log("[GameManager] No save found. Initialized default game data.");
         }
-
-
-        ApplySave(tempSaveData); // Apply to runtime clone
+        // Mark save as loaded
+        IsSaveLoaded = true;
     }
 
     public void SaveGame()
     {
-        if (RuntimeGameData == null)
+        if (gameDataSO == null)
+        {
+            Debug.LogWarning("[GameManager] GameDataSO is null → cannot save!");
             return;
+        }
 
-        if (tempSaveData == null)
-            tempSaveData = RuntimeGameData.ToSaveData();
+        // Convert SO to TempSaveData
+        TempSaveData saveData = gameDataSO.ToSaveData();
 
-        // Settings
-        tempSaveData.masterVolume = RuntimeGameData.masterVolume;
-        tempSaveData.musicVolume = RuntimeGameData.musicVolume;
-        tempSaveData.soundVolume = RuntimeGameData.soundVolume;
-        tempSaveData.musicTrack = RuntimeGameData.musicTrack;
-        tempSaveData.localSelected = RuntimeGameData.localSelected;
-
-        // Player
-        tempSaveData.currentPlayerLevel = RuntimeGameData.currentPlayerLevel;
-        tempSaveData.currentClass = RuntimeGameData.currentClass;
-
-        // Resources
-        tempSaveData.gameCurrency = RuntimeGameData.gameCurrency;
-        tempSaveData.woodResource = RuntimeGameData.woodResource;
-        tempSaveData.steinResource = RuntimeGameData.steinResource;
-        tempSaveData.metallResource = RuntimeGameData.metallResource;
-        tempSaveData.pulverResource = RuntimeGameData.pulverResource;
-
-        // Turrets
-        tempSaveData.unlockedBlueprintNames = RuntimeGameData.GetUnlockedBlueprints()
-            .Where(b => b != null)
-            .Select(b => b.name)
-            .ToList();
-
-        tempSaveData.buildMasterModifiers = new List<BuildMasterModifier>(RuntimeGameData.buildMasterModifiers);
-
-        // Save to disk
-        SaveSystem.Save(tempSaveData);
-        Debug.Log("[GameManager] Game saved.");
+        SaveSystem.Save(saveData);
     }
-    public void ApplySave(TempSaveData data)
-    {
-        RuntimeGameData.ApplySave(data);
-    }
-
-
     #endregion
 
     #region Gameplay Timer
@@ -270,8 +236,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("[GameManager] FULL GAME RESET");
         SaveSystem.DeleteSaveFiles();
-        RuntimeGameData.ResetToDefaults(defaultData);
-        tempSaveData = null;
         Debug.Log("[GameManager] Save deleted");
     }
 
@@ -284,7 +248,7 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.Loading);
 
         // Setup systems
-        TurretPlacementController.Instance?.SetupFromGameData(RuntimeGameData);
+        TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
         MapLoaderManager.Instance?.LoadMap(0);
 
         yield return new WaitUntil(() => PlayerManager.Instance != null);
