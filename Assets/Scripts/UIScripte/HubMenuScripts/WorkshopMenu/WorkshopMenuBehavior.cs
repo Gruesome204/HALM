@@ -137,7 +137,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         var turretIcon = turretStats.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{openTurretDetails.turretName}Icon");
 
-        FillDetailValue("cost", openTurretDetails.buildingCost, ref turretStats);
+       // FillDetailValue("cost", openTurretDetails.buildingCost, ref turretStats);
         FillDetailValue("fireRate", openTurretDetails.baseFireRate, ref turretStats);
         FillDetailValue("fireCountdown", openTurretDetails.BaseFireCountdown, ref turretStats);
         FillDetailValue("projectileSpeed", openTurretDetails.baseProjectileSpeed, ref turretStats);

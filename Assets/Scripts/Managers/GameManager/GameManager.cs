@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         MainMenu,
+        HubMenu,
         Playing,
         Loading,
         Paused,
