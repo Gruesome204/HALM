@@ -9,7 +9,7 @@
             <ui:VisualElement name="divider" class="divider" />
             <ui:VisualElement name="availableTurrets" style="flex-grow: 1;" />
             <ui:VisualElement name="divider" class="divider" />
-            <ui:VisualElement name="equippedTurrets" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 20%;" />
+            <ui:VisualElement name="equippedTurrets" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 20%; flex-direction: row; justify-content: center;" />
         </ui:VisualElement>
         <ui:VisualElement name="towerDetailsContainer" style="flex-grow: 0; background-color: rgba(7, 17, 53, 0); flex-shrink: 0; width: 35%; height: 80%; align-self: center;">
             <ui:VisualElement name="detailsMainContainer" class="SlideIn" style="flex-grow: 0; background-color: rgba(7, 17, 53, 0.47); flex-shrink: 0; align-self: center; width: 100%; height: 100%;">
