@@ -91,6 +91,9 @@ public class GameManager : MonoBehaviour
         MapLoaderManager.Instance?.LoadMap(0);
 
 
+
+        ChangeState(GameState.Playing);
+
         // WAIT until the player is spawned and has PlayerStats
         yield return new WaitUntil(() =>
             PlayerManager.Instance != null
@@ -98,8 +101,6 @@ public class GameManager : MonoBehaviour
 
         // Apply upgrades now that player exists
         ApplyPlayerUpgrades();
-
-        ChangeState(GameState.Playing);
     }
 
     private void ApplyPlayerUpgrades()  
