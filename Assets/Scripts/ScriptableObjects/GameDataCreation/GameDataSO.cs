@@ -33,8 +33,8 @@ public class GameDataSO : ScriptableObject
 
     [Header("Turrets")]
     public List<TurretBlueprint> allTurretBlueprints;
-    [SerializeField]private List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
-    [SerializeField] private List<TurretBlueprint> selectedBlueprints;
+    [SerializeField]public List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
+    [SerializeField] public List<TurretBlueprint> selectedBlueprints;
 
     [Header("Ressources")]
     public int gameCurrency = 0;

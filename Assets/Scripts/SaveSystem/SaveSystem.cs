@@ -1,61 +1,76 @@
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 using System;
 
 public static class SaveSystem
 {
     private static readonly string Folder = Path.Combine(Application.persistentDataPath, "Saves");
-    private static readonly string PathMain = System.IO.Path.Combine(Folder, "player.json");
-    private static readonly string PathBackup = System.IO.Path.Combine(Folder, "player_backup.json");
+    private static readonly string PathMain = Path.Combine(Folder, "player.json");
+    private static readonly string PathBackup = Path.Combine(Folder, "player_backup.json");
 
     public static TempSaveData Load()
     {
+        // Ensure folder exists
+        if (!Directory.Exists(Folder))
+            Directory.CreateDirectory(Folder);
+
+        // Try main save
+        TempSaveData data = LoadFromFile(PathMain);
+        if (data != null)
+            return data;
+
+        // Try backup
+        data = LoadFromFile(PathBackup);
+        if (data != null)
+        {
+            Debug.LogWarning("[SaveSystem] Loaded from backup.");
+            return data;
+        }
+
+        Debug.LogWarning("[SaveSystem] No valid save found → creating new TempSaveData.");
+        return new TempSaveData();
+    }
+
+    private static TempSaveData LoadFromFile(string path)
+    {
         try
         {
+            if (!File.Exists(path))
+                return null;
 
+            string json = File.ReadAllText(path);
+            if (string.IsNullOrEmpty(json))
+                return null;
 
-            if (!Directory.Exists(Folder))
-                Directory.CreateDirectory(Folder);
-
-            if (File.Exists(PathMain))
-            {
-                string json = File.ReadAllText(PathMain);
-                TempSaveData data = JsonUtility.FromJson<TempSaveData>(json);
-
-                if (data != null)
-                    return data;
-
-
-            }
+            TempSaveData data = JsonUtility.FromJson<TempSaveData>(json);
+            return data;
         }
         catch (Exception e)
         {
-            Debug.LogError("Main save corrupted: " + e);
+            Debug.LogError($"[SaveSystem] Failed to load {path}: {e}");
+            return null;
         }
+    }
 
-        // Try backup
+    public static void Save(TempSaveData data)
+    {
         try
         {
-            if (File.Exists(PathBackup))
-            {
-                string json = File.ReadAllText(PathBackup);
-                TempSaveData data = JsonUtility.FromJson<TempSaveData>(json);
+            if (!Directory.Exists(Folder))
+                Directory.CreateDirectory(Folder);
 
-                if (data != null)
-                {
-                    Debug.LogWarning("Loaded from backup.");
-                    return data;
-                }
+            // Backup current save
+            if (File.Exists(PathMain))
+                File.Copy(PathMain, PathBackup, true);
 
-
-            }
+            string json = JsonUtility.ToJson(data, true);
+            File.WriteAllText(PathMain, json);
+            Debug.Log($"[SaveSystem] Saved to {PathMain}");
         }
-        catch { }
-
-        Debug.LogWarning("No valid save found. Using new default GameData.");
-        return new TempSaveData();
-
-
+        catch (Exception e)
+        {
+            Debug.LogError("[SaveSystem] Failed to save file: " + e);
+        }
     }
 
     public static void DeleteSaveFiles()
@@ -72,31 +87,7 @@ public static class SaveSystem
         }
         catch (Exception e)
         {
-            Debug.LogError("Failed to delete save files: " + e);
-        }
-    }
-
-
-
-    public static void Save(TempSaveData data)
-    {
-        try
-        {
-            if (!Directory.Exists(Folder))
-                Directory.CreateDirectory(Folder);
-
-            string json = JsonUtility.ToJson(data, true);
-
-            if (File.Exists(PathMain))
-                File.Copy(PathMain, PathBackup, true); // backup before overwrite
-
-            File.WriteAllText(PathMain, json);
-
-            Debug.Log($"[SaveSystem] Saved to {PathMain}: {json}");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Failed to save file: " + e);
+            Debug.LogError("[SaveSystem] Failed to delete save files: " + e);
         }
     }
 }
