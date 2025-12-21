@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+
 public enum ResourceType
 {
     Currency,
@@ -9,32 +10,30 @@ public enum ResourceType
     Pulver
 }
 
-[System.Serializable]
+[Serializable]
 public struct ResourceCost
 {
     public ResourceType resourceType;
     public int amount;
 }
 
-
-public class ResourceTypeData : MonoBehaviour
+public static class ResourceDropper
 {
-    public ResourceType resourceType;
-
-    [System.Serializable]
+    [Serializable]
     public struct ResourceDrop
     {
         public ResourceType resourceType;
-
         public int minAmount;
         public int maxAmount;
-
         [Range(0f, 1f)]
-        public float dropChance; // 0.0 = 0%, 1.0 = 100%
+        public float dropChance; // 0 = 0%, 1 = 100%
     }
 
     public static event Action<ResourceType, int> OnResourceDropped;
 
+    /// <summary>
+    /// Try dropping a single resource.
+    /// </summary>
     public static void TryDrop(ResourceDrop drop)
     {
         float roll = UnityEngine.Random.Range(0f, 1f);
@@ -53,4 +52,29 @@ public class ResourceTypeData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Try dropping multiple resources from an array or list.
+    /// </summary>
+    public static void TryDropAll(ResourceDrop[] drops)
+    {
+        if (drops == null || drops.Length == 0) return;
+
+        foreach (var drop in drops)
+        {
+            TryDrop(drop);
+        }
+    }
+
+    /// <summary>
+    /// Overload to accept a List<ResourceDrop>
+    /// </summary>
+    public static void TryDropAll(System.Collections.Generic.List<ResourceDrop> drops)
+    {
+        if (drops == null || drops.Count == 0) return;
+
+        foreach (var drop in drops)
+        {
+            TryDrop(drop);
+        }
+    }
 }

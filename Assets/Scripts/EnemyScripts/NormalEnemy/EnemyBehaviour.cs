@@ -231,42 +231,40 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         switch (type)
         {
+            case ResourceType.Currency:
+                gameDataSO.gameCurrency += amount;
+                break;
             case ResourceType.Wood:
                 gameDataSO.woodResource += amount;
                 break;
-
             case ResourceType.Stone:
                 gameDataSO.steinResource += amount;
                 break;
-
             case ResourceType.Metal:
                 gameDataSO.metallResource += amount;
                 break;
-
             case ResourceType.Pulver:
                 gameDataSO.pulverResource += amount;
                 break;
-
             default:
                 Debug.LogWarning($"Unhandled resource type: {type}");
                 break;
         }
     }
 
-
     private void DropResources()
     {
         var drops = stats.baseStats.resourceDrops;
         if (drops == null || drops.Length == 0) return;
 
-        ResourceTypeData.OnResourceDropped += AddResourceToGameData;
+        // Subscribe to the event
+        ResourceDropper.OnResourceDropped += AddResourceToGameData;
 
-        foreach (var drop in drops)
-        {
-            ResourceTypeData.TryDrop(drop);
-        }
+        // Use the batch-friendly method
+        ResourceDropper.TryDropAll(drops);
 
-        ResourceTypeData.OnResourceDropped -= AddResourceToGameData;
+        // Unsubscribe after processing
+        ResourceDropper.OnResourceDropped -= AddResourceToGameData;
     }
     #endregion
 

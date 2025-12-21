@@ -62,8 +62,8 @@ public class EnemyStats : MonoBehaviour
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
         currentMagicResistance = baseStats.baseMagicResistance; // optional: scale if needed
         currentKnockbackReduction = Mathf.Clamp01(baseStats.baseKnockbackReduction);
-        currentKnockbackForce = baseStats.baseknockbackForce;
-        currentKnockbackDuration = baseStats.baseknockbackDuration;
+        currentKnockbackForce = baseStats.baseKnockbackForce;
+        currentKnockbackDuration = baseStats.baseKnockbackDuration;
 
         // Offensive Stats
         currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);

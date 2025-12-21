@@ -1,5 +1,4 @@
 using UnityEngine;
-using static ResourceTypeData;
 
 [CreateAssetMenu(fileName = "New EnemyBaseStats", menuName = "Game/Enemy/New EnemyBaseStats")]
 public class EnemyBaseStats : ScriptableObject
@@ -23,8 +22,8 @@ public class EnemyBaseStats : ScriptableObject
     public float baseArmor;
     public float baseMagicResistance;
     public float baseKnockbackReduction;
-    public float baseknockbackForce;
-    public float baseknockbackDuration;
+    public float baseKnockbackForce;
+    public float baseKnockbackDuration;
 
 
     [Header("Offensive Stats")]
@@ -43,7 +42,7 @@ public class EnemyBaseStats : ScriptableObject
     public int goldYield = 0;
 
     [Header("Resource Drops")]
-    public ResourceDrop[] resourceDrops;
+    public ResourceDropper.ResourceDrop[] resourceDrops;
 
     [Header("Scaling Factors")]
     public float baseHealthScaleFactor;
