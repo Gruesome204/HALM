@@ -52,6 +52,12 @@ public class TurretPlacementController : MonoBehaviour
     [Header("Placement Range")]
     [Tooltip("Maximum distance from the player where turrets can be placed.")]
     public float placementRadius = 30f;
+    [Header("Placement Radius Visual (LineRenderer)")]
+    [SerializeField] private Material radiusLineMaterial;
+    [SerializeField] private float radiusLineWidth = 0.05f;
+    [SerializeField] private int radiusSegments = 64;
+
+    private LineRenderer radiusLineRenderer;
 
     [Tooltip("Reference to the player transform.")]
     public Transform playerTransform;
@@ -92,9 +98,16 @@ public class TurretPlacementController : MonoBehaviour
     {
         HandleBlueprintSelectionInput();
         HandlePlacementInput();
+
+        if (radiusLineRenderer != null && playerTransform != null)
+        {
+            radiusLineRenderer.transform.position = playerTransform.position;
+            DrawRadiusCircle();
+        }
+
     }
 
-  
+
     private void HandleBlueprintSelectionInput()
     {
         // Loop through all possible blueprint indices
@@ -165,12 +178,14 @@ public class TurretPlacementController : MonoBehaviour
 
         //// Immediately create or update the preview object when a blueprint is selected
         CreateOrUpdatePreviewObject();
+        ShowPlacementRadius();
     }
 
     public void DeselectTurretBlueprint()
     {
         currentSelectedBlueprint = null;
         DestroyPreview();
+        HidePlacementRadius();
         Debug.Log("[TurretPlacement] Placement canceled.");
     }
 
@@ -432,7 +447,7 @@ public class TurretPlacementController : MonoBehaviour
         UnregisterTurret(turret);
 
         if (turret != null && activeTurrets.Contains(turret.gameObject))
-        activeTurrets.Remove(turret.gameObject);
+            activeTurrets.Remove(turret.gameObject);
 
         OnTurretsChanged?.Invoke();
     }
@@ -522,9 +537,58 @@ public class TurretPlacementController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (currentSelectedBlueprint == null || playerTransform == null) return;
+        //if (currentSelectedBlueprint == null || playerTransform == null) return;
 
-        Gizmos.color = new Color(0f, 1f, 0f, 0.35f);
-        Gizmos.DrawWireSphere(playerTransform.position, placementRadius);
+        //Gizmos.color = new Color(0f, 1f, 0f, 0.35f);
+        //Gizmos.DrawWireSphere(playerTransform.position, placementRadius);
+    }
+
+    private void ShowPlacementRadius()
+    {
+        if (playerTransform == null || radiusLineRenderer != null)
+            return;
+
+        GameObject radiusObj = new GameObject("PlacementRadiusCircle");
+        radiusObj.transform.position = playerTransform.position;
+
+        radiusLineRenderer = radiusObj.AddComponent<LineRenderer>();
+        radiusLineRenderer.useWorldSpace = true;
+        radiusLineRenderer.loop = true;
+        radiusLineRenderer.positionCount = radiusSegments;
+
+        radiusLineRenderer.material = radiusLineMaterial;
+        radiusLineRenderer.startWidth = radiusLineWidth;
+        radiusLineRenderer.endWidth = radiusLineWidth;
+
+        radiusLineRenderer.startColor = Color.green;
+        radiusLineRenderer.endColor = Color.green;
+
+        DrawRadiusCircle();
+    }
+
+    private void DrawRadiusCircle()
+    {
+        float angleStep = 360f / radiusSegments;
+
+        for (int i = 0; i < radiusSegments; i++)
+        {
+            float angle = angleStep * i * Mathf.Deg2Rad;
+            Vector3 pos = new Vector3(
+                Mathf.Cos(angle) * placementRadius,
+                Mathf.Sin(angle) * placementRadius,
+                0f
+            );
+
+            radiusLineRenderer.SetPosition(i, playerTransform.position + pos);
+        }
+    }
+
+    private void HidePlacementRadius()
+    {
+        if (radiusLineRenderer != null)
+        {
+            Destroy(radiusLineRenderer.gameObject);
+            radiusLineRenderer = null;
+        }
     }
 }
