@@ -90,9 +90,9 @@ public class TurretBlueprint : ScriptableObject
     [Tooltip("Flat increase in range per level.")]
     public float baseRangeGrowthFlat = 0.5f;
 
-    [Header("Buy Cost")]
-    [Tooltip("Resources required to buy the turret.")]
-    public ResourceCost[] buyCost;
+    [Header("BuyCost")]
+    [Tooltip("Resources required to build the turret.")]
+    public int buildingCost;
 
     [Header("Turret Size")]
     [Tooltip("Height of the turret in grid cells.")]
@@ -114,15 +114,4 @@ public class TurretBlueprint : ScriptableObject
 
     [Header("UI")]
     public int unlockCost;
-
-    public int GetResourceCost(ResourceType type)
-    {
-        if (buyCost == null) return 0;
-        foreach (var cost in buyCost)
-        {
-            if (cost.resourceType == type)
-                return cost.amount;
-        }
-        return 0;
-    }
 }
