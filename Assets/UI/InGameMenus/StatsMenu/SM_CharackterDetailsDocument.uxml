@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
-    <ui:VisualElement name="mainContainer" style="flex-grow: 0; flex-shrink: 0; align-items: center; justify-content: flex-start; width: 100%; height: 100%; min-width: 100%; min-height: 100%;">
+    <Style src="project://database/Assets/UI/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
+    <ui:VisualElement name="mainContainer" style="flex-grow: 0; flex-shrink: 0; align-items: center; justify-content: flex-start; background-color: rgba(3, 0, 60, 0.47); width: 100%; height: 100%; min-width: 100%; min-height: 100%;">
         <ui:Label text="Mechanic" name="name" class="sub-headline" style="margin-top: 5px; margin-right: 5px; margin-bottom: 5%; margin-left: 5px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
         <ui:VisualElement name="iconCostContainer" style="width: 90%; flex-direction: row; justify-content: center; margin-bottom: 5%;">
             <ui:VisualElement name="icon" style="width: 100px; height: 100px;" />

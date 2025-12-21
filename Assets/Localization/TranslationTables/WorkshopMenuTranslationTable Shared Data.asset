@@ -28,7 +28,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 137641988096
-    m_Key: selectedButton
+    m_Key: SelectedButton
     m_Metadata:
       m_Items: []
   - m_Id: 159691444224

@@ -50,7 +50,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         headline = root.Q<Label>("headline");
-        headline.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "headline"));
+        headline.SetBinding("text", new LocalizedString("BuildmasterModifyTranslationTable", "headline"));
 
         availableTurrets = root.Q<VisualElement>("availableTurrets");
         equippedTurrets = root.Q<VisualElement>("equippedTurrets");
@@ -106,26 +106,25 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         turretUnlocked = _turretUnlocked;
         turretSelected = _turretSelected;
 
-        buySelectButton.UnregisterCallback<ClickEvent>(TurretSelected);
-        buySelectButton.UnregisterCallback<ClickEvent>(TurretUnlocked);
-        buySelectButton.UnregisterCallback<ClickEvent>(TurretLocked);
-
         if (turretSelected)
         {
             //This Turrets is Selected and can only be removed from the List
-            buySelectButton.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "selectedButton"));
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretSelected"));
+            buySelectButton.text = "selected";
             buySelectButton.RegisterCallback<ClickEvent>(TurretSelected);
         }
         else if (turretUnlocked)
         {
             //This Turret ist Unlocked, but not selected. If there is open space it can be added to the Selected Turrets
-            buySelectButton.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "unlockedButton"));
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretUnlocked"));
+            buySelectButton.text = "unlocked";
             buySelectButton.RegisterCallback<ClickEvent>(TurretUnlocked);
         }
         else
         {
             //This Turret isn't unlocked. It has to be bought
-            buySelectButton.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "lockedButton"));
+            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretLocked"));
+            buySelectButton.text = "locked";
             buySelectButton.RegisterCallback<ClickEvent>(TurretLocked);
         }
 
@@ -158,46 +157,19 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     {
         detailsMainContainer.AddToClassList("turretChoiceMenuSlideOut");
         statsContainer.Clear();
-        informationTxt.text = "";
+        openTurretDetails = null;
     }
     void TurretSelected(ClickEvent evt)
     {
-        //This is registered when the Turret in question is selected. It can only be removed from the selected List
-        GameManager.Instance.gameDataSO.AddRemoveSelectedBlueprint(openTurretDetails, false);
-        Clear();
-        Fill();
-        FillTurretDetails(openTurretDetails, true, false);
+        Debug.Log("Turret selected");
     }
     void TurretUnlocked(ClickEvent evt)
     {
-        //This is registered when the Turret is unlocked, but not Selected.
-        //It can either be selected if there is space, or a message pops up informing the player that it cannot be selcted
-        if (GameManager.Instance.gameDataSO.GetSelectedBlueprints().Count() >= 2)
-        {
-            informationTxt.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "CantSelectText"));
-        }
-        else
-        {
-            GameManager.Instance.gameDataSO.AddRemoveSelectedBlueprint(openTurretDetails, true);
-            Clear();
-            Fill();
-            FillTurretDetails(openTurretDetails, true, true);
-        }
+        Debug.Log("Turret Unlocked");
     }
     void TurretLocked(ClickEvent evt)
     {
-        //This is registered when the Turret is not yet Unlocked.
-        //It can be unlocked, if the Players has enough ressources. If not, a message pops up informing the Player that they cannot unlock this
-        if (GameManager.Instance.gameDataSO.TakeRessource(1,2))
-        {
-            GameManager.Instance.gameDataSO.AddUnlockedBlueprint(openTurretDetails);
-            Clear();
-            Fill();
-            FillTurretDetails(openTurretDetails, true, false);
-        }
-        else
-        {
-            informationTxt.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "CantSelectText"));
-        }
+        Debug.Log("Turret Locked");
     }
+
 }
