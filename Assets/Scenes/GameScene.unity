@@ -2142,7 +2142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31df0c8649677fa4e8fa3d0a0c4da7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapsBeforeBoss: 2
+  mapsBeforeBoss: 0
   currentMapIndex: 0
   baseEnemyLevel: 1
   enemyLevelIncreasePerMap: 1
@@ -3599,6 +3599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
   defaultData: {fileID: 11400000, guid: c2f632fe28f34df4f88d5db9362b386c, type: 2}
+  playTimeSeconds: 0
   autosaveInterval: 60
 --- !u!1 &2051609381
 GameObject:

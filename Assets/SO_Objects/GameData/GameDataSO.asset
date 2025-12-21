@@ -28,8 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d57e7534158189347baee79ed9fa3fc1, type: 2}
   - {fileID: 11400000, guid: 78b5b99b66001634584825f663397a90, type: 2}
   unlockedBlueprints: []
-  selectedBlueprints:
-  - {fileID: 11400000, guid: 78b5b99b66001634584825f663397a90, type: 2}
+  selectedBlueprints: []
   gameCurrency: 0
   woodResource: 0
   steinResource: 0
