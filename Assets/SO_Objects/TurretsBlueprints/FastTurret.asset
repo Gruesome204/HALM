@@ -34,7 +34,11 @@ MonoBehaviour:
   baseDamageGrowthFactor: 1.2
   baseFireRateGrowthFactor: 0.95
   baseRangeGrowthFlat: 0.5
-  buildingCost: 0
+  buyCost:
+  - resourceType: 2
+    amount: 4
+  - resourceType: 1
+    amount: 7
   height: 3
   length: 3
   buildCapacityValue: 2

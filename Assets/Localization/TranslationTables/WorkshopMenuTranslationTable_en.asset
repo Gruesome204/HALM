@@ -42,6 +42,26 @@ MonoBehaviour:
     m_Localized: Carry Limit reached
     m_Metadata:
       m_Items: []
+  - m_Id: 1126219921362944
+    m_Localized: Gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126261524664320
+    m_Localized: Wood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126280961069056
+    m_Localized: Stone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126316511989760
+    m_Localized: Metal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126344521551872
+    m_Localized: Blackpowder
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -42,6 +42,26 @@ MonoBehaviour:
     m_Localized: Tragelimit erreicht
     m_Metadata:
       m_Items: []
+  - m_Id: 1126219921362944
+    m_Localized: Golt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126261524664320
+    m_Localized: Holz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126280961069056
+    m_Localized: Stein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126316511989760
+    m_Localized: Metall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126344521551872
+    m_Localized: Schwarzpulver
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

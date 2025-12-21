@@ -44,6 +44,26 @@ MonoBehaviour:
     m_Localized: Ne, das geht net
     m_Metadata:
       m_Items: []
+  - m_Id: 1126219921362944
+    m_Localized: Shiny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126261524664320
+    m_Localized: Baum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126280961069056
+    m_Localized: Berg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126316511989760
+    m_Localized: Grey Shiny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126344521551872
+    m_Localized: Boom powder
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

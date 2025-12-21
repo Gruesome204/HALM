@@ -25,7 +25,6 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
             InGameMenuManager.Instance.CloseAllMenus();
             //Open the Pause Menu, adds to openMenu List and sets Game to paused
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
-            InGameMenuManager.Instance.openMenus.Add(this.gameObject);
             GameManager.Instance.ChangeState(GameManager.GameState.Paused);
         }
         else
@@ -65,7 +64,7 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
         }
         else
         {
-            cancelRunButton.style.maxHeight = 1;
+            root.Q<VisualElement>("buttonContainer").Remove(cancelRunButton);
         }
 
         mainMenuButton = root.Q<Button>("mainMenuButton");
