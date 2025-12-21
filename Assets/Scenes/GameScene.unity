@@ -812,6 +812,9 @@ MonoBehaviour:
   maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}
   placementRadius: 8
+  radiusLineMaterial: {fileID: 2100000, guid: 97adbf2c4b802044db317ba2a78d4d8d, type: 2}
+  radiusLineWidth: 0.1
+  radiusSegments: 64
   playerTransform: {fileID: 2135666360}
 --- !u!114 &368292588
 MonoBehaviour:

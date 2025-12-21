@@ -99,11 +99,11 @@ public class TurretPlacementController : MonoBehaviour
         HandleBlueprintSelectionInput();
         HandlePlacementInput();
 
-        if (radiusLineRenderer != null && playerTransform != null)
+        if (radiusLineRenderer != null)
         {
-            radiusLineRenderer.transform.position = playerTransform.position;
-            DrawRadiusCircle();
+            DrawRadiusCircle(); // only needed if radius can change
         }
+
 
     }
 
@@ -549,39 +549,52 @@ public class TurretPlacementController : MonoBehaviour
             return;
 
         GameObject radiusObj = new GameObject("PlacementRadiusCircle");
-        radiusObj.transform.position = playerTransform.position;
+        radiusObj.transform.position = Vector3.zero;
 
         radiusLineRenderer = radiusObj.AddComponent<LineRenderer>();
-        radiusLineRenderer.useWorldSpace = true;
+
+        // CRITICAL SETTINGS
+        radiusLineRenderer.useWorldSpace = false;
         radiusLineRenderer.loop = true;
-        radiusLineRenderer.positionCount = radiusSegments;
+        radiusLineRenderer.alignment = LineAlignment.TransformZ;
+        radiusLineRenderer.textureMode = LineTextureMode.Stretch;
 
         radiusLineRenderer.material = radiusLineMaterial;
         radiusLineRenderer.startWidth = radiusLineWidth;
         radiusLineRenderer.endWidth = radiusLineWidth;
 
-        radiusLineRenderer.startColor = Color.green;
-        radiusLineRenderer.endColor = Color.green;
+        radiusLineRenderer.positionCount = radiusSegments + 1;
+
+        // Force visibility
+        radiusLineRenderer.sortingLayerName = "Default";
+        radiusLineRenderer.sortingOrder = 1000;
+
+        radiusObj.transform.SetParent(playerTransform, false);
 
         DrawRadiusCircle();
     }
 
+
     private void DrawRadiusCircle()
     {
-        float angleStep = 360f / radiusSegments;
+        if (radiusLineRenderer == null) return;
 
-        for (int i = 0; i < radiusSegments; i++)
+        float angleStep = 2f * Mathf.PI / radiusSegments;
+
+        for (int i = 0; i <= radiusSegments; i++)
         {
-            float angle = angleStep * i * Mathf.Deg2Rad;
+            float angle = angleStep * i;
+
             Vector3 pos = new Vector3(
                 Mathf.Cos(angle) * placementRadius,
                 Mathf.Sin(angle) * placementRadius,
                 0f
             );
 
-            radiusLineRenderer.SetPosition(i, playerTransform.position + pos);
+            radiusLineRenderer.SetPosition(i, pos);
         }
     }
+
 
     private void HidePlacementRadius()
     {
