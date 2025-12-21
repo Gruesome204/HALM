@@ -1,6 +1,6 @@
 using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
@@ -9,9 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Game Data")]
-    public GameDataSO gameDataSO;
+    public GameDataSO gameDataSO;                 // Asset reference (defaults)
     [SerializeField] private GameDataDefaultsSO defaultData;
-    private TempSaveData tempSaveData;
 
     [Header("In-Game Timer")]
     [SerializeField] private float playTimeSeconds;
@@ -21,109 +20,58 @@ public class GameManager : MonoBehaviour
     public event Action<float> OnPlayTimeUpdated;
     private float timerTick;
 
-    public enum GameState
-    {
-        MainMenu,
-        HubMenu,
-        Playing,
-        Loading,
-        Paused,
-        Stats,
-        GameOver
-    }
-
+    public enum GameState { MainMenu, HubMenu, Playing, Loading, Paused, Stats, GameOver }
     public GameState CurrentState { get; private set; }
     public GameState PreviousState { get; private set; }
-
     public event Action<GameState, GameState> OnGameStateChanged;
 
-    [SerializeField]private readonly List<IPausable> pausables = new List<IPausable>();
+    [SerializeField] private readonly List<IPausable> pausables = new();
 
     [Header("Autosave")]
     [SerializeField] private float autosaveInterval = 60f;
     private float autosaveTimer = 0f;
 
+    public bool IsSaveLoaded { get; private set; } = false;
+
+    #region Unity Callbacks
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // only one instance allowed
+            Destroy(gameObject);
             return;
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // survive scene loads
+        DontDestroyOnLoad(gameObject);
+
+        LoadOrCreateSave();
+    }
+
+    private void OnEnable() => SceneManager.sceneUnloaded += OnSceneUnloaded;
+    private void OnDisable() => SceneManager.sceneUnloaded -= OnSceneUnloaded;
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        Debug.Log($"[GameManager] Scene '{scene.name}' unloaded → saving.");
+        SaveGame();
     }
 
     private void Start()
     {
         Scene activeScene = SceneManager.GetActiveScene();
 
-        if (activeScene.name == "GameScene") // replace with your gameplay scene name
-        {
-            StartCoroutine(LoadGameRoutine());
-        }else
-        if (activeScene.name == "HubScene") // replace with your gameplay scene name
+        if (activeScene.name == "GameScene") 
+        StartCoroutine(LoadGameRoutine());
+        else if (activeScene.name == "HubScene")
         {
             ChangeState(GameState.HubMenu);
         }
         else
         {
-            ChangeState(GameState.MainMenu); // or HubMenu
+            ChangeState(GameState.MainMenu);
         }
-    }
-
-    private System.Collections.IEnumerator LoadGameRoutine()
-    {
-        ChangeState(GameState.Loading);
-
-        TempSaveData loadedData = SaveSystem.Load();
-        if (loadedData != null)
-        {
-            tempSaveData = loadedData;
-        }
-        else
-        {
-            Debug.Log("[GameManager] No save found → creating new GameData from SO defaults");
-            tempSaveData = gameDataSO.ToSaveData();
-        }
-
-        // Ensure lists are not null
-        tempSaveData.unlockedBlueprintNames ??= new List<string>();
-        tempSaveData.buildMasterModifiers ??= new List<BuildMasterModifier>();
-        playTimeSeconds = tempSaveData.playTimeSeconds;
-
-        // Apply to SO
-        ApplyRuntimeDataToSO();
-
-
-        // Setup turret placement system
-        TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
-
-
-        // Load Scene Elements (Map)
-        MapLoaderManager.Instance?.LoadMap(0);
-
-        // WAIT until the player is spawned and has PlayerStats
-        yield return new WaitUntil(() =>
-            PlayerManager.Instance != null
-        );
-
-        // Apply upgrades now that player exists
-        ApplyPlayerUpgrades();
-        ChangeState(GameState.Playing);
-
-    }
-
-    private void ApplyPlayerUpgrades()  
-    {
-        var so = tempSaveData;
-        PlayerStats playerStats = PlayerManager.Instance.playerStats;
-        playerStats.currentHealth += so.additionalHealth;
-        playerStats.currentMaxHealth += so.additionalMaxHealth;
-        playerStats.currentRegen += so.additionalRegen;
-        playerStats.currentArmor += so.additionalArmor;
-        playerStats.currentMagicResistance += so.additionalMagicResistance;
     }
 
     private void Update()
@@ -131,7 +79,65 @@ public class GameManager : MonoBehaviour
         if (CurrentState != GameState.Playing)
             return;
 
-        //In-game timer
+        UpdatePlayTimer();
+        HandleAutosave();
+        HandleDebugInput();
+    }
+
+    private void OnApplicationQuit()
+    {
+        Debug.Log("[GameManager] Application quitting → saving.");
+        SaveGame();
+    }
+
+    #endregion
+
+    #region Save / Load
+    private void LoadOrCreateSave()
+    {
+        TempSaveData saveData = SaveSystem.Load();
+
+
+
+        if (saveData != null)
+        {
+            // Apply loaded data
+            gameDataSO.ApplySave(saveData);
+            Debug.Log("[GameManager] Save loaded successfully.");
+        }
+        else
+        {
+            // No save found → reset to defaults
+            gameDataSO.ResetToDefaults(defaultData);
+            playTimeSeconds = 0f;
+
+            // Save initial data
+            SaveGame();
+            Debug.Log("[GameManager] No save found. Initialized default game data.");
+        }
+        // Mark save as loaded
+        IsSaveLoaded = true;
+    }
+
+    public void SaveGame()
+    {
+        if (gameDataSO == null)
+        {
+            Debug.LogWarning("[GameManager] GameDataSO is null → cannot save!");
+            return;
+        }
+
+        // Convert SO to TempSaveData
+        TempSaveData saveData = gameDataSO.ToSaveData();
+
+        SaveSystem.Save(saveData);
+    }
+    #endregion
+
+    #region Gameplay Timer
+
+    private void UpdatePlayTimer()
+    {
         playTimeSeconds += Time.deltaTime;
         timerTick += Time.deltaTime;
 
@@ -140,43 +146,32 @@ public class GameManager : MonoBehaviour
             timerTick = 0f;
             OnPlayTimeUpdated?.Invoke(playTimeSeconds);
         }
+    }
 
+    #endregion
+
+    #region Autosave & Debug
+
+    private void HandleAutosave()
+    {
         autosaveTimer += Time.deltaTime;
 
         if (autosaveTimer >= autosaveInterval)
         {
             autosaveTimer = 0f;
             SaveGame();
-            Debug.Log("Auto-saved.");
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+    private void HandleDebugInput()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
             SaveGame();
-            Debug.Log("Auto-saved.");
-        }
     }
 
+    #endregion
 
-    public void SaveGame()
-    {
-        if (gameDataSO == null) return;
-
-        // Convert all current SO runtime values into TempSaveData
-        tempSaveData = gameDataSO.ToSaveData();
-        tempSaveData.playTimeSeconds = playTimeSeconds;
-
-        SaveSystem.Save(tempSaveData);
-    }
-
-    private void ApplyRuntimeDataToSO()
-    {
-        if (tempSaveData != null && gameDataSO != null)
-        {
-            gameDataSO.ApplySave(tempSaveData);
-            Debug.Log("[GameManager] Runtime data fully applied to GameDataSO.");
-        }
-    }
+    #region Game State & Pausables
 
     public void ChangeState(GameState newState)
     {
@@ -185,7 +180,7 @@ public class GameManager : MonoBehaviour
         PreviousState = CurrentState;
         CurrentState = newState;
         Debug.Log($"[GameManager] State changed: {PreviousState} → {CurrentState}");
-        OnGameStateChanged?.Invoke(CurrentState, PreviousState); 
+        OnGameStateChanged?.Invoke(CurrentState, PreviousState);
 
         UpdatePausables(newState);
     }
@@ -199,8 +194,6 @@ public class GameManager : MonoBehaviour
             switch (newState)
             {
                 case GameState.GameOver:
-                    p.OnPause();
-                    break;
                 case GameState.Paused:
                     p.OnPause();
                     break;
@@ -231,39 +224,39 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame() => ChangeState(GameState.Paused);
     public void ResumeGame() => ChangeState(GameState.Playing);
-
     public bool IsPlaying() => CurrentState == GameState.Playing;
     public bool IsPaused() => CurrentState == GameState.Paused;
+
+    #endregion
+
+    #region Reset Game
+
+    [ContextMenu("RESET SAVE DATA")]
+    private void ResetSaveFromEditor() => ResetGame();
 
     public void ResetGame()
     {
         Debug.Log("[GameManager] FULL GAME RESET");
-
-        // 1. Delete save files
         SaveSystem.DeleteSaveFiles();
-
-        // 2. Reset SO to defaults
-        gameDataSO.ResetToDefaults(defaultData);
-
-        // 3. Create fresh runtime save
-        tempSaveData = new TempSaveData(gameDataSO);
-        playTimeSeconds = 0f;
-
-        // 5. Go to main menu or reload
-        ChangeState(GameState.MainMenu);
+        Debug.Log("[GameManager] Save deleted");
     }
 
+    #endregion
 
-    private void OnApplicationQuit()
+    #region Load Game Routine
+
+    private System.Collections.IEnumerator LoadGameRoutine()
     {
-        Debug.Log("[GameManager] Application quitting → Saving game.");
-        SaveGame();
+        ChangeState(GameState.Loading);
+
+        // Setup systems
+        TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
+        MapLoaderManager.Instance?.LoadMap(0);
+
+        yield return new WaitUntil(() => PlayerManager.Instance != null);
+
+        ChangeState(GameState.Playing);
     }
 
-    [ContextMenu("RESET SAVE DATA")]
-    private void ResetSaveFromEditor()
-    {
-        ResetGame();
-        SaveGame();
-    }
+    #endregion
 }

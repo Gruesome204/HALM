@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: GameDataDefaultSO
   m_EditorClassIdentifier: 
   localSelected: 0
-  musicTrack: 0
-  masterVolume: 0
-  musicVolume: 0.05
-  soundVolume: 0.09999999
+  musicTrack: 3
+  masterVolume: 0.2
+  musicVolume: 0.02
+  soundVolume: 0.02
   currentPlayerLevel: 1
   currentClass: 0
   gameCurrency: 0

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 
@@ -14,9 +15,6 @@ public class TempSaveData
     public float musicVolume;
     public float soundVolume;
 
-    //Game-Timer
-    public float playTimeSeconds;
-
     // Player
     public int currentPlayerLevel;
     public GameDataSO.Class currentClass;
@@ -27,14 +25,6 @@ public class TempSaveData
     public int steinResource;
     public int metallResource;
     public int pulverResource;
-
-
-    // --- Player upgrades ---
-    public float additionalHealth;
-    public float additionalMaxHealth;
-    public float additionalRegen;
-    public float additionalArmor;
-    public float additionalMagicResistance;
 
     // --- Turrets ---
     public List<string> unlockedBlueprintNames; // store by unique name/ID
@@ -64,28 +54,29 @@ public class TempSaveData
         metallResource = so.metallResource;
         pulverResource = so.pulverResource;
 
-        // Player upgrades
-        additionalHealth = 0f;
-        additionalMaxHealth = 0f;
-        additionalRegen = 0f;
-        additionalArmor = 0f;
-        additionalMagicResistance = 0f;
-
         // Turrets
-        unlockedBlueprintNames = new List<string>();
-        foreach (var blueprint in so.GetUnlockedBlueprints())
-        {
-            if (blueprint != null)
-                unlockedBlueprintNames.Add(blueprint.name);
-        }
-
         buildMasterModifiers = new List<BuildMasterModifier>(so.buildMasterModifiers);
+
+        unlockedBlueprintNames = so.unlockedBlueprints.Select(b => b.name).ToList();
     }
 
-    // Default constructor for new saves
+    //Constructor
     public TempSaveData()
     {
-        unlockedBlueprintNames = new List<string>();
+        localSelected = "Default";
+        musicTrack = 0;
+        masterVolume = 1f;
+        musicVolume = 1f;
+        soundVolume = 1f;
+        currentPlayerLevel = 1;
+        currentClass = GameDataSO.Class.Mechanic;
+        gameCurrency = 0;
+        woodResource = 0;
+        steinResource = 0;
+        metallResource = 0;
+        pulverResource = 0;
         buildMasterModifiers = new List<BuildMasterModifier>();
+        unlockedBlueprintNames = new List<string>();
     }
+
 }
