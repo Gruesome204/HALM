@@ -20,23 +20,6 @@
 
         public event Action<float> OnPlayTimeUpdated;
         private float timerTick;
-
-        private void OnEnable()
-        {
-            SceneManager.sceneUnloaded += OnSceneUnloaded;
-        }
-
-        private void OnDisable()
-        {
-            SceneManager.sceneUnloaded -= OnSceneUnloaded;
-            SaveGame(); // optional: save on disable too
-        }
-
-        private void OnSceneUnloaded(Scene scene)
-        {
-            Debug.Log($"[GameManager] Scene '{scene.name}' unloaded → saving game.");
-            SaveGame();
-        }
         public enum GameState
         {
             MainMenu,
@@ -58,6 +41,24 @@
         [Header("Autosave")]
         [SerializeField] private float autosaveInterval = 60f;
         private float autosaveTimer = 0f;
+        private void OnEnable()
+        {
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
+            SaveGame(); // optional: save on disable too
+        }
+
+        private void OnSceneUnloaded(Scene scene)
+        {
+            Debug.Log($"[GameManager] Scene '{scene.name}' unloaded → saving game.");
+            SaveGame();
+        }
+
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -68,12 +69,6 @@
 
             Instance = this;
             DontDestroyOnLoad(gameObject); // survive scene loads
-
-            // Ensure tempSaveData always exists to avoid null reference
-            if (tempSaveData == null)
-            {
-                tempSaveData = gameDataSO != null ? gameDataSO.ToSaveData() : new TempSaveData();
-            }
         }
 
         private void Start()
@@ -289,7 +284,7 @@
             // 5. Go to main menu or reload
             ChangeState(GameState.MainMenu);
         }
-
+        
 
         private void OnApplicationQuit()
         {
