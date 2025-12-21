@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -56,7 +57,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(LoadGameRoutine());
+        Scene activeScene = SceneManager.GetActiveScene();
+
+        if (activeScene.name == "GameScene") // replace with your gameplay scene name
+        {
+            StartCoroutine(LoadGameRoutine());
+        }
+        else
+        {
+            ChangeState(GameState.MainMenu); // or HubMenu
+        }
     }
 
     private System.Collections.IEnumerator LoadGameRoutine()
@@ -90,10 +100,6 @@ public class GameManager : MonoBehaviour
         // Load Scene Elements (Map)
         MapLoaderManager.Instance?.LoadMap(0);
 
-
-
-        ChangeState(GameState.Playing);
-
         // WAIT until the player is spawned and has PlayerStats
         yield return new WaitUntil(() =>
             PlayerManager.Instance != null
@@ -101,6 +107,8 @@ public class GameManager : MonoBehaviour
 
         // Apply upgrades now that player exists
         ApplyPlayerUpgrades();
+        ChangeState(GameState.Playing);
+
     }
 
     private void ApplyPlayerUpgrades()  
