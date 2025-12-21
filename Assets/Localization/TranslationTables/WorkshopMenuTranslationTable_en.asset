@@ -17,7 +17,31 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 2e508bcb48c717a47946e78d863f765e, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 8151240704
+    m_Localized: Workshop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137641988096
+    m_Localized: Deselect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 107312975872
+    m_Localized: Select
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42364178432
+    m_Localized: Aqcuier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159691444224
+    m_Localized: Not enough Materials
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206269190144
+    m_Localized: Carry Limit reached
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
