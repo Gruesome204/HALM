@@ -50,7 +50,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         headline = root.Q<Label>("headline");
-        headline.SetBinding("text", new LocalizedString("BuildmasterModifyTranslationTable", "headline"));
+        headline.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "headline"));
 
         availableTurrets = root.Q<VisualElement>("availableTurrets");
         equippedTurrets = root.Q<VisualElement>("equippedTurrets");
@@ -106,25 +106,26 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         turretUnlocked = _turretUnlocked;
         turretSelected = _turretSelected;
 
+        buySelectButton.UnregisterCallback<ClickEvent>(TurretSelected);
+        buySelectButton.UnregisterCallback<ClickEvent>(TurretUnlocked);
+        buySelectButton.UnregisterCallback<ClickEvent>(TurretLocked);
+
         if (turretSelected)
         {
             //This Turrets is Selected and can only be removed from the List
-            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretSelected"));
-            buySelectButton.text = "selected";
+            buySelectButton.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "selectedButton"));
             buySelectButton.RegisterCallback<ClickEvent>(TurretSelected);
         }
         else if (turretUnlocked)
         {
             //This Turret ist Unlocked, but not selected. If there is open space it can be added to the Selected Turrets
-            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretUnlocked"));
-            buySelectButton.text = "unlocked";
+            buySelectButton.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "unlockedButton"));
             buySelectButton.RegisterCallback<ClickEvent>(TurretUnlocked);
         }
         else
         {
             //This Turret isn't unlocked. It has to be bought
-            //buySelectButton.SetBinding("text", new LocalizedString("ActionRowTranslationTable", "TurretLocked"));
-            buySelectButton.text = "locked";
+            buySelectButton.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "lockedButton"));
             buySelectButton.RegisterCallback<ClickEvent>(TurretLocked);
         }
 
@@ -157,19 +158,44 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     {
         detailsMainContainer.AddToClassList("turretChoiceMenuSlideOut");
         statsContainer.Clear();
-        openTurretDetails = null;
+        informationTxt.text = "";
     }
     void TurretSelected(ClickEvent evt)
     {
-        Debug.Log("Turret selected");
+        if (true)
+        {
+            GameManager.Instance.gameDataSO.AddRemoveSelectedBlueprint(openTurretDetails, false);
+            Clear();
+            Fill();
+            FillTurretDetails(openTurretDetails, true, false);
+        }
     }
     void TurretUnlocked(ClickEvent evt)
     {
-        Debug.Log("Turret Unlocked");
+        if (GameManager.Instance.gameDataSO.GetSelectedBlueprints().Count >= 2)
+        {
+            informationTxt.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "cantSelectText"));
+        }
+        else
+        {
+            GameManager.Instance.gameDataSO.AddRemoveSelectedBlueprint(openTurretDetails, true);
+            Clear();
+            Fill();
+            FillTurretDetails(openTurretDetails, true, true);
+        }
     }
     void TurretLocked(ClickEvent evt)
     {
-        Debug.Log("Turret Locked");
+        if (GameManager.Instance.gameDataSO.TakeRessource(1,2))
+        {
+            GameManager.Instance.gameDataSO.AddUnlockedBlueprint(openTurretDetails);
+            Clear();
+            Fill();
+            FillTurretDetails(openTurretDetails, true, false);
+        }
+        else
+        {
+            informationTxt.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "cantBuyText"));
+        }
     }
-
 }

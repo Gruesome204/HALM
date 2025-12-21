@@ -18,22 +18,22 @@ public class HubInteractable : MonoBehaviour
         Debug.Log($"Interacted with {interactionName}");
         OnInteractedEvent?.Invoke(interactionName);
 
-        if (interactionName == "DungeonEntrance" && !InGameMenuManager.Instance.CheckForAnOpenMenu("one"))
+        if (interactionName == "DungeonEntrance")
         {
             InGameMenuManager.Instance.OpenOrCloseOneMenu("EnterDungeonDoc", true);
         }
 
-        if (interactionName == "Markt" && !InGameMenuManager.Instance.CheckForAnOpenMenu("one"))
+        if (interactionName == "Markt")
         {
             InGameMenuManager.Instance.OpenOrCloseOneMenu("x", true);
         }
 
-        if (interactionName == "Schmiede" && !InGameMenuManager.Instance.CheckForAnOpenMenu("one"))
+        if (interactionName == "Schmiede")
         {
             InGameMenuManager.Instance.OpenOrCloseOneMenu("BuildmasterModifyDoc", true);
         }
 
-        if (interactionName == "Werkstatt" && !InGameMenuManager.Instance.CheckForAnOpenMenu("one"))
+        if (interactionName == "Werkstatt")
         {
             InGameMenuManager.Instance.OpenOrCloseOneMenu("WorkshopDoc", true);
         }
