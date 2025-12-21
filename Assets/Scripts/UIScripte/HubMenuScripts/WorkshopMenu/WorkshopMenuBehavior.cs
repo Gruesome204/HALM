@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 using UnityEngine.UIElements;
 
 public class WorkshopMenuBehavior : MonoBehaviour, IMenu
@@ -137,7 +140,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         var turretIcon = turretStats.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{openTurretDetails.turretName}Icon");
 
-       // FillDetailValue("cost", openTurretDetails.buildingCost, ref turretStats);
+        FillCostValue(ref turretStats);
         FillDetailValue("fireRate", openTurretDetails.baseFireRate, ref turretStats);
         FillDetailValue("fireCountdown", openTurretDetails.BaseFireCountdown, ref turretStats);
         FillDetailValue("projectileSpeed", openTurretDetails.baseProjectileSpeed, ref turretStats);
@@ -152,6 +155,21 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     {
         container.Q<Label>($"{value}Name").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
         container.Q<Label>($"{value}").text = $"{turretValue}";
+    }
+
+    void FillCostValue(ref TemplateContainer container)
+    {
+        container.Q<Label>("costName").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"cost"));
+        StringTable table = LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable");
+
+        string turretCost = new string("");
+        foreach (var cost in openTurretDetails.buyCost)
+        {
+            var temporary = new string(table.GetEntry($"{cost.resourceType}").GetLocalizedString());
+
+            turretCost = turretCost + $"<br>{temporary} {cost.amount}";
+        }
+        container.Q<Label>("cost").text = turretCost;
     }
 
     private void ClearTurretDetails()
@@ -186,8 +204,12 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     }
     void TurretLocked(ClickEvent evt)
     {
-        if (GameManager.Instance.gameDataSO.TakeRessource(1,2))
+        if (TurretCanBeBought())
         {
+            foreach (var cost in openTurretDetails.buyCost)
+            {
+                GameManager.Instance.gameDataSO.RemoveRessource(cost.resourceType.ToString(), cost.amount);
+            }
             GameManager.Instance.gameDataSO.AddUnlockedBlueprint(openTurretDetails);
             Clear();
             Fill();
@@ -197,5 +219,25 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         {
             informationTxt.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "cantBuyText"));
         }
+    }
+
+    private Boolean TurretCanBeBought()
+    {
+        var canBeBought = new Boolean();
+        canBeBought = true;
+
+        foreach (var cost in openTurretDetails.buyCost)
+        {
+            if (GameManager.Instance.gameDataSO.CheckForRessource(cost.resourceType.ToString(), cost.amount))
+            {
+
+            }
+            else
+            {
+                canBeBought = false;
+            }
+
+        }
+        return canBeBought;
     }
 }

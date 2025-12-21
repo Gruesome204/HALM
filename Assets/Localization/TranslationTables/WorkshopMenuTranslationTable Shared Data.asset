@@ -39,6 +39,26 @@ MonoBehaviour:
     m_Key: CantSelectText
     m_Metadata:
       m_Items: []
+  - m_Id: 1126219921362944
+    m_Key: Currency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126261524664320
+    m_Key: Wood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126280961069056
+    m_Key: Stone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126316511989760
+    m_Key: Metal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1126344521551872
+    m_Key: Pulver
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

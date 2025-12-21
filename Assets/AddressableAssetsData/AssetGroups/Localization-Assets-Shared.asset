@@ -45,6 +45,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c0e96b58a3d4944f92c825681e183cc
+    m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretTranslationBarricade
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7aa78df79a2b7524497af3ab510eb39c
     m_Address: Assets/Localization/TranslationTables/EnterDungeonTranslationTable
       Shared Data.asset
@@ -71,6 +77,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9373c65a754783c47aaf88f08f938a9d
     m_Address: Assets/Localization/TranslationTables/BMTranslations/BMTranslationsTest2
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a85dfb13163a27a4188a484320731153
+    m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretTranslationCannonTurret
       Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []

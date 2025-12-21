@@ -22,6 +22,13 @@ MonoBehaviour:
     - Locale-en
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2dbf6be02a73e4c4f9f3ac37ffa7a3de
+    m_Address: TurretTranslationCannonTurret_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3d0fce8b16c4d7e4dba38d0923a95ca9
     m_Address: ClassTranslationCommon_en
     m_ReadOnly: 1
@@ -62,6 +69,12 @@ MonoBehaviour:
     - Locale-en
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 715bd30ef7bcbf44784749f9a871f488
+    m_Address: TurretTranslationBarricade_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 796d8a2a774c6f44dbe931f43121fca2
     m_Address: PauseMenuTranslationTable_en
     m_ReadOnly: 1
@@ -74,6 +87,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 91a38e79d97c9e746be7df5c0ccfb30b
     m_Address: EnterDungeonTranslationTable_en

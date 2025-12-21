@@ -35,6 +35,12 @@ MonoBehaviour:
     - Locale-de-DE
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 203a55b8aa53eb349ba824e65fe124b0
+    m_Address: TurretTranslationBarricade_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2bfbf5da3f08e824abb46c5a86288269
     m_Address: TurretUpgradeTranslationTable_de-DE
     m_ReadOnly: 1
@@ -54,9 +60,17 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 490a71be3f9ce5445a3fa3b696bbe638
     m_Address: GameWonTranslationaTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a9717b9f0baabb458e06615ede9342d
+    m_Address: TurretTranslationCannonTurret_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE
