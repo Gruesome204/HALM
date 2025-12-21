@@ -1,12 +1,18 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEngine;
-using System;
 
 public static class SaveSystem
 {
     private static readonly string Folder = Path.Combine(Application.persistentDataPath, "Saves");
     private static readonly string PathMain = Path.Combine(Folder, "player.json");
     private static readonly string PathBackup = Path.Combine(Folder, "player_backup.json");
+
+    // Expose main path for GameManager checks
+    public static string MainSavePath => PathMain;
+
+    // Set the current save version for your game
+    public static readonly int CurrentSaveVersion = 1;
 
     public static TempSaveData Load()
     {
@@ -16,19 +22,21 @@ public static class SaveSystem
 
         // Try main save
         TempSaveData data = LoadFromFile(PathMain);
-        if (data != null)
+        if (IsValidSave(data))
             return data;
 
         // Try backup
         data = LoadFromFile(PathBackup);
-        if (data != null)
+        if (IsValidSave(data))
         {
             Debug.LogWarning("[SaveSystem] Loaded from backup.");
             return data;
         }
 
-        Debug.LogWarning("[SaveSystem] No valid save found → creating new TempSaveData.");
-        return new TempSaveData();
+        // No valid save found → delete old files and return null
+        Debug.LogWarning("[SaveSystem] No valid save found → creating new save on next Save() call.");
+        DeleteSaveFiles();
+        return null;
     }
 
     private static TempSaveData LoadFromFile(string path)
@@ -50,6 +58,21 @@ public static class SaveSystem
             Debug.LogError($"[SaveSystem] Failed to load {path}: {e}");
             return null;
         }
+    }
+
+    private static bool IsValidSave(TempSaveData data)
+    {
+        if (data == null)
+            return false;
+
+        if (data.unlockedBlueprintNames == null || data.unlockedBlueprintNames.Count == 0)
+            return false;
+
+        // Version check
+        if (data.saveVersion < CurrentSaveVersion)
+            return false;
+
+        return true;
     }
 
     public static void Save(TempSaveData data)
