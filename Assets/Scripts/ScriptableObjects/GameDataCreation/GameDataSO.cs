@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 //Runtime Data that is only changed and is then saved into Data
@@ -13,8 +14,6 @@ public class GameDataSO : ScriptableObject
     //All Settings Data
     public string localSelected;
 
-    public float playTimeSeconds;
-
     public int musicTrack;
     public float masterVolume;
     public float musicVolume;
@@ -22,7 +21,7 @@ public class GameDataSO : ScriptableObject
     //Settings Data end
 
     public int limitOfUnlockableTurrets = 10;
-    public  int limitOfSelectableTurrets = 5;
+    public int limitOfSelectableTurrets = 5;
     public enum Class
     {
         Mechanic,
@@ -33,7 +32,7 @@ public class GameDataSO : ScriptableObject
 
     [Header("Turrets")]
     public List<TurretBlueprint> allTurretBlueprints;
-    [SerializeField]public List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
+    [SerializeField] public List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
     [SerializeField] public List<TurretBlueprint> selectedBlueprints;
 
     [Header("Ressources")]
@@ -45,6 +44,7 @@ public class GameDataSO : ScriptableObject
 
     [Header("PlayerStatsUpgrades")]
     public List<BuildMasterModifier> buildMasterModifiers;
+
 
     public void ResetToDefaults(GameDataDefaultsSO defaults)
     {
@@ -152,63 +152,58 @@ public class GameDataSO : ScriptableObject
         }
     }
 
-    //Remove a Ressource, but only if there is enough of it
-    public Boolean TakeRessource(int ressourceNumber, int amount)
+    //Check if there is enough of a ressource
+    public Boolean CheckForRessource(string ressourceNumber, int amount)
     {
         switch (ressourceNumber)
         {
-            case 1:
+            case "Currency":
                 if (gameCurrency < amount)
                 {
                     return false;
                 }
                 else
                 {
-                    gameCurrency = gameCurrency - amount;
                     return true;
                 }
                 break;
-            case 2:
+            case "Wood":
                 if (woodResource < amount)
                 {
                     return false;
                 }
                 else
                 {
-                    woodResource = woodResource - amount;
                     return true;
                 }
                 break;
-            case 3:
+            case "Stone":
                 if (steinResource < amount)
                 {
                     return false;
                 }
                 else
                 {
-                    steinResource = steinResource - amount;
                     return true;
                 }
                 break;
-            case 4:
+            case "Metal":
                 if (metallResource < amount)
                 {
                     return false;
                 }
                 else
                 {
-                    metallResource = metallResource - amount;
                     return true;
                 }
                 break;
-            case 5:
+            case "Pulver":
                 if (pulverResource < amount)
                 {
                     return false;
                 }
                 else
                 {
-                    pulverResource = pulverResource - amount;
                     return true;
                 }
                 break;
@@ -216,24 +211,46 @@ public class GameDataSO : ScriptableObject
         return false;
     }
 
-    //Add a Ressource
-    public void GiveRessource(int ressourceNumber, int amount)
+    //Remove from a Ressource
+    public void RemoveRessource(string ressourceNumber, int amount)
     {
         switch (ressourceNumber)
         {
-            case 1:
+            case "Currency":
+                gameCurrency = gameCurrency - amount;
+                break;
+            case "Wood":
+                woodResource = woodResource - amount;
+                break;
+            case "Stone":
+                steinResource = steinResource - amount;
+                break;
+            case "Metal":
+                metallResource = metallResource - amount;
+                break;
+            case "Pulver":
+                pulverResource = pulverResource - amount;
+                break;
+        }
+    }
+    //Add a Ressource
+    public void GiveRessource(string ressourceNumber, int amount)
+    {
+        switch (ressourceNumber)
+        {
+            case "Currency":
                 gameCurrency = gameCurrency + amount;
                 break;
-            case 2:
+            case "Wood":
                 woodResource = woodResource + amount;
                 break;
-            case 3:
+            case "Stone":
                 steinResource = steinResource + amount;
                 break;
-            case 4:
+            case "Metal":
                 metallResource = metallResource + amount;
                 break;
-            case 5:
+            case "Pulver":
                 pulverResource = pulverResource + amount;
                 break;
         }
