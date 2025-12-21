@@ -1,23 +1,29 @@
 using System;
 using UnityEngine;
+public enum ResourceType
+{
+    Wood,
+    Stone,
+    Metal,
+    Pulver
+}
+
+[System.Serializable]
+public struct ResourceCost
+{
+    public ResourceType resourceType;
+    public int amount;
+}
+
 
 public class ResourceTypeData : MonoBehaviour
 {
     public ResourceType resourceType;
 
-
-    public enum ResourceType
-    {
-        WoodResource,
-        StoneResource,
-        MetalResource,
-        PulverResource
-    }
-
     [System.Serializable]
     public struct ResourceDrop
     {
-        public ResourceTypeData.ResourceType resourceType;
+        public ResourceType resourceType;
 
         public int minAmount;
         public int maxAmount;

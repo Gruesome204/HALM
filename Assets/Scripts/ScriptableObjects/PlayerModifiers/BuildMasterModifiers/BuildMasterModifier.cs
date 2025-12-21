@@ -13,6 +13,9 @@ public class BuildMasterModifier : ScriptableObject
         public string name;
         [TextArea] public string description;
         public Sprite icon;
+
+        [Header("Costs")]
+        public ResourceCost[] costs;
         public float goldCost;
         public float additionalHealth;
         public float additionalMaxHealth;

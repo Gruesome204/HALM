@@ -225,18 +225,34 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     #endregion
 
     #region Resource Handling
-    private void AddResourceToGameData(ResourceTypeData.ResourceType type, int amount)
+    private void AddResourceToGameData(ResourceType type, int amount)
     {
         var gameDataSO = GameManager.Instance.gameDataSO;
+
         switch (type)
         {
-            case ResourceTypeData.ResourceType.WoodResource: gameDataSO.woodResource += amount; break;
-            case ResourceTypeData.ResourceType.StoneResource: gameDataSO.steinResource += amount; break;
-            case ResourceTypeData.ResourceType.MetalResource: gameDataSO.metallResource += amount; break;
-            case ResourceTypeData.ResourceType.PulverResource: gameDataSO.pulverResource += amount; break;
-            default: Debug.LogWarning($"Unhandled resource type: {type}"); break;
+            case ResourceType.Wood:
+                gameDataSO.woodResource += amount;
+                break;
+
+            case ResourceType.Stone:
+                gameDataSO.steinResource += amount;
+                break;
+
+            case ResourceType.Metal:
+                gameDataSO.metallResource += amount;
+                break;
+
+            case ResourceType.Pulver:
+                gameDataSO.pulverResource += amount;
+                break;
+
+            default:
+                Debug.LogWarning($"Unhandled resource type: {type}");
+                break;
         }
     }
+
 
     private void DropResources()
     {
@@ -246,7 +262,9 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         ResourceTypeData.OnResourceDropped += AddResourceToGameData;
 
         foreach (var drop in drops)
+        {
             ResourceTypeData.TryDrop(drop);
+        }
 
         ResourceTypeData.OnResourceDropped -= AddResourceToGameData;
     }
