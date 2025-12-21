@@ -16,7 +16,6 @@ public class BuildMasterModifier : ScriptableObject
 
         [Header("Costs")]
         public ResourceCost[] costs;
-        public float goldCost;
         public float additionalHealth;
         public float additionalMaxHealth;
         public float additionalRegen;
