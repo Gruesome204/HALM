@@ -16,7 +16,9 @@ MonoBehaviour:
     name: Test2
     description: 
     icon: {fileID: 0}
-    goldCost: 0
+    costs:
+    - resourceType: 0
+      amount: 0
     additionalHealth: 2
     additionalMaxHealth: 2
     additionalRegen: 2

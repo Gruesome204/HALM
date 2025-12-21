@@ -16,7 +16,9 @@ MonoBehaviour:
     name: Test1
     description: 
     icon: {fileID: 0}
-    costs: []
+    costs:
+    - resourceType: 0
+      amount: 0
     additionalHealth: 1
     additionalMaxHealth: 1
     additionalRegen: 1

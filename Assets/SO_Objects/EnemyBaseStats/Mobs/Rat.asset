@@ -22,8 +22,8 @@ MonoBehaviour:
   baseArmor: 1
   baseMagicResistance: 0
   baseKnockbackReduction: 0
-  baseknockbackForce: 0
-  baseknockbackDuration: 0
+  baseKnockbackForce: 0
+  baseKnockbackDuration: 0
   baseDamage: 7
   baseAttackSpeed: 1
   baseCritChance: 0
@@ -33,7 +33,11 @@ MonoBehaviour:
   pursueRange: 10
   experienceYield: 100
   goldYield: 0
-  resourceDrops: []
+  resourceDrops:
+  - resourceType: 0
+    minAmount: 0
+    maxAmount: 0
+    dropChance: 0
   baseHealthScaleFactor: 0.1
   baseDamageScaleFactor: 0.1
   baseSpeedScaleFactor: 0
