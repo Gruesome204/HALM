@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float autosaveInterval = 60f;
     private float autosaveTimer = 0f;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
