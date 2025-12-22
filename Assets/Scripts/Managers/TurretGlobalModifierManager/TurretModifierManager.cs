@@ -24,19 +24,14 @@ public class TurretGlobalModifierManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // Subscribe to BuildmasterModifyManager changes
-        if (BuildmasterModifyManager.Instance != null)
-        {
-            BuildmasterModifyManager.Instance.OnModifiersChanged += SyncModifiers;
-        }
+        //Add subscrption to change event for adding and removing modifier
+
     }
 
     private void OnDestroy()
     {
-        if (BuildmasterModifyManager.Instance != null)
-        {
-            BuildmasterModifyManager.Instance.OnModifiersChanged -= SyncModifiers;
-        }
+
+        //Add subscrption to change event for adding and removing  modifier
     }
 
     // Sync applied modifiers with BuildmasterModifyManager
