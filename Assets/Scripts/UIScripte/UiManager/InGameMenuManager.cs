@@ -12,6 +12,9 @@ public class InGameMenuManager : MonoBehaviour
     public List<GameObject> allMenuesInThisScene = new List<GameObject>();
     public List<GameObject> openMenus = new List<GameObject>();
 
+    public event Action<BuildMasterModifier, bool> OnBuildmasterModifierChanged;
+
+
     void Start()
     {
         // Ensuring that all menues are active and closed
@@ -159,5 +162,10 @@ public class InGameMenuManager : MonoBehaviour
     {
         CloseAllMenus();
         OpenOrCloseOneMenu("GameWonDoc", true);
+    }
+
+    public void BuildmasterModifierAdded(BuildMasterModifier _modifier, bool _added)
+    {
+        OnBuildmasterModifierChanged.Invoke(_modifier, _added);
     }
 }
