@@ -57,6 +57,7 @@ public class TempSaveData
         // Turrets
         buildMasterModifiers = new List<BuildMasterModifier>(so.buildMasterModifiers);
 
+
         unlockedBlueprintNames = so.unlockedBlueprints.Select(b => b.name).ToList();
     }
 

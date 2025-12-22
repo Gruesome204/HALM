@@ -29,11 +29,6 @@ public class GameDataSO : ScriptableObject
     [SerializeField] public Class currentClass;
     public int currentPlayerLevel;
 
-    [Header("Turrets")]
-    public List<TurretBlueprint> allTurretBlueprints;
-    [SerializeField] public List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
-    [SerializeField] public List<TurretBlueprint> selectedBlueprints;
-
     [Header("Ressources")]
     public int gameCurrency = 0;
     public int woodResource;
@@ -41,68 +36,16 @@ public class GameDataSO : ScriptableObject
     public int metallResource;
     public int pulverResource;
 
+    [Header("Turrets")]
+    public List<TurretBlueprint> allTurretBlueprints;
+    [SerializeField] public List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
+    [SerializeField] public List<TurretBlueprint> selectedBlueprints;
+
     [Header("PlayerStatsUpgrades")]
-    public List<BuildMasterModifier> buildMasterModifiers;
-    public List<BuildMasterModifier> AllBuildMasterModifiers;
-    public List<BuildMasterModifier> UnlockedBuildMasterModifiers;
+    public List<BuildMasterModifier> allBuildMasterModifiers;
+    public List<BuildMasterModifier> buildMasterModifiers;// selected / active
+    public List<BuildMasterModifier> unlockedBuildMasterModifiers;
 
-
-    public void ResetToDefaults(GameDataDefaultsSO defaults)
-    {
-        localSelected = defaults.localSelected;
-        musicTrack = defaults.musicTrack;
-        masterVolume = defaults.masterVolume;
-        musicVolume = defaults.musicVolume;
-        soundVolume = defaults.soundVolume;
-
-        currentPlayerLevel = defaults.currentPlayerLevel;
-        currentClass = defaults.currentClass;
-
-        gameCurrency = defaults.gameCurrency;
-        woodResource = defaults.woodResource;
-        steinResource = defaults.steinResource;
-        metallResource = defaults.metallResource;
-        pulverResource = defaults.pulverResource;
-
-        unlockedBlueprints = new List<TurretBlueprint>(defaults.defaultUnlockedBlueprints);
-        buildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers);
-    }
-
-    public GameDataSO ApplySave(TempSaveData save)
-    {
-        // Settings
-        localSelected = save.localSelected;
-        musicTrack = save.musicTrack;
-        masterVolume = save.masterVolume;
-        musicVolume = save.musicVolume;
-        soundVolume = save.soundVolume;
-
-        // Player
-        currentPlayerLevel = save.currentPlayerLevel;
-        currentClass = save.currentClass;
-
-        // Resources
-        gameCurrency = save.gameCurrency;
-        woodResource = save.woodResource;
-        steinResource = save.steinResource;
-        metallResource = save.metallResource;
-        pulverResource = save.pulverResource;
-
-        // Player upgrades
-        buildMasterModifiers = new List<BuildMasterModifier>(save.buildMasterModifiers);
-
-        // Turrets
-        unlockedBlueprints = allTurretBlueprints
-            .Where(b => save.unlockedBlueprintNames.Contains(b.name))
-            .ToList();
-
-        return this;
-    }
-
-    public TempSaveData ToSaveData()
-    {
-        return new TempSaveData(this);
-    }
     public TurretBlueprint GetBlueprintByType(TurretType type)
     {
         return allTurretBlueprints.FirstOrDefault(t => t.turretType == type);
@@ -111,6 +54,7 @@ public class GameDataSO : ScriptableObject
     {
         return allTurretBlueprints.Find(t => t.turretType == type);
     }
+
     // Check if blueprint is unlocked
     public bool IsUnlocked(TurretBlueprint blueprint)
     {
@@ -152,6 +96,49 @@ public class GameDataSO : ScriptableObject
             selectedBlueprints.Remove(blueprint);
         }
     }
+
+    public bool IsModifierSelected(BuildMasterModifier modifier)
+    {
+        return buildMasterModifiers.Contains(modifier);
+    }
+
+    public List<BuildMasterModifier> GetSelectedModifiers()
+    {
+        return buildMasterModifiers.ToList();
+    }
+
+    public bool IsModifierUnlocked(BuildMasterModifier modifier)
+    {
+        return UnlockedBuildMasterModifiers.Contains(modifier);
+    }
+
+    public List<BuildMasterModifier> GetUnlockedModifiers()
+    {
+        return UnlockedBuildMasterModifiers.ToList();
+    }
+
+    public void AddUnlockedModifier(BuildMasterModifier modifier)
+    {
+        if (!UnlockedBuildMasterModifiers.Contains(modifier))
+            UnlockedBuildMasterModifiers.Add(modifier);
+    }
+    public bool DeselectModifier(BuildMasterModifier modifier)
+    {
+        return buildMasterModifiers.Remove(modifier);
+    }
+
+    public bool SelectModifier(BuildMasterModifier modifier)
+    {
+        if (!IsModifierUnlocked(modifier))
+            return false;
+
+        if (buildMasterModifiers.Contains(modifier))
+            return false;
+
+        buildMasterModifiers.Add(modifier);
+        return true;
+    }
+
 
     //Check if there is enough of a ressource
     public Boolean CheckForRessource(string ressourceNumber, int amount)
@@ -288,5 +275,64 @@ public class GameDataSO : ScriptableObject
             .Where(b => IsUnlocked(b))
             .Take(limitOfSelectableTurrets)
             .ToList();
+    }
+
+
+
+    public void ResetToDefaults(GameDataDefaultsSO defaults)
+    {
+        localSelected = defaults.localSelected;
+        musicTrack = defaults.musicTrack;
+        masterVolume = defaults.masterVolume;
+        musicVolume = defaults.musicVolume;
+        soundVolume = defaults.soundVolume;
+
+        currentPlayerLevel = defaults.currentPlayerLevel;
+        currentClass = defaults.currentClass;
+
+        gameCurrency = defaults.gameCurrency;
+        woodResource = defaults.woodResource;
+        steinResource = defaults.steinResource;
+        metallResource = defaults.metallResource;
+        pulverResource = defaults.pulverResource;
+
+        unlockedBlueprints = new List<TurretBlueprint>(defaults.defaultUnlockedBlueprints);
+        buildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers);
+    }
+
+    public GameDataSO ApplySave(TempSaveData save)
+    {
+        // Settings
+        localSelected = save.localSelected;
+        musicTrack = save.musicTrack;
+        masterVolume = save.masterVolume;
+        musicVolume = save.musicVolume;
+        soundVolume = save.soundVolume;
+
+        // Player
+        currentPlayerLevel = save.currentPlayerLevel;
+        currentClass = save.currentClass;
+
+        // Resources
+        gameCurrency = save.gameCurrency;
+        woodResource = save.woodResource;
+        steinResource = save.steinResource;
+        metallResource = save.metallResource;
+        pulverResource = save.pulverResource;
+
+        // Player upgrades
+        buildMasterModifiers = new List<BuildMasterModifier>(save.buildMasterModifiers);
+
+        // Turrets
+        unlockedBlueprints = allTurretBlueprints
+            .Where(b => save.unlockedBlueprintNames.Contains(b.name))
+            .ToList();
+
+        return this;
+    }
+
+    public TempSaveData ToSaveData()
+    {
+        return new TempSaveData(this);
     }
 }
