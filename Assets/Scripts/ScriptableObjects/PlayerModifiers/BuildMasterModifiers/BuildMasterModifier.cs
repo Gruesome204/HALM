@@ -39,6 +39,8 @@ public class BuildMasterModifier : ScriptableObject
         public float turretFireRateMultiplier;          // e.g., 1.15 for +15% fire rate
         public int turretProjectilesPerSalve;           // e.g., +1 projectile per attack
         public float turretProjectileSpeed;             // e.g., 1.1 for +10% projectile speed
+        public int turretMaxCapacityBonus;
+        public float turretPlacementRadiusMultiplier;
     }
 
 }

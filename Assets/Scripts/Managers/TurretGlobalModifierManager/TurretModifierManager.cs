@@ -23,8 +23,10 @@ public class TurretGlobalModifierManager : MonoBehaviour
     public float globalHealthMultiplier = 1f;
     public float globalDamageMultiplier = 1f;
     public float globalFireRateMultiplier = 1f;
-    public int globalProjectilesPerSalve = 0;
+    public int globalProjectilesPerSalve = 0;// additive
     public float globalProjectileSpeed = 1f;
+    public int globalMaxTurretCapacityBonus = 0;  // additive
+    public float globalPlacementRadiusMultiplier = 1f; 
 
     // Expand as needed...
 
@@ -41,9 +43,21 @@ public class TurretGlobalModifierManager : MonoBehaviour
         globalFireRateMultiplier *= Mathf.Max(0.01f, modifier.additionalStats.turretFireRateMultiplier);
         globalProjectilesPerSalve += modifier.additionalStats.turretProjectilesPerSalve;
         globalProjectileSpeed *= Mathf.Max(0.01f, modifier.additionalStats.turretProjectileSpeed);
+        globalMaxTurretCapacityBonus += modifier.additionalStats.turretMaxCapacityBonus;
+        globalPlacementRadiusMultiplier *= Mathf.Max(0.01f, modifier.additionalStats.turretPlacementRadiusMultiplier);
+
 
         // Recalculate stats for all existing turrets
         ApplyModifiersToAllExistingTurrets();
+
+        // Update turret placement controller values
+        var tp = TurretPlacementController.Instance;
+        if (tp != null)
+        {
+            tp.maxTurretCapacity = tp.maxTurretCapacity + globalMaxTurretCapacityBonus;
+            tp.placementRadius = tp.placementRadius * globalPlacementRadiusMultiplier;
+        }
+
 
         // Notify UI / save systems
         OnModifiersChanged?.Invoke();

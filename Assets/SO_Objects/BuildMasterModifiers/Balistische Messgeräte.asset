@@ -10,19 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb2254af7ab53e943ab30b47ac29e08c, type: 3}
-  m_Name: BuildMasterModifier
+  m_Name: "Balistische Messger\xE4te"
   m_EditorClassIdentifier: 
   options:
-    name: 
+    name: "Balistische Messger\xE4te "
     description: 
     icon: {fileID: 0}
-    costs: []
+    costs:
+    - resourceType: 0
+      amount: 250
+    - resourceType: 1
+      amount: 50
+    - resourceType: 3
+      amount: 50
     additionalStats:
       health: 0
       maxHealth: 0
       armor: 0
       movementSpeed: 0
-      turretPlacementCooldownMultiplier: 0
+      turretPlacementCooldownMultiplier: 1.2
       turretHealthMultiplier: 0
       turretDamageMultiplier: 0
       turretFireRateMultiplier: 0
