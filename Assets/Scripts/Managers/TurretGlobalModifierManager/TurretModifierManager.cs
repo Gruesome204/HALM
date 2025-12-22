@@ -29,25 +29,26 @@ public class TurretGlobalModifierManager : MonoBehaviour
     // Expand as needed...
 
     // Called by upgrades, research, player stats, etc.
-    public void ApplyModifier(TurretModifier modifier)
+    public void ApplyBuildMasterModifier(BuildMasterModifier.Modifier modifier)
     {
-        appliedModifiers.Add(modifier);
+        // Apply player-related stats if needed (health, armor, movement speed)
+        // Example: global player stats manager could handle this
 
-        globalTurretPlacementCooldownMultiplier *= Mathf.Max(0.01f, modifier.turretPlacementCooldownMultiplier);
-        globalHealthMultiplier *= Mathf.Max(0.01f, modifier.healthMultiplier);
-        globalDamageMultiplier *= Mathf.Max(0.01f, modifier.damageMultiplier);
-        globalFireRateMultiplier *= Mathf.Max(0.01f, modifier.fireRateMultiplier);
-        globalProjectileSpeed *= Mathf.Max(0.01f, modifier.projectileSpeed);
-        globalProjectilesPerSalve += modifier.projectilesPerSalve;
+        // Apply turret global stats
+        globalTurretPlacementCooldownMultiplier *= Mathf.Max(0.01f, modifier.additionalStats.turretPlacementCooldownMultiplier);
+        globalHealthMultiplier *= Mathf.Max(0.01f, modifier.additionalStats.turretHealthMultiplier);
+        globalDamageMultiplier *= Mathf.Max(0.01f, modifier.additionalStats.turretDamageMultiplier);
+        globalFireRateMultiplier *= Mathf.Max(0.01f, modifier.additionalStats.turretFireRateMultiplier);
+        globalProjectilesPerSalve += modifier.additionalStats.turretProjectilesPerSalve;
+        globalProjectileSpeed *= Mathf.Max(0.01f, modifier.additionalStats.turretProjectileSpeed);
 
-
-
-        // Apply changes to all existing turrets
+        // Recalculate stats for all existing turrets
         ApplyModifiersToAllExistingTurrets();
 
-        // Notify UI or save systems
-        OnModifiersChanged?.Invoke();   
+        // Notify UI / save systems
+        OnModifiersChanged?.Invoke();
     }
+
 
     // Prevent 0 / negative numbers from breaking the system
     private float MultiplySafe(float current, float modifier)
@@ -70,6 +71,8 @@ public class TurretGlobalModifierManager : MonoBehaviour
         }
     }
 
+
     // ---------------- GET ALL APPLIED MODIFIERS (optional) -------------------
     public IReadOnlyList<TurretModifier> GetAppliedModifiers() => appliedModifiers;
+
 }

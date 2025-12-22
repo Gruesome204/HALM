@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb2254af7ab53e943ab30b47ac29e08c, type: 3}
-  m_Name: Test2
+  m_Name: BuildMasterModifier
   m_EditorClassIdentifier: 
   options:
-    name: Test2
+    name: 
     description: 
     icon: {fileID: 0}
-    costs:
-    - resourceType: 0
-      amount: 0
-    additionalHealth: 2
-    additionalMaxHealth: 2
-    additionalRegen: 2
-    additionalArmor: 2
-    additionalMagicResistance: 2
-    additionalMovementSpeed: 2
+    costs: []
+    additionalStats:
+      health: 0
+      maxHealth: 0
+      armor: 0
+      movementSpeed: 0
+      turretPlacementCooldownMultiplier: 0
+      turretHealthMultiplier: 0
+      turretDamageMultiplier: 0
+      turretFireRateMultiplier: 0
+      turretProjectilesPerSalve: 0
+      turretProjectileSpeed: 0
