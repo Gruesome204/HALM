@@ -809,11 +809,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   previewObject: {fileID: 0}
+  defaultMaxTurretCapacity: 6
   maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}
+  defaultPlacementRadius: 30
   placementRadius: 8
   radiusLineMaterial: {fileID: 2100000, guid: 97adbf2c4b802044db317ba2a78d4d8d, type: 2}
-  radiusLineWidth: 0.1
+  radiusLineWidth: 0.05
   radiusSegments: 64
   playerTransform: {fileID: 2135666360}
 --- !u!114 &368292588
@@ -2607,6 +2609,8 @@ MonoBehaviour:
   globalFireRateMultiplier: 1
   globalProjectilesPerSalve: 1
   globalProjectileSpeed: 1
+  globalMaxTurretCapacityBonus: 0
+  globalPlacementRadiusMultiplier: 1
 --- !u!1 &1463319342
 GameObject:
   m_ObjectHideFlags: 0
@@ -3919,6 +3923,7 @@ MonoBehaviour:
   currentRegen: 0
   currentArmor: 0
   currentMagicResistance: 0
+  currentMoveSpeed: 0
 --- !u!114 &2135666365
 MonoBehaviour:
   m_ObjectHideFlags: 0
