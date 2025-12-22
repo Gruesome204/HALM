@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
     <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
-    <ui:VisualElement name="mainContainer" class="mainContainerClass" style="flex-grow: 1; flex-direction: row; justify-content: center;">
+    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn" style="flex-grow: 1; flex-direction: row; justify-content: center;">
         <ui:VisualElement name="workshopContainer" style="flex-grow: 0; background-color: rgba(7, 17, 53, 0.47); flex-shrink: 0; width: 40%; height: 95%; align-self: center;">
             <ui:Label text="Label" name="headline" class="headline" style="height: 15%;" />
             <ui:VisualElement name="divider" class="divider" />

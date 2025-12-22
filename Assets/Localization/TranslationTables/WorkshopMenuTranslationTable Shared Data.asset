@@ -36,7 +36,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 206269190144
-    m_Key: CantSelectText
+    m_Key: cantSelectText
     m_Metadata:
       m_Items: []
   - m_Id: 1126219921362944

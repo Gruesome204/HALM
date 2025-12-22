@@ -180,26 +180,22 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     }
     void TurretSelected(ClickEvent evt)
     {
-        if (true)
-        {
-            GameManager.Instance.gameDataSO.SelectBlueprint(openTurretDetails);
-            Clear();
-            Fill();
-            FillTurretDetails(openTurretDetails, true, false);
-        }
+        GameManager.Instance.gameDataSO.DeselectBlueprint(openTurretDetails);
+        Clear();
+        Fill();
+        FillTurretDetails(openTurretDetails, true, false);
     }
     void TurretUnlocked(ClickEvent evt)
     {
-        if (GameManager.Instance.gameDataSO.GetSelectedBlueprints().Count >= 2)
+        if (GameManager.Instance.gameDataSO.SelectBlueprint(openTurretDetails))
         {
-            informationTxt.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "cantSelectText"));
-        }
-        else
-        {
-            GameManager.Instance.gameDataSO.SelectBlueprint(openTurretDetails);
             Clear();
             Fill();
             FillTurretDetails(openTurretDetails, true, true);
+        }
+        else
+        {
+            informationTxt.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "cantSelectText"));
         }
     }
     void TurretLocked(ClickEvent evt)

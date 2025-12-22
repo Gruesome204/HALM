@@ -74,6 +74,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 796d8a2a774c6f44dbe931f43121fca2
     m_Address: PauseMenuTranslationTable_en

@@ -111,7 +111,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         CreateRessourceRowElement(gameDataSO.steinResource, "StoneIcon");
         CreateRessourceRowElement(gameDataSO.metallResource, "MetallIcon");
         CreateRessourceRowElement(gameDataSO.pulverResource, "BlackpowderIcon");
-
     }
 
     private void CreateRessourceRowElement(int amountOfRessource, string ressourceIcon)
