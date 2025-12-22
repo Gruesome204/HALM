@@ -84,10 +84,16 @@ public class GameDataSO : ScriptableObject
     }
 
     //Add a Blueprint to the unlocked List
-    public void AddUnlockedBlueprint(TurretBlueprint blueprint)
+    public bool AddUnlockedBlueprint(TurretBlueprint blueprint)
     {
-        if (!unlockedBlueprints.Contains(blueprint))
-            unlockedBlueprints.Add(blueprint);
+        if (unlockedBlueprints.Count >= limitOfUnlockableTurrets)
+            return false;
+
+        if (unlockedBlueprints.Contains(blueprint))
+            return false;
+
+        unlockedBlueprints.Add(blueprint);
+        return true;
     }
 
     // Check if blueprint is selected
@@ -122,10 +128,16 @@ public class GameDataSO : ScriptableObject
         return unlockedBuildMasterModifiers.ToList();
     }
 
-    public void AddUnlockedModifier(BuildMasterModifier modifier)
+    public bool AddUnlockedModifier(BuildMasterModifier modifier)
     {
-        if (!unlockedBuildMasterModifiers.Contains(modifier))
-            unlockedBuildMasterModifiers.Add(modifier);
+        if (unlockedBuildMasterModifiers.Count >= limitOfUnlockableModifiers)
+            return false;
+
+        if (unlockedBuildMasterModifiers.Contains(modifier))
+            return false;
+
+        unlockedBuildMasterModifiers.Add(modifier);
+        return true;
     }
     public bool DeselectModifier(BuildMasterModifier modifier)
     {
@@ -292,6 +304,29 @@ public class GameDataSO : ScriptableObject
         selectedBlueprints = allTurretBlueprints
           .Where(b => save.selectedBlueprintNames.Contains(b.name))
           .ToList();
+
+        // Sanitize blueprint selection
+        selectedBlueprints = selectedBlueprints
+            .Where(IsUnlocked)
+            .Distinct()
+            .Take(limitOfSelectableTurrets)
+            .ToList();
+        unlockedBlueprints = unlockedBlueprints
+            .Distinct()
+            .Take(limitOfUnlockableTurrets)
+            .ToList();
+
+        // Sanitize modifier selection
+        buildMasterModifiers = buildMasterModifiers
+            .Where(IsModifierUnlocked)
+            .Distinct()
+            .Take(limitOfSelectableModifiers)
+            .ToList();
+
+        unlockedBuildMasterModifiers = unlockedBuildMasterModifiers
+            .Distinct()
+            .Take(limitOfUnlockableModifiers)
+            .ToList();
     }
 
     public TempSaveData ToSaveData()
