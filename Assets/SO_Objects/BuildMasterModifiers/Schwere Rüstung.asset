@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   options:
     name: "Schwere R\xFCstung"
-    description: 
+    description: "+2 R\xFCstung\n-0,5 Laufgeschwindigkeit"
     icon: {fileID: 0}
     costs:
     - resourceType: 0
@@ -32,3 +32,5 @@ MonoBehaviour:
       turretFireRateMultiplier: 0
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
+      turretMaxCapacityBonus: 0
+      turretPlacementRadiusMultiplier: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   options:
     name: Leichte Baumaterialien
-    description: 
+    description: "-20% Bauabklingzeit\n-30% Lebenspunkte von T\xFCrmen"
     icon: {fileID: 0}
     costs:
     - resourceType: 0
@@ -32,3 +32,5 @@ MonoBehaviour:
       turretFireRateMultiplier: 0
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
+      turretMaxCapacityBonus: 0
+      turretPlacementRadiusMultiplier: 0

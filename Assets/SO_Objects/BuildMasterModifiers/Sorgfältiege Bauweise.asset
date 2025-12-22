@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   options:
     name: "Sorgf\xE4ltiege Bauweise"
-    description: 
+    description: "+20% Lebenspunkte von T\xFCrmen\n-1 Turmkontrollmaximum"
     icon: {fileID: 0}
     costs:
     - resourceType: 0
@@ -34,3 +34,5 @@ MonoBehaviour:
       turretFireRateMultiplier: 0
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
+      turretMaxCapacityBonus: 0
+      turretPlacementRadiusMultiplier: 0
