@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wekzeuge mit Stiel
   m_EditorClassIdentifier: 
   options:
-    name: Wergzeuge mit Stiel
+    name: WergzeugemitStiel
     description: '+50% Baureichweite
 
       +20% Bauabklinzeit'

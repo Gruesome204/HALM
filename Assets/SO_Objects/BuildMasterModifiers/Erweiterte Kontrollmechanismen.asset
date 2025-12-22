@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Erweiterte Kontrollmechanismen
   m_EditorClassIdentifier: 
   options:
-    name: Erweiterte Kontrollmechanismen
+    name: ErweiterteKontrollmechanismen
     description: '+2 Turmkontrollmaximum
 
       +30% Bauabklinzeit'
