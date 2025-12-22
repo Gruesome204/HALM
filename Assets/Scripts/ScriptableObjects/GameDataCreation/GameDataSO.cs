@@ -109,18 +109,18 @@ public class GameDataSO : ScriptableObject
 
     public bool IsModifierUnlocked(BuildMasterModifier modifier)
     {
-        return UnlockedBuildMasterModifiers.Contains(modifier);
+        return unlockedBuildMasterModifiers.Contains(modifier);
     }
 
     public List<BuildMasterModifier> GetUnlockedModifiers()
     {
-        return UnlockedBuildMasterModifiers.ToList();
+        return unlockedBuildMasterModifiers.ToList();
     }
 
     public void AddUnlockedModifier(BuildMasterModifier modifier)
     {
-        if (!UnlockedBuildMasterModifiers.Contains(modifier))
-            UnlockedBuildMasterModifiers.Add(modifier);
+        if (!unlockedBuildMasterModifiers.Contains(modifier))
+            unlockedBuildMasterModifiers.Add(modifier);
     }
     public bool DeselectModifier(BuildMasterModifier modifier)
     {
