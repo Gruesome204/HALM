@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
+public class UnlockableList<T>
+{
+    public List<T> all = new();
+    public List<T> unlocked = new();
+    public List<T> selected = new();
+    public int selectionLimit = int.MaxValue;
+}
+
+
 //Runtime Data that is only changed and is then saved into Data
 
 [CreateAssetMenu(fileName = "New GameDataSO", menuName = "Game/GameData/New GameDataSO")]
@@ -139,110 +149,58 @@ public class GameDataSO : ScriptableObject
         return true;
     }
 
-
-    //Check if there is enough of a ressource
-    public Boolean CheckForRessource(string ressourceNumber, int amount)
+    public bool HasResource(ResourceType type, int amount)
     {
-        switch (ressourceNumber)
-        {
-            case "Currency":
-                if (gameCurrency < amount)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-                break;
-            case "Wood":
-                if (woodResource < amount)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-                break;
-            case "Stone":
-                if (steinResource < amount)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-                break;
-            case "Metal":
-                if (metallResource < amount)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-                break;
-            case "Pulver":
-                if (pulverResource < amount)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-                break;
-        }
-        return false;
+        return GetResourceAmount(type) >= amount;
     }
 
-    //Remove from a Ressource
-    public void RemoveRessource(string ressourceNumber, int amount)
+    public void RemoveResource(ResourceType type, int amount)
     {
-        switch (ressourceNumber)
+        SetResourceAmount(type, GetResourceAmount(type) - amount);
+    }
+
+    public void AddResource(ResourceType type, int amount)
+    {
+        SetResourceAmount(type, GetResourceAmount(type) + amount);
+    }
+
+    private int GetResourceAmount(ResourceType type)
+    {
+        return type switch
         {
-            case "Currency":
-                gameCurrency = gameCurrency - amount;
+            ResourceType.Currency => gameCurrency,
+            ResourceType.Wood => woodResource,
+            ResourceType.Stone => steinResource,
+            ResourceType.Metal => metallResource,
+            ResourceType.Pulver => pulverResource,
+            _ => 0
+        };
+    }
+
+    private void SetResourceAmount(ResourceType type, int value)
+    {
+        value = Mathf.Max(0, value); // clamp to prevent negatives
+
+        switch (type)
+        {
+            case ResourceType.Currency:
+                gameCurrency = value;
                 break;
-            case "Wood":
-                woodResource = woodResource - amount;
+            case ResourceType.Wood:
+                woodResource = value;
                 break;
-            case "Stone":
-                steinResource = steinResource - amount;
+            case ResourceType.Stone:
+                steinResource = value;
                 break;
-            case "Metal":
-                metallResource = metallResource - amount;
+            case ResourceType.Metal:
+                metallResource = value;
                 break;
-            case "Pulver":
-                pulverResource = pulverResource - amount;
+            case ResourceType.Pulver:
+                pulverResource = value;
                 break;
         }
     }
-    //Add a Ressource
-    public void GiveRessource(string ressourceNumber, int amount)
-    {
-        switch (ressourceNumber)
-        {
-            case "Currency":
-                gameCurrency = gameCurrency + amount;
-                break;
-            case "Wood":
-                woodResource = woodResource + amount;
-                break;
-            case "Stone":
-                steinResource = steinResource + amount;
-                break;
-            case "Metal":
-                metallResource = metallResource + amount;
-                break;
-            case "Pulver":
-                pulverResource = pulverResource + amount;
-                break;
-        }
-    }
+
     // Add a blueprint to selected list
     public bool SelectBlueprint(TurretBlueprint blueprint)
     {
@@ -276,7 +234,6 @@ public class GameDataSO : ScriptableObject
             .Take(limitOfSelectableTurrets)
             .ToList();
     }
-
 
 
     public void ResetToDefaults(GameDataDefaultsSO defaults)
