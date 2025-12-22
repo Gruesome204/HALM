@@ -67,7 +67,6 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
         // General
         backBtn = root.Q<Button>("backBtn");
-        backBtn.SetBinding("text", new LocalizedString("MenuTranslationaTable", "backBtnText"));
         backBtn.RegisterCallback<ClickEvent>(OnBackBtnClicked);
 
         headline = root.Q<Label>("headline");

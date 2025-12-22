@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: BMTranslationsLeichteBaumaterialien
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: dd827692b93351b4ba45a0c3db67d0e6, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: cdb2e987e39c59a4ba01926dce30f171, type: 2}
+  - {fileID: 11400000, guid: 1172583400534894d86b4b1419879911, type: 2}
+  - {fileID: 11400000, guid: 4cc50b75b4ee006408a578f1ddac8c8f, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []
