@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: -501948981244045764
     second: SkeletWalk0005_0
+  - first:
+      213: 1490951281318526088
+    second: SkeletWalk0005_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,10 +106,10 @@ TextureImporter:
       name: SkeletWalk0005_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1920
-        height: 1080
+        x: 683
+        y: 36
+        width: 626
+        height: 995
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,6 +120,28 @@ TextureImporter:
       bones: []
       spriteID: c36549d9f08b809f0800000000000000
       internalID: -501948981244045764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletWalk0005_1
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 24
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88c776c7a4ce0b410800000000000000
+      internalID: 1490951281318526088
       vertices: []
       indices: 
       edges: []
@@ -136,6 +161,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       SkeletWalk0005_0: -501948981244045764
+      SkeletWalk0005_1: 1490951281318526088
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
