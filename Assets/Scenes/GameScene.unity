@@ -813,7 +813,7 @@ MonoBehaviour:
   maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}
   defaultPlacementRadius: 30
-  placementRadius: 8
+  placementRadius: 30
   radiusLineMaterial: {fileID: 2100000, guid: 97adbf2c4b802044db317ba2a78d4d8d, type: 2}
   radiusLineWidth: 0.05
   radiusSegments: 64
