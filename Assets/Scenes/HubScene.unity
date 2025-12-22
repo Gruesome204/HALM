@@ -880,9 +880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
-  availableBuildmasterModifiers:
-  - {fileID: 11400000, guid: 63aefb47f4843d545918393963ca342d, type: 2}
-  - {fileID: 11400000, guid: d4924574ebd4e1c4ca8537cf0f6dcf11, type: 2}
+  availableBuildmasterModifiers: []
 --- !u!1 &368423647
 GameObject:
   m_ObjectHideFlags: 0

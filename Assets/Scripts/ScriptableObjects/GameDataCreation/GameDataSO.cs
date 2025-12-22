@@ -49,6 +49,8 @@ public class GameDataSO : ScriptableObject
     public int limitOfUnlockableModifiers = 10;
     public int limitOfSelectableModifiers = 5;
 
+    public event Action OnBuildMasterModifiersChanged;
+
     private void OnEnable()
     {
         unlockedBlueprints ??= new();
@@ -141,7 +143,10 @@ public class GameDataSO : ScriptableObject
     }
     public bool DeselectModifier(BuildMasterModifier modifier)
     {
-        return buildMasterModifiers.Remove(modifier);
+        bool removed = buildMasterModifiers.Remove(modifier);
+        if (removed)
+            OnBuildMasterModifiersChanged?.Invoke(); // notify listeners
+        return removed;
     }
 
     public bool SelectModifier(BuildMasterModifier modifier)
@@ -156,6 +161,7 @@ public class GameDataSO : ScriptableObject
             return false;
 
         buildMasterModifiers.Add(modifier);
+        OnBuildMasterModifiersChanged?.Invoke(); // notify listeners
         return true;
     }
 
