@@ -59,9 +59,9 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     private void FillMenu()
     {
         ClearMenu();
-        foreach (var modifier in BuildmasterModifyManager.Instance.GetBuildmasterModifiers())
+        foreach (var modifier in GameManager.Instance.gameDataSO.allBuildMasterModifiers)
         {
-            if (BuildmasterModifyManager.Instance.GetAppliedBuildmasterModifiers().Contains<BuildMasterModifier>(modifier))
+            if (GameManager.Instance.gameDataSO.GetSelectedModifiers().Contains<BuildMasterModifier>(modifier))
             {
 
             }
