@@ -20,8 +20,6 @@ public class GameDataSO : ScriptableObject
     public float soundVolume;
     //Settings Data end
 
-    public int limitOfUnlockableTurrets = 10;
-    public int limitOfSelectableTurrets = 5;
     public enum Class
     {
         Mechanic,
@@ -41,11 +39,28 @@ public class GameDataSO : ScriptableObject
     public List<TurretBlueprint> allTurretBlueprints;
     [SerializeField] public List<TurretBlueprint> unlockedBlueprints;  // Blueprints player has unlocked
     [SerializeField] public List<TurretBlueprint> selectedBlueprints;
+    public int limitOfUnlockableTurrets = 10;
+    public int limitOfSelectableTurrets = 5;
 
     [Header("PlayerStatsUpgrades")]
     public List<BuildMasterModifier> allBuildMasterModifiers;
     public List<BuildMasterModifier> buildMasterModifiers;// selected / active
     public List<BuildMasterModifier> unlockedBuildMasterModifiers;
+    public int limitOfUnlockableModifiers = 10;
+    public int limitOfSelectableModifiers = 5;
+
+    private void OnEnable()
+    {
+        unlockedBlueprints ??= new();
+        selectedBlueprints ??= new();
+
+        unlockedBuildMasterModifiers ??= new();
+        buildMasterModifiers ??= new();
+
+        allTurretBlueprints ??= new();
+        allBuildMasterModifiers ??= new();
+    }
+
 
     public TurretBlueprint GetBlueprintByType(TurretType type)
     {
@@ -71,7 +86,8 @@ public class GameDataSO : ScriptableObject
     //Add a Blueprint to the unlocked List
     public void AddUnlockedBlueprint(TurretBlueprint blueprint)
     {
-        unlockedBlueprints.Add(blueprint);
+        if (!unlockedBlueprints.Contains(blueprint))
+            unlockedBlueprints.Add(blueprint);
     }
 
     // Check if blueprint is selected
@@ -84,18 +100,6 @@ public class GameDataSO : ScriptableObject
     public List<TurretBlueprint> GetSelectedBlueprints()
     {
         return selectedBlueprints.ToList();
-    }
-
-    public void AddRemoveSelectedBlueprint(TurretBlueprint blueprint, Boolean add)
-    {
-        if (add)
-        {
-            selectedBlueprints.Add(blueprint);
-        }
-        else
-        {
-            selectedBlueprints.Remove(blueprint);
-        }
     }
 
     public bool IsModifierSelected(BuildMasterModifier modifier)
@@ -134,6 +138,9 @@ public class GameDataSO : ScriptableObject
             return false;
 
         if (buildMasterModifiers.Contains(modifier))
+            return false;
+
+        if (buildMasterModifiers.Count >= limitOfSelectableModifiers)
             return false;
 
         buildMasterModifiers.Add(modifier);
@@ -248,7 +255,7 @@ public class GameDataSO : ScriptableObject
         buildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers);
     }
 
-    public GameDataSO ApplySave(TempSaveData save)
+    public void ApplySave(TempSaveData save)
     {
         // Settings
         localSelected = save.localSelected;
@@ -285,7 +292,6 @@ public class GameDataSO : ScriptableObject
         selectedBlueprints = allTurretBlueprints
           .Where(b => save.selectedBlueprintNames.Contains(b.name))
           .ToList();
-        return this;
     }
 
     public TempSaveData ToSaveData()

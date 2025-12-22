@@ -182,7 +182,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     {
         if (true)
         {
-            GameManager.Instance.gameDataSO.AddRemoveSelectedBlueprint(openTurretDetails, false);
+            GameManager.Instance.gameDataSO.SelectBlueprint(openTurretDetails);
             Clear();
             Fill();
             FillTurretDetails(openTurretDetails, true, false);
@@ -196,7 +196,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         }
         else
         {
-            GameManager.Instance.gameDataSO.AddRemoveSelectedBlueprint(openTurretDetails, true);
+            GameManager.Instance.gameDataSO.SelectBlueprint(openTurretDetails);
             Clear();
             Fill();
             FillTurretDetails(openTurretDetails, true, true);
@@ -208,7 +208,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         {
             foreach (var cost in openTurretDetails.buyCost)
             {
-                GameManager.Instance.gameDataSO.RemoveRessource(cost.resourceType.ToString(), cost.amount);
+                GameManager.Instance.gameDataSO.RemoveResource(cost.resourceType, cost.amount);
             }
             GameManager.Instance.gameDataSO.AddUnlockedBlueprint(openTurretDetails);
             Clear();
@@ -228,7 +228,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
 
         foreach (var cost in openTurretDetails.buyCost)
         {
-            if (GameManager.Instance.gameDataSO.CheckForRessource(cost.resourceType.ToString(), cost.amount))
+            if (GameManager.Instance.gameDataSO.HasResource(cost.resourceType, cost.amount))
             {
 
             }
