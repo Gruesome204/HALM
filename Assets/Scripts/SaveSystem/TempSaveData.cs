@@ -28,8 +28,9 @@ public class TempSaveData
 
     // --- Turrets ---
     public List<string> unlockedBlueprintNames; // store by unique name/ID
-    public List<BuildMasterModifier> buildMasterModifiers;
-
+    public List<string> selectedBlueprintNames;
+    public List<string> unlockedBuildMasterModifierNames;
+    public List<string> selectedBuildMasterModifierNames;
 
 
     public TempSaveData(GameDataSO so)
@@ -54,11 +55,18 @@ public class TempSaveData
         metallResource = so.metallResource;
         pulverResource = so.pulverResource;
 
+        // Build Master Modifiers
+        unlockedBuildMasterModifierNames = so.unlockedBuildMasterModifiers
+            .Select(m => m.name)
+            .ToList();
+
+        selectedBuildMasterModifierNames = so.buildMasterModifiers
+            .Select(m => m.name)
+            .ToList();
+
         // Turrets
-        buildMasterModifiers = new List<BuildMasterModifier>(so.buildMasterModifiers);
-
-
         unlockedBlueprintNames = so.unlockedBlueprints.Select(b => b.name).ToList();
+        selectedBlueprintNames = so.selectedBlueprints.Select(b => b.name).ToList();
     }
 
     //Constructor
@@ -76,8 +84,10 @@ public class TempSaveData
         steinResource = 0;
         metallResource = 0;
         pulverResource = 0;
-        buildMasterModifiers = new List<BuildMasterModifier>();
+        unlockedBuildMasterModifierNames = new List<string>();
+        selectedBuildMasterModifierNames = new List<string>();
         unlockedBlueprintNames = new List<string>();
+        selectedBlueprintNames = new List<string>();
     }
 
 }

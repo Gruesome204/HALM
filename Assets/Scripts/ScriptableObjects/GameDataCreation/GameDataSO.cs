@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[Serializable]
-public class UnlockableList<T>
-{
-    public List<T> all = new();
-    public List<T> unlocked = new();
-    public List<T> selected = new();
-    public int selectionLimit = int.MaxValue;
-}
-
 
 //Runtime Data that is only changed and is then saved into Data
 
@@ -278,13 +269,22 @@ public class GameDataSO : ScriptableObject
         pulverResource = save.pulverResource;
 
         // Player upgrades
-        buildMasterModifiers = new List<BuildMasterModifier>(save.buildMasterModifiers);
+        unlockedBuildMasterModifiers = allBuildMasterModifiers
+            .Where(m => save.unlockedBuildMasterModifierNames.Contains(m.name))
+            .ToList();
+
+        buildMasterModifiers = allBuildMasterModifiers
+            .Where(m => save.selectedBuildMasterModifierNames.Contains(m.name))
+            .ToList();
 
         // Turrets
         unlockedBlueprints = allTurretBlueprints
             .Where(b => save.unlockedBlueprintNames.Contains(b.name))
             .ToList();
 
+        selectedBlueprints = allTurretBlueprints
+          .Where(b => save.selectedBlueprintNames.Contains(b.name))
+          .ToList();
         return this;
     }
 
