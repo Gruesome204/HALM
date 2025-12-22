@@ -257,14 +257,20 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         var drops = stats.baseStats.resourceDrops;
         if (drops == null || drops.Length == 0) return;
 
-        // Subscribe to the event
-        ResourceDropper.OnResourceDropped += AddResourceToGameData;
+        foreach (var drop in drops)
+        {
+            float roll = UnityEngine.Random.Range(0f, 1f);
+            if (roll <= drop.dropChance)
+            {
+                int amount = UnityEngine.Random.Range(drop.minAmount, drop.maxAmount + 1);
+                if (amount > 0)
+                {
+                    GameManager.Instance.gameDataSO.AddResource(drop.resourceType, amount);
+                    Debug.Log($"Dropped {amount} {drop.resourceType} (roll: {roll})");
+                }
+            }
+        }
 
-        // Use the batch-friendly method
-        ResourceDropper.TryDropAll(drops);
-
-        // Unsubscribe after processing
-        ResourceDropper.OnResourceDropped -= AddResourceToGameData;
     }
     #endregion
 
