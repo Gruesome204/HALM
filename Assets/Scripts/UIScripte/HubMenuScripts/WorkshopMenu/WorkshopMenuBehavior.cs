@@ -19,6 +19,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     private VisualElement statsContainer;
     private Label informationTxt;
     private Button buySelectButton;
+    private Button backBtn;
     private TurretBlueprint openTurretDetails;
 
     private Boolean turretUnlocked = false;
@@ -59,7 +60,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         equippedTurrets = root.Q<VisualElement>("equippedTurrets");
 
         detailsMainContainer = root.Q<VisualElement>("detailsMainContainer");
-        //detailsMainContainer.AddToClassList("turretChoiceMenuSlideOut");
+        detailsMainContainer.AddToClassList("turretChoiceMenuSlideOut");
 
         statsContainer = root.Q<VisualElement>("statsContainer");
 
@@ -67,6 +68,9 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         informationTxt.text = "";
 
         buySelectButton = root.Q<Button>("buySelectButton");
+
+        backBtn = root.Q<Button>("backBtn");
+        backBtn.RegisterCallback<ClickEvent>(OnBackBtnClicked);
     }
 
     private void Fill()
@@ -231,9 +235,15 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
             else
             {
                 canBeBought = false;
+                return canBeBought;
             }
 
         }
         return canBeBought;
+    }
+
+    void OnBackBtnClicked(ClickEvent clicked)
+    {
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("WorkshopDoc", false);
     }
 }

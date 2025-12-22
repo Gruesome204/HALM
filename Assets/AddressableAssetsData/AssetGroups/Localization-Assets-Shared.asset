@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: 77e159cd53431c449a4dcf77dd9b39ae
   m_SerializeEntries:
+  - m_GUID: 1e2d2fbbe49395343a285a5a761ce7dd
+    m_Address: "Assets/Localization/TranslationTables/BMTranslations/BMTranslationsSorgf\xE4ltiegeBauweise
+      Shared Data.asset"
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 25989c0697f8a4f46bd74ed5a0f3ba69
     m_Address: Assets/Localization/TranslationTables/ClassTranslationCommon Shared
       Data.asset
@@ -54,6 +60,12 @@ MonoBehaviour:
   - m_GUID: 7aa78df79a2b7524497af3ab510eb39c
     m_Address: Assets/Localization/TranslationTables/EnterDungeonTranslationTable
       Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7bb8e15572083754087ef783120a7a58
+    m_Address: "Assets/Localization/TranslationTables/BMTranslations/BMTranslationsSchwereR\xFCstung
+      Shared Data.asset"
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -99,6 +111,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd827692b93351b4ba45a0c3db67d0e6
+    m_Address: Assets/Localization/TranslationTables/BMTranslations/BMTranslationsLeichteBaumaterialien
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ed55aba6ff1d81c4f9b0c5a79153ff66
     m_Address: Assets/Localization/TranslationTables/StatsMenuTranslationTable Shared
       Data.asset
@@ -126,6 +144,12 @@ MonoBehaviour:
   - m_GUID: fa15c4663a8f3fa44a93981ff2a4a34b
     m_Address: Assets/Localization/TranslationTables/GameOverTranslationaTable Shared
       Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffe822c9f3fec3a42810a0e04022967f
+    m_Address: Assets/Localization/TranslationTables/BMTranslations/BMTranslationsWergzeugemitStiel
+      Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

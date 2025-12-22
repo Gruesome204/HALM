@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Schwere R\xFCstung"
   m_EditorClassIdentifier: 
   options:
-    name: "Schwere R\xFCstung"
+    name: "SchwereR\xFCstung"
     description: 
     icon: {fileID: 0}
     costs:
@@ -32,3 +32,5 @@ MonoBehaviour:
       turretFireRateMultiplier: 0
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
+      turretMaxCapacityBonus: 0
+      turretPlacementRadiusMultiplier: 0

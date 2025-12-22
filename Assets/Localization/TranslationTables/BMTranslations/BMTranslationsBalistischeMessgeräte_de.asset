@@ -10,22 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: BMTranslationsTest2_en
+  m_Name: "BMTranslationsBalistischeMessger\xE4te_de"
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: en
-  m_SharedData: {fileID: 11400000, guid: 9373c65a754783c47aaf88f08f938a9d, type: 2}
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: 620bc351ac75a8e49b04dfd3cb12eb5e, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 94855892992
-    m_Localized: Light Buildingmaterials
+  - m_Id: 307297390592
+    m_Localized: "bls r\xFCstung, weniger Tempo"
     m_Metadata:
       m_Items: []
-  - m_Id: 114560733184
-    m_Localized: '-20% Building Cooldown
-
-      -30% Turrets Hit Points'
+  - m_Id: 304961163264
+    m_Localized: diese mehrfeuer Armbrust
     m_Metadata:
       m_Items: []
   references:

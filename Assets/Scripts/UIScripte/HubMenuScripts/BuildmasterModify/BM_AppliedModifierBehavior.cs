@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public class BM_AppliedModifierBehavior
 {
     public BuildMasterModifier representedModifier;
+    private BuildmasterModifyBehavior buildmaster;
 
     public VisualElement mainContainer;
     private VisualElement icon;
@@ -13,10 +14,10 @@ public class BM_AppliedModifierBehavior
 
     private Button button;
 
-    public BM_AppliedModifierBehavior(VisualTreeAsset asset, BuildMasterModifier _representedModifier)
+    public BM_AppliedModifierBehavior(VisualTreeAsset asset, BuildMasterModifier _representedModifier, BuildmasterModifyBehavior _buildmaster)
     {
-
         representedModifier = _representedModifier;
+        buildmaster = _buildmaster;
 
         TemplateContainer modifierButton = asset.Instantiate();
 
@@ -24,10 +25,10 @@ public class BM_AppliedModifierBehavior
         icon = modifierButton.Q<VisualElement>("icon");
 
         name = modifierButton.Q<Label>("name");
-        name.SetBinding("text", new LocalizedString($"BMTranslations{_representedModifier.name}", "name"));
+        name.SetBinding("text", new LocalizedString($"BMTranslations{_representedModifier.options.name}", "name"));
 
         description = modifierButton.Q<Label>("description");
-        description.SetBinding("text", new LocalizedString($"BMTranslations{_representedModifier.name}", "description"));
+        description.SetBinding("text", new LocalizedString($"BMTranslations{_representedModifier.options.name}", "description"));
 
         button = modifierButton.Q<Button>("button");
         button.RegisterCallback<ClickEvent>(OnButtonClicked);
@@ -35,7 +36,7 @@ public class BM_AppliedModifierBehavior
 
     private void OnButtonClicked(ClickEvent evt)
     {
-        BuildmasterModifyManager.Instance.RemoveABuildmasterModifier(representedModifier);
-        InGameMenuManager.Instance.OpenOrCloseOneMenu("BuildmasterModifyDoc", true);
+        buildmaster.ClearDetails();
+        buildmaster.FillModifierDetails(representedModifier, true,true);
     }
 }

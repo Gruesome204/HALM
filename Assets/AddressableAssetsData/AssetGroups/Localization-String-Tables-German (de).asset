@@ -23,7 +23,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 16b85ba59350b724baa90630cbbe09db
-    m_Address: BMTranslationsTest2_de
+    m_Address: BMTranslationsErweiterteKontrollmechanismen_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de
@@ -42,6 +42,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-de
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30ad36e895df14d419b4c5e1e0b7474c
+    m_Address: "BMTranslationsSchwereR\xFCstung_de"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 376410957c89daf44899d2b758c17e9c
+    m_Address: "BMTranslationsSorgf\xE4ltiegeBauweise_de"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3a540370ed0df8a4198f882ebc63295d
     m_Address: ClassTranslationCommon_de
     m_ReadOnly: 1
@@ -53,6 +67,13 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4cc50b75b4ee006408a578f1ddac8c8f
+    m_Address: BMTranslationsLeichteBaumaterialien_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4ef1bba05b08bbc41899b1d9c7148bcb
     m_Address: WorkshopMenuTranslationTable_de
@@ -82,7 +103,7 @@ MonoBehaviour:
     - Locale-de
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 925fc98e611238c4491453977d379047
-    m_Address: BMTranslationsTest1_de
+    m_Address: "BMTranslationsBalistischeMessger\xE4te_de"
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de
@@ -111,6 +132,13 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b49a9e051b7b3da4f8e128f861091a3f
     m_Address: TurretTranslationBarricade_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4d914b761cc1f54f9188e9b26241e45
+    m_Address: BMTranslationsWergzeugemitStiel_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de

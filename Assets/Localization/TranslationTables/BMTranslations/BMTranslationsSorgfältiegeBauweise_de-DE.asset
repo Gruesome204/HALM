@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: "BMTranslationsSorgf\xE4ltiegeBauweise_de-DE"
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de-DE
+  m_SharedData: {fileID: 11400000, guid: 1e2d2fbbe49395343a285a5a761ce7dd, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 4980346880
+    m_Localized: "Sorgf\xE4ltiege Bauweise"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6951669760
+    m_Localized: "+20% Lebenspunkte von T\xFCrmen\n-1 Turmkontrollmaximum"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

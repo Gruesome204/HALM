@@ -15,6 +15,13 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-English (en)
   m_GUID: 5900b9890ab5a4e40a0d0b5094d247fb
   m_SerializeEntries:
+  - m_GUID: 0de0eee3deebaaa4bb494f0834a46e34
+    m_Address: BMTranslationsWergzeugemitStiel_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 270edb084b25e7b42a26d7ab6d9cd160
     m_Address: GameWonTranslationaTable_en
     m_ReadOnly: 1
@@ -42,7 +49,7 @@ MonoBehaviour:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a39437d7d833d2408d6452b5cd0174f
-    m_Address: BMTranslationsTest2_en
+    m_Address: BMTranslationsErweiterteKontrollmechanismen_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
@@ -90,6 +97,13 @@ MonoBehaviour:
     - Locale-en
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e8d275d9138e4d469223c8d2c76ec2d
+    m_Address: "BMTranslationsSchwereR\xFCstung_en"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 91a38e79d97c9e746be7df5c0ccfb30b
     m_Address: EnterDungeonTranslationTable_en
     m_ReadOnly: 1
@@ -97,7 +111,7 @@ MonoBehaviour:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a640f8d5a6ba9dd4780b90e28f797d2d
-    m_Address: BMTranslationsTest1_en
+    m_Address: "BMTranslationsBalistischeMessger\xE4te_en"
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
@@ -105,6 +119,13 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ae649716cdf099940899b148922c2da6
     m_Address: WorkshopMenuTranslationTable_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b22c1c527af803248b6e210df48b3af6
+    m_Address: "BMTranslationsSorgf\xE4ltiegeBauweise_en"
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
@@ -119,6 +140,13 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c3709e446cbc49a4e9b226d91e771b3b
     m_Address: GameOverTranslationaTable_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdb2e987e39c59a4ba01926dce30f171
+    m_Address: BMTranslationsLeichteBaumaterialien_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

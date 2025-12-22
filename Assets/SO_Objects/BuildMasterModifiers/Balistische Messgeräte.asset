@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Balistische Messger\xE4te"
   m_EditorClassIdentifier: 
   options:
-    name: "Balistische Messger\xE4te "
+    name: "BalistischeMessger\xE4te"
     description: 
     icon: {fileID: 0}
     costs:
@@ -34,3 +34,5 @@ MonoBehaviour:
       turretFireRateMultiplier: 0
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
+      turretMaxCapacityBonus: 0
+      turretPlacementRadiusMultiplier: 0
