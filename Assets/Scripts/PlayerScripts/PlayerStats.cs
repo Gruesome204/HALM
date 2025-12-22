@@ -18,6 +18,7 @@ public class PlayerStats : MonoBehaviour
      public float currentRegen;
      public float currentArmor;
      public float currentMagicResistance;
+    public float currentMoveSpeed;
 
     /// <summary>
     /// All currently applied modifiers.
@@ -54,30 +55,26 @@ public class PlayerStats : MonoBehaviour
     }
     private void RecalculateStats(bool fullReheal = false)
     {
-        // Reset to base stats
+        // Start from base stats
         currentMaxHealth = baseHealth;
         currentRegen = baseRegen;
         currentArmor = baseArmor;
         currentMagicResistance = baseMagicResistance;
-
         // Apply all modifiers
         foreach (var mod in appliedModifiers)
         {
-            currentMaxHealth += mod.additionalMaxHealth;
-            currentRegen += mod.additionalRegen;
-            currentArmor += mod.additionalArmor;
-            currentMagicResistance += mod.additionalMagicResistance;
-            moveSpeed += mod.additionalMovementSpeed;
-        }
+            currentMaxHealth += mod.additionalStats.maxHealth;
+            currentArmor += mod.additionalStats.armor;
+            currentMoveSpeed += mod.additionalStats.movementSpeed;
+}
 
-        // Adjust current health depending on type of recalculation
+        // Adjust current health
         if (fullReheal)
         {
             currentHealth = currentMaxHealth;
         }
         else
         {
-            // Clamp health if max decreased
             if (currentHealth > currentMaxHealth)
                 currentHealth = currentMaxHealth;
         }

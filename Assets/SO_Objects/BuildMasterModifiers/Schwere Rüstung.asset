@@ -10,18 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb2254af7ab53e943ab30b47ac29e08c, type: 3}
-  m_Name: Test2
+  m_Name: "Schwere R\xFCstung"
   m_EditorClassIdentifier: 
   options:
-    name: Test2
+    name: "Schwere R\xFCstung"
     description: 
     icon: {fileID: 0}
     costs:
     - resourceType: 0
-      amount: 0
-    additionalHealth: 2
-    additionalMaxHealth: 2
-    additionalRegen: 2
-    additionalArmor: 2
-    additionalMagicResistance: 2
-    additionalMovementSpeed: 2
+      amount: 150
+    - resourceType: 3
+      amount: 50
+    additionalStats:
+      health: 0
+      maxHealth: 0
+      armor: 2
+      movementSpeed: -0.5
+      turretPlacementCooldownMultiplier: 0
+      turretHealthMultiplier: 0
+      turretDamageMultiplier: 0
+      turretFireRateMultiplier: 0
+      turretProjectilesPerSalve: 0
+      turretProjectileSpeed: 0

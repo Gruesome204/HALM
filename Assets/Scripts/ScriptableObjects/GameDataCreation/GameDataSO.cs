@@ -248,24 +248,41 @@ public class GameDataSO : ScriptableObject
 
     public void ResetToDefaults(GameDataDefaultsSO defaults)
     {
+        // Settings
         localSelected = defaults.localSelected;
         musicTrack = defaults.musicTrack;
         masterVolume = defaults.masterVolume;
         musicVolume = defaults.musicVolume;
         soundVolume = defaults.soundVolume;
 
+        // Player
         currentPlayerLevel = defaults.currentPlayerLevel;
         currentClass = defaults.currentClass;
 
+        // Resources
         gameCurrency = defaults.gameCurrency;
         woodResource = defaults.woodResource;
         steinResource = defaults.steinResource;
         metallResource = defaults.metallResource;
         pulverResource = defaults.pulverResource;
 
-        unlockedBlueprints = new List<TurretBlueprint>(defaults.defaultUnlockedBlueprints);
-        buildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers);
+        // Turrets
+        unlockedBlueprints = new List<TurretBlueprint>(defaults.defaultUnlockedBlueprints)
+            .Take(limitOfUnlockableTurrets)
+            .ToList();
+        selectedBlueprints = unlockedBlueprints
+            .Take(limitOfSelectableTurrets)
+            .ToList(); // auto-select first unlocked ones
+
+        // BuildMasterModifiers
+        unlockedBuildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers)
+            .Take(limitOfUnlockableModifiers)
+            .ToList();
+        buildMasterModifiers = unlockedBuildMasterModifiers
+            .Take(limitOfSelectableModifiers)
+            .ToList(); // auto-select first unlocked ones
     }
+
 
     public void ApplySave(TempSaveData save)
     {
