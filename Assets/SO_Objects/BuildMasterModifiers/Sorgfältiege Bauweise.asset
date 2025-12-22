@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: "Sorgf\xE4ltiege Bauweise"
   m_EditorClassIdentifier: 
   options:
-    name: "Sorgf\xE4ltiegeBauweise"
-    description: 
+    name: "Sorgf\xE4ltiege Bauweise"
+    description: "+20% Lebenspunkte von T\xFCrmen\n-1 Turmkontrollmaximum"
     icon: {fileID: 0}
     costs:
     - resourceType: 0

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: "Balistische Messger\xE4te"
   m_EditorClassIdentifier: 
   options:
-    name: "BalistischeMessger\xE4te"
-    description: 
+    name: "Balistische Messger\xE4te "
+    description: '+30% Turmreichweite
+
+      +20% Bauabklinzeit'
     icon: {fileID: 0}
     costs:
     - resourceType: 0
@@ -35,4 +37,4 @@ MonoBehaviour:
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
       turretMaxCapacityBonus: 0
-      turretPlacementRadiusMultiplier: 0
+      turretPlacementRadiusMultiplier: 1.3

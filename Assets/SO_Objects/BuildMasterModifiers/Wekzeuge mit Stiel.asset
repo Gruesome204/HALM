@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Wekzeuge mit Stiel
   m_EditorClassIdentifier: 
   options:
-    name: WergzeugemitStiel
-    description: 
+    name: Wergzeuge mit Stiel
+    description: '+50% Baureichweite
+
+      +20% Bauabklinzeit'
     icon: {fileID: 0}
     costs:
     - resourceType: 0
@@ -33,4 +35,4 @@ MonoBehaviour:
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
       turretMaxCapacityBonus: 0
-      turretPlacementRadiusMultiplier: 0
+      turretPlacementRadiusMultiplier: 1.5

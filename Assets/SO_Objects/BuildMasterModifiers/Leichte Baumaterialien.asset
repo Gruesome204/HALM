@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Leichte Baumaterialien
   m_EditorClassIdentifier: 
   options:
-    name: LeichteBaumaterialien
-    description: 
+    name: Leichte Baumaterialien
+    description: "-20% Bauabklingzeit\n-30% Lebenspunkte von T\xFCrmen"
     icon: {fileID: 0}
     costs:
     - resourceType: 0

@@ -44,6 +44,7 @@ public class TurretPlacementController : MonoBehaviour
 
     [Header("Placement Rules")]
     [Tooltip("Maximum turret capacity (not just number).")]
+    public int defaultMaxTurretCapacity = 6;
     public int maxTurretCapacity = 6;// e.g. total "points" you can spend
 
     [Header("Hierarchy Organization")]
@@ -51,7 +52,18 @@ public class TurretPlacementController : MonoBehaviour
 
     [Header("Placement Range")]
     [Tooltip("Maximum distance from the player where turrets can be placed.")]
+    public float defaultPlacementRadius = 30f;
     public float placementRadius = 30f;
+    public float PlacementRadius
+    {
+        get => placementRadius;
+        set
+        {
+            placementRadius = value;
+            DrawRadiusCircle();
+        }
+    }
+
     [Header("Placement Radius Visual (LineRenderer)")]
     [SerializeField] private Material radiusLineMaterial;
     [SerializeField] private float radiusLineWidth = 0.05f;
@@ -575,7 +587,7 @@ public class TurretPlacementController : MonoBehaviour
     }
 
 
-    private void DrawRadiusCircle()
+    public void DrawRadiusCircle()
     {
         if (radiusLineRenderer == null) return;
 
