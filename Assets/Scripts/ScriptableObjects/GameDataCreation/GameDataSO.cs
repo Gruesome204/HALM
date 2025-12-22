@@ -43,6 +43,8 @@ public class GameDataSO : ScriptableObject
 
     [Header("PlayerStatsUpgrades")]
     public List<BuildMasterModifier> buildMasterModifiers;
+    public List<BuildMasterModifier> AllBuildMasterModifiers;
+    public List<BuildMasterModifier> UnlockedBuildMasterModifiers;
 
 
     public void ResetToDefaults(GameDataDefaultsSO defaults)
