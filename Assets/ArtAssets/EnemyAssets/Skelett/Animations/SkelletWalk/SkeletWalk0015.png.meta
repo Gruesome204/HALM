@@ -103,10 +103,10 @@ TextureImporter:
       name: SkeletWalk0015_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1920
-        height: 1080
+        x: 717
+        y: 41
+        width: 543
+        height: 1016
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

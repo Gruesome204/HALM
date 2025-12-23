@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 2174677942501653198
     second: SkeletAttack0038_0
+  - first:
+      213: 4062617754811485069
+    second: SkeletAttack0038_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,10 +106,10 @@ TextureImporter:
       name: SkeletAttack0038_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1920
-        height: 1080
+        x: 720
+        y: 45
+        width: 589
+        height: 949
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,6 +120,28 @@ TextureImporter:
       bones: []
       spriteID: eca30b711120e2e10800000000000000
       internalID: 2174677942501653198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletAttack0038_1
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 38
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8bcbb5c251516830800000000000000
+      internalID: 4062617754811485069
       vertices: []
       indices: 
       edges: []
@@ -136,6 +161,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       SkeletAttack0038_0: 2174677942501653198
+      SkeletAttack0038_1: 4062617754811485069
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
