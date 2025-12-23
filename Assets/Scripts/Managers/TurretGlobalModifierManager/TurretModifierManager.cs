@@ -15,9 +15,11 @@ public class TurretGlobalModifierManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-
-       GameManager.Instance.gameDataSO.OnBuildMasterModifiersChanged += UpdateModifiersFromSO;
-       UpdateModifiersFromSO(); // initial sync
+    }
+    private void Start()
+    {
+        GameManager.Instance.gameDataSO.OnBuildMasterModifiersChanged += UpdateModifiersFromSO;
+        UpdateModifiersFromSO(); // initial sync
     }
 
     private void OnDestroy()
