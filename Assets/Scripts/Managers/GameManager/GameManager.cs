@@ -35,6 +35,12 @@ public class GameManager : MonoBehaviour
 
     #region Unity Callbacks
 
+    public void LoadScene(string sceneName)
+    {
+        SaveGame();
+        SceneManager.LoadScene(sceneName);
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -46,17 +52,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        gameDataSO = Instantiate(gameDataSO);
+
         LoadOrCreateSave();
     }
 
-    private void OnEnable() => SceneManager.sceneUnloaded += OnSceneUnloaded;
-    private void OnDisable() => SceneManager.sceneUnloaded -= OnSceneUnloaded;
-
-    private void OnSceneUnloaded(Scene scene)
-    {
-        Debug.Log($"[GameManager] Scene '{scene.name}' unloaded → saving.");
-        SaveGame();
-    }
 
     private void Start()
     {
@@ -154,6 +154,8 @@ public class GameManager : MonoBehaviour
 
     private void HandleAutosave()
     {
+        if (CurrentState != GameState.Playing)
+            return;
         autosaveTimer += Time.deltaTime;
 
         if (autosaveTimer >= autosaveInterval)
