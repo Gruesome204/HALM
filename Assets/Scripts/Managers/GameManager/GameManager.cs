@@ -1,8 +1,10 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -33,9 +35,10 @@ public class GameManager : MonoBehaviour
 
     public bool IsSaveLoaded { get; private set; } = false;
 
-    #region Unity Callbacks
 
-    public void LoadScene(string sceneName)
+#region Unity Callbacks
+
+public void LoadScene(string sceneName)
     {
         SaveGame();
         SceneManager.LoadScene(sceneName);
@@ -245,9 +248,9 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Load Game Routine
+#region Load Game Routine
 
-    private System.Collections.IEnumerator LoadGameRoutine()
+private System.Collections.IEnumerator LoadGameRoutine()
     {
         ChangeState(GameState.Loading);
 
@@ -261,4 +264,5 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
 }
