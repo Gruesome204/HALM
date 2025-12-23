@@ -1,9 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ui="UnityEngine.UIElements"
-    xmlns:uie="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
->
-    
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
+    <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
+    <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
+    <ui:VisualElement name="mainContainer" class="mainContainerClass" style="flex-direction: row; align-items: center; justify-content: center;">
+        <ui:VisualElement name="optionsContainer" style="background-color: rgba(7, 17, 53, 0.47); width: 40%; height: 95%;">
+            <ui:Label text="Label" name="headline" class="headline" />
+            <ui:VisualElement name="ressourceButtonContainer" />
+        </ui:VisualElement>
+        <ui:VisualElement name="detailsContainer" style="width: 35%; height: 80%; background-color: rgba(7, 17, 53, 0.47); margin-left: 2%; align-items: center;">
+            <ui:VisualElement name="detailsMainContainer" class="SlideIn" style="flex-grow: 1; flex-shrink: 0; width: 90%;">
+                <ui:Label text="Label" name="subHeadline" class="sub-headline" style="-unity-text-align: upper-center; flex-grow: 1;" />
+                <ui:VisualElement name="icon" style="flex-grow: 4; flex-shrink: 0;" />
+                <ui:Label text="Label" name="goingRateTxt" class="sub-headline" style="font-size: 15px; flex-grow: 2;" />
+                <ui:VisualElement name="sliderContainer" style="flex-grow: 1; flex-shrink: 0;">
+                    <ui:Label text="Label" name="informationTxt" class="sub-headline" style="font-size: 15px;" />
+                    <ui:VisualElement name="sliderMinMaxTxtContainer" style="flex-direction: row; justify-content: space-between;">
+                        <ui:Label text="1x" name="sliderMinTxt" class="sub-headline" style="font-size: 10px;" />
+                        <ui:Label text="10x" name="sliderMaxTxt" class="sub-headline" style="font-size: 10px;" />
+                    </ui:VisualElement>
+                    <ui:SliderInt value="6" high-value="10" name="howMuchToSellSlider" low-value="1" class="sub-headline" style="font-size: 15px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="btnContainer" style="flex-direction: row; align-items: center; justify-content: center; flex-grow: 3; flex-shrink: 0;">
+                    <ui:Button text="Button" name="sellButton" class="mainMenuBtnClass" />
+                    <ui:Button text="Button" name="buyButton" class="mainMenuBtnClass" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

@@ -19,6 +19,7 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
             //Open the ActionRow and sets Game to playing
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
             GameManager.Instance.ChangeState(GameManager.GameState.HubMenu);
+            FillResourceRow();
         }
         else
         {
@@ -48,6 +49,7 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
 
     void FillResourceRow()
     {
+        resourceContainer.Clear();
         CreateRessourceRowElement(GameManager.Instance.gameDataSO.gameCurrency, "CurrencyIcon");
         CreateRessourceRowElement(GameManager.Instance.gameDataSO.woodResource, "WoodIcon");
         CreateRessourceRowElement(GameManager.Instance.gameDataSO.steinResource, "StoneIcon");
@@ -59,7 +61,5 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
     {
         AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, amountOfRessource, ressourceIcon);
         resourceContainer.Add(aR_Resource.border);
-
-        Debug.Log("Kill me jow");
     }
 }

@@ -31,6 +31,8 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
             //Open the ActionRow and sets Game to playing
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
             GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+            FillResourceRow();
+            FillActionRow();
             Debug.Log("Open ActionRow");
         }
         else
@@ -65,6 +67,7 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         FillTowerLimitBar(TurretPlacementController.Instance.maxTurretCapacity);
 
         TurretPlacementController.Instance.OnTurretsChanged += UpdateTowerLimitBar;
+        
     }
 
     void OnDisable()
@@ -84,10 +87,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         }
     }
 
-    private void Start()
-    {
-        FillActionRow();
-    }
 
     void FillActionRow()
     {
@@ -106,6 +105,7 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     void FillResourceRow()
     {
+        resourceContainer.Clear();
         CreateRessourceRowElement(gameDataSO.gameCurrency, "CurrencyIcon");
         CreateRessourceRowElement(gameDataSO.woodResource, "WoodIcon");
         CreateRessourceRowElement(gameDataSO.steinResource, "StoneIcon");
@@ -113,6 +113,10 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         CreateRessourceRowElement(gameDataSO.pulverResource, "BlackpowderIcon");
     }
 
+    public void RessourceAdded()
+    {
+
+    }
     private void CreateRessourceRowElement(int amountOfRessource, string ressourceIcon)
     {
         AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, amountOfRessource, ressourceIcon);

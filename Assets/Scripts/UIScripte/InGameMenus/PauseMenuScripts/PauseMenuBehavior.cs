@@ -25,8 +25,8 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
             InGameMenuManager.Instance.CloseAllMenus();
             //Open the Pause Menu, adds to openMenu List and sets Game to paused
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
-            InGameMenuManager.Instance.openMenus.Add(this.gameObject);
             GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+            InGameMenuManager.Instance.openMenus.Add(this.gameObject);
         }
         else
         {
@@ -50,8 +50,16 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
         resumeButton.RegisterCallback<ClickEvent>(OnResumeBtnCicked);
 
         statsMenuButton = root.Q<Button>("statsMenuButton");
-        statsMenuButton.SetBinding("text", new LocalizedString("StatsMenuTranslationTable", "statsMenuHeadline"));
-        statsMenuButton.RegisterCallback<ClickEvent>(OnStatsMenuButtonClicked);
+
+        if (SceneManager.GetActiveScene().name != "HubScene")
+        {
+            statsMenuButton.SetBinding("text", new LocalizedString("StatsMenuTranslationTable", "statsMenuHeadline"));
+            statsMenuButton.RegisterCallback<ClickEvent>(OnStatsMenuButtonClicked);
+        }
+        else
+        {
+            statsMenuButton.AddToClassList("vanish");
+        }
 
         settingsButton = root.Q<Button>("settingsButton");
         settingsButton.SetBinding("text", new LocalizedString("MenuTranslationaTable", "settingsButton"));
@@ -65,7 +73,7 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
         }
         else
         {
-            root.Q<VisualElement>("buttonContainer").Remove(cancelRunButton);
+            cancelRunButton.AddToClassList("vanish");
         }
 
         mainMenuButton = root.Q<Button>("mainMenuButton");

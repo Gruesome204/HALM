@@ -27,7 +27,7 @@ public class HubInteractable : MonoBehaviour
         if (interactionName == "Markt")
         {
             InGameMenuManager.Instance.CloseAllMenus();
-            InGameMenuManager.Instance.OpenOrCloseOneMenu("x", true);
+            InGameMenuManager.Instance.OpenOrCloseOneMenu("MarktMenuDoc", true);
         }
 
         if (interactionName == "Schmiede")

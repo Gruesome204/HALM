@@ -180,7 +180,7 @@ public class GameDataSO : ScriptableObject
         SetResourceAmount(type, GetResourceAmount(type) + amount);
     }
 
-    private int GetResourceAmount(ResourceType type)
+    public int GetResourceAmount(ResourceType type)
     {
         return type switch
         {
