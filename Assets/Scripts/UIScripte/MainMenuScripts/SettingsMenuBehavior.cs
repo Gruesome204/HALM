@@ -46,6 +46,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
     private void OnEnable()
     {
+       gameDataSO = GameManager.Instance.gameDataSO;
        StartCoroutine(WaitForSaveLoad());
     }
     private IEnumerator WaitForSaveLoad()

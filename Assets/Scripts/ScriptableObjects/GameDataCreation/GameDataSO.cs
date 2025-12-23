@@ -272,21 +272,40 @@ public class GameDataSO : ScriptableObject
         metallResource = defaults.metallResource;
         pulverResource = defaults.pulverResource;
 
-        // Turrets
-        unlockedBlueprints = new List<TurretBlueprint>(defaults.defaultUnlockedBlueprints)
+        // All Turrets and BuildMasterModifiers
+        allTurretBlueprints = new List<TurretBlueprint>(defaults.allTurretBlueprints ?? new());
+        allBuildMasterModifiers = new List<BuildMasterModifier>(defaults.allBuildMasterModifiers ?? new());
+
+        // Unlocked / Selected Turrets
+        unlockedBlueprints = new List<TurretBlueprint>(defaults.defaultUnlockedBlueprints ?? new())
             .Take(limitOfUnlockableTurrets)
             .ToList();
-        selectedBlueprints = unlockedBlueprints
-            .Take(limitOfSelectableTurrets)
-            .ToList(); // auto-select first unlocked ones
 
-        // BuildMasterModifiers
-        unlockedBuildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers)
+        selectedBlueprints = defaults.defaultSelectedBlueprints != null && defaults.defaultSelectedBlueprints.Count > 0
+            ? defaults.defaultSelectedBlueprints
+                .Where(IsUnlocked)
+                .Take(limitOfSelectableTurrets)
+                .ToList()
+            : unlockedBlueprints
+                .Take(limitOfSelectableTurrets)
+                .ToList();
+
+        // Unlocked / Selected Modifiers
+        unlockedBuildMasterModifiers = new List<BuildMasterModifier>(defaults.defaultModifiers ?? new())
             .Take(limitOfUnlockableModifiers)
             .ToList();
-        buildMasterModifiers = unlockedBuildMasterModifiers
-            .Take(limitOfSelectableModifiers)
-            .ToList(); // auto-select first unlocked ones
+
+        buildMasterModifiers = defaults.defaultSelectedModifiers != null && defaults.defaultSelectedModifiers.Count > 0
+            ? defaults.defaultSelectedModifiers
+                .Where(IsModifierUnlocked)
+                .Take(limitOfSelectableModifiers)
+                .ToList()
+            : unlockedBuildMasterModifiers
+                .Take(limitOfSelectableModifiers)
+                .ToList();
+
+        // Notify listeners
+        OnBuildMasterModifiersChanged?.Invoke();
     }
 
 
