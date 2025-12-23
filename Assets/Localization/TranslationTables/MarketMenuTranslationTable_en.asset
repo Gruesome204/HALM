@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: MarketMenuTranslationTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 4e92320f802ff2a46a033f3d12a65ffc, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 3575255040
+    m_Localized: Market Square
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6171529216
+    m_Localized: Sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61595062272
+    m_Localized: Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14747581419520
+    m_Localized: Department
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22006042595328
+    m_Localized: 'You don''t have enough '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27009511723008
+    m_Localized: ' selected'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29862573772800
+    m_Localized: 'Gold to Gold ratio:
+
+
+      Buying: 1:1
+
+      Selling: 1:1'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30203289669632
+    m_Localized: 'Wood to Gold ratio:
+
+
+      Buying: 1:3
+
+      Selling: 1:2'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30496404410368
+    m_Localized: 'Stone to Gold ratio:
+
+
+      Buying: 1:5
+
+      Selling: 1:3'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30712964714496
+    m_Localized: 'Metal to Gold ratio:
+
+
+      Buying: 1:8
+
+      Selling: 1:5'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30869668106240
+    m_Localized: 'Blackpowder to Gold ratio:
+
+
+      Buying: 1:12
+
+      Selling:
+      1:8'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

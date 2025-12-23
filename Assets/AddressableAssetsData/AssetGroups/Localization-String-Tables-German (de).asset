@@ -109,6 +109,12 @@ MonoBehaviour:
     - Locale-de
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c76d75322d607441bf733cc3571c8de
+    m_Address: MarketMenuTranslationTable_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a280f1be2a9f75042971a7f772af3ab1
     m_Address: TurretTranslationCommon_de
     m_ReadOnly: 1

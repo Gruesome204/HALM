@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: MarketMenuTranslationTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: MarketMenuTranslationTable
+  m_TableCollectionNameGuidString: 4e92320f802ff2a46a033f3d12a65ffc
+  m_Entries:
+  - m_Id: 3575255040
+    m_Key: headline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14747581419520
+    m_Key: subHeadline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6171529216
+    m_Key: sellButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61595062272
+    m_Key: buyButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22006042595328
+    m_Key: notEnough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27009511723008
+    m_Key: selectedAmount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29862573772800
+    m_Key: CurrencyGoingRate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30203289669632
+    m_Key: WoodGoingRate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30496404410368
+    m_Key: StoneGoingRate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30712964714496
+    m_Key: MetalGoingRate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30869668106240
+    m_Key: PulverGoingRate
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6828362469445468288
+  references:
+    version: 2
+    RefIds:
+    - rid: 6828362469445468288
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1766506954100

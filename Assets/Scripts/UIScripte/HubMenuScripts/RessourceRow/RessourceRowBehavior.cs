@@ -53,8 +53,8 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
         CreateRessourceRowElement(GameManager.Instance.gameDataSO.gameCurrency, "CurrencyIcon");
         CreateRessourceRowElement(GameManager.Instance.gameDataSO.woodResource, "WoodIcon");
         CreateRessourceRowElement(GameManager.Instance.gameDataSO.steinResource, "StoneIcon");
-        CreateRessourceRowElement(GameManager.Instance.gameDataSO.metallResource, "MetallIcon");
-        CreateRessourceRowElement(GameManager.Instance.gameDataSO.pulverResource, "BlackpowderIcon");
+        CreateRessourceRowElement(GameManager.Instance.gameDataSO.metallResource, "MetalIcon");
+        CreateRessourceRowElement(GameManager.Instance.gameDataSO.pulverResource, "PulverIcon");
     }
 
     private void CreateRessourceRowElement(int amountOfRessource, string ressourceIcon)

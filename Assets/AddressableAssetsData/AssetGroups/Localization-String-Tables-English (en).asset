@@ -110,6 +110,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91f0c26865c8ea949a6c3370ec8f5a65
+    m_Address: MarketMenuTranslationTable_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a640f8d5a6ba9dd4780b90e28f797d2d
     m_Address: "BMTranslationsBalistischeMessger\xE4te_en"
     m_ReadOnly: 1

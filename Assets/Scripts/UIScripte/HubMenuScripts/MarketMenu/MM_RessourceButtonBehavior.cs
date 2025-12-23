@@ -11,7 +11,7 @@ public class MM_RessourceButtonBehaviior
 
     private ResourceType represendetRessource;
     private MarketMenuBehavior marketMenu;
-    public MM_RessourceButtonBehaviior(VisualTreeAsset _asset, ResourceType _type, string iconGlass, MarketMenuBehavior _marketMenu)
+    public MM_RessourceButtonBehaviior(VisualTreeAsset _asset, ResourceType _type, MarketMenuBehavior _marketMenu)
     {
         TemplateContainer buttonElement = _asset.Instantiate();
 
@@ -24,7 +24,7 @@ public class MM_RessourceButtonBehaviior
         button.RegisterCallback<ClickEvent>(OnButtonClicked);
 
         icon = buttonElement.Q<VisualElement>("icon");
-        icon.AddToClassList(iconGlass);
+        icon.AddToClassList($"{represendetRessource}Icon");
 
         ressourceAmount = buttonElement.Q<Label>("turretNumber");
         ressourceAmount.text = GameManager.Instance.gameDataSO.GetResourceAmount(_type).ToString();

@@ -20,11 +20,11 @@ MonoBehaviour:
   soundVolume: 0.32
   currentClass: 0
   currentPlayerLevel: 0
-  gameCurrency: 0
+  gameCurrency: 35
   woodResource: 0
   steinResource: 0
-  metallResource: 0
-  pulverResource: 0
+  metallResource: 14
+  pulverResource: 23
   allTurretBlueprints:
   - {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
   - {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
@@ -47,9 +47,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2fc5e4ef1149ae745af940e75217bee3, type: 2}
   buildMasterModifiers:
   - {fileID: 11400000, guid: e6c9d6b6ad2f8dc44846d9621fbe1163, type: 2}
-  - {fileID: 11400000, guid: 909bf050f53471b48b52a65858383ff2, type: 2}
   - {fileID: 11400000, guid: 40748bb504db2554c91a3400f59bc5b8, type: 2}
-  - {fileID: 11400000, guid: e1d09ff082bc4f447a0e806ed2410fd9, type: 2}
   - {fileID: 11400000, guid: 2fc5e4ef1149ae745af940e75217bee3, type: 2}
   unlockedBuildMasterModifiers:
   - {fileID: 11400000, guid: e6c9d6b6ad2f8dc44846d9621fbe1163, type: 2}

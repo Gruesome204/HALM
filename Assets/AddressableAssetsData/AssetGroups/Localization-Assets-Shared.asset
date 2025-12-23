@@ -39,6 +39,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e92320f802ff2a46a033f3d12a65ffc
+    m_Address: Assets/Localization/TranslationTables/MarketMenuTranslationTable Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 620bc351ac75a8e49b04dfd3cb12eb5e
     m_Address: Assets/Localization/TranslationTables/BMTranslations/BMTranslationTest1
       Shared Data.asset
