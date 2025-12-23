@@ -51,6 +51,13 @@ public class GameDataSO : ScriptableObject
 
     public event Action OnBuildMasterModifiersChanged;
 
+    // delta = change, newTotal = current amount
+    public event Action<int, int> OnCurrencyChanged;
+    public event Action<int, int> OnWoodChanged;
+    public event Action<int, int> OnStoneChanged;
+    public event Action<int, int> OnMetalChanged;
+    public event Action<int, int> OnPulverChanged;
+
     private void OnEnable()
     {
         unlockedBlueprints ??= new();
@@ -172,11 +179,13 @@ public class GameDataSO : ScriptableObject
 
     public void RemoveResource(ResourceType type, int amount)
     {
+        if (amount <= 0) return; // ignore non-positive amounts
         SetResourceAmount(type, GetResourceAmount(type) - amount);
     }
 
     public void AddResource(ResourceType type, int amount)
     {
+        if (amount <= 0) return; // ignore non-positive amounts
         SetResourceAmount(type, GetResourceAmount(type) + amount);
     }
 
@@ -200,19 +209,48 @@ public class GameDataSO : ScriptableObject
         switch (type)
         {
             case ResourceType.Currency:
-                gameCurrency = value;
+                int deltaCurrency = value - gameCurrency;
+                if (deltaCurrency != 0)
+                {
+                    gameCurrency = value;
+                    OnCurrencyChanged?.Invoke(deltaCurrency, gameCurrency);
+                }
                 break;
+
             case ResourceType.Wood:
-                woodResource = value;
+                int deltaWood = value - woodResource;
+                if (deltaWood != 0)
+                {
+                    woodResource = value;
+                    OnWoodChanged?.Invoke(deltaWood, woodResource);
+                }
                 break;
+
             case ResourceType.Stone:
-                steinResource = value;
+                int deltaStone = value - steinResource;
+                if (deltaStone != 0)
+                {
+                    steinResource = value;
+                    OnStoneChanged?.Invoke(deltaStone, steinResource);
+                }
                 break;
+
             case ResourceType.Metal:
-                metallResource = value;
+                int deltaMetal = value - metallResource;
+                if (deltaMetal != 0)
+                {
+                    metallResource = value;
+                    OnMetalChanged?.Invoke(deltaMetal, metallResource);
+                }
                 break;
+
             case ResourceType.Pulver:
-                pulverResource = value;
+                int deltaPulver = value - pulverResource;
+                if (deltaPulver != 0)
+                {
+                    pulverResource = value;
+                    OnPulverChanged?.Invoke(deltaPulver, pulverResource);
+                }
                 break;
         }
     }
