@@ -6,6 +6,7 @@
         <ui:VisualElement name="optionsContainer" style="background-color: rgba(7, 17, 53, 0.47); width: 40%; height: 95%;">
             <ui:Label text="Label" name="headline" class="headline" />
             <ui:VisualElement name="ressourceButtonContainer" />
+            <ui:Button name="backBtn" text="X" class="mainMenuBtnClass backBtnClass" />
         </ui:VisualElement>
         <ui:VisualElement name="detailsContainer" style="width: 35%; height: 80%; margin-left: 2%; align-items: center;">
             <ui:VisualElement name="detailsMainContainer" class="SlideIn" style="flex-grow: 1; flex-shrink: 0; width: 90%; background-color: rgba(7, 17, 53, 0.47);">

@@ -1,8 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
-    <ui:VisualElement name="container" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; background-color: rgba(255, 255, 255, 0.39);">
-        <ui:VisualElement name="addSymbol" style="flex-grow: 1; background-image: url(&quot;project://database/Packages/com.unity.render-pipelines.core/Editor/LookDev/Icons/d_Add@2x.png?fileID=2800000&amp;guid=daa49a1f06460a04b9827dd6f0bace08&amp;type=3#d_Add@2x&quot;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(0, 0, 0);" />
-        <ui:Label text="Label" name="addedNumber" class="sub-headline" style="font-size: 15px; color: rgb(0, 0, 0);" />
-        <ui:VisualElement name="icon" style="flex-grow: 1; -unity-background-scale-mode: scale-to-fit;" />
+    <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
+    <ui:VisualElement name="container" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; background-color: rgba(255, 255, 255, 0.39); height: 100%;">
+        <ui:Label text="Label" name="addedNumber" class="sub-headline" style="font-size: 15px; color: rgb(0, 0, 0); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-left;" />
+        <ui:VisualElement name="icon" class="WoodIcon" style="flex-grow: 1; -unity-background-scale-mode: scale-to-fit; flex-shrink: 0; align-self: stretch; height: auto; width: auto;" />
+        <ui:Label name="sizeHolder" style="font-size: 15px; color: rgb(0, 0, 0); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 11px; padding-right: 11px; padding-bottom: 11px; padding-left: 11px;" />
     </ui:VisualElement>
 </ui:UXML>

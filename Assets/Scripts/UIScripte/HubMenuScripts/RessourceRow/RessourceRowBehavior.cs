@@ -12,8 +12,6 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
     public VisualTreeAsset resourceElementAsset;
     public VisualTreeAsset ressourceAddedElement;
 
-    private List<AR_ResourceBehavior> ressourceElementList = new List<AR_ResourceBehavior>();
-
 
     public void OpenOrClose(Boolean open)
     {
@@ -24,7 +22,6 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
             //Open the ActionRow and sets Game to playing
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
             GameManager.Instance.ChangeState(GameManager.GameState.HubMenu);
-            FillResourceRow();
         }
         else
         {
@@ -45,21 +42,8 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
 
         FillResourceRow();
 
-        GameManager.Instance.OnRessourceChanged += RessourceAdded;
     }
 
-    public void RessourceAdded(ResourceType _type, int change, int currentAmount)
-    {
-        foreach (var ressource in ressourceElementList)
-        {
-            if (ressource.GetRessourceType() == _type)
-            {
-                //do shit i guess
-                ressource.CreateAddRessourceElement(ressourceAddedElement, change, _type);
-                return;
-            }
-        }
-    }
     void PauseBtnClicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.CloseAllMenus();
@@ -69,7 +53,6 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
     void FillResourceRow()
     {
         resourceContainer.Clear();
-        ressourceElementList.Clear();
         CreateRessourceRowElement(ResourceType.Currency);
         CreateRessourceRowElement(ResourceType.Wood);
         CreateRessourceRowElement(ResourceType.Stone);
@@ -80,8 +63,7 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
 
     private void CreateRessourceRowElement(ResourceType _type)
     {
-        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, _type);
-        ressourceElementList.Add(aR_Resource);
+        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, _type, ressourceAddedElement);
         resourceContainer.Add(aR_Resource.border);
     }
 }

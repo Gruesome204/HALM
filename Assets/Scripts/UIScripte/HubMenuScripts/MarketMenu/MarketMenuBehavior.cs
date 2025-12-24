@@ -8,6 +8,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
 {
     private Label headline;
     private VisualElement ressourceButtonContainer;
+    private Button backBtn;
 
     private VisualElement detailsMainContainer;
     private Label subHeadline;
@@ -41,9 +42,8 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").AddToClassList("turretChoiceMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
             Clear();
+            GameManager.Instance.SaveGame();
         }
-
-        GameManager.Instance.SaveGame();
     }
     void OnEnable()
     {
@@ -54,6 +54,9 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
         headline.SetBinding("text", new LocalizedString("MarketMenuTranslationTable", "headline"));
 
         ressourceButtonContainer = root.Q<VisualElement>("ressourceButtonContainer");
+
+        backBtn = root.Q<Button>("backBtn");
+        backBtn.RegisterCallback<ClickEvent>(OnBackBtnClicked);
 
         //Connecting everything on the right
         detailsMainContainer = root.Q<VisualElement>("detailsMainContainer");
@@ -191,5 +194,10 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
                                 + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{ResourceType.Currency}").GetLocalizedString();
         }
         GameManager.Instance.SaveGame();
+    }
+
+    private void OnBackBtnClicked(ClickEvent evt)
+    {
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("MarktMenuDoc", false);
     }
 }

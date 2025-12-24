@@ -46,6 +46,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").AddToClassList("turretChoiceMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
             Clear();
+            GameManager.Instance.SaveGame();
         }
     }
 
@@ -234,6 +235,5 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     void OnBackBtnClicked(ClickEvent clicked)
     {
         InGameMenuManager.Instance.OpenOrCloseOneMenu("WorkshopDoc", false);
-        GameManager.Instance.SaveGame();
     }
 }

@@ -22,7 +22,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<AR_TowerLimitElementBehavior> towerLimitElementList = new List<AR_TowerLimitElementBehavior>();
-    private List<AR_ResourceBehavior> ressourceElementList = new List<AR_ResourceBehavior>();
 
     private void Awake()
     {
@@ -36,7 +35,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         if (open)
         {
             FillActionRow();
-            FillResourceRow();
             //Open the ActionRow and sets Game to playing
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
             GameManager.Instance.ChangeState(GameManager.GameState.Playing);
@@ -49,7 +47,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     }
     void OnEnable()
     {
-
         var root = GetComponent<UIDocument>().rootVisualElement;
 
 
@@ -74,8 +71,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         FillTowerLimitBar(TurretPlacementController.Instance.maxTurretCapacity);
 
         TurretPlacementController.Instance.OnTurretsChanged += UpdateTowerLimitBar;
-
-        GameManager.Instance.OnRessourceChanged += RessourceAdded;
     }
 
     void OnDisable()
@@ -119,7 +114,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     void FillResourceRow()
     {
         resourceContainer.Clear();
-        ressourceElementList.Clear();
         CreateRessourceRowElement(ResourceType.Currency);
         CreateRessourceRowElement(ResourceType.Wood);
         CreateRessourceRowElement(ResourceType.Stone);
@@ -128,22 +122,9 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     }
 
-    public void RessourceAdded(ResourceType _type, int change, int currentAmount)
-    {
-        foreach (var ressource in ressourceElementList)
-        {
-            if (ressource.GetRessourceType() == _type)
-            {
-                //do shit i guess
-                ressource.CreateAddRessourceElement(ressourceAddedElement, change, _type);
-                return;
-            }
-        }
-    }
     private void CreateRessourceRowElement(ResourceType _type)
     {
-        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, _type);
-        ressourceElementList.Add(aR_Resource);
+        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, _type, ressourceAddedElement);
         resourceContainer.Add(aR_Resource.border);
     }
 

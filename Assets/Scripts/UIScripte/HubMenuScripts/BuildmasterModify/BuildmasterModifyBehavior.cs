@@ -42,6 +42,7 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").AddToClassList("turretChoiceMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
             ClearMenu();
+            GameManager.Instance.SaveGame();
         }
     }
 
@@ -228,6 +229,5 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     private void OnBackBtnClicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.OpenOrCloseOneMenu("BuildmasterModifyDoc", false);
-        GameManager.Instance.SaveGame();
     }
 }

@@ -183,7 +183,7 @@ public class GameDataSO : ScriptableObject
     {
         if (amount <= 0) return; // ignore non-positive amounts
         SetResourceAmount(type, GetResourceAmount(type) + amount);
-        OnResourceChanged?.Invoke(type, GetResourceAmount(type));
+        OnResourceChanged?.Invoke(type, amount);
     }
 
     public int GetResourceAmount(ResourceType type)
@@ -210,7 +210,6 @@ public class GameDataSO : ScriptableObject
                 if (deltaCurrency != 0)
                 {
                     gameCurrency = value;
-                    GameManager.Instance.CallRessourceChanged(ResourceType.Currency, deltaCurrency, gameCurrency);
                 }
                 break;
 
@@ -219,7 +218,6 @@ public class GameDataSO : ScriptableObject
                 if (deltaWood != 0)
                 {
                     woodResource = value;
-                    GameManager.Instance.CallRessourceChanged(ResourceType.Wood, deltaWood, gameCurrency);
                 }
                 break;
 
@@ -228,7 +226,6 @@ public class GameDataSO : ScriptableObject
                 if (deltaStone != 0)
                 {
                     steinResource = value;
-                    GameManager.Instance.CallRessourceChanged(ResourceType.Stone, deltaStone, gameCurrency);
                 }
                 break;
 
@@ -237,7 +234,6 @@ public class GameDataSO : ScriptableObject
                 if (deltaMetal != 0)
                 {
                     metallResource = value;
-                    GameManager.Instance.CallRessourceChanged(ResourceType.Metal, deltaMetal, gameCurrency);
                 }
                 break;
 
@@ -246,7 +242,6 @@ public class GameDataSO : ScriptableObject
                 if (deltaPulver != 0)
                 {
                     pulverResource = value;
-                    GameManager.Instance.CallRessourceChanged(ResourceType.Pulver, deltaPulver, gameCurrency);
                 }
                 break;
         }

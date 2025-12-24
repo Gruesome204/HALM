@@ -40,6 +40,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
         {
             root.Q<VisualElement>("mainContainer").AddToClassList("settingsMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
+            GameManager.Instance.SaveGame();
         }
     }
     #endregion
@@ -128,27 +129,23 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
         {
             gameDataSO.masterVolume = evt.newValue;
             SetAllMusicVolume(gameDataSO.masterVolume * gameDataSO.musicVolume);
-            GameManager.Instance.SaveGame();
         });
 
         musicVolumeSlider.RegisterValueChangedCallback(evt =>
         {
             gameDataSO.musicVolume = evt.newValue;
             SetAllMusicVolume(gameDataSO.masterVolume * gameDataSO.musicVolume);
-            GameManager.Instance.SaveGame();
         });
 
         soundVolumeSlider.RegisterValueChangedCallback(evt =>
         {
             gameDataSO.soundVolume = evt.newValue;
-            GameManager.Instance.SaveGame();
         });
 
         musicTrackSlider.RegisterValueChangedCallback(evt =>
         {
             gameDataSO.musicTrack = evt.newValue;
             PlayThisMusic(evt.newValue);
-            GameManager.Instance.SaveGame();
         });
     }
     #endregion

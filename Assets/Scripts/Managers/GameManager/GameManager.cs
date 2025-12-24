@@ -35,13 +35,6 @@ public class GameManager : MonoBehaviour
 
     public bool IsSaveLoaded { get; private set; } = false;
 
-    public event Action<ResourceType, int, int> OnRessourceChanged;
-
-    public void CallRessourceChanged(ResourceType _type, int changedAmount, int currentAmount)
-    {
-        OnRessourceChanged?.Invoke(_type, changedAmount, currentAmount);
-    }
-
 
     #region Unity Callbacks
 

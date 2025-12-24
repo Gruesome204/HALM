@@ -19,13 +19,7 @@ public class AR_RessourceAddedBehavior
         addedNumber = asset.Q<Label>("addedNumber");
         addedNumber.text = _addedNumber.ToString();
 
-        icon = asset.Q<VisualElement>("icon");
-        icon.AddToClassList($"{_type}Icon");
-    }
-
-    private void DestroySlef()
-    {
-        Debug.Log("Kamikaze");
-        container.GetFirstAncestorOfType<VisualElement>().Remove(container);
+        asset.Q<VisualElement>("icon").RemoveFromClassList("WoodIcon");
+        //icon.AddToClassList($"WoodIcon");
     }
 }

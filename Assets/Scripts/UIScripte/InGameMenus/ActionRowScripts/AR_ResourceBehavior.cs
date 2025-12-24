@@ -11,10 +11,10 @@ public class AR_ResourceBehavior
     private ResourceType representedRessource;
     private VisualTreeAsset resourceAsset;
 
-    public AR_ResourceBehavior(VisualTreeAsset asset, ResourceType _type)
+    public AR_ResourceBehavior(VisualTreeAsset asset, ResourceType _type, VisualTreeAsset addRessourceAsset)
     {
         representedRessource = _type;
-        resourceAsset = asset;
+        resourceAsset = addRessourceAsset;
 
         // Instantiate the main resource UI
         TemplateContainer resourceElemente = asset.Instantiate();
@@ -35,7 +35,9 @@ public class AR_ResourceBehavior
     private void UpdateResourceUI(ResourceType type, int newAmount)
     {
         if (type != representedRessource) return;
-        resourceAmount.text = newAmount.ToString();
+        resourceAmount.text = GameManager.Instance.gameDataSO.GetResourceAmount(type).ToString();
+
+        CreateAddRessourceElement(resourceAsset, newAmount, type);
     }
 
     public ResourceType GetRessourceType()
@@ -55,12 +57,6 @@ public class AR_ResourceBehavior
         // Schedule removal after 1 second
         addElement.schedule
             .Execute(() => addElement.RemoveFromHierarchy())
-            .StartingIn(1000); // Delay in milliseconds
-    }
-
-    public void DestroySelf()
-    {
-        GameManager.Instance.gameDataSO.OnResourceChanged -= UpdateResourceUI;
-        border.GetFirstAncestorOfType<VisualElement>()?.Remove(border);
+            .StartingIn(2000); // Delay in milliseconds
     }
 }
