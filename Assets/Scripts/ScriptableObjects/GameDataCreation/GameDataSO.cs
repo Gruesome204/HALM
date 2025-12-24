@@ -51,6 +51,8 @@ public class GameDataSO : ScriptableObject
 
     public event Action OnBuildMasterModifiersChanged;
 
+    public event System.Action<ResourceType, int> OnResourceChanged;
+
 
     private void OnEnable()
     {
@@ -181,6 +183,7 @@ public class GameDataSO : ScriptableObject
     {
         if (amount <= 0) return; // ignore non-positive amounts
         SetResourceAmount(type, GetResourceAmount(type) + amount);
+        OnResourceChanged?.Invoke(type, GetResourceAmount(type));
     }
 
     public int GetResourceAmount(ResourceType type)
