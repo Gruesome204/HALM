@@ -42,6 +42,8 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
             Clear();
         }
+
+        GameManager.Instance.SaveGame();
     }
     void OnEnable()
     {
@@ -169,6 +171,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             informationTxt.text = LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"notEnough").GetLocalizedString()
                                 + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{openRessourceDetails}").GetLocalizedString();
         }
+        GameManager.Instance.SaveGame();
     }
 
     void OnBuyButtonClicked(ClickEvent evt)
@@ -187,5 +190,6 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             informationTxt.text = LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"notEnough").GetLocalizedString()
                                 + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{ResourceType.Currency}").GetLocalizedString();
         }
+        GameManager.Instance.SaveGame();
     }
 }

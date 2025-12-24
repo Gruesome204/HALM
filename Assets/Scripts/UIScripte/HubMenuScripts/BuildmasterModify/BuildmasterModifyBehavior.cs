@@ -228,5 +228,6 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     private void OnBackBtnClicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.OpenOrCloseOneMenu("BuildmasterModifyDoc", false);
+        GameManager.Instance.SaveGame();
     }
 }
