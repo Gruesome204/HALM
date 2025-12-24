@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class ActionRowBehavior : MonoBehaviour, IMenu
@@ -23,6 +24,10 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     private List<AR_TowerLimitElementBehavior> towerLimitElementList = new List<AR_TowerLimitElementBehavior>();
     private List<AR_ResourceBehavior> ressourceElementList = new List<AR_ResourceBehavior>();
 
+    private void Awake()
+    {
+        gameDataSO = GameManager.Instance.gameDataSO;
+    }
 
     public void OpenOrClose(Boolean open)
     {
@@ -30,11 +35,11 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         var root = GetComponent<UIDocument>().rootVisualElement;
         if (open)
         {
+            FillActionRow();
+            FillResourceRow();
             //Open the ActionRow and sets Game to playing
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
             GameManager.Instance.ChangeState(GameManager.GameState.Playing);
-            FillResourceRow();
-            FillActionRow();
         }
         else
         {
@@ -44,6 +49,7 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     }
     void OnEnable()
     {
+
         var root = GetComponent<UIDocument>().rootVisualElement;
 
 
@@ -78,7 +84,9 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
             TurretPlacementController.Instance.OnTurretsChanged -= UpdateTowerLimitBar;
 
         TurretDemolitionController.Instance.OnDemolitionModeChange -= TurretButtonContainerColor;
+
     }
+
 
     private void FixedUpdate()
     {
@@ -93,10 +101,12 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     void FillActionRow()
     {
         turretBtnList.Clear();
+        turretButtonContainer.Clear();
         var turretNumber = new int();
         turretNumber = 1;
         foreach (var turret in GameManager.Instance.gameDataSO.GetSelectedBlueprints())
         {
+            Debug.Log(GameManager.Instance.gameDataSO.GetSelectedBlueprints().Count);
             Debug.Log("Help me");
             AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret, turretNumber);
             turretButtonContainer.Add(aR_Element.turretBorder);

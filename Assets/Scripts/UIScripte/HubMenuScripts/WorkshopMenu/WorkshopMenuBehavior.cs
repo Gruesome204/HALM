@@ -223,27 +223,17 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
 
     private Boolean TurretCanBeBought()
     {
-        var canBeBought = new Boolean();
-        canBeBought = true;
-
         foreach (var cost in openTurretDetails.buyCost)
         {
-            if (GameManager.Instance.gameDataSO.HasResource(cost.resourceType, cost.amount))
-            {
-
-            }
-            else
-            {
-                canBeBought = false;
-                return canBeBought;
-            }
-
+            if (!GameManager.Instance.gameDataSO.HasResource(cost.resourceType, cost.amount))
+                return false;
         }
-        return canBeBought;
+        return true;
     }
 
     void OnBackBtnClicked(ClickEvent clicked)
     {
         InGameMenuManager.Instance.OpenOrCloseOneMenu("WorkshopDoc", false);
+        GameManager.Instance.SaveGame();
     }
 }
