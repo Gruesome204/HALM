@@ -30,6 +30,7 @@ public class GameOverBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").AddToClassList("settingsMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
         }
+        GameManager.Instance.SaveGame();
     }
     private void OnEnable()
     {
