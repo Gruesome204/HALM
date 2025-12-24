@@ -48,10 +48,12 @@ public class EnterDungeonBehavior : MonoBehaviour, IMenu
     void OnEnterDungeonBtnClicked(ClickEvent evt)
     {
         SceneManager.LoadScene("GameScene");
+        GameManager.Instance.SaveGame();
     }
 
     void OnStayInHubBtnClicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.OpenOrCloseOneMenu("EnterDungeonDoc", false);
+        GameManager.Instance.SaveGame();
     }
 }
