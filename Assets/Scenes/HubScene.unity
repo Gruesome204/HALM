@@ -1076,6 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceElementAsset: {fileID: 9197481963319205126, guid: 4bd58734194a10b4688b9fb12f1f84e8, type: 3}
+  ressourceAddedElement: {fileID: 9197481963319205126, guid: 6a03a5841fdca06429cc85a0946a8be8, type: 3}
 --- !u!114 &430137879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2695,9 +2696,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 845095075}
   - {fileID: 1165752281}
+  - {fileID: 2023103396}
   - {fileID: 1832977395}
   - {fileID: 368423651}
   - {fileID: 4816159}
   - {fileID: 1872803193}
   - {fileID: 960880854}
-  - {fileID: 2023103396}

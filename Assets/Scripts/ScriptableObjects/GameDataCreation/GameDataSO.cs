@@ -51,12 +51,6 @@ public class GameDataSO : ScriptableObject
 
     public event Action OnBuildMasterModifiersChanged;
 
-    // delta = change, newTotal = current amount
-    public event Action<int, int> OnCurrencyChanged;
-    public event Action<int, int> OnWoodChanged;
-    public event Action<int, int> OnStoneChanged;
-    public event Action<int, int> OnMetalChanged;
-    public event Action<int, int> OnPulverChanged;
 
     private void OnEnable()
     {
@@ -114,7 +108,7 @@ public class GameDataSO : ScriptableObject
     // Get all selected blueprints
     public List<TurretBlueprint> GetSelectedBlueprints()
     {
-        return selectedBlueprints.ToList();
+        return selectedBlueprints;
     }
 
     public bool IsModifierSelected(BuildMasterModifier modifier)
@@ -213,7 +207,7 @@ public class GameDataSO : ScriptableObject
                 if (deltaCurrency != 0)
                 {
                     gameCurrency = value;
-                    OnCurrencyChanged?.Invoke(deltaCurrency, gameCurrency);
+                    GameManager.Instance.CallRessourceChanged(ResourceType.Currency, deltaCurrency, gameCurrency);
                 }
                 break;
 
@@ -222,7 +216,7 @@ public class GameDataSO : ScriptableObject
                 if (deltaWood != 0)
                 {
                     woodResource = value;
-                    OnWoodChanged?.Invoke(deltaWood, woodResource);
+                    GameManager.Instance.CallRessourceChanged(ResourceType.Wood, deltaWood, gameCurrency);
                 }
                 break;
 
@@ -231,7 +225,7 @@ public class GameDataSO : ScriptableObject
                 if (deltaStone != 0)
                 {
                     steinResource = value;
-                    OnStoneChanged?.Invoke(deltaStone, steinResource);
+                    GameManager.Instance.CallRessourceChanged(ResourceType.Stone, deltaStone, gameCurrency);
                 }
                 break;
 
@@ -240,7 +234,7 @@ public class GameDataSO : ScriptableObject
                 if (deltaMetal != 0)
                 {
                     metallResource = value;
-                    OnMetalChanged?.Invoke(deltaMetal, metallResource);
+                    GameManager.Instance.CallRessourceChanged(ResourceType.Metal, deltaMetal, gameCurrency);
                 }
                 break;
 
@@ -249,7 +243,7 @@ public class GameDataSO : ScriptableObject
                 if (deltaPulver != 0)
                 {
                     pulverResource = value;
-                    OnPulverChanged?.Invoke(deltaPulver, pulverResource);
+                    GameManager.Instance.CallRessourceChanged(ResourceType.Pulver, deltaPulver, gameCurrency);
                 }
                 break;
         }

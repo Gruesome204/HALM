@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UIElements;
@@ -9,6 +10,10 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
     private Button pauseMenuButton;
 
     public VisualTreeAsset resourceElementAsset;
+    public VisualTreeAsset ressourceAddedElement;
+
+    private List<AR_ResourceBehavior> ressourceElementList = new List<AR_ResourceBehavior>();
+
 
     public void OpenOrClose(Boolean open)
     {
@@ -39,8 +44,22 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
         pauseMenuButton.RegisterCallback<ClickEvent>(PauseBtnClicked);
 
         FillResourceRow();
+
+        GameManager.Instance.OnRessourceChanged += RessourceAdded;
     }
 
+    public void RessourceAdded(ResourceType _type, int change, int currentAmount)
+    {
+        foreach (var ressource in ressourceElementList)
+        {
+            if (ressource.GetRessourceType() == _type)
+            {
+                //do shit i guess
+                ressource.CreateAddRessourceElement(ressourceAddedElement, change, _type);
+                return;
+            }
+        }
+    }
     void PauseBtnClicked(ClickEvent evt)
     {
         InGameMenuManager.Instance.CloseAllMenus();
@@ -50,16 +69,19 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
     void FillResourceRow()
     {
         resourceContainer.Clear();
-        CreateRessourceRowElement(GameManager.Instance.gameDataSO.gameCurrency, "CurrencyIcon");
-        CreateRessourceRowElement(GameManager.Instance.gameDataSO.woodResource, "WoodIcon");
-        CreateRessourceRowElement(GameManager.Instance.gameDataSO.steinResource, "StoneIcon");
-        CreateRessourceRowElement(GameManager.Instance.gameDataSO.metallResource, "MetalIcon");
-        CreateRessourceRowElement(GameManager.Instance.gameDataSO.pulverResource, "PulverIcon");
+        ressourceElementList.Clear();
+        CreateRessourceRowElement(ResourceType.Currency);
+        CreateRessourceRowElement(ResourceType.Wood);
+        CreateRessourceRowElement(ResourceType.Stone);
+        CreateRessourceRowElement(ResourceType.Metal);
+        CreateRessourceRowElement(ResourceType.Pulver);
+
     }
 
-    private void CreateRessourceRowElement(int amountOfRessource, string ressourceIcon)
+    private void CreateRessourceRowElement(ResourceType _type)
     {
-        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, amountOfRessource, ressourceIcon);
+        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, _type);
+        ressourceElementList.Add(aR_Resource);
         resourceContainer.Add(aR_Resource.border);
     }
 }

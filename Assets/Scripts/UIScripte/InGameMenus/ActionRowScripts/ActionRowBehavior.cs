@@ -16,10 +16,12 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     public VisualTreeAsset actionRowElementAsset;
     public VisualTreeAsset resourceElementAsset;
+    public VisualTreeAsset ressourceAddedElement;
     public VisualTreeAsset towerLimitElement;
 
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<AR_TowerLimitElementBehavior> towerLimitElementList = new List<AR_TowerLimitElementBehavior>();
+    private List<AR_ResourceBehavior> ressourceElementList = new List<AR_ResourceBehavior>();
 
 
     public void OpenOrClose(Boolean open)
@@ -33,7 +35,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
             GameManager.Instance.ChangeState(GameManager.GameState.Playing);
             FillResourceRow();
             FillActionRow();
-            Debug.Log("Open ActionRow");
         }
         else
         {
@@ -67,7 +68,8 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         FillTowerLimitBar(TurretPlacementController.Instance.maxTurretCapacity);
 
         TurretPlacementController.Instance.OnTurretsChanged += UpdateTowerLimitBar;
-        
+
+        GameManager.Instance.OnRessourceChanged += RessourceAdded;
     }
 
     void OnDisable()
@@ -93,8 +95,9 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         turretBtnList.Clear();
         var turretNumber = new int();
         turretNumber = 1;
-        foreach (var turret in TurretPlacementController.Instance.GetTurretBlueprintList())
+        foreach (var turret in GameManager.Instance.gameDataSO.GetSelectedBlueprints())
         {
+            Debug.Log("Help me");
             AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret, turretNumber);
             turretButtonContainer.Add(aR_Element.turretBorder);
             turretBtnList.Add(aR_Element);
@@ -106,20 +109,31 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     void FillResourceRow()
     {
         resourceContainer.Clear();
-        CreateRessourceRowElement(gameDataSO.gameCurrency, "CurrencyIcon");
-        CreateRessourceRowElement(gameDataSO.woodResource, "WoodIcon");
-        CreateRessourceRowElement(gameDataSO.steinResource, "StoneIcon");
-        CreateRessourceRowElement(gameDataSO.metallResource, "MetalIcon");
-        CreateRessourceRowElement(gameDataSO.pulverResource, "PulverIcon");
-    }
-
-    public void RessourceAdded()
-    {
+        ressourceElementList.Clear();
+        CreateRessourceRowElement(ResourceType.Currency);
+        CreateRessourceRowElement(ResourceType.Wood);
+        CreateRessourceRowElement(ResourceType.Stone);
+        CreateRessourceRowElement(ResourceType.Metal);
+        CreateRessourceRowElement(ResourceType.Pulver);
 
     }
-    private void CreateRessourceRowElement(int amountOfRessource, string ressourceIcon)
+
+    public void RessourceAdded(ResourceType _type, int change, int currentAmount)
     {
-        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, amountOfRessource, ressourceIcon);
+        foreach (var ressource in ressourceElementList)
+        {
+            if (ressource.GetRessourceType() == _type)
+            {
+                //do shit i guess
+                ressource.CreateAddRessourceElement(ressourceAddedElement, change, _type);
+                return;
+            }
+        }
+    }
+    private void CreateRessourceRowElement(ResourceType _type)
+    {
+        AR_ResourceBehavior aR_Resource = new AR_ResourceBehavior(resourceElementAsset, _type);
+        ressourceElementList.Add(aR_Resource);
         resourceContainer.Add(aR_Resource.border);
     }
 
@@ -150,17 +164,13 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     public void UpdateTowerLimitBar()
     {
-        Debug.Log("Update Triggered");
-       int t = TurretPlacementController.Instance.GetUsedCapacity();
+        int t = TurretPlacementController.Instance.GetUsedCapacity();
         foreach ( var limitElement in towerLimitElementList)
         {
             limitElement.UpdateColor(t);
         }
     }
-    void SetCurrentTurret(int clickedBtn)
-    {
-        FindObjectOfType<TurretPlacementController>().currentSelectedBlueprint = TurretPlacementController.Instance.GetTurretBlueprintList()[clickedBtn];
-    }
+
 
     public void TurretButtonContainerColor()
     {

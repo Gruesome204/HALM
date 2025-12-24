@@ -35,10 +35,17 @@ public class GameManager : MonoBehaviour
 
     public bool IsSaveLoaded { get; private set; } = false;
 
+    public event Action<ResourceType, int, int> OnRessourceChanged;
 
-#region Unity Callbacks
+    public void CallRessourceChanged(ResourceType _type, int changedAmount, int currentAmount)
+    {
+        OnRessourceChanged?.Invoke(_type, changedAmount, currentAmount);
+    }
 
-public void LoadScene(string sceneName)
+
+    #region Unity Callbacks
+
+    public void LoadScene(string sceneName)
     {
         SaveGame();
         SceneManager.LoadScene(sceneName);
