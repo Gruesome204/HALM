@@ -49,21 +49,46 @@ public class MapProgressionManager : MonoBehaviour
         int safeMapIndex = Mathf.Min(currentMapIndex, MapLoaderManager.Instance.mapPrefabs.Length - 1);
 
         // Load map normally
-        MapLoaderManager.Instance.LoadMap(safeMapIndex);
+        GameObject map = MapLoaderManager.Instance.LoadMap(safeMapIndex);
 
-        bool shouldSpawnBoss = mapsClearedSinceBoss >= mapsBeforeBoss;
+        EnemySpawnManager spawner = EnemySpawnManager.Instance;
+        spawner.PrepareForNewRoom();
 
-        if (shouldSpawnBoss)
+        MapEnemySetup setup = map.GetComponent<MapEnemySetup>();
+
+
+        //bool shouldSpawnBoss = mapsClearedSinceBoss >= mapsBeforeBoss;
+        if (setup != null)
+        {
+            if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
+                    spawner.enemyPrefabs = setup.enemyPrefabs;
+
+                // Apply overrides
+                if (setup.spawnAmountOverride > 0)
+                    spawner.spawnAmount = setup.spawnAmountOverride;
+
+                if (setup.spawnIntervalOverride > 0)
+                    spawner.spawnInterval = setup.spawnIntervalOverride;
+
+                if (setup.spawnIntervalOverride > 0)
+                    spawner.spawnInterval = setup.spawnIntervalOverride;
+        }
+
+        bool isBossRoom = mapsClearedSinceBoss >= mapsBeforeBoss;
+
+        if (isBossRoom)
         {
             bossActive = true;
-            EnemySpawnManager.Instance.SpawnBoss();
+            spawner.SpawnBoss();
             mapsClearedSinceBoss = 0; // reset after boss
         }
         else
         {
             bossActive = false;
-            EnemySpawnManager.Instance.OnAllEnemiesDefeated += OnRoomCleared;
-            mapsClearedSinceBoss++; // increment only if not boss
+            mapsClearedSinceBoss++;
+            // SAFE subscription
+            spawner.OnAllEnemiesDefeated -= OnRoomCleared;
+            spawner.OnAllEnemiesDefeated += OnRoomCleared;
         }
 
         currentMapIndex++;
@@ -73,7 +98,7 @@ public class MapProgressionManager : MonoBehaviour
         // Prevent multiple fires
         EnemySpawnManager.Instance.OnAllEnemiesDefeated -= OnRoomCleared;
 
-        Debug.Log("[Progression] Room cleared!");
+        Debug.Log("[Progression] Room cle   ared!");
 
         if (autoProgress)
         {

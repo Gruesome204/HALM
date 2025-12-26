@@ -1836,12 +1836,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47769b2c793f1314bb9ce22cad59ad5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefabs:
-  - {fileID: 3645313828594104337, guid: 7bfd39ed4013ca345a07cf8e4d48ca67, type: 3}
-  - {fileID: 3645313828594104337, guid: 308205ce09e88f748958afa4ee758b79, type: 3}
-  - {fileID: 3645313828594104337, guid: 66c98b1852f7c4341b7652af8904ca46, type: 3}
+  enemyPrefabs: []
   spawnInterval: 1
-  spawnAmount: 15
+  spawnAmount: 1
   spawnRadius: 5
   spawnPoints: []
   useRandomSpawnPoint: 1
@@ -4019,7 +4016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashAbility: {fileID: 11400000, guid: 99a2466cf9e169547a21a27cd44fb045, type: 2}
-  parryAbility: {fileID: 11400000, guid: e3e0089a40a412c47ba31d8b50b60df8, type: 2}
+  parryAbility: {fileID: 0}
   parryColor: {r: 0, g: 1, b: 1, a: 1}
   parryBlinkFrequency: 20
 --- !u!114 &2135666371

@@ -5137,6 +5137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4324282620192694198}
   - component: {fileID: 2144341746362542200}
+  - component: {fileID: -3873311712721704981}
   m_Layer: 0
   m_Name: Map_04
   m_TagString: Untagged
@@ -5181,6 +5182,23 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &-3873311712721704981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5872725842470093268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 430db78da1ab4ad48aca778cb2277c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBossRoom: 0
+  enemyPrefabs: []
+  spawnAmountOverride: -1
+  spawnIntervalOverride: -1
+  bossPrefab: {fileID: 0}
 --- !u!1 &6636609605688708527
 GameObject:
   m_ObjectHideFlags: 0

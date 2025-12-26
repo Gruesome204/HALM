@@ -8,6 +8,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     public static EnemySpawnManager Instance { get; private set; }
 
     [Header("Spawn Settings")]
+    [HideInInspector]
     public List<GameObject> enemyPrefabs = new List<GameObject>(); // Multiple enemy types
     public float spawnInterval = 3f;
     public int spawnAmount = 1; // Total number of enemies this spawner will spawn
@@ -277,6 +278,13 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         activeEnemies.Add(boss);
     }
 
+    public void PrepareForNewRoom()
+    {
+        ResetSpawner();
+        isBossRoom = false;
+        activeEnemies.Clear();
+    }
+
     public void OnPause()
     {
         isPaused = true;
@@ -292,4 +300,5 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         totalSpawned = 0;
         allEnemiesSpawned = false;
     }
+
 }

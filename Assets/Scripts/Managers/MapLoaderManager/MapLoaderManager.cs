@@ -34,12 +34,12 @@ public class MapLoaderManager : MonoBehaviour
         Instance = this;
     }
 
-    public void LoadMap(int index)
+    public GameObject LoadMap(int index)
     {
         if (index < 0 || index >= mapPrefabs.Length)
         {
             Debug.LogError("Map index out of range!");
-            return;
+            return null;
         }
 
         // Destroy old map
@@ -63,6 +63,8 @@ public class MapLoaderManager : MonoBehaviour
         AssignSpawnPointsToEnemyManager();
 
         SetPlayerPosition();
+
+        return currentMap;
     }
 
     private void SetPlayerPosition()
