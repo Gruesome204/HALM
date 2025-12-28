@@ -37,7 +37,7 @@ public class AR_ResourceBehavior
         if (type != representedRessource) return;
         resourceAmount.text = GameManager.Instance.gameDataSO.GetResourceAmount(type).ToString();
 
-        CreateAddRessourceElement(resourceAsset, newAmount, type);
+        CreateAddRessourceElement(resourceAsset, newAmount);
     }
 
     public ResourceType GetRessourceType()
@@ -45,15 +45,14 @@ public class AR_ResourceBehavior
         return representedRessource;
     }
 
-    public void CreateAddRessourceElement(VisualTreeAsset asset, int addedAmount, ResourceType _type)
+    public void CreateAddRessourceElement(VisualTreeAsset asset, int addedAmount)
     {
-        if (_type != representedRessource) return;
-
         TemplateContainer addElement = asset.Instantiate();
-        Label addedNumber = addElement.Q<Label>("addedNumber");
-        addedNumber.text = $"+{addedAmount}";
+        addElement.Q<Label>("addedNumber").text = $"+{addedAmount}";
+        addElement.Q<VisualElement>("icon").AddToClassList($"{representedRessource}Icon");
 
         addContainer.Add(addElement);
+
         // Schedule removal after 1 second
         addElement.schedule
             .Execute(() => addElement.RemoveFromHierarchy())
