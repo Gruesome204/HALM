@@ -1,0 +1,41 @@
+.paperButton {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    -unity-font-style: bold;
+    font-size: 25px;
+    color: rgb(255, 204, 140);
+    -unity-text-align: upper-center;
+    margin: 0;
+    padding: 12px;
+}
+
+.paperButton:hover {
+    color: rgb(255, 235, 209);
+    padding: 18px;
+}
+
+.paperButton:active {
+    color: rgb(255, 249, 240);
+    padding: 18px;
+}
+
+.smallPaperButton {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    -unity-font-style: bold;
+    font-size: 20px;
+    color: rgb(255, 204, 140);
+    -unity-text-align: upper-center;
+    margin: 0;
+    padding: 10px;
+}
+
+.smallPaperButton:hover {
+    color: rgb(255, 235, 209);
+}
+
+.smallPaperButton:active {
+    color: rgb(255, 249, 240);
+}

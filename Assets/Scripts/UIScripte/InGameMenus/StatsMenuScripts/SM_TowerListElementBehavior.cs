@@ -16,16 +16,18 @@ public class SM_TowerListElementBehavior
         listButton.RegisterCallback<ClickEvent>(onListButtonClicked);
         listButton.text = $"{turret.turretName}";
 
+        listElement.Q<VisualElement>("listElementIcon").AddToClassList($"{turret.turretName}Icon");
+
         this.turret = turret;
         this.towerDetails = towerDetails;
     }
 
     void onListButtonClicked(ClickEvent evt)
     {
-        Debug.Log($"This turret is called {turret.name}");
         towerDetails.Q<Label>("name").SetBinding("text", new LocalizedString($"TurretTranslation{turret.turretName}",$"name"));
 
         var turretIcon = towerDetails.Q<VisualElement>("icon");
+        turretIcon.ClearClassList();
         turretIcon.AddToClassList($"{turret.turretName}Icon");
 
         towerDetails.Q<Label>($"costName").text = "";

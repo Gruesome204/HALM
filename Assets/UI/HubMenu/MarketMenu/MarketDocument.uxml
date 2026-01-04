@@ -2,14 +2,17 @@
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
-    <ui:VisualElement name="mainContainer" class="mainContainerClass" style="flex-direction: row; align-items: center; justify-content: center;">
-        <ui:VisualElement name="optionsContainer" style="background-color: rgba(7, 17, 53, 0.47); width: 40%; height: 95%;">
-            <ui:Label text="Label" name="headline" class="headline" />
+    <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
+    <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
+    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn" style="flex-direction: row; align-items: flex-end; justify-content: center;">
+        <ui:VisualElement name="optionsContainer" class="buildmasterModifyBackground">
+            <ui:Label text="Label" name="headline" class="headline" style="height: 14%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+            <ui:VisualElement name="nullSpace1" style="flex-grow: 0; flex-shrink: 0; height: 3%;" />
             <ui:VisualElement name="ressourceButtonContainer" />
             <ui:Button name="backBtn" text="X" class="mainMenuBtnClass backBtnClass" />
         </ui:VisualElement>
-        <ui:VisualElement name="detailsContainer" style="width: 35%; height: 80%; margin-left: 2%; align-items: center;">
-            <ui:VisualElement name="detailsMainContainer" class="SlideIn" style="flex-grow: 1; flex-shrink: 0; width: 90%; background-color: rgba(7, 17, 53, 0.47);">
+        <ui:VisualElement name="detailsContainer" style="align-items: center; justify-content: center; width: 35%; height: 85%;">
+            <ui:VisualElement name="detailsMainContainer" class="SlideIn buildmasterModifyBackground2" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 100%; padding-top: 9%; padding-bottom: 20%; padding-right: 3%; padding-left: 3%;">
                 <ui:Label text="Label" name="subHeadline" class="sub-headline" style="-unity-text-align: upper-center; flex-grow: 1; white-space: normal;" />
                 <ui:VisualElement style="flex-grow: 4; flex-shrink: 0;">
                     <ui:VisualElement name="icon" style="height: 100%; -unity-background-scale-mode: scale-to-fit;" />

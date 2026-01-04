@@ -1,0 +1,30 @@
+.pauseMenuBcakground {
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/PauseMenu_Version1.png?fileID=2800000&guid=8f20a118e245c2240bfd6debfc8bb7e0&type=3#PauseMenu_Version1");
+    -unity-background-scale-mode: scale-to-fit;
+    padding: 5%;
+}
+
+.buildmasterModifyBackground {
+    width: 45%;
+    height: 97%;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/HubMenu_Part1.png?fileID=2800000&guid=b0e5bbd8306fa8e4eb410abe667920e9&type=3#HubMenu_Part1");
+    -unity-background-scale-mode: scale-to-fit;
+    padding-top: 0%;
+    padding-right: 5%;
+    padding-left: 5%;
+    padding-bottom: 1%;
+}
+
+.buildmasterModifyBackground2 {
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/HubMenu_Part2.png?fileID=2800000&guid=75b61b709f4878f43abe9758c890de44&type=3#HubMenu_Part2");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 35%;
+    height: 85%;
+    padding-right: 1%;
+    padding-left: 1%;
+    padding-top: 3%;
+    padding-bottom: 6.5%;
+}
