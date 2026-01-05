@@ -3,8 +3,8 @@
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
     <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
-    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn" style="flex-grow: 1; justify-content: flex-end;">
-        <ui:VisualElement class="buildmasterModifyBackground2" style="flex-shrink: 0; height: 95%; align-content: auto; align-self: center; width: 40%;">
+    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass SlideIn" style="flex-grow: 1; justify-content: flex-end; align-items: center;">
+        <ui:VisualElement class="buildmasterModifyBackground2" style="flex-shrink: 0; height: 95%; align-content: auto; width: 40%; flex-grow: 0;">
             <ui:Label text="Label" name="headline" class="headline" style="height: 30%;" />
             <ui:Button text="Button" name="enterDungeonButton" class="mainMenuBtnClass" />
             <ui:Button text="Button" name="stayInHubButton" class="mainMenuBtnClass" />

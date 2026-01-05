@@ -137,6 +137,7 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     public void FillModifierDetails(BuildMasterModifier modifier, bool modifierUnlocked, bool modifierSelected)
     {
         openModifierDetails = modifier;
+        informationTxt.text = $"{openModifierDetails.options.name}";
 
         buySelectButton.RemoveFromClassList("vanish");
 

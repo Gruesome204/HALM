@@ -34,9 +34,9 @@ public class AR_ResourceBehavior
 
     private void UpdateResourceUI(ResourceType type, int newAmount)
     {
-        if (type != representedRessource) return;
-        resourceAmount.text = GameManager.Instance.gameDataSO.GetResourceAmount(type).ToString();
+        resourceAmount.text = GameManager.Instance.gameDataSO.GetResourceAmount(representedRessource).ToString();
 
+        if (type != representedRessource) return;
         CreateAddRessourceElement(resourceAsset, newAmount);
     }
 
