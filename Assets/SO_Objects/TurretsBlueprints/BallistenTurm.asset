@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7e7cda704781734ebb691b39dac05d3, type: 3}
-  m_Name: FastTurret
+  m_Name: BallistenTurm
   m_EditorClassIdentifier: 
-  turretName: RepeatingCrossbowTower
+  turretName: BallisticTower
   towerIcon: {fileID: 0}
   baseLevel: 1
-  description: Repetierarmbrust Turm
-  turretType: 5
+  description: 
+  turretType: 4
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
-  turretPrefab: {fileID: 2143098689819666265, guid: e7ba0ce86f14b9c49bff82f2efd22797, type: 3}
+  turretPrefab: {fileID: 0}
   turretProjectileType: {fileID: 1397600981807428680, guid: d3df5105a70605c43a377002780ecfe3, type: 3}
   firingPattern: 1
-  projectilesPerSalve: 5
+  projectilesPerSalve: 1
   delayBetweenSalveProjectiles: 0.5
-  baseHealth: 100
+  baseHealth: 0
   baseAttackDamage: 10
-  baseFireRate: 2
-  baseProjectileSpeed: 15
+  baseFireRate: 1
+  baseProjectileSpeed: 10
   baseAttackRange: 5
   baseKnockbackStrength: 1
   baseKnockbackDuration: 0.5
@@ -34,13 +34,9 @@ MonoBehaviour:
   baseDamageGrowthFactor: 1.2
   baseFireRateGrowthFactor: 0.95
   baseRangeGrowthFlat: 0.5
-  buyCost:
-  - resourceType: 2
-    amount: 4
-  - resourceType: 1
-    amount: 7
-  height: 3
-  length: 3
-  buildCapacityValue: 2
-  placementCooldown: 3
-  unlockCost: 10
+  buyCost: []
+  height: 0
+  length: 0
+  buildCapacityValue: 1
+  placementCooldown: 1
+  unlockCost: 0

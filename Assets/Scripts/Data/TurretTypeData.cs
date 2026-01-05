@@ -10,5 +10,7 @@ public enum TurretType
     ArcherTower,
     Fast,
     CannonTower,
-    Barricade
+    Barricade,
+    BallistTower,
+    RepeatingCrossbow
 }
