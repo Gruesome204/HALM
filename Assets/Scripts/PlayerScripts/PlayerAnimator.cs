@@ -49,7 +49,6 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetFloat(MoveSpeedParam, moveSpeed);
         animator.SetBool(IsDashing, movement.IsDashing);
 
-        Debug.Log($"MoveSpeed: {moveSpeed}, Facing: {facing}, IsDashing: {movement.IsDashing}");
     }
 
     private void OnDeath(PlayerHealth _, DamageData __)
