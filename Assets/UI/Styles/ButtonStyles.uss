@@ -12,12 +12,12 @@
 
 .paperButton:hover {
     color: rgb(255, 235, 209);
-    padding: 18px;
+    padding: 13px;
 }
 
 .paperButton:active {
     color: rgb(255, 249, 240);
-    padding: 18px;
+    padding: 13px;
 }
 
 .smallPaperButton {
