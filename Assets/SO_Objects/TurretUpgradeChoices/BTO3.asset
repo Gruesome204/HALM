@@ -10,15 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
-  m_Name: Choice 3
+  m_Name: BTO3
   m_EditorClassIdentifier: 
   turretType: 0
   triggerLevel: 2
   options:
   - name: "Zus\xE4tzliche Besatzung"
     description: "Zus\xE4tzliche Besatzung"
-    damageMultiplier: 0
-    fireRateMultiplier: 0
-    rangeBonus: 0
     icon: {fileID: 0}
-    projectileType: {fileID: 0}
+    modifier:
+      turretPlacementCooldownMultiplier: 1
+      healthMultiplier: 1
+      damageMultiplier: 1
+      fireRateMultiplier: 1
+      projectilesPerSalve: 2
+      projectileSpeed: 1
+      rangeBonus: 0
+      projectileType: {fileID: 0}
