@@ -39,7 +39,7 @@ MonoBehaviour:
     amount: 4
   - resourceType: 1
     amount: 7
-  height: 1
-  length: 1
+  height: 2
+  length: 2
   buildCapacityValue: 2
   placementCooldown: 3
