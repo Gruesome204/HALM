@@ -138,8 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0876544fb09bf7440af77e58e8e60754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretBlueprint: {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
-  currentProjectileType: {fileID: 1397600981807428680, guid: d3df5105a70605c43a377002780ecfe3, type: 3}
+  turretBlueprint: {fileID: 11400000, guid: 2d60481287488094aae6e9ac13b8e092, type: 2}
+  currentProjectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}
   firePoint: {fileID: 1742868537700555360}
   healthBarPrefab: {fileID: 4822189033948548198, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
   currentAttackDamage: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70bc1a31c981814d8d8890bf295a7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueprint: {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
+  blueprint: {fileID: 11400000, guid: 2d60481287488094aae6e9ac13b8e092, type: 2}
 --- !u!114 &1068732837739404348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 261ce8c736131a2469d7965e407e1342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStats: {fileID: 11400000, guid: f2eb6d52ebb7b7a4c92db0953788b50c, type: 2}
+  baseStats: {fileID: 11400000, guid: 2d60481287488094aae6e9ac13b8e092, type: 2}
   currentLevel: 1
   currentHealth: 0
   currentMaxHealth: 0

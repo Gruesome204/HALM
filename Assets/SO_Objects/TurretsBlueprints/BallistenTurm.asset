@@ -18,25 +18,28 @@ MonoBehaviour:
   description: 
   turretType: 4
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
-  turretPrefab: {fileID: 0}
-  turretProjectileType: {fileID: 1397600981807428680, guid: d3df5105a70605c43a377002780ecfe3, type: 3}
+  turretPrefab: {fileID: 673453059274113653, guid: 130817ef7da155845abce0dd7b6b7f83, type: 3}
+  turretProjectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}
   firingPattern: 1
   projectilesPerSalve: 1
   delayBetweenSalveProjectiles: 0.5
-  baseHealth: 0
-  baseAttackDamage: 10
-  baseFireRate: 1
+  baseHealth: 250
+  baseAttackDamage: 30
+  baseFireRate: 0.5
   baseProjectileSpeed: 10
-  baseAttackRange: 5
-  baseKnockbackStrength: 1
-  baseKnockbackDuration: 0.5
+  baseAttackRange: 20
+  baseKnockbackStrength: 1.5
+  baseKnockbackDuration: 1
   baseHealthGrowthFactor: 1.2
   baseDamageGrowthFactor: 1.2
   baseFireRateGrowthFactor: 0.95
   baseRangeGrowthFlat: 0.5
-  buyCost: []
-  height: 0
-  length: 0
-  buildCapacityValue: 1
-  placementCooldown: 1
-  unlockCost: 0
+  buyCost:
+  - resourceType: 2
+    amount: 10
+  - resourceType: 0
+    amount: 50
+  height: 2
+  length: 2
+  buildCapacityValue: 2
+  placementCooldown: 20

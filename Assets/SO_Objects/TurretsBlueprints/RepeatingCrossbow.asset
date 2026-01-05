@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7e7cda704781734ebb691b39dac05d3, type: 3}
-  m_Name: FastTurret
+  m_Name: RepeatingCrossbow
   m_EditorClassIdentifier: 
   turretName: RepeatingCrossbowTower
   towerIcon: {fileID: 0}
@@ -39,8 +39,7 @@ MonoBehaviour:
     amount: 4
   - resourceType: 1
     amount: 7
-  height: 3
-  length: 3
+  height: 1
+  length: 1
   buildCapacityValue: 2
   placementCooldown: 3
-  unlockCost: 10
