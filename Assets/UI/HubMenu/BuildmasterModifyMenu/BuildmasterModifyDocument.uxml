@@ -8,20 +8,20 @@
         <ui:VisualElement name="possibleModifierList" class="buildmasterModifyBackground" style="justify-content: flex-start; margin-right: 20px;">
             <ui:Label text="Label" name="headline" class="headline" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-grow: 0; height: 14%;" />
             <ui:VisualElement name="nullSpace1" style="flex-shrink: 0; flex-grow: 0; height: 3%;" />
-            <ui:VisualElement name="btnContainer" style="flex-grow: 0; flex-shrink: 0; align-self: center; width: 105%; height: 63%;">
+            <ui:VisualElement name="btnContainer" style="flex-grow: 0; flex-shrink: 0; align-self: center; width: 105%; height: 68%;">
                 <ui:ScrollView name="ScrollView" style="flex-grow: 1; align-content: center;" />
             </ui:VisualElement>
-            <ui:VisualElement name="lowerContainer" style="flex-grow: 0; flex-shrink: 0; padding-left: 3%; height: 20%;">
-                <ui:Label text="Label" name="informationTxt" class="sub-headline" />
-                <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-                    <ui:Button text="Button" name="buySelectButton" class="mainMenuBtnClass" />
-                    <ui:Label text="Label" name="costName" class="sub-headline" style="-unity-text-align: middle-left; font-size: 15px;" />
-                    <ui:Label text="Label" name="cost" class="sub-headline" style="-unity-text-align: middle-left; font-size: 15px;" />
+            <ui:VisualElement name="lowerContainer" style="flex-grow: 0; flex-shrink: 0; padding-left: 3%; height: 15%;">
+                <ui:Label text="Label" name="informationTxt" class="sub-headline" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 25px;" />
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
+                    <ui:Button text="Button" name="buySelectButton" class="paperButton" style="width: auto; align-self: center;" />
+                    <ui:Label text="Label" name="costName" class="sub-headline" style="-unity-text-align: middle-left; font-size: 15px; align-self: center;" />
+                    <ui:Label text="Label" name="cost" class="sub-headline" style="-unity-text-align: middle-left; font-size: 15px; align-self: center;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:Button text="X" name="backBtn" class="backBtnClass mainMenuBtnClass" />
         </ui:VisualElement>
-        <ui:VisualElement name="appliedModifierList" class="buildmasterModifyBackground2" style="flex-grow: 0; flex-shrink: 0; justify-content: flex-start; align-content: center;">
+        <ui:VisualElement name="appliedModifierList" class="buildmasterModifyBackground2" style="flex-grow: 0; flex-shrink: 0; justify-content: flex-start; align-content: center; width: 35%;">
             <ui:Label text="Label" name="subHeadline" class="sub-headline" style="-unity-text-align: middle-center; white-space: normal; margin-top: 3%; margin-right: 0%; margin-bottom: 3%; margin-left: 0%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; height: auto;" />
             <ui:ScrollView name="scrollView1" style="flex-grow: 0; flex-shrink: 0; width: 105%; height: 85%; align-self: center; align-items: center;">
                 <ui:VisualElement name="appliedModifierContainer" style="flex-grow: 0; align-content: center; justify-content: flex-start; width: 100%; height: 80%; flex-shrink: 0; align-self: center;" />
