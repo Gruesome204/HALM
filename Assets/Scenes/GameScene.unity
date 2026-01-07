@@ -1072,7 +1072,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2862bf5ea98c34bbb2cc0c62a41c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listElementAsset: {fileID: 9197481963319205126, guid: a028c66d72758d648b906cf8a6847953, type: 3}
+  turretListElementAsset: {fileID: 9197481963319205126, guid: a028c66d72758d648b906cf8a6847953, type: 3}
+  modifierListElementAsset: {fileID: 9197481963319205126, guid: a19c3f17cf0f3fd47a91d1724acfa94e, type: 3}
   turretDetailsAsset: {fileID: 9197481963319205126, guid: e922ef6cfc128ff4d80b6196b13b981f, type: 3}
   charackterDetailsAsset: {fileID: 9197481963319205126, guid: 50ce1698f8830634691260d6471ebe72, type: 3}
 --- !u!1 &427538119

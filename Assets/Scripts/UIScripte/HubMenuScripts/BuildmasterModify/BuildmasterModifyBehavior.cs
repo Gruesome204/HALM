@@ -216,6 +216,10 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     {
         if (ModifierCanBeBought())
         {
+            foreach (var cost in openModifierDetails.options.costs)
+            {
+                GameManager.Instance.gameDataSO.RemoveResource(cost.resourceType, cost.amount);
+            }
             GameManager.Instance.gameDataSO.AddUnlockedModifier(openModifierDetails);
             FillMenu();
             FillModifierDetails(openModifierDetails, true, false);

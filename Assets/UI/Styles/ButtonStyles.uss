@@ -1,5 +1,5 @@
 .paperButton {
-    width: 100%;
+    width: auto;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
     -unity-font-style: bold;

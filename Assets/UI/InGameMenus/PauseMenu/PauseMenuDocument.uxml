@@ -3,9 +3,9 @@
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
     <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
-    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass SlideIn pauseMenuBcakground" style="flex-direction: column; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 40%; justify-content: flex-start;">
-        <ui:Label text="Label" name="pauseMenuHeadline" class="sub-headline" style="align-self: center; white-space: normal; margin-bottom: 20%;" />
-        <ui:VisualElement name="buttonContainer" style="height: auto; width: 100%; flex-shrink: 0; align-items: center; justify-content: center;">
+    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="SlideIn pauseMenuBcakground" style="flex-direction: column; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; justify-content: space-around; height: 100%;">
+        <ui:Label text="Label" name="pauseMenuHeadline" class="sub-headline" style="align-self: center; white-space: normal; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+        <ui:VisualElement name="buttonContainer" style="height: auto; width: auto; flex-shrink: 0; align-items: center; justify-content: center;">
             <ui:Button text="Button" name="resumeButton" class="paperButton" />
             <ui:Button text="Button" focusable="false" name="statsMenuButton" class="paperButton" />
             <ui:Button text="Button" name="settingsButton" class="paperButton" />
