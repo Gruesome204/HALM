@@ -6,7 +6,6 @@
 }
 
 .buildmasterModifyBackground {
-    width: 45%;
     height: 97%;
     flex-shrink: 0;
     background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/HubMenu_Part1.png?fileID=2800000&guid=b0e5bbd8306fa8e4eb410abe667920e9&type=3#HubMenu_Part1");

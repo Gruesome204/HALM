@@ -35,6 +35,13 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("turretChoiceMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
             FillMenu();
+
+            //This ensures that the picture in the back can grow as large as possible while keeping it's correct scale :D
+            //It can only be run when the Menu is actually on screen, otherwise the numbers go hairwire O.o
+            // I wanted to run this once in the Enable Method, but due to the above that didn't work :C
+            //I'm leaving it like this for now, it works fine so just close your eyes and look elswhere Lukas XD
+            var container = root.Q<VisualElement>("possibleModifierList");
+            container.style.width = (int)((int)container.resolvedStyle.height / (float)1.368);
         }
         else
         {
@@ -136,6 +143,15 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
 
     public void FillModifierDetails(BuildMasterModifier modifier, bool modifierUnlocked, bool modifierSelected)
     {
+        //This ensures that the picture in the back can grow as large as possible while keeping it's correct scale :D
+        //It can only be run when the Menu is actually on screen, otherwise the numbers go hairwire O.o
+        // I wanted to run this once in the Enable Method, but due to the above that didn't work :C
+        //I'm leaving it like this for now, it works fine so just close your eyes and look elswhere Lukas XD
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        var container = root.Q<VisualElement>("appliedModifierList");
+        container.style.width = (int)((int)container.resolvedStyle.height / (float)1.485);
+
+
         openModifierDetails = modifier;
         informationTxt.text = $"{openModifierDetails.options.name}";
 

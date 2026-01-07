@@ -11,7 +11,7 @@
 }
 
 .settingsMenuSlideOut {
-    translate: 0 100%;
+    translate: 0 120%;
     transition-timing-function: ease-in-out;
     transition-duration: 0.5s;
     opacity: 0;
