@@ -112,9 +112,6 @@ public class TurretBlueprint : ScriptableObject
     [Tooltip("Cooldown time in seconds after placing this turret.")]
     public float placementCooldown = 1.0f;
 
-    [Header("UI")]
-    public int unlockCost;
-
     public int GetResourceCost(ResourceType type)
     {
         if (buyCost == null) return 0;
