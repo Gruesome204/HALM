@@ -88,6 +88,14 @@ MonoBehaviour:
       1:8'
     m_Metadata:
       m_Items: []
+  - m_Id: 5829617757327360
+    m_Localized: "Verkaufe f\xFCr "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5829667451441152
+    m_Localized: "Kaufe f\xFCr "
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

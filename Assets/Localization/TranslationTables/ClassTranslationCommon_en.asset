@@ -22,12 +22,20 @@ MonoBehaviour:
     m_Localized: Mechanic
     m_Metadata:
       m_Items: []
-  - m_Id: 154985656320
-    m_Localized: Relics
+  - m_Id: 68541072260337664
+    m_Localized: 'Hit points: '
     m_Metadata:
       m_Items: []
-  - m_Id: 220731371520
-    m_Localized: Turrets
+  - m_Id: 68541085606612992
+    m_Localized: 'Armor: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68541105005268992
+    m_Localized: 'Movement Speed: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68541118313795584
+    m_Localized: 'Build Radius: '
     m_Metadata:
       m_Items: []
   references:

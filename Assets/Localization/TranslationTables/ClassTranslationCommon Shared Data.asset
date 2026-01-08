@@ -19,16 +19,20 @@ MonoBehaviour:
     m_Key: Mechanic
     m_Metadata:
       m_Items: []
-  - m_Id: 83787345920
-    m_Key: Test
+  - m_Id: 68541072260337664
+    m_Key: playerHitpoints
     m_Metadata:
       m_Items: []
-  - m_Id: 154985656320
-    m_Key: relics
+  - m_Id: 68541085606612992
+    m_Key: playerArmor
     m_Metadata:
       m_Items: []
-  - m_Id: 220731371520
-    m_Key: turrets
+  - m_Id: 68541105005268992
+    m_Key: playerMoveSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68541118313795584
+    m_Key: playerBuildRadius
     m_Metadata:
       m_Items: []
   m_Metadata:

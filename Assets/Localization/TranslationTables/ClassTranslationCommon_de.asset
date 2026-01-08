@@ -22,12 +22,20 @@ MonoBehaviour:
     m_Localized: Bob der Baumeister
     m_Metadata:
       m_Items: []
-  - m_Id: 154985656320
-    m_Localized: Shiny Stuff
+  - m_Id: 68541072260337664
+    m_Localized: 'Rote Leiste: '
     m_Metadata:
       m_Items: []
-  - m_Id: 220731371520
-    m_Localized: "Boom boom H\xE4uschen"
+  - m_Id: 68541085606612992
+    m_Localized: 'Klamotten: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68541105005268992
+    m_Localized: 'Run level:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68541118313795584
+    m_Localized: "Hammer l\xE4nge: "
     m_Metadata:
       m_Items: []
   references:

@@ -22,12 +22,20 @@ MonoBehaviour:
     m_Localized: Mechanik
     m_Metadata:
       m_Items: []
-  - m_Id: 154985656320
-    m_Localized: Relikte
+  - m_Id: 68541072260337664
+    m_Localized: 'Lebenspunkte: '
     m_Metadata:
       m_Items: []
-  - m_Id: 220731371520
-    m_Localized: "T\xFCrme"
+  - m_Id: 68541085606612992
+    m_Localized: "R\xFCstung: "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68541105005268992
+    m_Localized: 'Bewegungsgeschwindigkeit: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68541118313795584
+    m_Localized: 'Bauradius: '
     m_Metadata:
       m_Items: []
   references:

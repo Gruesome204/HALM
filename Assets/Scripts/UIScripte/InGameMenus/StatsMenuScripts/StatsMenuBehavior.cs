@@ -101,17 +101,26 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
 
         statsContainer.RemoveFromClassList("turretChoiceMenuSlideOut");
 
-        TemplateContainer charackterDetails = charackterDetailsAsset.Instantiate();
+        TemplateContainer charackterDetails = turretDetailsAsset.Instantiate();
         charackterDetails.style.height = new Length(100, LengthUnit.Percent);
         statsContainer.Add(charackterDetails);
 
         charackterDetails.Q<Label>($"name").SetBinding("text", new LocalizedString("ClassTranslationCommon", $"Mechanic"));
 
-        charackterDetails.Q<Label>($"relicsName").SetBinding("text", new LocalizedString("ClassTranslationCommon", $"relics"));
-        charackterDetails.Q<Label>($"relics").text = $"{GameManager.Instance.gameDataSO.GetSelectedModifiers().Count}";
 
-        charackterDetails.Q<Label>($"turretsName").SetBinding("text", new LocalizedString("ClassTranslationCommon", $"turrets"));
-        charackterDetails.Q<Label>($"turrets").text = $"{GameManager.Instance.gameDataSO.GetSelectedBlueprints().Count}";
+        var turretIcon = charackterDetails.Q<VisualElement>("icon");
+        turretIcon.AddToClassList($"MechanicIcon");
+
+        charackterDetails.Q<Label>($"costName").text = "";
+        charackterDetails.Q<Label>($"cost").text = $"";
+
+        var player = FindFirstObjectByType<PlayerStats>();
+
+        FillCharacterDetailValue("playerHitpoints", player.currentHealth, ref charackterDetails);
+        FillCharacterDetailValue("playerArmor", player.currentArmor, ref charackterDetails);
+        FillCharacterDetailValue("playerMoveSpeed", player.currentMoveSpeed, ref charackterDetails);
+        FillCharacterDetailValue("playerBuildRadius", TurretPlacementController.Instance.placementRadius, ref charackterDetails);
+
     }
     void OnRelicsBtnClicked(ClickEvent evt)
     {
@@ -165,25 +174,45 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
         turretDetails.Q<Label>("name").SetBinding("text", new LocalizedString($"TurretTranslation{_turret.turretName}", $"name"));
 
         var turretIcon = turretDetails.Q<VisualElement>("icon");
-        turretIcon.ClearClassList();
         turretIcon.AddToClassList($"{_turret.turretName}Icon");
 
         turretDetails.Q<Label>($"costName").text = "";
         turretDetails.Q<Label>($"cost").text = $"";
 
-        FillDetailValue("fireRate", _turret.baseFireRate, ref turretDetails);
-        FillDetailValue("fireCountdown", _turret.BaseFireCountdown, ref turretDetails);
-        FillDetailValue("projectileSpeed", _turret.baseProjectileSpeed, ref turretDetails);
-        FillDetailValue("attackRange", _turret.baseAttackRange, ref turretDetails);
-        FillDetailValue("damage", _turret.baseAttackDamage, ref turretDetails);
-        FillDetailValue("knockbackStrength", _turret.baseKnockbackStrength, ref turretDetails);
-        FillDetailValue("knockbackDuration", _turret.baseKnockbackDuration, ref turretDetails);
+        FillDetailValue("baseHealth", _turret.baseHealth, ref turretDetails);
+        FillDetailValue("baseAttackDamage", _turret.baseAttackDamage, ref turretDetails);
+        FillDetailValue("baseFireRate", _turret.baseFireRate, ref turretDetails);
+        FillDetailValue("baseAttackRange", _turret.baseAttackRange, ref turretDetails);
+        FillDetailValue("turretSize", _turret.height + _turret.length, ref turretDetails);
+        FillDetailValue("placementCooldown", _turret.placementCooldown, ref turretDetails);
+        FillDetailValue("buildCapacityValue", _turret.buildCapacityValue, ref turretDetails);
     }
     void FillDetailValue(string value, float turretValue, ref TemplateContainer _turretDetails)
     {
-        _turretDetails.Q<Label>($"{value}Name").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
-        _turretDetails.Q<Label>($"{value}").text = $"{turretValue}";
+        var valueName = new Label();
+        valueName.AddToClassList("paper-Text");
+        valueName.SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
+        _turretDetails.Q<VisualElement>("detailNames").Add(valueName);
+
+        var valueNumbers = new Label();
+        valueNumbers.AddToClassList("paper-Text");
+        valueNumbers.text = $"{turretValue}";
+        _turretDetails.Q<VisualElement>("detailNumbers").Add(valueNumbers);
     }
+
+    void FillCharacterDetailValue(string value, float turretValue, ref TemplateContainer _turretDetails)
+    {
+        var valueName = new Label();
+        valueName.AddToClassList("paper-Text");
+        valueName.SetBinding("text", new LocalizedString("ClassTranslationCommon", $"{value}"));
+        _turretDetails.Q<VisualElement>("detailNames").Add(valueName);
+
+        var valueNumbers = new Label();
+        valueNumbers.AddToClassList("paper-Text");
+        valueNumbers.text = $"{turretValue}";
+        _turretDetails.Q<VisualElement>("detailNumbers").Add(valueNumbers);
+    }
+
 
     //Clearing Methods
     void ClearList()

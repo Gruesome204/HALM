@@ -88,6 +88,14 @@ MonoBehaviour:
       1:8'
     m_Metadata:
       m_Items: []
+  - m_Id: 5829617757327360
+    m_Localized: 'Sell for '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5829667451441152
+    m_Localized: 'Buy for '
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

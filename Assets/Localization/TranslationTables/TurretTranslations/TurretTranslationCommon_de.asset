@@ -18,32 +18,32 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 11481739264
-    m_Localized: 'Boom boom rate: '
+  - m_Id: 70744699016187904
+    m_Localized: 'Sitzplatz verbrauch: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64886077747200
-    m_Localized: 'i don''t even know what this is: '
+  - m_Id: 70744515280506880
+    m_Localized: 'Wartezeit: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64904218112000
-    m_Localized: 'How fast?: '
+  - m_Id: 70744327769952256
+    m_Localized: 'Masse: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64917459529728
-    m_Localized: 'Arm Lenght: '
+  - m_Id: 70744242084515840
+    m_Localized: "Arm l\xE4nge: "
     m_Metadata:
       m_Items: []
-  - m_Id: 64935855747072
-    m_Localized: 'Aua Scale: '
+  - m_Id: 70744115475255296
+    m_Localized: 'Speed meter: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64953949974528
-    m_Localized: 'Bully Push: '
+  - m_Id: 70744003197931520
+    m_Localized: "Aua St\xE4rke: "
     m_Metadata:
       m_Items: []
-  - m_Id: 64970135793664
-    m_Localized: 'Victim since: '
+  - m_Id: 70743694845284352
+    m_Localized: 'Rote Leiste: '
     m_Metadata:
       m_Items: []
   - m_Id: 1157554652409856

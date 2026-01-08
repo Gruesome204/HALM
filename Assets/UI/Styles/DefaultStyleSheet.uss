@@ -119,3 +119,27 @@
 .vanish {
     display: none;
 }
+
+.paper-Text {
+    color: rgb(255, 204, 140);
+    font-size: 15px;
+    -unity-font-style: bold;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.wood-Text {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    color: rgb(255, 158, 105);
+    font-size: 20px;
+    -unity-font-style: bold;
+}

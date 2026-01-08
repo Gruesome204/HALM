@@ -11,24 +11,30 @@
             <ui:VisualElement name="ressourceButtonContainer" />
             <ui:Button name="backBtn" text="X" class="mainMenuBtnClass backBtnClass" />
         </ui:VisualElement>
-        <ui:VisualElement name="detailsContainer" style="align-items: center; justify-content: center; height: 85%; flex-shrink: 0;">
+        <ui:VisualElement name="detailsContainer" style="align-items: center; justify-content: center; height: 85%; flex-shrink: 0; -unity-background-scale-mode: scale-to-fit;">
             <ui:VisualElement name="detailsMainContainer" class="SlideIn buildmasterModifyBackground2" style="flex-grow: 0; flex-shrink: 0; height: 100%; padding-top: 9%; padding-bottom: 20%; padding-right: 3%; padding-left: 3%;">
-                <ui:Label text="Label" name="subHeadline" class="sub-headline" style="-unity-text-align: upper-center; flex-grow: 1; white-space: normal;" />
-                <ui:VisualElement style="flex-grow: 4; flex-shrink: 0;">
+                <ui:Label text="Label" name="subHeadline" class="sub-headline" style="-unity-text-align: upper-center; flex-grow: 0; white-space: normal; height: 10%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; height: 30%;">
                     <ui:VisualElement name="icon" style="height: 100%; -unity-background-scale-mode: scale-to-fit;" />
                 </ui:VisualElement>
-                <ui:Label text="Label" name="goingRateTxt" class="sub-headline" style="font-size: 15px; flex-grow: 2; -unity-text-align: upper-center;" />
-                <ui:VisualElement name="sliderContainer" style="flex-grow: 1; flex-shrink: 0;">
-                    <ui:Label text="Label" name="informationTxt" class="sub-headline" style="font-size: 15px; margin-left: 5%;" />
+                <ui:Label text="Label" name="goingRateTxt" class="wood-Text" style="font-size: 15px; flex-grow: 0; -unity-text-align: upper-center; height: 20%;" />
+                <ui:VisualElement name="sliderContainer" style="flex-grow: 0; flex-shrink: 0; height: 15%;">
+                    <ui:Label text="Label" name="informationTxt" class="wood-Text" style="font-size: 15px; margin-left: 5%; margin-bottom: 0; margin-right: 0; margin-top: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
                     <ui:VisualElement name="sliderMinMaxTxtContainer" style="flex-direction: row; justify-content: space-between;">
-                        <ui:Label text="1x" name="sliderMinTxt" class="sub-headline" style="font-size: 10px;" />
-                        <ui:Label text="10x" name="sliderMaxTxt" class="sub-headline" style="font-size: 10px;" />
+                        <ui:Label text="1x" name="sliderMinTxt" class="sub-headline wood-Text" style="font-size: 10px;" />
+                        <ui:Label text="10x" name="sliderMaxTxt" class="sub-headline wood-Text" style="font-size: 10px;" />
                     </ui:VisualElement>
-                    <ui:SliderInt value="6" high-value="10" name="howMuchToSellSlider" low-value="1" class="sub-headline" style="font-size: 15px;" />
+                    <ui:SliderInt value="6" high-value="10" name="howMuchToSellSlider" low-value="1" style="font-size: 15px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="btnContainer" style="flex-direction: row; align-items: center; justify-content: center; flex-grow: 3; flex-shrink: 0;">
-                    <ui:Button text="Button" name="sellButton" class="paperButton" style="width: auto;" />
-                    <ui:Button text="Button" name="buyButton" class="paperButton" style="width: auto;" />
+                <ui:VisualElement name="btnContainer" style="flex-direction: row; align-items: center; justify-content: space-around; flex-grow: 0; flex-shrink: 0; height: 22%;">
+                    <ui:VisualElement name="sellContainer" style="flex-grow: 0; flex-shrink: 0;">
+                        <ui:Label text="Label" name="sellLabel" class="wood-Text" style="padding-left: 12px; font-size: 15px;" />
+                        <ui:Button text="Button" name="sellButton" class="paperButton" style="width: auto;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="buyContainer" style="flex-grow: 0; flex-shrink: 0;">
+                        <ui:Label text="Label" name="buyLabel" class="wood-Text" style="padding-left: 12px; font-size: 15px;" />
+                        <ui:Button text="Button" name="buyButton" class="paperButton" style="width: auto;" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

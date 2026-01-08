@@ -15,36 +15,36 @@ MonoBehaviour:
   m_TableCollectionName: TurretTranslationCommon
   m_TableCollectionNameGuidString: f54ef236fc66be84cbbc728f2dda48fd
   m_Entries:
-  - m_Id: 11481739264
-    m_Key: fireRate
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64886077747200
-    m_Key: fireCountdown
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64904218112000
-    m_Key: projectileSpeed
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64917459529728
-    m_Key: attackRange
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64935855747072
-    m_Key: damage
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64953949974528
-    m_Key: knockbackStrength
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64970135793664
-    m_Key: knockbackDuration
-    m_Metadata:
-      m_Items: []
   - m_Id: 1157554652409856
     m_Key: cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70743694845284352
+    m_Key: baseHealth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70744003197931520
+    m_Key: baseAttackDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70744115475255296
+    m_Key: baseFireRate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70744242084515840
+    m_Key: baseAttackRange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70744327769952256
+    m_Key: turretSize
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70744515280506880
+    m_Key: placementCooldown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70744699016187904
+    m_Key: buildCapacityValue
     m_Metadata:
       m_Items: []
   m_Metadata:

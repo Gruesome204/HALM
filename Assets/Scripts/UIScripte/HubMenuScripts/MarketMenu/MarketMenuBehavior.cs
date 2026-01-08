@@ -16,7 +16,10 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
     private Label goingRateTxt;
     private Label informationTxt;
     private SliderInt slider;
+
+    private Label sellLabel;
     private Button sellButton;
+    private Label buyLabel;
     private Button buyButton;
 
     public VisualTreeAsset ressourceButton;
@@ -82,11 +85,23 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             informationTxt.text = $"x{slider.value} "
                                 + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{openRessourceDetails}").GetLocalizedString()
                                 + LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"selectedAmount").GetLocalizedString();
+
+            sellLabel.text = LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"sellLabel").GetLocalizedString()
+                            + $"{slider.value * sellingRate}x "
+                            + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{ResourceType.Currency}").GetLocalizedString();
+
+            buyLabel.text = LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"buyLabel").GetLocalizedString()
+                            + $"{slider.value * buyingRate}x "
+                            + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{ResourceType.Currency}").GetLocalizedString();
         });
+
+        sellLabel = root.Q<Label>("sellLabel");
 
         sellButton = root.Q<Button>("sellButton");
         sellButton.SetBinding("text", new LocalizedString("MarketMenuTranslationTable", "sellButton"));
         sellButton.RegisterCallback<ClickEvent>(OnSellButtonClicked);
+
+        buyLabel = root.Q<Label>("buyLabel");
 
         buyButton = root.Q<Button>("buyButton");
         buyButton.SetBinding("text", new LocalizedString("MarketMenuTranslationTable", "buyButton"));
@@ -134,7 +149,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
         {
             case ResourceType.Currency:
                 buyingRate = 1;
-                sellingRate = 1;
+                sellingRate = 1000;
                 break;
             case ResourceType.Wood:
                 buyingRate = 3;
@@ -167,6 +182,9 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
         subHeadline.text = "";
         goingRateTxt.text = "";
         informationTxt.text = "";
+
+        sellLabel.text = "";
+        buyLabel.text = "";
 
         slider.value = 2;
         slider.value = 1;

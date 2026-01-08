@@ -23,8 +23,16 @@ MonoBehaviour:
     m_Key: subHeadline
     m_Metadata:
       m_Items: []
+  - m_Id: 5829617757327360
+    m_Key: sellLabel
+    m_Metadata:
+      m_Items: []
   - m_Id: 6171529216
     m_Key: sellButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5829667451441152
+    m_Key: buyLabel
     m_Metadata:
       m_Items: []
   - m_Id: 61595062272

@@ -45,3 +45,8 @@
 }
 
 
+.MechanicIcon{
+    background-image: url("project://database/Assets/ArtAssets/PlayerCharacterAssets/20250924_Charakter.png");
+    -unity-background-scale-mode: scale-to-fit;
+
+}

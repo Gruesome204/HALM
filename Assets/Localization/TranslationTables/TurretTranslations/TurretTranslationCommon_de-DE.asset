@@ -18,32 +18,32 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 11481739264
-    m_Localized: 'Feuerrate: '
+  - m_Id: 70744699016187904
+    m_Localized: "Turmkapazit\xE4ten verbrauch: "
     m_Metadata:
       m_Items: []
-  - m_Id: 64886077747200
-    m_Localized: "Feuer Abz\xE4hlung: "
+  - m_Id: 70744515280506880
+    m_Localized: 'Bau abklingzeit: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64904218112000
-    m_Localized: 'Geschoss Geschwindigkeit: '
+  - m_Id: 70744327769952256
+    m_Localized: "Turm gr\xF6\xDFe: "
     m_Metadata:
       m_Items: []
-  - m_Id: 64917459529728
+  - m_Id: 70744242084515840
     m_Localized: 'Reichweite: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64935855747072
+  - m_Id: 70744115475255296
+    m_Localized: 'Feuerrate: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70744003197931520
     m_Localized: 'Schaden: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64953949974528
-    m_Localized: "R\xFCckschlag St\xE4rke: "
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64970135793664
-    m_Localized: "R\xFCckschlag Dauer: "
+  - m_Id: 70743694845284352
+    m_Localized: 'Lebenspunkte: '
     m_Metadata:
       m_Items: []
   - m_Id: 1157554652409856

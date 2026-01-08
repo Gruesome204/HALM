@@ -18,32 +18,32 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 11481739264
-    m_Localized: 'Fire Rate: '
+  - m_Id: 70744699016187904
+    m_Localized: 'Tower Capacity: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64886077747200
-    m_Localized: 'Fire Countdown: '
+  - m_Id: 70744515280506880
+    m_Localized: 'Placement cooldown: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64904218112000
-    m_Localized: 'Projectile Speed: '
+  - m_Id: 70744327769952256
+    m_Localized: 'Tower size: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64917459529728
-    m_Localized: 'Attack Range: '
+  - m_Id: 70744242084515840
+    m_Localized: 'Attack range: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64935855747072
+  - m_Id: 70744115475255296
+    m_Localized: 'Fire rate: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70744003197931520
     m_Localized: 'Damage: '
     m_Metadata:
       m_Items: []
-  - m_Id: 64953949974528
-    m_Localized: 'Knochback Strenght: '
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64970135793664
-    m_Localized: 'Knockback Duration: '
+  - m_Id: 70743694845284352
+    m_Localized: 'Hit Points: '
     m_Metadata:
       m_Items: []
   - m_Id: 1157554652409856

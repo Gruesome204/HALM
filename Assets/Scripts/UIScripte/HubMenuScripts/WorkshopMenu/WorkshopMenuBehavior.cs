@@ -162,20 +162,26 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         turretIcon.AddToClassList($"{openTurretDetails.turretName}Icon");
 
         FillCostValue(ref turretStats);
-        FillDetailValue("fireRate", openTurretDetails.baseFireRate, ref turretStats);
-        FillDetailValue("fireCountdown", openTurretDetails.BaseFireCountdown, ref turretStats);
-        FillDetailValue("projectileSpeed", openTurretDetails.baseProjectileSpeed, ref turretStats);
-        FillDetailValue("attackRange", openTurretDetails.baseAttackRange, ref turretStats);
-        FillDetailValue("damage", openTurretDetails.baseAttackDamage, ref turretStats);
-        FillDetailValue("knockbackStrength", openTurretDetails.baseKnockbackStrength, ref turretStats);
-        FillDetailValue("knockbackDuration", openTurretDetails.baseKnockbackDuration, ref turretStats);
+        FillDetailValue("baseHealth", openTurretDetails.baseHealth, ref turretStats);
+        FillDetailValue("baseAttackDamage", openTurretDetails.baseAttackDamage, ref turretStats);
+        FillDetailValue("baseAttackRange", openTurretDetails.baseAttackRange, ref turretStats);
+        FillDetailValue("turretSize", openTurretDetails.height + openTurretDetails.length, ref turretStats);
+        FillDetailValue("placementCooldown", openTurretDetails.placementCooldown, ref turretStats);
+        FillDetailValue("buildCapacityValue", openTurretDetails.buildCapacityValue, ref turretStats);
 
         detailsMainContainer.RemoveFromClassList("turretChoiceMenuSlideOut");
     }
     void FillDetailValue(string value, float turretValue, ref TemplateContainer container)
     {
-        container.Q<Label>($"{value}Name").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
-        container.Q<Label>($"{value}").text = $"{turretValue}";
+        var valueName = new Label();
+        valueName.AddToClassList("paper-Text");
+        valueName.SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
+        container.Q<VisualElement>("detailNames").Add(valueName);
+
+        var valueNumbers = new Label();
+        valueNumbers.AddToClassList("paper-Text");
+        valueNumbers.text = $"{turretValue}";
+        container.Q<VisualElement>("detailNumbers").Add(valueNumbers);
     }
 
     void FillCostValue(ref TemplateContainer container)
