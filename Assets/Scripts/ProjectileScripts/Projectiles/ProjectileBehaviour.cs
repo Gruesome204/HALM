@@ -12,11 +12,11 @@ public class ProjectileBehaviour : MonoBehaviour
     public Vector2 direction;
     private Rigidbody2D rb;
 
-    public int piercingHitsRemaining = 3;
+    public int remainingPierces;
 
-    public void InitializePiercing(int hits)
+    public void InitializePiercing(int pierces)
     {
-        piercingHitsRemaining = hits;
+        remainingPierces = pierces;
     }
     private void Awake()
     {
@@ -67,22 +67,16 @@ public class ProjectileBehaviour : MonoBehaviour
             };
 
             damagable.TakeDamage(damageData, knockbackData);
-            // Reduce piercing hits remaining
-            if (piercingHitsRemaining > 0) // Only decrement if not infinite piercing
-            {
-                piercingHitsRemaining--;
-            }
 
-            // Destroy the projectile if it has no more piercing hits remaining
-            if (piercingHitsRemaining == 0)
+            // Reduce piercing hits remaining
+            if (remainingPierces > 0)
+            {
+                remainingPierces--;
+            }
+            else
             {
                 Destroy(gameObject);
             }
-        }
-        else
-        {
-            // Handle collisions with non-damagable objects if needed
-           // Destroy(gameObject);
         }
     }
 }
