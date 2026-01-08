@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KTO2
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevel: 10
+  triggerLevel: 5
   options:
   - name: 
     description: 'Hinterlader

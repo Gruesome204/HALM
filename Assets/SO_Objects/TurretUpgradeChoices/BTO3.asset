@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BTO3
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevel: 2
+  triggerLevel: 10
   options:
   - name: "Zus\xE4tzliche Besatzung"
     description: "Zus\xE4tzliche Besatzung"

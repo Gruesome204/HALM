@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
-  m_Name: BTO2
+  m_Name: BATO3
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevel: 5
+  triggerLevel: 10
   options:
-  - name: "Gesch\xE4rfte Pfeil Spitzen"
-    description: "Gesch\xE4rfte Pfeil Spitzen"
+  - name: Stahlbolzen
+    description: "Balistenbolzen erh\xF6hen ihren Durchschlag um +2"
     icon: {fileID: 0}
     modifier:
-      turretPlacementCooldownMultiplier: 1
-      healthMultiplier: 1
-      damageMultiplier: 1
-      fireRateMultiplier: 1
-      projectilesPerSalve: 1
-      projectileSpeed: 1
+      turretPlacementCooldownMultiplier: 0
+      healthMultiplier: 0
+      damageMultiplier: 0
+      fireRateMultiplier: 0
+      projectilesPerSalve: 0
+      projectileSpeed: 0
       rangeBonus: 0
-      projectileType: {fileID: 0}
+      piercingHits: 2
+      projectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}

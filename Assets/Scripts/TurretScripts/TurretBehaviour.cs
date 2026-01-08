@@ -237,6 +237,9 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         if (currentProjectileType == null || target == null || firePoint == null)
             return;
 
+    TurretModifier modifier =
+    TurretUpgradeChoiceManager.Instance.GetCombinedModifier(turretBlueprint.turretType);
+
         GameObject projectileObj = Instantiate(
             currentProjectileType,
             firePoint.position,
@@ -256,6 +259,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         projectile.knockbackStrength = currentKnockbackStrength;
         projectile.knockbackDuration = currentKnockbackDuration;
 
+        projectile.InitializePiercing(modifier.piercingHits);
         Vector2 direction = (target.position - firePoint.position).normalized;
         rb.linearVelocity = direction * currentProjectileSpeed;
 

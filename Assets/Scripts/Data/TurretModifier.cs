@@ -10,6 +10,7 @@ public class TurretModifier
     public int projectilesPerSalve = 1;
     public float projectileSpeed = 1f;
     public float rangeBonus = 0f;
+    public int piercingHits = 0;
 
     public GameObject projectileType;
 }

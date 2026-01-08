@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KTO1
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevel: 10
+  triggerLevel: 2
   options:
   - name: 
     description: "Kart\xE4schen\n(\xE4nderung des Geschosses)"

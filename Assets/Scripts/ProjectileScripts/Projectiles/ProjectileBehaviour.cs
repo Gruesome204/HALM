@@ -13,6 +13,11 @@ public class ProjectileBehaviour : MonoBehaviour
     private Rigidbody2D rb;
 
     public int piercingHitsRemaining = 3;
+
+    public void InitializePiercing(int hits)
+    {
+        piercingHitsRemaining = hits;
+    }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

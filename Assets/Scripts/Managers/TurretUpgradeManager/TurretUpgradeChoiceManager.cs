@@ -83,9 +83,12 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
                 combined.damageMultiplier *= mod.damageMultiplier;
                 combined.fireRateMultiplier *= mod.fireRateMultiplier;
                 combined.projectileSpeed *= mod.projectileSpeed;
-                combined.projectilesPerSalve += mod.projectilesPerSalve;
                 combined.healthMultiplier *= mod.healthMultiplier;
                 combined.turretPlacementCooldownMultiplier *= mod.turretPlacementCooldownMultiplier;
+
+                combined.projectilesPerSalve += mod.projectilesPerSalve;
+                combined.piercingHits += mod.piercingHits;
+                combined.rangeBonus += mod.rangeBonus;
             }
         }
 
