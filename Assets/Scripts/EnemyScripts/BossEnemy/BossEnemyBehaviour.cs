@@ -13,7 +13,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
         base.HandleDamaged(damageData, knockbackData); // call default behaviour
 
         // Boss-specific logic: Enrage at low health
-        if (!isEnraged && stats.currentHealth / stats.currentMaxHealth <= enrageHealthThreshold)  
+        if (!isEnraged && stats.currentHealth / stats.maxHealth <= enrageHealthThreshold)  
         {
             Enrage();
         }

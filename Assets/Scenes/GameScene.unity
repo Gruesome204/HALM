@@ -1752,7 +1752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs: []
   spawnInterval: 1
-  spawnAmount: 1
+  spawnAmount: 10
   spawnRadius: 5
   spawnPoints: []
   useRandomSpawnPoint: 1

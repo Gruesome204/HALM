@@ -23,8 +23,8 @@ MonoBehaviour:
       healthMultiplier: 0
       damageMultiplier: 0
       fireRateMultiplier: 0
-      projectilesPerSalve: 0
       projectileSpeed: 0
+      projectilesPerSalve: 0
       rangeBonus: 0
       piercingHits: 2
       projectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}

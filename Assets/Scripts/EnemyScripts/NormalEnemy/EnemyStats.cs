@@ -15,8 +15,8 @@ public class EnemyStats : MonoBehaviour
     public float currentAttackRange;
 
     [Header("Current Stats - Defensive")]
+    public float maxHealth;
     public float currentHealth;
-    public float currentMaxHealth;
     public float currentArmor;
     public float currentMagicResistance;
     public float currentKnockbackReduction;
@@ -57,8 +57,8 @@ public class EnemyStats : MonoBehaviour
         armorScaleFactor = baseStats.baseArmorScaleFactor;
 
         // Defensive Stats
-        currentMaxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
-        currentHealth = currentMaxHealth;
+        maxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
+        currentHealth = maxHealth;
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
         currentMagicResistance = baseStats.baseMagicResistance; // optional: scale if needed
         currentKnockbackReduction = Mathf.Clamp01(baseStats.baseKnockbackReduction);
@@ -93,12 +93,12 @@ public class EnemyStats : MonoBehaviour
         currentLevel = Mathf.Max(1, level);
 
         // Update max stats
-        currentMaxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
+        maxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
         currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
         currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
 
         // Optional: keep currentHealth relative to new max
-        currentHealth = Mathf.Min(currentHealth, currentMaxHealth);
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
 }

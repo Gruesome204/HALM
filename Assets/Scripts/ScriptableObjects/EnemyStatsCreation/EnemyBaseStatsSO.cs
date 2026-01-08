@@ -18,7 +18,6 @@ public class EnemyBaseStats : ScriptableObject
 
     [Header("Defensive Stats")]
     public float baseMaxHealth = 100f;
-    public float baseHealth = 100f;
     public float baseArmor;
     public float baseMagicResistance;
     public float baseKnockbackReduction;

@@ -42,7 +42,7 @@ public class AbilityRuntime
                 if (targetHealth is PlayerHealth ph)
                     hpPercent = ph.stats.currentHealth / ph.stats.currentMaxHealth;
                 else if (targetHealth is EnemyHealth eh)
-                    hpPercent = eh.stats.currentHealth / eh.stats.currentMaxHealth;
+                    hpPercent = eh.stats.currentHealth / eh.stats.maxHealth;
 
                 if (hpPercent > ability.maxTargetHealthPercent || hpPercent < ability.minUserHealthPercent)
                     return false;

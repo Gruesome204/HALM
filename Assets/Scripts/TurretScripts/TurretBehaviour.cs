@@ -84,7 +84,13 @@ public class TurretBehaviour : MonoBehaviour, IPausable
                                 * TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType)
                                 * TurretGlobalModifierManager.Instance.globalProjectileSpeed;
 
-        projectilesPerSalve = turretBlueprint.projectilesPerSalve + globalExtraProjectiles;
+        int upgradeExtraProjectiles =
+            TurretUpgradeChoiceManager.Instance.GetProjectilesPerSalve(turretBlueprint.turretType);
+
+        projectilesPerSalve =
+            turretBlueprint.projectilesPerSalve
+            + globalExtraProjectiles
+            + upgradeExtraProjectiles;
 
         currentProjectileType = turretBlueprint.turretProjectileType;
 
@@ -111,7 +117,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
                         StartCoroutine(ShootFireSalve());
                         break;
                 }
-                currentFireCountdown = turretBlueprint.BaseFireCountdown;
+                currentFireCountdown = turretBlueprint.BaseFireCountdown / currentFireRate;
             }
             currentFireCountdown -= Time.deltaTime;
         }
@@ -175,7 +181,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
         isShootingSalve = true;
         // normal cooldown after salve
-        currentFireCountdown = turretBlueprint.BaseFireCountdown;
+        currentFireCountdown = turretBlueprint.BaseFireCountdown / currentFireRate;
 
         float delay = delayBetweenSalveProjectiles;
 

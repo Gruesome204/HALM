@@ -35,8 +35,12 @@ MonoBehaviour:
   goldYield: 0
   resourceDrops:
   - resourceType: 0
-    minAmount: 0
-    maxAmount: 0
+    minAmount: 5
+    maxAmount: 5
+    dropChance: 0
+  - resourceType: 2
+    minAmount: 5
+    maxAmount: 5
     dropChance: 0
   baseHealthScaleFactor: 0.1
   baseDamageScaleFactor: 0.1

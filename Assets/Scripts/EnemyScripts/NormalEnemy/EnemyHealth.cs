@@ -44,7 +44,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
             return;
         }
 
-        stats.currentHealth = stats.currentMaxHealth;
+        stats.currentHealth = stats.maxHealth;
 
         canvas = FindObjectOfType<Canvas>();
 
@@ -87,7 +87,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 
         float damage = CalculateTakenDamage(damageData);
         stats.currentHealth -= damage;
-        stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0f, stats.currentMaxHealth);
+        stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0f, stats.maxHealth);
 
         PlayDamageFlash();
 
@@ -97,7 +97,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
         else if (healthBar != null)
         {
             healthBar.SetValueWithoutNotify(
-                stats.currentHealth / stats.currentMaxHealth
+                stats.currentHealth / stats.maxHealth
             );
         }
 
