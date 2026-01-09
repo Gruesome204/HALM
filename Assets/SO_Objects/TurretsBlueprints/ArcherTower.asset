@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7e7cda704781734ebb691b39dac05d3, type: 3}
-  m_Name: BasicTurret
+  m_Name: ArcherTower
   m_EditorClassIdentifier: 
   turretName: ArcherTower
   towerIcon: {fileID: 7892373371436272380, guid: a8c81774cdfd55b46b00e047a78ba8ca, type: 3}

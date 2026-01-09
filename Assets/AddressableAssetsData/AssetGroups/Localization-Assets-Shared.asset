@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: 77e159cd53431c449a4dcf77dd9b39ae
   m_SerializeEntries:
+  - m_GUID: 0a142936ede63a549ae77730537bdb10
+    m_Address: Assets/Localization/TranslationTables/TurretTranslations/TurretTranslationRepeatingCrossbow
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1e2d2fbbe49395343a285a5a761ce7dd
     m_Address: "Assets/Localization/TranslationTables/BMTranslations/BMTranslationsSorgf\xE4ltiegeBauweise
       Shared Data.asset"

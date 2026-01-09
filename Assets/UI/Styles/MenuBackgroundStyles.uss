@@ -29,3 +29,13 @@
     padding-bottom: 6.5%;
     flex-grow: 1;
 }
+
+.popUpMenuBackground {
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/PopUpMenu_Version1.png?fileID=2800000&guid=f79ae721863e69e4280622aeedc8f4d1&type=3#PopUpMenu_Version1");
+    padding-top: 2%;
+    padding-right: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+}

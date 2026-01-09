@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: TurretUpgradeTranslationTable Shared Data
+  m_Name: TurretTranslationRepeatingCrossbow Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: TurretUpgradeTranslationTable
-  m_TableCollectionNameGuidString: dbf8d7e09d4a02645939537c832780c8
+  m_TableCollectionName: TurretTranslationRepeatingCrossbow
+  m_TableCollectionNameGuidString: 0a142936ede63a549ae77730537bdb10
   m_Entries:
-  - m_Id: 8688111616
-    m_Key: headline
+  - m_Id: 4258926592
+    m_Key: name
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 6291889513694494797
+    rid: 6747693184491716742
   references:
     version: 2
     RefIds:
-    - rid: 6291889513694494797
+    - rid: 6747693184491716742
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1759933179422
+        m_CustomEpoch: 1767988387437

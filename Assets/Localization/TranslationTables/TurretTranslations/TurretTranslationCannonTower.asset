@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
-  m_Name: TurretTranslationFastTurret
+  m_Name: TurretTranslationCannonTower
   m_EditorClassIdentifier: 
-  m_SharedTableData: {fileID: 11400000, guid: 90ca13a0f67bb494ebb46e945e8dd23a, type: 2}
+  m_SharedTableData: {fileID: 11400000, guid: a85dfb13163a27a4188a484320731153, type: 2}
   m_Tables:
-  - {fileID: 11400000, guid: 6b8b5e921fdaa8949893f42c364dfc97, type: 2}
-  - {fileID: 11400000, guid: 72d7664fe7aa4d14fb31a3e813438f97, type: 2}
-  - {fileID: 11400000, guid: f824c36ae6fd5f543b58b79dd95394ba, type: 2}
+  - {fileID: 11400000, guid: 2dbf6be02a73e4c4f9f3ac37ffa7a3de, type: 2}
+  - {fileID: 11400000, guid: 4a9717b9f0baabb458e06615ede9342d, type: 2}
+  - {fileID: 11400000, guid: dd6e2a86017c9e84298dbf3266b0434b, type: 2}
   m_Extensions: []
   m_Group: String Table
   references:

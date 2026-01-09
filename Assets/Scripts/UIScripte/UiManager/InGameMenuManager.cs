@@ -28,7 +28,7 @@ public class InGameMenuManager : MonoBehaviour
         //Suscribing to the Events that trigger a Menu opneing
         if (SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "HubScene")
         {
-            TurretLevelManager.Instance.OnMilestoneReached += OpenTurretUpgradeChoice;
+            //TurretLevelManager.Instance.OnMilestoneReached += OpenTurretUpgradeChoice;
             PlayerManager.Instance.OnPlayerDeath += GameOver;
             EnemySpawnManager.Instance.OnBossDefeated += GameWon;
         }

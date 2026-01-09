@@ -1,9 +1,11 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
-    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn turretChoiceMenuSlideOut" style="flex-grow: 0; flex-shrink: 0; flex-direction: column; align-content: auto; justify-content: flex-start; align-items: center;">
-        <ui:VisualElement name="turretIcon" style="flex-grow: 0; align-self: auto; width: 40%; height: 10%; flex-shrink: 0; background-color: rgb(153, 60, 60);" />
-        <ui:Label text="Label" name="turretName" style="align-self: auto; width: auto; height: 10%;" />
-        <ui:VisualElement name="turretUpgradeChoices" style="flex-grow: 0; align-self: center; align-content: auto; flex-shrink: 0; width: 40%; height: 80%; background-color: rgba(8, 0, 61, 0.25);" />
+    <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
+    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn popUpMenuBackground" style="flex-grow: 0; flex-shrink: 0; flex-direction: column; align-content: auto; justify-content: flex-start; align-items: center; width: 36%; align-self: center;">
+        <ui:Label text="Label" name="headline" class="headline" style="align-self: auto; width: auto; height: 20%;" />
+        <ui:VisualElement name="icon" style="flex-grow: 0; align-self: auto; width: 40%; height: 20%; flex-shrink: 0;" />
+        <ui:Label text="Label" name="towerName" style="height: 5%;" />
+        <ui:ScrollView name="turretUpgradeChoices" style="flex-shrink: 0; flex-grow: 1;" />
     </ui:VisualElement>
 </ui:UXML>

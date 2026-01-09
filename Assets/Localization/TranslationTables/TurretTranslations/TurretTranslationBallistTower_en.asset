@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: TurretTranslationFastTurret_de-DE
+  m_Name: TurretTranslationBallistTower_en
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: de-DE
+    m_Code: en
   m_SharedData: {fileID: 11400000, guid: 90ca13a0f67bb494ebb46e945e8dd23a, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
   - m_Id: 11741786112
-    m_Localized: Schneller Turm
+    m_Localized: Fast Turret
     m_Metadata:
       m_Items: []
   references:

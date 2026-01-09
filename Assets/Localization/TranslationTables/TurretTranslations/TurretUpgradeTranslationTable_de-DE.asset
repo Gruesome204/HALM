@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 8688111616
-    m_Localized: Das ist ein Platzhalter
+    m_Localized: Ein Turm kann verbessert werden!
     m_Metadata:
       m_Items: []
   references:

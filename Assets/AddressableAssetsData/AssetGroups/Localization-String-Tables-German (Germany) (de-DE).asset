@@ -76,6 +76,12 @@ MonoBehaviour:
     - Locale-de-DE
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 412a10b70cb89874982c04b5c62c4edb
+    m_Address: TurretTranslationRepeatingCrossbow_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 460bf22d12523084f8a3ba3cd27558de
     m_Address: MenuTranslationaTable_de-DE
     m_ReadOnly: 1
@@ -91,7 +97,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a9717b9f0baabb458e06615ede9342d
-    m_Address: TurretTranslationCannonTurret_de-DE
+    m_Address: TurretTranslationCannonTower_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE
@@ -118,7 +124,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 72d7664fe7aa4d14fb31a3e813438f97
-    m_Address: TurretTranslationFastTurret_de-DE
+    m_Address: TurretTranslationBallistTower_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE

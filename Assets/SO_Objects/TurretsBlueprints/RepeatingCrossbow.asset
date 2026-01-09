@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e7cda704781734ebb691b39dac05d3, type: 3}
   m_Name: RepeatingCrossbow
   m_EditorClassIdentifier: 
-  turretName: RepeatingCrossbowTower
+  turretName: RepeatingCrossbow
   towerIcon: {fileID: 0}
   baseLevel: 1
   description: Repetierarmbrust Turm

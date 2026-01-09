@@ -1,13 +1,18 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UIElements;
 
 public class TurretUpgradeMenuBehavior : MonoBehaviour, IMenu
 {
-    private VisualElement turretUpgradeChoices;
-    public VisualTreeAsset choiceListElement;
 
+    private Label headline;
+    private VisualElement icon;
+    private Label towerName;
+    private ScrollView turretUpgradeChoices;
+
+    public VisualTreeAsset choiceListElement;
 
     public void OpenOrClose(Boolean open)
     {
@@ -30,39 +35,40 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour, IMenu
     private void OnEnable()
     {
         TurretLevelManager.Instance.OnMilestoneReached += CreateListEntry;
+        var root = GetComponent<UIDocument>().rootVisualElement;
 
-        turretUpgradeChoices = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("turretUpgradeChoices");
+        headline = root.Q<Label>("headline");
+        icon = root.Q<VisualElement>("icon");
+        towerName = root.Q<Label>("towerName");
 
-        if (turretUpgradeChoices == null)
-        {
-            Debug.LogError("turretUpgradeChoices element not found in UXML!");
-            return;
-        }
-        turretUpgradeChoices.Clear();
-
-        var uiDoc = GetComponent<UIDocument>();
-        if (uiDoc == null)
-        {
-            Debug.LogError("No UIDocument found!");
-            return;
-        }
+        turretUpgradeChoices = root.Q<ScrollView>("turretUpgradeChoices");
     }
 
+    void Fill(TurretType _type)
+    {
+        headline.SetBinding("text", new LocalizedString("TurretUpgradeTranslationTable", "headline"));
+
+        towerName.SetBinding("text", new LocalizedString($"TurretTranslation{_type}","name"));
+
+        icon.ClearClassList();
+        icon.AddToClassList($"{_type}Icon");
+    }
 
     public void CreateListEntry(TurretType type, int level)
     {
-        Debug.Log("Test");
+        InGameMenuManager.Instance.OpenOrCloseOneMenu("TurretUpgradeChoiceDoc", true);
+        Fill(type);
+
         turretUpgradeChoices.Clear();
 
         var options = TurretUpgradeChoiceManager.Instance.GetAllOptionsForLevel(type, level);
 
         foreach (var option in options)
         {
-            TU_ChoiceElementBehavior tu_ChoiceElementBehavior =
-                new TU_ChoiceElementBehavior(choiceListElement, option, type, level);
+            
+            TU_ChoiceElementBehavior tu_ChoiceElementBehavior = new TU_ChoiceElementBehavior(choiceListElement, option);
 
             turretUpgradeChoices.Add(tu_ChoiceElementBehavior.border);
         }
-
     }
    }

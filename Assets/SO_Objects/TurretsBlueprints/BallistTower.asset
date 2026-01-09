@@ -10,35 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7e7cda704781734ebb691b39dac05d3, type: 3}
-  m_Name: CannonTurret
+  m_Name: BallistTower
   m_EditorClassIdentifier: 
-  turretName: CannonTurret
-  towerIcon: {fileID: 7274916224334571485, guid: 74f16a1d77dc72544b1d872b093b4c4a, type: 3}
+  turretName: BallistTower
+  towerIcon: {fileID: 0}
   baseLevel: 1
   description: 
-  turretType: 2
+  turretType: 4
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
-  turretPrefab: {fileID: 7571318827705311655, guid: 1ce6f749031a829468e26f28d04a94b6, type: 3}
-  turretProjectileType: {fileID: 1759283730849935406, guid: 35da1b0dcddb8ae4aba1d2ccafe97370, type: 3}
+  turretPrefab: {fileID: 673453059274113653, guid: 130817ef7da155845abce0dd7b6b7f83, type: 3}
+  turretProjectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}
   firingPattern: 1
   projectilesPerSalve: 1
   delayBetweenSalveProjectiles: 0.5
   baseHealth: 250
-  baseAttackDamage: 50
-  baseFireRate: 0.25
-  baseProjectileSpeed: 15
+  baseAttackDamage: 30
+  baseFireRate: 0.5
+  baseProjectileSpeed: 10
   baseAttackRange: 20
-  baseKnockbackStrength: 2
+  baseKnockbackStrength: 1.5
   baseKnockbackDuration: 1
-  baseHealthGrowthFactor: 1.1
-  baseDamageGrowthFactor: 0
-  baseFireRateGrowthFactor: 1.1
-  baseRangeGrowthFlat: 0
+  baseHealthGrowthFactor: 1.2
+  baseDamageGrowthFactor: 1.2
+  baseFireRateGrowthFactor: 0.95
+  baseRangeGrowthFlat: 0.5
   buyCost:
-  - resourceType: 1
-    amount: 20
+  - resourceType: 2
+    amount: 10
+  - resourceType: 0
+    amount: 50
   height: 2
   length: 2
   buildCapacityValue: 2
   placementCooldown: 20
-  unlockCost: 10

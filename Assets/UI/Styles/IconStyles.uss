@@ -3,17 +3,20 @@
     -unity-background-scale-mode: scale-to-fit;
 }
 
-.CannonTurretIcon {
+.CannonTowerIcon {
     background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/CannonTurretIcon.png?fileID=2800000&guid=b9be343fdf857404f9f37aa77422947b&type=3#CannonTurretIcon");
     -unity-background-scale-mode: scale-to-fit;
 }
 
-.FastTurretIcon {
+.BallistTowerIcon {
     background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/FastTurretIcon.png?fileID=2800000&guid=d3efb326e50aa80448845a63e91d45ed&type=3#FastTurretIcon");
     -unity-background-scale-mode: scale-to-fit;
 }
 .BarricadeIcon {
     background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/BarricadeIcon.png?fileID=2800000&guid=b3f3e4ce66739754f8d401e160d93016&type=3#BarricadeIcon");
+    -unity-background-scale-mode: scale-to-fit;
+}
+.RepeatingCrossbowIcon {
     -unity-background-scale-mode: scale-to-fit;
 }
 

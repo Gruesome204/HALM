@@ -45,6 +45,16 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
             }
         }
     }
+    public IEnumerable<TurretUpgradeChoiceSO> GetAllSOOptionsForLevel(TurretType type, int level)
+    {
+        foreach (var choice in upgradeChoices)
+        {
+            if (choice != null && choice.turretType == type && choice.triggerLevel == level)
+            {
+                yield return choice;
+            }
+        }
+    }
 
     //Player Selects and upgrade and this method saves the choice
     public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoiceSO.UpgradeOption option)

@@ -10,19 +10,20 @@ public class TU_ChoiceElementBehavior
 
     private TurretUpgradeChoiceSO.UpgradeOption option;
     private TurretType turretType;
-    private int turretLevel;
 
-    public TU_ChoiceElementBehavior(VisualTreeAsset asset, TurretUpgradeChoiceSO.UpgradeOption _option, TurretType type, int level)
+    public TU_ChoiceElementBehavior(VisualTreeAsset asset, TurretUpgradeChoiceSO.UpgradeOption _option)
     {
         TemplateContainer choiceElement = asset.Instantiate();
 
         option = _option;
-        turretType = type;
-        turretLevel = level;
 
-        border = choiceElement.Q<VisualElement>();
-        button = choiceElement.Q<Button>();
-        button.SetBinding("text", new LocalizedString("TurretUpgradeTranslationTable", "placeholder"));
+        border = choiceElement.Q<VisualElement>("border");
+
+        choiceElement.Q<Label>("name").SetBinding("text", new LocalizedString("", $"{option.name}"));
+
+        choiceElement.Q<Label>("description").SetBinding("text", new LocalizedString("", $"{option.name}Description"));
+
+        button = choiceElement.Q<Button>("turretUpgradeChoice_Btn");
         button.RegisterCallback<ClickEvent>(OnClicked);
     }
 

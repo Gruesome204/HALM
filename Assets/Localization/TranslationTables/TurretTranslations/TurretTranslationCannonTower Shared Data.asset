@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: TurretTranslationFastTurret Shared Data
+  m_Name: TurretTranslationCannonTower Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: TurretTranslationFastTurret
-  m_TableCollectionNameGuidString: 90ca13a0f67bb494ebb46e945e8dd23a
+  m_TableCollectionName: TurretTranslationCannonTower
+  m_TableCollectionNameGuidString: a85dfb13163a27a4188a484320731153
   m_Entries:
-  - m_Id: 11741786112
+  - m_Id: 3906605056
     m_Key: name
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 4024202187725078820
+    rid: 6828362419830260151
   references:
     version: 2
     RefIds:
-    - rid: 4024202187725078820
+    - rid: 6828362419830260151
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1751037360276
+        m_CustomEpoch: 1766344050184

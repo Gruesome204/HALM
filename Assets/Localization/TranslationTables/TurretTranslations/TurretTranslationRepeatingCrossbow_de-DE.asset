@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: TurretTranslationCannonTurret_de-DE
+  m_Name: TurretTranslationRepeatingCrossbow_de-DE
   m_EditorClassIdentifier: 
   m_LocaleId:
     m_Code: de-DE
-  m_SharedData: {fileID: 11400000, guid: a85dfb13163a27a4188a484320731153, type: 2}
+  m_SharedData: {fileID: 11400000, guid: 0a142936ede63a549ae77730537bdb10, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 3906605056
-    m_Localized: Kanonen Turm
+  - m_Id: 4258926592
+    m_Localized: was zum fick ist das auf Deutsch
     m_Metadata:
       m_Items: []
   references:
