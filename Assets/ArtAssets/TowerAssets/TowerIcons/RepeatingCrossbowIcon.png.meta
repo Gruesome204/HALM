@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e1b92c61e75939b40bec252b18e02a8a
+guid: 503b33e4a58fffa47a3992da620fb518
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2034295510090961216
-    second: RessourceRow_Version1_0
+      213: 3896201345920015889
+    second: 20260110_IconRepetierarmbrust_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RessourceRow_Version1_0
+      name: 20260110_IconRepetierarmbrust_0
       rect:
         serializedVersion: 2
-        x: 1445
-        y: 66
-        width: 303
-        height: 58
+        x: 0
+        y: 0
+        width: 185
+        height: 218
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0ce2bd0030bb4c3e0800000000000000
-      internalID: -2034295510090961216
+      spriteID: 11e16fc2b76121630800000000000000
+      internalID: 3896201345920015889
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8890a637fcef9044d9134f6242fa34da
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RessourceRow_Version1_0: -2034295510090961216
+      20260110_IconRepetierarmbrust_0: 3896201345920015889
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

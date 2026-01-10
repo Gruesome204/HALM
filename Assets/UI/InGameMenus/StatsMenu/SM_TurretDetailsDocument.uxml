@@ -2,16 +2,12 @@
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
     <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
-    <ui:VisualElement name="mainContainer" style="flex-grow: 1; flex-shrink: 0; align-items: center; justify-content: flex-start; width: 100%; height: 100%;">
-        <ui:Label text="Label" name="name" class="sub-headline" style="margin-top: 5px; margin-right: 5px; margin-bottom: 5%; margin-left: 5px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal;" />
-        <ui:VisualElement name="icon" style="width: 100px; height: 100px; flex-shrink: 0; flex-grow: 1;" />
-        <ui:VisualElement name="costContainer" style="position: relative; flex-direction: row; right: 0; bottom: 0; align-self: flex-end;">
-            <ui:Label text="Label" name="costName" style="position: relative; right: 0%; align-self: flex-end; color: rgb(255, 255, 255);" />
-            <ui:Label text="Label" name="cost" style="position: relative; right: 0%; align-self: flex-end; color: rgb(255, 255, 255);" />
-        </ui:VisualElement>
-        <ui:VisualElement name="detailsContainer" style="flex-direction: row-reverse; width: 100%; flex-shrink: 0; flex-grow: 1;">
-            <ui:VisualElement name="detailNumbers" style="width: 30%; align-items: flex-start;" />
-            <ui:VisualElement name="detailNames" style="width: auto; flex-direction: column; justify-content: flex-start; align-items: flex-start;" />
+    <ui:VisualElement name="mainContainer" style="flex-grow: 1; flex-shrink: 0; align-items: center; justify-content: flex-start; width: 100%; height: 100%; align-self: center;">
+        <ui:Label text="Label" name="name" class="sub-headline headline" style="white-space: normal; height: 20%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+        <ui:VisualElement name="icon" style="flex-shrink: 0; flex-grow: 0; width: 100%; height: 30%;" />
+        <ui:VisualElement name="detailsContainer" style="flex-direction: row-reverse; width: 100%; flex-shrink: 0; flex-grow: 0; margin-top: 0; height: 50%; padding-top: 10px; justify-content: center; padding-bottom: 20px;">
+            <ui:VisualElement name="detailNumbers" style="width: auto; align-items: flex-start; padding-left: 20px; justify-content: space-around; flex-shrink: 0;" />
+            <ui:VisualElement name="detailNames" style="width: auto; flex-direction: column; justify-content: space-around; align-items: flex-start; flex-shrink: 0;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

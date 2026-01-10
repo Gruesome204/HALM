@@ -156,37 +156,49 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         TemplateContainer turretStats = turretDetailsStats.Instantiate();
         statsContainer.Add(turretStats);
         turretStats.style.flexGrow = 1;
-        turretStats.Q<Label>("name").SetBinding("text", new LocalizedString($"TurretTranslation{openTurretDetails.turretName}", $"name"));
+
+        var headline = turretStats.Q<Label>("name");
+        headline.SetBinding("text", new LocalizedString($"TurretTranslation{openTurretDetails.turretName}", $"name"));
+        headline.AddToClassList("wood-Text");
 
         var turretIcon = turretStats.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{openTurretDetails.turretName}Icon");
 
-        FillCostValue(ref turretStats);
+
         FillDetailValue("baseHealth", openTurretDetails.baseHealth, ref turretStats);
         FillDetailValue("baseAttackDamage", openTurretDetails.baseAttackDamage, ref turretStats);
         FillDetailValue("baseAttackRange", openTurretDetails.baseAttackRange, ref turretStats);
         FillDetailValue("turretSize", openTurretDetails.height + openTurretDetails.length, ref turretStats);
         FillDetailValue("placementCooldown", openTurretDetails.placementCooldown, ref turretStats);
         FillDetailValue("buildCapacityValue", openTurretDetails.buildCapacityValue, ref turretStats);
+        if (!_turretUnlocked)
+        {
+            FillCostValue(ref turretStats);
+        }
 
         detailsMainContainer.RemoveFromClassList("turretChoiceMenuSlideOut");
     }
     void FillDetailValue(string value, float turretValue, ref TemplateContainer container)
     {
         var valueName = new Label();
-        valueName.AddToClassList("paper-Text");
+        valueName.AddToClassList("wood-Text");
+        valueName.AddToClassList("small-Text");
         valueName.SetBinding("text", new LocalizedString("TurretTranslationCommon", $"{value}"));
         container.Q<VisualElement>("detailNames").Add(valueName);
 
         var valueNumbers = new Label();
-        valueNumbers.AddToClassList("paper-Text");
+        valueNumbers.AddToClassList("wood-Text");
+        valueNumbers.AddToClassList("small-Text");
         valueNumbers.text = $"{turretValue}";
         container.Q<VisualElement>("detailNumbers").Add(valueNumbers);
     }
 
     void FillCostValue(ref TemplateContainer container)
     {
-        container.Q<Label>("costName").SetBinding("text", new LocalizedString("TurretTranslationCommon", $"cost"));
+        var costName = new Label();
+        costName.AddToClassList("wood-Text");
+        costName.AddToClassList("small-Text");
+        costName.SetBinding("text", new LocalizedString("TurretTranslationCommon", $"cost"));
         StringTable table = LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable");
 
         string turretCost = new string("");
@@ -194,9 +206,15 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         {
             var temporary = new string(table.GetEntry($"{cost.resourceType}").GetLocalizedString());
 
-            turretCost = turretCost + $"<br>{temporary} {cost.amount}";
+            turretCost = turretCost + $"{cost.amount}x {table.GetEntry($"{cost.resourceType}").GetLocalizedString()}<br>";
         }
-        container.Q<Label>("cost").text = turretCost;
+        var costText = new Label();
+        costText.AddToClassList("wood-Text");
+        costText.AddToClassList("small-Text");
+        costText.text = turretCost;
+
+        container.Q<VisualElement>("detailNames").Add(costName);
+        container.Q<VisualElement>("detailNumbers").Add(costText);
     }
 
     private void ClearTurretDetails()

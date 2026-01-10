@@ -5,9 +5,9 @@
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
     <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass SlideIn" style="flex-grow: 1; justify-content: flex-end; align-items: center;">
         <ui:VisualElement name="container" class="buildmasterModifyBackground2" style="flex-shrink: 0; height: 95%; align-content: auto; width: 40%; flex-grow: 0;">
-            <ui:Label text="Label" name="headline" class="headline" style="height: 30%;" />
-            <ui:Button text="Button" name="enterDungeonButton" class="mainMenuBtnClass" />
-            <ui:Button text="Button" name="stayInHubButton" class="mainMenuBtnClass" />
+            <ui:Label text="Label" name="headline" class="headline wood-Text" style="height: 30%;" />
+            <ui:Button text="Button" name="enterDungeonButton" class="woodButton" />
+            <ui:Button text="Button" name="stayInHubButton" class="woodButton" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

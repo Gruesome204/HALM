@@ -166,11 +166,11 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     {
         if (TurretDemolitionController.Instance.IsDestructionModeActive())
         {
-            turretButtonContainer.style.backgroundColor = Color.red;
+            turretButtonContainer.style.unityBackgroundImageTintColor = Color.red;
         }
         else
         {
-            turretButtonContainer.style.backgroundColor = Color.grey;
+            turretButtonContainer.style.unityBackgroundImageTintColor = Color.white;
         }
     }
 }

@@ -7,18 +7,18 @@
     <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
     <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn" style="flex-grow: 1; flex-direction: row; justify-content: center; align-items: flex-end;">
         <ui:VisualElement name="workshopContainer" class="buildmasterModifyBackground" style="flex-grow: 0; flex-shrink: 0; align-self: flex-end;">
-            <ui:Label text="Label" name="headline" class="headline" style="height: 14%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+            <ui:Label text="Label" name="headline" class="headline wood-Text" style="height: 14%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             <ui:VisualElement name="nullSpace1" style="flex-shrink: 0; height: 3%;" />
             <ui:VisualElement name="availableTurrets" style="flex-grow: 1;" />
             <ui:VisualElement name="equippedTurrets" style="flex-grow: 0; flex-shrink: 0; width: 95%; height: 20%; flex-direction: row; justify-content: center;" />
-            <ui:Button text="X" name="backBtn" class="backBtnClass mainMenuBtnClass" />
+            <ui:Button text="X" name="backBtn" class="backBtnClass mainMenuBtnClass smallWoodButton" style="font-size: 25px;" />
         </ui:VisualElement>
-        <ui:VisualElement name="towerDetailsContainer" style="flex-grow: 0; background-color: rgba(7, 17, 53, 0); flex-shrink: 0; height: 85%; align-items: flex-start;">
+        <ui:VisualElement name="towerDetailsContainer" style="flex-grow: 0; background-color: rgba(7, 17, 53, 0); flex-shrink: 0; height: 77%; align-items: flex-start;">
             <ui:VisualElement name="detailsMainContainer" class="SlideIn buildmasterModifyBackground2" style="flex-grow: 0; flex-shrink: 0; height: 100%; padding-top: 10%; padding-bottom: 20%; padding-right: 3%; padding-left: 3%;">
                 <ui:VisualElement name="statsContainer" style="flex-grow: 1;">
                     <ui:Instance template="SM_TurretDetailsDocument" style="flex-grow: 1;" />
                 </ui:VisualElement>
-                <ui:Label text="Label" name="informationTxt" class="sub-headline" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 25px;" />
+                <ui:Label text="Label" name="informationTxt" class="wood-Text small-Text" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
                 <ui:Button text="Button" name="buySelectButton" class="woodButton" />
             </ui:VisualElement>
         </ui:VisualElement>

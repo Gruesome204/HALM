@@ -10,7 +10,7 @@
 
 .BallistTowerIcon {
     -unity-background-scale-mode: scale-to-fit;
-    background-color: rgb(253, 0, 0);
+    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/BallistTowerIcon.png?fileID=2800000&guid=47d14519c62cf634da304e3e71df3c64&type=3#BallistTowerIcon");
 }
 
 .BarricadeIcon {
@@ -20,7 +20,7 @@
 
 .RepeatingCrossbowIcon {
     -unity-background-scale-mode: scale-to-fit;
-    background-color: rgb(135, 40, 40);
+    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/RepeatingCrossbowIcon.png?fileID=2800000&guid=503b33e4a58fffa47a3992da620fb518&type=3#RepeatingCrossbowIcon");
 }
 
 .CurrencyIcon {
