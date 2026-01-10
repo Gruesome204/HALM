@@ -7447,7 +7447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBossRoom: 0
-  enemyPrefabs: []
+  enemyPrefabs:
+  - {fileID: 3645313828594104337, guid: 7bfd39ed4013ca345a07cf8e4d48ca67, type: 3}
   spawnAmountOverride: -1
   spawnIntervalOverride: -1
   bossPrefab: {fileID: 0}
