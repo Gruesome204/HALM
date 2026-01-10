@@ -154,21 +154,10 @@ public class MapLoaderManager : MonoBehaviour
         }
 
         EnemySpawnManager spawner = EnemySpawnManager.Instance;
-
-        // Apply overrides if set
-        if (setup.spawnAmountOverride > -1)
-            spawner.spawnAmount = setup.spawnAmountOverride;
-
-        if (setup.spawnIntervalOverride > 0)
-            spawner.spawnInterval = setup.spawnIntervalOverride;
-
         spawner.isBossRoom = setup.isBossRoom;
-
         if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
-            spawner.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs);
+            spawner.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs); ;
 
         spawner.bossPrefab = setup.bossPrefab;
-
-        Debug.Log($"Applied MapEnemySetup: {spawner.spawnAmount} enemies, interval {spawner.spawnInterval}, bossRoom={spawner.isBossRoom}");
     }
 }

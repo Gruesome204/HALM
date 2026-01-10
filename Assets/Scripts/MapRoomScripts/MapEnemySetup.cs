@@ -7,8 +7,14 @@ public class MapEnemySetup : MonoBehaviour
     public bool isBossRoom;
 
     public List<GameObject> enemyPrefabs;
-    public int spawnAmountOverride = -1; // -1 = use default
-    public float spawnIntervalOverride = -1f;
+
+    [Tooltip("-1 uses default from EnemySpawnManager")]
+    public int spawnAmount = -1;
+
+    [Tooltip("-1 uses default from EnemySpawnManager")]
+    public float spawnInterval = -1f;
+
+
 
     [Header("Boss")]
     public GameObject bossPrefab;
