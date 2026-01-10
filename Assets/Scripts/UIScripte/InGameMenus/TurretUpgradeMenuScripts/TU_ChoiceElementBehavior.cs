@@ -8,14 +8,21 @@ public class TU_ChoiceElementBehavior
     public VisualElement border;
     private Button button;
 
+    private TurretUpgradeChoiceSO choiceSO; 
     private TurretUpgradeChoiceSO.UpgradeOption option;
     private TurretType turretType;
+    private int level;
 
-    public TU_ChoiceElementBehavior(VisualTreeAsset asset, TurretUpgradeChoiceSO.UpgradeOption _option)
+    public TU_ChoiceElementBehavior(VisualTreeAsset asset, TurretType type,
+        int level, TurretUpgradeChoiceSO choiceSO, TurretUpgradeChoiceSO.UpgradeOption _option)
     {
         TemplateContainer choiceElement = asset.Instantiate();
 
-        option = _option;
+        this.turretType = type;
+        this.level = level;
+        this.choiceSO = choiceSO;
+        this.option = _option;
+
 
         border = choiceElement.Q<VisualElement>("border");
 
@@ -45,6 +52,13 @@ public class TU_ChoiceElementBehavior
             Debug.LogError("TurretPlacementController instance is missing!");
             return;
         }
+
+        TurretUpgradeChoiceManager.Instance.ChooseUpgrade(
+        turretType,
+        level,
+        choiceSO,
+        option
+    );
 
 
         TurretLevelManager.Instance.ForceReapplyUpgrades(turretType);

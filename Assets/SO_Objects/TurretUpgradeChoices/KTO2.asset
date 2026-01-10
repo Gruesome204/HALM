@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: KTO2
   m_EditorClassIdentifier: 
   turretType: 2
-  triggerLevel: 5
+  triggerLevels: 0a00000014000000
   options:
-  - name: 
+  - optionId: 
+    name: 
     description: 'Hinterlader
 
       Verbesserte die Nachladegeschwindigkeit von

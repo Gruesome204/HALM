@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BATO3
   m_EditorClassIdentifier: 
   turretType: 5
-  triggerLevel: 10
+  triggerLevels: 0a00000014000000
   options:
-  - name: Stahlbolzen
+  - optionId: 
+    name: Stahlbolzen
     description: "Balistenbolzen erh\xF6hen ihren Durchschlag um +2"
     icon: {fileID: 0}
     modifier:

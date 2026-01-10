@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BATO2
   m_EditorClassIdentifier: 
   turretType: 5
-  triggerLevel: 5
+  triggerLevels: 0a00000014000000
   options:
-  - name: "Pfeilb\xFCndel"
+  - optionId: 
+    name: "Pfeilb\xFCndel"
     description: "\xC4nderung des Geschosses"
     icon: {fileID: 0}
     modifier:

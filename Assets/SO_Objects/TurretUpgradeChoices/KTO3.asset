@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: KTO3
   m_EditorClassIdentifier: 
   turretType: 2
-  triggerLevel: 10
+  triggerLevels: 0a00000014000000
   options:
-  - name: 
+  - optionId: 
+    name: 
     description: "Gezogener Lauf\nErh\xF6t die Reichweite der Kanonen um +50%."
     icon: {fileID: 0}
     modifier:

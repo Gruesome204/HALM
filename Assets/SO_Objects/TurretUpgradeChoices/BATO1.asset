@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BATO1
   m_EditorClassIdentifier: 
   turretType: 5
-  triggerLevel: 2
+  triggerLevels: 0a00000014000000
   options:
-  - name: Repetiermagazin
+  - optionId: 
+    name: Repetiermagazin
     description: "Erh\xF6ht die Magaziengr\xF6\xDFe(Salvengr\xF6\xDFe) um +2 und
       verschlechtert die Nachladerate."
     icon: {fileID: 0}

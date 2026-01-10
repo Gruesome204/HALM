@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BTO3
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevel: 10
+  triggerLevels: 0a00000014000000
   options:
-  - name: "Zus\xE4tzliche Besatzung"
+  - optionId: 
+    name: "Zus\xE4tzliche Besatzung"
     description: "Zus\xE4tzliche Besatzung"
     icon: {fileID: 0}
     modifier:
