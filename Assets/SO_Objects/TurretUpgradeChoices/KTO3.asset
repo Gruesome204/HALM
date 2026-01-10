@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: KTO3
   m_EditorClassIdentifier: 
-  turretType: 0
-  triggerLevel: 10
+  turretType: 2
+  triggerLevels: 0a00000014000000
   options:
-  - name: 
+  - optionId: 198257db-2318-4cdc-ac52-04be0f13d551
+    name: 
     description: "Gezogener Lauf\nErh\xF6t die Reichweite der Kanonen um +50%."
     icon: {fileID: 0}
     modifier:
@@ -23,7 +24,8 @@ MonoBehaviour:
       healthMultiplier: 0
       damageMultiplier: 0
       fireRateMultiplier: 0
-      projectilesPerSalve: 0
       projectileSpeed: 0
+      projectilesPerSalve: 0
       rangeBonus: 0.5
+      piercingHits: 0
       projectileType: {fileID: 0}

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: BATO1
   m_EditorClassIdentifier: 
-  turretType: 0
-  triggerLevel: 2
+  turretType: 5
+  triggerLevels: 0a00000014000000
   options:
-  - name: Repetiermagazin
+  - optionId: 0587679c-7a48-4594-bee7-2a0aa5aeb18e
+    name: Repetiermagazin
     description: "Erh\xF6ht die Magaziengr\xF6\xDFe(Salvengr\xF6\xDFe) um +2 und
       verschlechtert die Nachladerate."
     icon: {fileID: 0}
@@ -24,8 +25,8 @@ MonoBehaviour:
       healthMultiplier: 0
       damageMultiplier: 0
       fireRateMultiplier: -0.5
-      projectilesPerSalve: 2
       projectileSpeed: 0
+      projectilesPerSalve: 2
       rangeBonus: 0
       piercingHits: 0
       projectileType: {fileID: 0}

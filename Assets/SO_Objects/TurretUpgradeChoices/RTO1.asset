@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: RTO1
   m_EditorClassIdentifier: 
-  turretType: 5
-  triggerLevel: 2
+  turretType: 4
+  triggerLevels: 0a00000014000000
   options:
-  - name: "Gr\xF6\xDFeres Magazin"
+  - optionId: c608a50a-449f-43c4-9992-9977e6736299
+    name: "Gr\xF6\xDFeres Magazin"
     description: "Gr\xF6\xDFeres Magazin\nErh\xF6hre die Magaziengr\xF6\xDFe(Salvengr\xF6\xDFe)
       um +3."
     icon: {fileID: 0}
@@ -24,8 +25,8 @@ MonoBehaviour:
       healthMultiplier: 0
       damageMultiplier: 0
       fireRateMultiplier: 0
-      projectilesPerSalve: 3
       projectileSpeed: 0
+      projectilesPerSalve: 3
       rangeBonus: 0
       piercingHits: 0
       projectileType: {fileID: 0}

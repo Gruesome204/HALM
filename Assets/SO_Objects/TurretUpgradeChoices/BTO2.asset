@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BTO2
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevel: 5
+  triggerLevels: 1300000014000000
   options:
-  - name: "Gesch\xE4rfte Pfeil Spitzen"
+  - optionId: 1aa8b72a-d154-4133-8e8a-b160ada74305
+    name: "Gesch\xE4rfte Pfeil Spitzen"
     description: "Gesch\xE4rfte Pfeil Spitzen"
     icon: {fileID: 0}
     modifier:
@@ -23,7 +24,8 @@ MonoBehaviour:
       healthMultiplier: 1
       damageMultiplier: 1
       fireRateMultiplier: 1
-      projectilesPerSalve: 1
       projectileSpeed: 1
+      projectilesPerSalve: 1
       rangeBonus: 0
+      piercingHits: 0
       projectileType: {fileID: 0}

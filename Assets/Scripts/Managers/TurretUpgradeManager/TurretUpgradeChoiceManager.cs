@@ -10,6 +10,10 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
 
     //Dictionary that saves all picked upgrades
     private Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption> chosenUpgrades;
+    // Tracks which UpgradeChoiceSO was already used
+    private HashSet<(TurretType, int, TurretUpgradeChoiceSO)> usedChoices;
+
+    private HashSet<string> usedOptionIds = new HashSet<string>();
 
     private void Awake()
     {
@@ -21,6 +25,9 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         Instance = this;
 
         chosenUpgrades = new Dictionary<(TurretType, int), TurretUpgradeChoiceSO.UpgradeOption>();
+        usedChoices = new HashSet<(TurretType, int, TurretUpgradeChoiceSO)>();
+
+
     }
 
     //Loops over all Choices and gives all of the given turret Type
@@ -38,7 +45,7 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
     {
         foreach (var choice in upgradeChoices)
         {
-            if (choice != null && choice.turretType == type && choice.triggerLevel == level)
+            if (choice != null && choice.turretType == type && choice.triggerLevels.Contains(level))
             {
                 foreach (var option in choice.options)
                     yield return option;
@@ -49,7 +56,7 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
     {
         foreach (var choice in upgradeChoices)
         {
-            if (choice != null && choice.turretType == type && choice.triggerLevel == level)
+            if (choice != null && choice.turretType == type && choice.triggerLevels.Contains(level))
             {
                 yield return choice;
             }
@@ -57,7 +64,7 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
     }
 
     //Player Selects and upgrade and this method saves the choice
-    public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoiceSO.UpgradeOption option)
+    public void ChooseUpgrade(TurretType type, int level, TurretUpgradeChoiceSO choice, TurretUpgradeChoiceSO.UpgradeOption option)
     {
       
         if (chosenUpgrades.ContainsKey((type, level)))
@@ -66,7 +73,8 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         }
 
         chosenUpgrades[(type, level)] = option;
-
+        usedChoices.Add((type, level, choice));
+        MarkOptionUsed(option.optionId);
         if (TurretLevelManager.Instance != null)
         {
             TurretLevelManager.Instance.ForceReapplyUpgrades(type);
@@ -105,6 +113,26 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         return combined;
     }
 
+    public IEnumerable<TurretUpgradeChoiceSO> GetAvailableChoicesForLevel(
+    TurretType type,
+    int level)
+    {
+        foreach (var choice in upgradeChoices)
+        {
+            if (choice == null)
+                continue;
+
+             // Check turret type AND that this choice appears at this level
+            if (choice.turretType != type || !choice.triggerLevels.Contains(level))
+                continue;
+
+            if (usedChoices.Contains((type, level, choice)))
+                continue;
+
+            yield return choice;
+        }
+    }
+
     // Convenience getters
     public float GetDamageMultiplier(TurretType type) => GetCombinedModifier(type).damageMultiplier;
     public float GetFireRateMultiplier(TurretType type) => GetCombinedModifier(type).fireRateMultiplier;
@@ -122,6 +150,17 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         }
         return bonus;
     }
+
+    public bool IsOptionUsed(string optionId)
+    {
+        return usedOptionIds.Contains(optionId);
+    }
+
+    public void MarkOptionUsed(string optionId)
+    {
+        usedOptionIds.Add(optionId);
+    }
+
 
     [System.Serializable]
     public struct UpgradeSaveData

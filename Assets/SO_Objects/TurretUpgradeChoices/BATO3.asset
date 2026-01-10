@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: BATO3
   m_EditorClassIdentifier: 
-  turretType: 0
-  triggerLevel: 10
+  turretType: 5
+  triggerLevels: 0a00000014000000
   options:
-  - name: Stahlbolzen
+  - optionId: 6e181fe0-1e9a-4034-aab5-304850d3a77c
+    name: Stahlbolzen
     description: "Balistenbolzen erh\xF6hen ihren Durchschlag um +2"
     icon: {fileID: 0}
     modifier:

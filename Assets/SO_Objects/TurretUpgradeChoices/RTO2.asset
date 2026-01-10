@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: RTO2
   m_EditorClassIdentifier: 
-  turretType: 0
-  triggerLevel: 5
+  turretType: 4
+  triggerLevels: 0a00000014000000
   options:
-  - name: Stahlbolzen
+  - optionId: e7926181-96bc-4663-8680-b85e057cb1c3
+    name: Stahlbolzen
     description: "Stahlbolzen\nBolzen erh\xF6hen ihren Durchschlag um +1."
     icon: {fileID: 0}
     modifier:
@@ -23,8 +24,8 @@ MonoBehaviour:
       healthMultiplier: 0
       damageMultiplier: 0
       fireRateMultiplier: 0
-      projectilesPerSalve: 0
       projectileSpeed: 0
+      projectilesPerSalve: 0
       rangeBonus: 0
       piercingHits: 1
       projectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}

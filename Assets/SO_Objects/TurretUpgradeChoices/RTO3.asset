@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: RTO3
   m_EditorClassIdentifier: 
-  turretType: 0
-  triggerLevel: 10
+  turretType: 4
+  triggerLevels: 0a00000014000000
   options:
-  - name: Wechselmagazin
+  - optionId: 90cbf88b-566c-4c10-9b90-6d2419fb6c2f
+    name: Wechselmagazin
     description: 'Wechselmagazin
 
       Verbesserte die Nachladegeschwindigkeit von

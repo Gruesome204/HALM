@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: KTO1
   m_EditorClassIdentifier: 
-  turretType: 0
-  triggerLevel: 2
+  turretType: 2
+  triggerLevels: 0a00000014000000
   options:
-  - name: 
+  - optionId: 952e971e-35d4-479d-ae7f-eb2dc08a0363
+    name: 
     description: "Kart\xE4schen\n(\xE4nderung des Geschosses)"
     icon: {fileID: 0}
     modifier:
@@ -23,7 +24,8 @@ MonoBehaviour:
       healthMultiplier: 0
       damageMultiplier: 0
       fireRateMultiplier: 0
-      projectilesPerSalve: 0
       projectileSpeed: 0
+      projectilesPerSalve: 0
       rangeBonus: 0
+      piercingHits: 0
       projectileType: {fileID: 0}
