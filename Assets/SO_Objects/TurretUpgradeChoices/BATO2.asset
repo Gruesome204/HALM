@@ -15,7 +15,7 @@ MonoBehaviour:
   turretType: 5
   triggerLevels: 0a00000014000000
   options:
-  - optionId: 
+  - optionId: 987d633a-6ac6-4411-8c28-119465d9c806
     name: "Pfeilb\xFCndel"
     description: "\xC4nderung des Geschosses"
     icon: {fileID: 0}

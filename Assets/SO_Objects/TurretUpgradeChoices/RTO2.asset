@@ -15,7 +15,7 @@ MonoBehaviour:
   turretType: 4
   triggerLevels: 0a00000014000000
   options:
-  - optionId: 
+  - optionId: e7926181-96bc-4663-8680-b85e057cb1c3
     name: Stahlbolzen
     description: "Stahlbolzen\nBolzen erh\xF6hen ihren Durchschlag um +1."
     icon: {fileID: 0}

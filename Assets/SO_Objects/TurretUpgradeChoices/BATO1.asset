@@ -15,7 +15,7 @@ MonoBehaviour:
   turretType: 5
   triggerLevels: 0a00000014000000
   options:
-  - optionId: 
+  - optionId: 0587679c-7a48-4594-bee7-2a0aa5aeb18e
     name: Repetiermagazin
     description: "Erh\xF6ht die Magaziengr\xF6\xDFe(Salvengr\xF6\xDFe) um +2 und
       verschlechtert die Nachladerate."

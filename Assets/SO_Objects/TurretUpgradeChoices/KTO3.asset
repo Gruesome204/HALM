@@ -15,7 +15,7 @@ MonoBehaviour:
   turretType: 2
   triggerLevels: 0a00000014000000
   options:
-  - optionId: 
+  - optionId: 198257db-2318-4cdc-ac52-04be0f13d551
     name: 
     description: "Gezogener Lauf\nErh\xF6t die Reichweite der Kanonen um +50%."
     icon: {fileID: 0}

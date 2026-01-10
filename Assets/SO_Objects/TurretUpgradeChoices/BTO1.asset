@@ -15,7 +15,7 @@ MonoBehaviour:
   turretType: 0
   triggerLevels: 0a00000014000000
   options:
-  - optionId: 
+  - optionId: 500c2b9e-5fc6-4eed-af1e-3804f4a07d29
     name: Stahlpfeil
     description: "\xC4ndere Projektil zu Stahlpfeil"
     icon: {fileID: 0}
