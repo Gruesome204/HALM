@@ -2,10 +2,12 @@
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
+    <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
+    <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
     <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn" style="flex-grow: 1;">
-        <ui:VisualElement name="upperBarContainer" style="width: 100%; height: auto; background-color: rgba(96, 0, 0, 0.72); flex-direction: row;">
+        <ui:VisualElement name="upperBarContainer" class="ressourceRowBackground" style="flex-direction: row;">
             <ui:VisualElement name="menuButtonContainer" style="align-self: flex-start; width: 40%; height: 100%; flex-shrink: 0; flex-direction: row; align-items: stretch;">
-                <ui:Button text="Button" name="pauseMenuButton" />
+                <ui:Button text="Button" name="pauseMenuButton" class="paperButton" style="padding-top: 0; padding-bottom: 0;" />
             </ui:VisualElement>
             <ui:VisualElement name="resourceContainer" style="flex-grow: 1; flex-shrink: 0; flex-direction: row;" />
         </ui:VisualElement>

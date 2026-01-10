@@ -1,55 +1,54 @@
 .ArcherTowerIcon {
-    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/ArcherTower_Icon.png?fileID=2800000&guid=a8c81774cdfd55b46b00e047a78ba8ca&type=3#ArcherTower_Icon");
+    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/ArcherTowerIcon.png?fileID=2800000&guid=d3efb326e50aa80448845a63e91d45ed&type=3#ArcherTowerIcon");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .CannonTowerIcon {
-    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/CannonTurretIcon.png?fileID=2800000&guid=b9be343fdf857404f9f37aa77422947b&type=3#CannonTurretIcon");
+    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/CannonTowerIcon.png?fileID=2800000&guid=b9be343fdf857404f9f37aa77422947b&type=3#CannonTowerIcon");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .BallistTowerIcon {
-    background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/FastTurretIcon.png?fileID=2800000&guid=d3efb326e50aa80448845a63e91d45ed&type=3#FastTurretIcon");
     -unity-background-scale-mode: scale-to-fit;
+    background-color: rgb(253, 0, 0);
 }
+
 .BarricadeIcon {
     background-image: url("project://database/Assets/ArtAssets/TowerAssets/TowerIcons/BarricadeIcon.png?fileID=2800000&guid=b3f3e4ce66739754f8d401e160d93016&type=3#BarricadeIcon");
     -unity-background-scale-mode: scale-to-fit;
 }
+
 .RepeatingCrossbowIcon {
     -unity-background-scale-mode: scale-to-fit;
+    background-color: rgb(135, 40, 40);
 }
 
-
-
 .CurrencyIcon {
-    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/CurrencyRessourceIcon.png?fileID=2800000&guid=b9d30ab36dd410049904d7685eaa819f&type=3#CurrencyRessourceIcon");
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/CurrencyRessourceIcon.png?fileID=3645047768759246456&guid=b9d30ab36dd410049904d7685eaa819f&type=3#20251208_Goldressource_0");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .WoodIcon {
-    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/WoodRessourceIcon.png?fileID=2800000&guid=2e47bdb1270775740ae12c941f5dafa9&type=3#WoodRessourceIcon");
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/WoodRessourceIcon.png?fileID=-7202329500453857334&guid=2e47bdb1270775740ae12c941f5dafa9&type=3#20251208_Holzressource_0");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .StoneIcon {
-    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/SteinRessourceIcon.png?fileID=2800000&guid=71cad7f17f685c44da804de4c8648691&type=3#SteinRessourceIcon");
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/SteinRessourceIcon.png?fileID=845044669362553947&guid=71cad7f17f685c44da804de4c8648691&type=3#20251208_Steinressource_0");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .MetalIcon {
-    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/MetallRessourceIcon.png?fileID=2800000&guid=b0057ad7113269642a626797a0d934ab&type=3#MetallRessourceIcon");
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/MetallRessourceIcon.png?fileID=43752052149767440&guid=b0057ad7113269642a626797a0d934ab&type=3#20251208_Metallressource_0");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .PulverIcon {
-    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/PulverRessourceIcon.png?fileID=2800000&guid=9037814008b566d46b62f234e9ceb0c1&type=3#PulverRessourceIcon");
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/RessourceAssets/PulverRessourceIcon.png?fileID=-6184238333294190405&guid=9037814008b566d46b62f234e9ceb0c1&type=3#20251208_Schiepulverressource_0");
     -unity-background-scale-mode: scale-to-fit;
 }
 
-
-.MechanicIcon{
-    background-image: url("project://database/Assets/ArtAssets/PlayerCharacterAssets/20250924_Charakter.png");
+.MechanicIcon {
+    background-image: url("project://database/Assets/ArtAssets/PlayerCharacterAssets/20250924_Charakter.png?fileID=6238010593028434169&guid=a2d7f4cea6e5d2b429919633c1bff86b&type=3#20250924_Charakter_0");
     -unity-background-scale-mode: scale-to-fit;
-
 }

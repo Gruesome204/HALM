@@ -102,7 +102,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
         foreach (var turret in GameManager.Instance.gameDataSO.GetSelectedBlueprints())
         {
             Debug.Log(GameManager.Instance.gameDataSO.GetSelectedBlueprints().Count);
-            Debug.Log("Help me");
             AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret, turretNumber);
             turretButtonContainer.Add(aR_Element.turretBorder);
             turretBtnList.Add(aR_Element);

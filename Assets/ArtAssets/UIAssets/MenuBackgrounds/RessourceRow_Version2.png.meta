@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a8c81774cdfd55b46b00e047a78ba8ca
+guid: ea6e984abb03bfe40b066d383d15b6c9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7892373371436272380
-    second: 20250924_Turm Icon_0
+      213: -328047934698643957
+    second: RessourceRow_Version2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 20250924_Turm Icon_0
+      name: RessourceRow_Version2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 294
-        height: 299
+        width: 1768
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cfa063704c7578d60800000000000000
-      internalID: 7892373371436272380
+      spriteID: b0e9cf6342a827bf0800000000000000
+      internalID: -328047934698643957
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      20250924_Turm Icon_0: 7892373371436272380
+      RessourceRow_Version2_0: -328047934698643957
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

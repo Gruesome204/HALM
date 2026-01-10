@@ -8,7 +8,6 @@ public class W_AvailableTurretsButtonBejavior
     private WorkshopMenuBehavior workshop;
 
     public VisualElement turretBorder;
-    public VisualElement turretIcon;
     public VisualElement cooldownCover;
     public Label turretNumbertxt;
     public Button turretButton;
@@ -23,13 +22,11 @@ public class W_AvailableTurretsButtonBejavior
         turretBorder = rowElement.Q<VisualElement>("border");
         cooldownCover = rowElement.Q<VisualElement>("cooldownCover");
 
-        turretIcon = rowElement.Q<VisualElement>("icon");
-        turretIcon.AddToClassList($"{_turret.turretName}Icon");
-
         turretNumbertxt = rowElement.Q<Label>("turretNumber");
         turretNumbertxt.text = "";
 
         turretButton = rowElement.Q<Button>("button");
+        turretButton.AddToClassList($"{_turret.turretName}Icon");
         turretButton.RegisterCallback<ClickEvent>(OnButtonClicked);
 
 

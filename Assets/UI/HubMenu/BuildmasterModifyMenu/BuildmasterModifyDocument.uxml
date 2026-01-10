@@ -9,12 +9,12 @@
             <ui:Label text="Label" name="headline" class="headline" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-grow: 0; height: 14%;" />
             <ui:VisualElement name="nullSpace1" style="flex-shrink: 0; flex-grow: 0; height: 3%;" />
             <ui:VisualElement name="btnContainer" style="flex-grow: 0; flex-shrink: 0; align-self: center; width: 105%; height: 68%;">
-                <ui:ScrollView name="ScrollView" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1; align-content: center;" />
+                <ui:ScrollView name="ScrollView" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1; align-content: center; align-items: center;" />
             </ui:VisualElement>
-            <ui:VisualElement name="lowerContainer" style="flex-grow: 0; flex-shrink: 0; padding-left: 3%; height: 15%;">
+            <ui:VisualElement name="lowerContainer" style="flex-grow: 0; flex-shrink: 0; padding-left: 3%; height: 15%; align-items: flex-start; width: 100%;">
                 <ui:Label text="Label" name="informationTxt" class="sub-headline" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 25px;" />
                 <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
-                    <ui:Button text="Button" name="buySelectButton" class="paperButton" style="width: auto; align-self: center;" />
+                    <ui:Button text="Button" name="buySelectButton" class="woodButton" style="width: auto; align-self: center;" />
                     <ui:Label text="Label" name="costName" class="sub-headline" style="-unity-text-align: middle-left; font-size: 15px; align-self: center;" />
                     <ui:Label text="Label" name="cost" class="sub-headline" style="-unity-text-align: middle-left; font-size: 15px; align-self: center;" />
                 </ui:VisualElement>

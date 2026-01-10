@@ -39,3 +39,14 @@
     padding-bottom: 2%;
     padding-left: 2%;
 }
+
+.ressourceRowBackground {
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/RessourceRow_Version1.png?fileID=2800000&guid=e1b92c61e75939b40bec252b18e02a8a&type=3#RessourceRow_Version1");
+    height: 10%;
+    width: 100%;
+    padding-top: 1%;
+    padding-right: 1%;
+    padding-bottom: 0.5%;
+    padding-left: 1%;
+}

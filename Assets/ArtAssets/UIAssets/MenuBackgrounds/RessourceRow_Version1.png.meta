@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 74f16a1d77dc72544b1d872b093b4c4a
+guid: e1b92c61e75939b40bec252b18e02a8a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7274916224334571485
-    second: "20251103_Bogensch\xFCtzenturm_0"
-  - first:
-      213: -8754052649512542606
-    second: "20251103_Bogensch\xFCtzenturm_1"
-  - first:
-      213: 596036392006360314
-    second: "20251103_Bogensch\xFCtzenturm_2"
-  - first:
-      213: -2005231246252641377
-    second: "20251103_Bogensch\xFCtzenturm_3"
+      213: -2034295510090961216
+    second: RessourceRow_Version1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "20251103_Bogensch\xFCtzenturm_0"
+      name: RessourceRow_Version1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1000
-        height: 1000
+        width: 1768
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dd7203a03c1b5f460800000000000000
-      internalID: 7274916224334571485
+      spriteID: 0ce2bd0030bb4c3e0800000000000000
+      internalID: -2034295510090961216
       vertices: []
       indices: 
       edges: []
@@ -134,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 91cea6059ac44a840a8ba68bf6bcd073
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -144,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "20251103_Bogensch\xFCtzenturm_0": 7274916224334571485
+      RessourceRow_Version1_0: -2034295510090961216
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

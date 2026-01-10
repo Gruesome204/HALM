@@ -11,7 +11,6 @@ public class AR_ElementBehavior
     private int turretNumber;
 
     public VisualElement turretBorder;
-    public VisualElement turretIcon;
     public VisualElement cooldownCover;
     public Label turretNumbertxt;
     public Button turretButton;
@@ -24,14 +23,12 @@ public class AR_ElementBehavior
         turretBorder = rowElement.Q<VisualElement>("border");
         cooldownCover = rowElement.Q<VisualElement>("cooldownCover");
 
-        turretIcon = rowElement.Q<VisualElement>("icon");
-        turretIcon.AddToClassList($"{_turret.turretName}Icon");
-
         turretNumber = _turretNumber;
         turretNumbertxt = rowElement.Q<Label>("turretNumber");
         turretNumbertxt.text = $"{_turretNumber}";
 
         turretButton = rowElement.Q<Button>("button");
+        turretButton.AddToClassList($"{_turret.turretName}Icon");
         turretButton.RegisterCallback<ClickEvent>(OnTurretButtonClicked);
 
 
@@ -44,11 +41,11 @@ public class AR_ElementBehavior
     {
         if (TurretPlacementController.Instance.currentSelectedBlueprint == representedTurret)
         {
-            turretButton.style.backgroundColor = Color.red;
+            turretButton.style.unityBackgroundImageTintColor = Color.red;
         }
         else
         {
-            turretButton.style.backgroundColor = Color.white;
+            turretButton.style.unityBackgroundImageTintColor = new Color(202, 201, 201);
         }
     }
 

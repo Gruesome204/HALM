@@ -1,8 +1,13 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
+    <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
+    <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
     <ui:VisualElement name="mainContainer" style="flex-grow: 1; flex-shrink: 0; justify-content: center; align-items: center;">
         <ui:VisualElement name="image" style="flex-grow: 0; flex-shrink: 0; background-image: url(&quot;project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/HubMenu_Part2.png?fileID=2800000&amp;guid=75b61b709f4878f43abe9758c890de44&amp;type=3#HubMenu_Part2&quot;); -unity-background-scale-mode: scale-to-fit; height: 100%; width: 100%; flex-basis: auto;">
-            <ui:VisualElement name="contentContainer" style="flex-grow: 1;" />
+            <ui:VisualElement name="contentContainer" style="flex-grow: 1;">
+                <ui:Button text="Button" name="Button" class="woodButton" style="margin-top: 115px; margin-right: 115px; margin-bottom: 115px; margin-left: 115px;" />
+                <ui:VisualElement class="MetalIcon" style="flex-grow: 1;" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

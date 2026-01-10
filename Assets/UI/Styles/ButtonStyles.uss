@@ -4,23 +4,73 @@
     border-width: 0;
     -unity-font-style: bold;
     font-size: 25px;
-    color: rgb(255, 204, 140);
-    -unity-text-align: upper-center;
+    color: rgb(58, 33, 24);
+    -unity-text-align: middle-center;
     margin: 0;
     padding: 12px;
 }
 
 .paperButton:hover {
-    color: rgb(255, 235, 209);
+    color: rgb(94, 58, 39);
     padding: 13px;
 }
 
 .paperButton:active {
-    color: rgb(255, 249, 240);
+    color: rgb(132, 96, 61);
     padding: 13px;
 }
 
 .smallPaperButton {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    -unity-font-style: bold;
+    font-size: 20px;
+    color: rgb(58, 33, 24);
+    -unity-text-align: upper-center;
+    margin: 0;
+    padding: 10px;
+}
+
+.smallPaperButton:hover {
+    color: rgb(94, 58, 39);
+}
+
+.smallPaperButton:active {
+    color: rgb(132, 96, 61);
+}
+
+.woodButton {
+    flex-shrink: 0;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    color: rgb(255, 204, 140);
+    font-size: 25px;
+    -unity-font-style: bold;
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.woodButton:hover {
+    color: rgb(255, 235, 182);
+    padding: 13px;
+}
+
+.woodButton:active {
+    color: rgb(253, 248, 206);
+    padding: 13px;
+}
+
+.smallWoodButton {
     width: 100%;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
@@ -32,10 +82,26 @@
     padding: 10px;
 }
 
-.smallPaperButton:hover {
-    color: rgb(255, 235, 209);
+.smallWoodButton:hover {
+    color: rgb(255, 235, 182);
 }
 
-.smallPaperButton:active {
-    color: rgb(255, 249, 240);
+.smallWoodButton:active {
+    color: rgb(253, 248, 207);
+}
+
+.iconButton {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    -unity-background-image-tint-color: rgb(202, 201, 201);
+}
+
+.iconButton:hover {
+    color: rgb(255, 235, 182);
+    -unity-background-image-tint-color: rgb(226, 225, 225);
+}
+
+.iconButton:active {
+    color: rgb(253, 248, 207);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
 }

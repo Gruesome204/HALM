@@ -2,23 +2,21 @@
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
     <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
-    <ui:VisualElement name="mainContainer" class="SlideIn actionRowSlideOut" style="width: 100%; height: 100%; flex-shrink: 0; align-items: center; justify-content: space-between;">
-        <ui:VisualElement name="upperBarContainer" style="width: 100%; height: auto; background-color: rgba(96, 0, 0, 0.72); flex-direction: row;">
+    <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
+    <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
+    <ui:VisualElement name="mainContainer" class="SlideIn" style="width: 100%; height: 100%; flex-shrink: 0; align-items: center; justify-content: space-between;">
+        <ui:VisualElement name="upperBarContainer" class="ressourceRowBackground" style="flex-direction: row;">
             <ui:VisualElement name="menuButtonContainer" style="align-self: flex-start; width: 40%; height: 100%; flex-shrink: 0; flex-direction: row; align-items: stretch;">
-                <ui:Button text="Button" name="pauseMenuButton" />
-                <ui:Button text="Button" name="statsMenuButton" style="align-self: auto;" />
+                <ui:Button name="pauseMenuButton" text="bbb" class="woodButton" style="padding-top: 0; padding-bottom: 0;" />
+                <ui:Button name="statsMenuButton" text="ccc" class="woodButton" style="align-self: auto; padding-top: 0; padding-bottom: 0;" />
             </ui:VisualElement>
             <ui:VisualElement name="resourceContainer" style="flex-grow: 1; flex-shrink: 0; flex-direction: row;" />
         </ui:VisualElement>
-        <ui:VisualElement name="middleBarContainer" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 60%;" />
-        <ui:VisualElement name="lowerBarContainer" style="margin-bottom: 0; width: 100%; height: 30%; flex-direction: column; align-items: flex-end; margin-top: 0; margin-right: 0; margin-left: 0; justify-content: center;">
-            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 80%; justify-content: flex-end;">
-                <ui:VisualElement name="turretAndLimitContainer" style="flex-grow: 1; width: 60%; height: 20%; align-self: center; justify-content: flex-end;">
-                    <ui:VisualElement name="towerLimitContainer" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 20%; flex-direction: row; justify-content: center; align-self: center;" />
-                    <ui:VisualElement name="turrentButtonContainer" style="flex-shrink: 0; flex-direction: row; width: 100%; height: 50%; padding-top: 0%; padding-right: 0%; padding-bottom: 0%; padding-left: 0%; margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; align-items: center; justify-content: center; align-self: center; flex-grow: 0; background-color: rgba(0, 0, 0, 0.37); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;" />
-                </ui:VisualElement>
-                <ui:VisualElement name="mapPlaceHolder" enabled="true" style="background-color: rgba(0, 0, 0, 0); flex-shrink: 0; flex-grow: 0; width: 130px; height: 130px; position: absolute; right: 1%; bottom: 10%;" />
-                <ui:VisualElement name="characterIcon" enabled="true" style="background-color: rgba(45, 24, 82, 0); flex-shrink: 0; flex-grow: 0; width: 120px; height: 120px; position: absolute; bottom: 15%; left: 3%;" />
+        <ui:VisualElement name="middleBarContainer" style="flex-grow: 1; flex-shrink: 0; width: 100%; height: 55%;" />
+        <ui:VisualElement name="lowerBarContainer" style="margin-bottom: 0; width: 100%; height: 20%; flex-direction: column; align-items: center; margin-top: 0; margin-right: 0; margin-left: 0; justify-content: flex-start;">
+            <ui:VisualElement name="turretAndLimitContainer" style="flex-grow: 0; width: 60%; height: 90%; justify-content: flex-end;">
+                <ui:VisualElement name="towerLimitContainer" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 30%; flex-direction: row; justify-content: center; align-self: center;" />
+                <ui:VisualElement name="turrentButtonContainer" style="flex-shrink: 0; flex-direction: row; width: 100%; height: 60%; padding-top: 0%; padding-right: 0%; padding-bottom: 0%; padding-left: 0%; margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; align-items: center; justify-content: center; align-self: center; flex-grow: 0; background-color: rgba(0, 0, 0, 0.37); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

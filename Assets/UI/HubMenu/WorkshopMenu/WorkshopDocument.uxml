@@ -19,7 +19,7 @@
                     <ui:Instance template="SM_TurretDetailsDocument" style="flex-grow: 1;" />
                 </ui:VisualElement>
                 <ui:Label text="Label" name="informationTxt" class="sub-headline" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 25px;" />
-                <ui:Button text="Button" name="buySelectButton" class="paperButton" />
+                <ui:Button text="Button" name="buySelectButton" class="woodButton" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
