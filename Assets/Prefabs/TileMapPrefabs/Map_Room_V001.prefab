@@ -7532,7 +7532,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBossRoom: 0
-  enemyPrefabs: []
+  enemyPrefabs:
+  - {fileID: 0}
   spawnAmountOverride: -1
   spawnIntervalOverride: -1
   bossPrefab: {fileID: 0}
