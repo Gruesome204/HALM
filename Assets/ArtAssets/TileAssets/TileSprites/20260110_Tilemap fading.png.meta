@@ -1,0 +1,1040 @@
+fileFormatVersion: 2
+guid: e312fa9d0d5a51e46af09f8cf4112cf5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3185257213960826062
+    second: 20260110_Tilemap fading_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2335d9ba071bbc3d0800000000000000
+      internalID: -3185257213960826062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_1
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 319dc7321673b9b40ae12996d4b7a10d
+      internalID: 189568235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_2
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ba5aa5fc81c2d54891591849c827401
+      internalID: -634160795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_3
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcf7468388cbd034a939020fb615d577
+      internalID: 1402408442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_4
+      rect:
+        serializedVersion: 2
+        x: 4320
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f13d92c3e68bc084a885b724333fbc1a
+      internalID: -1294848124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_5
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 984aeb1ab48da0f4ab4503899d4ce29a
+      internalID: -616226507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_6
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df073034b00cc2647aea888c90856408
+      internalID: 1691936672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_7
+      rect:
+        serializedVersion: 2
+        x: 7560
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a4a6a0f5fc0a5d45b0b6e000097bd05
+      internalID: 1397559608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_8
+      rect:
+        serializedVersion: 2
+        x: 8640
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 163b23b27d9b12d4b86fd4e64b9d7be9
+      internalID: -1684965999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_9
+      rect:
+        serializedVersion: 2
+        x: 9720
+        y: 3600
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03a62321e0bcc3647b826d805f641f48
+      internalID: 365159656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 042b5ff098eac0d49ae97dc606da7fa5
+      internalID: 1713407500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_11
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23fea39ce48fd74479e47bb5baff307a
+      internalID: 1039261996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_12
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa2666f9eb9fdbe41bb41e9595545ff9
+      internalID: -1438732239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_13
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eea8cc690a84b964c9f263826ab38d68
+      internalID: -1860369764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_14
+      rect:
+        serializedVersion: 2
+        x: 4320
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02aa8839df22b6a4d9b991be4c64102a
+      internalID: -1822254448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_15
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c861d92856a93ef42b00bb7ebec56e8c
+      internalID: -578532544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_16
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10bdcac9d97190f49b213f4475752108
+      internalID: 1297746050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_17
+      rect:
+        serializedVersion: 2
+        x: 7560
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cbd59e8bfebb934e8d7e9c96c208dd8
+      internalID: -633844869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_18
+      rect:
+        serializedVersion: 2
+        x: 8640
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2d4d2afc62150a4d8218810cfa0e5af
+      internalID: 1800011038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_19
+      rect:
+        serializedVersion: 2
+        x: 9720
+        y: 2400
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28f29ac5300b1284caf96141cff08537
+      internalID: -445548375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39d5e8076a1611144a7e935c3a442e49
+      internalID: -1967812154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_21
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0006a49d3eff66147989136113c50594
+      internalID: 216863329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_22
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddb850dd4983469468f158f27cb8c4f2
+      internalID: 657714244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_23
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d95343a8aa6a3f459d301f903f27487
+      internalID: 1700975985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_24
+      rect:
+        serializedVersion: 2
+        x: 4320
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db45f44ed7ac6074488be5dcbf160817
+      internalID: -291925845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_25
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 292c0fbcd6b8d5646ac6f8268ee1a99f
+      internalID: -1812907983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_26
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f54464b3c1f0f641a325333a4016ca4
+      internalID: -1366559681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_27
+      rect:
+        serializedVersion: 2
+        x: 7560
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89254d0a438e6d348a10d70dc2ebc549
+      internalID: -1176858616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_28
+      rect:
+        serializedVersion: 2
+        x: 8640
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6de628eb8f57204c8d6be9a1de5a07e
+      internalID: -1991851415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_29
+      rect:
+        serializedVersion: 2
+        x: 9720
+        y: 1200
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2deffe2af7b5f90488304796d0dbc18a
+      internalID: 2093664392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da05bee199ac24c40a218d4bab60639e
+      internalID: -71642422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_31
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d45000f478e8f0468ea041e75a09c28
+      internalID: -495144279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_32
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fa661085e158204fb0dcbcc47cb14cf
+      internalID: -830123451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_33
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 031844b585433aa4abd029427e1ca21f
+      internalID: -1460142611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_34
+      rect:
+        serializedVersion: 2
+        x: 4320
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dae2988d64f0fc04899ad5958c25d138
+      internalID: 1328978519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_35
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd1145ee31a455645b018a6082f3aa83
+      internalID: -1598363303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_36
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc0cfa2b566cc204e82b25fa09eba4cd
+      internalID: 163609338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_37
+      rect:
+        serializedVersion: 2
+        x: 7560
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7ad8bc93958f064e8f71c291e2710a1
+      internalID: -521830952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_38
+      rect:
+        serializedVersion: 2
+        x: 8640
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeac5550d06f71344b632d1063eb3c35
+      internalID: -1740696675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 20260110_Tilemap fading_39
+      rect:
+        serializedVersion: 2
+        x: 9720
+        y: 0
+        width: 1080
+        height: 1200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2f148cf97a52a348a1e3ce6a1cc3863
+      internalID: 1999935953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 21143dcee510ba147806f9e2865e02bb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      20260110_Tilemap fading_0: -3185257213960826062
+      20260110_Tilemap fading_1: 189568235
+      20260110_Tilemap fading_10: 1713407500
+      20260110_Tilemap fading_11: 1039261996
+      20260110_Tilemap fading_12: -1438732239
+      20260110_Tilemap fading_13: -1860369764
+      20260110_Tilemap fading_14: -1822254448
+      20260110_Tilemap fading_15: -578532544
+      20260110_Tilemap fading_16: 1297746050
+      20260110_Tilemap fading_17: -633844869
+      20260110_Tilemap fading_18: 1800011038
+      20260110_Tilemap fading_19: -445548375
+      20260110_Tilemap fading_2: -634160795
+      20260110_Tilemap fading_20: -1967812154
+      20260110_Tilemap fading_21: 216863329
+      20260110_Tilemap fading_22: 657714244
+      20260110_Tilemap fading_23: 1700975985
+      20260110_Tilemap fading_24: -291925845
+      20260110_Tilemap fading_25: -1812907983
+      20260110_Tilemap fading_26: -1366559681
+      20260110_Tilemap fading_27: -1176858616
+      20260110_Tilemap fading_28: -1991851415
+      20260110_Tilemap fading_29: 2093664392
+      20260110_Tilemap fading_3: 1402408442
+      20260110_Tilemap fading_30: -71642422
+      20260110_Tilemap fading_31: -495144279
+      20260110_Tilemap fading_32: -830123451
+      20260110_Tilemap fading_33: -1460142611
+      20260110_Tilemap fading_34: 1328978519
+      20260110_Tilemap fading_35: -1598363303
+      20260110_Tilemap fading_36: 163609338
+      20260110_Tilemap fading_37: -521830952
+      20260110_Tilemap fading_38: -1740696675
+      20260110_Tilemap fading_39: 1999935953
+      20260110_Tilemap fading_4: -1294848124
+      20260110_Tilemap fading_5: -616226507
+      20260110_Tilemap fading_6: 1691936672
+      20260110_Tilemap fading_7: 1397559608
+      20260110_Tilemap fading_8: -1684965999
+      20260110_Tilemap fading_9: 365159656
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
