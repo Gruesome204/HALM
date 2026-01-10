@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: RTO3
   m_EditorClassIdentifier: 
-  turretType: 0
+  turretType: 4
   triggerLevel: 10
   options:
   - name: Wechselmagazin

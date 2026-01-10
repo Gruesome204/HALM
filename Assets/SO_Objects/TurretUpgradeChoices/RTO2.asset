@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: RTO2
   m_EditorClassIdentifier: 
-  turretType: 0
+  turretType: 4
   triggerLevel: 5
   options:
   - name: Stahlbolzen
@@ -23,8 +23,8 @@ MonoBehaviour:
       healthMultiplier: 0
       damageMultiplier: 0
       fireRateMultiplier: 0
-      projectilesPerSalve: 0
       projectileSpeed: 0
+      projectilesPerSalve: 0
       rangeBonus: 0
       piercingHits: 1
       projectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}
