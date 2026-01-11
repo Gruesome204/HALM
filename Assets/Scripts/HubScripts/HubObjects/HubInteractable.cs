@@ -20,25 +20,21 @@ public class HubInteractable : MonoBehaviour
 
         if (interactionName == "DungeonEntrance" && InGameMenuManager.Instance.CheckForAnOpenMenu("one") == false)
         {
-            InGameMenuManager.Instance.CloseAllMenus();
             InGameMenuManager.Instance.OpenOrCloseOneMenu("EnterDungeonDoc", true);
         }
 
         if (interactionName == "Markt" && InGameMenuManager.Instance.CheckForAnOpenMenu("one") == false)
         {
-            InGameMenuManager.Instance.CloseAllMenus();
             InGameMenuManager.Instance.OpenOrCloseOneMenu("MarktMenuDoc", true);
         }
 
         if (interactionName == "Schmiede" && InGameMenuManager.Instance.CheckForAnOpenMenu("one") == false)
         {
-            InGameMenuManager.Instance.CloseAllMenus();
             InGameMenuManager.Instance.OpenOrCloseOneMenu("BuildmasterModifyDoc", true);
         }
 
         if (interactionName == "Werkstatt" && InGameMenuManager.Instance.CheckForAnOpenMenu("one") == false)
         {
-            InGameMenuManager.Instance.CloseAllMenus();
             InGameMenuManager.Instance.OpenOrCloseOneMenu("WorkshopDoc", true);
         }
     }

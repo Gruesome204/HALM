@@ -7,7 +7,7 @@
     <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn" style="flex-grow: 1;">
         <ui:VisualElement name="upperBarContainer" class="ressourceRowBackground" style="flex-direction: row;">
             <ui:VisualElement name="menuButtonContainer" style="align-self: flex-start; width: 40%; height: 100%; flex-shrink: 0; flex-direction: row; align-items: stretch;">
-                <ui:Button text="Button" name="pauseMenuButton" class="paperButton" style="padding-top: 0; padding-bottom: 0;" />
+                <ui:Button text="Button" name="pauseMenuButton" class="woodButton" style="padding-top: 0; padding-bottom: 0;" />
             </ui:VisualElement>
             <ui:VisualElement name="resourceContainer" style="flex-grow: 1; flex-shrink: 0; flex-direction: row;" />
         </ui:VisualElement>

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 public class EnemySpawnManager : MonoBehaviour, IPausable
 {
@@ -10,8 +9,6 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     [Header("Spawn Settings")]
     [HideInInspector]
     public List<GameObject> enemyPrefabs = new List<GameObject>(); // Multiple enemy types
-    public float spawnInterval = 3f;
-    public int spawnAmount = 1; // Total number of enemies this spawner will spawn
 
     [Header("Spawn Randomization")]
     public float spawnRadius = 5f;
@@ -40,6 +37,15 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     [SerializeField]private bool isPaused;
 
+    private MapEnemySetup CurrentMapSetup => MapLoaderManager.Instance?.CurrentMap?.GetComponent<MapEnemySetup>();
+
+    public int CurrentSpawnAmount => (CurrentMapSetup != null && CurrentMapSetup.spawnAmount > -1)
+        ? CurrentMapSetup.spawnAmount
+        : 1; // fallback
+
+    public float CurrentSpawnInterval => (CurrentMapSetup != null && CurrentMapSetup.spawnInterval > 0f)
+        ? CurrentMapSetup.spawnInterval : 3f;
+
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
     private void Awake()
@@ -67,7 +73,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
             return;
 
         spawnTimer += Time.deltaTime;
-        if (spawnTimer >= spawnInterval)
+        if (spawnTimer >= CurrentSpawnInterval)
         {
             spawnTimer = 0f;
             TrySpawnEnemy();
@@ -80,7 +86,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         activeEnemies.RemoveAll(e => e == null);
 
         // Check if all local enemies spawned
-        if (totalSpawned >= spawnAmount)
+        if (totalSpawned >= CurrentSpawnAmount)
         {
             allEnemiesSpawned = true;
             CheckIfAllEnemiesDefeated();

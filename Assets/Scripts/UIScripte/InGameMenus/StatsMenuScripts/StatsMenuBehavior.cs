@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.SmartFormat;
 using UnityEngine.UIElements;
 
 public class StatsMenuBehavior : MonoBehaviour, IMenu
@@ -105,14 +106,12 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
         charackterDetails.style.height = new Length(100, LengthUnit.Percent);
         statsContainer.Add(charackterDetails);
 
-        charackterDetails.Q<Label>($"name").SetBinding("text", new LocalizedString("ClassTranslationCommon", $"Mechanic"));
-
+        var headline = charackterDetails.Q<Label>("name");
+        headline.SetBinding("text", new LocalizedString("ClassTranslationCommon", $"Mechanic"));
+        headline.AddToClassList("paper-Text");
 
         var turretIcon = charackterDetails.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"MechanicIcon");
-
-        charackterDetails.Q<Label>($"costName").text = "";
-        charackterDetails.Q<Label>($"cost").text = $"";
 
         var player = FindFirstObjectByType<PlayerStats>();
 
@@ -171,13 +170,12 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
         turretDetails.style.height = new Length(100, LengthUnit.Percent);
         statsContainer.Add(turretDetails);
 
-        turretDetails.Q<Label>("name").SetBinding("text", new LocalizedString($"TurretTranslation{_turret.turretName}", $"name"));
+        var headline = turretDetails.Q<Label>("name");
+        headline.SetBinding("text", new LocalizedString($"TurretTranslation{_turret.turretName}", $"name"));
+        headline.AddToClassList("paper-Text");
 
         var turretIcon = turretDetails.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{_turret.turretName}Icon");
-
-        turretDetails.Q<Label>($"costName").text = "";
-        turretDetails.Q<Label>($"cost").text = $"";
 
         FillDetailValue("baseHealth", _turret.baseHealth, ref turretDetails);
         FillDetailValue("baseAttackDamage", _turret.baseAttackDamage, ref turretDetails);
@@ -204,11 +202,13 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
     {
         var valueName = new Label();
         valueName.AddToClassList("paper-Text");
+        valueName.AddToClassList("small-Text");
         valueName.SetBinding("text", new LocalizedString("ClassTranslationCommon", $"{value}"));
         _turretDetails.Q<VisualElement>("detailNames").Add(valueName);
 
         var valueNumbers = new Label();
         valueNumbers.AddToClassList("paper-Text");
+        valueNumbers.AddToClassList("small-Text");
         valueNumbers.text = $"{turretValue}";
         _turretDetails.Q<VisualElement>("detailNumbers").Add(valueNumbers);
     }

@@ -5,8 +5,8 @@
         <ui:Button name="button" class="woodButton" style="width: 90%; margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; flex-direction: row;">
             <ui:VisualElement name="icon" style="flex-grow: 1;" />
             <ui:VisualElement name="textContainer" style="flex-grow: 2; justify-content: space-around; margin-left: 10px;">
-                <ui:Label text="Label" name="name" style="margin-top: 0; margin-right: 0; margin-bottom: 5px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-font-style: bold; white-space: normal; -unity-text-align: middle-left;" />
-                <ui:Label text="Label" name="description" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal; -unity-text-align: middle-left; -unity-font-style: normal;" />
+                <ui:Label text="Label" name="name" style="margin-top: 0; margin-right: 0; margin-bottom: 5px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-font-style: bold; white-space: normal; -unity-text-align: middle-left; font-size: 15px;" />
+                <ui:Label text="Label" name="description" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal; -unity-text-align: middle-left; -unity-font-style: normal; font-size: 15px;" />
             </ui:VisualElement>
         </ui:Button>
         <ui:VisualElement picking-mode="Ignore" name="cooldownCover" style="flex-grow: 0; position: absolute; width: 90%; height: 0%; background-size: 100% 100%; flex-shrink: 0; align-self: center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; background-color: rgba(0, 0, 0, 0.59);" />

@@ -6,7 +6,7 @@
 }
 
 .buildmasterModifyBackground {
-    height: 97%;
+    height: 87%;
     flex-shrink: 0;
     background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/HubMenu_Part1.png?fileID=2800000&guid=b0e5bbd8306fa8e4eb410abe667920e9&type=3#HubMenu_Part1");
     -unity-background-scale-mode: scale-to-fit;
@@ -22,7 +22,7 @@
     background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/HubMenu_Part2.png?fileID=2800000&guid=75b61b709f4878f43abe9758c890de44&type=3#HubMenu_Part2");
     -unity-background-scale-mode: scale-to-fit;
     width: auto;
-    height: 85%;
+    height: 77%;
     padding-right: 1%;
     padding-left: 1%;
     padding-top: 3%;

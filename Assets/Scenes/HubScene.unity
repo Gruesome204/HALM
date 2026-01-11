@@ -2381,7 +2381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c2efd81dc86804f967fa0dd9986fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretButtons: {fileID: 9197481963319205126, guid: 5916de780a3544940be1967023788fce, type: 3}
+  turretButtons: {fileID: 9197481963319205126, guid: 6301a73b7a7960f44a47250b6b775cf1, type: 3}
   turretDetailsStats: {fileID: 9197481963319205126, guid: e922ef6cfc128ff4d80b6196b13b981f, type: 3}
 --- !u!1 &1922251807
 GameObject:
@@ -2670,7 +2670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bacab9fef3218f48ba7031361e6e93b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ressourceButton: {fileID: 9197481963319205126, guid: 5916de780a3544940be1967023788fce, type: 3}
+  ressourceButton: {fileID: 9197481963319205126, guid: 6301a73b7a7960f44a47250b6b775cf1, type: 3}
 --- !u!114 &2111749441
 MonoBehaviour:
   m_ObjectHideFlags: 0

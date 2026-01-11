@@ -48,6 +48,9 @@ public class MapLoaderManager : MonoBehaviour
 
         // Load new map prefab
         currentMap = Instantiate(mapPrefabs[index], mapParent);
+        AssignSpawnPointsToEnemyManager();
+        ApplyMapEnemySetup();
+
 
         // Auto-assign exit objects by tag
         ExitBlockerObjects = FindAllObjectsInChildrenWithTag(currentMap, "ExitBlocker");
@@ -137,5 +140,24 @@ public class MapLoaderManager : MonoBehaviour
                 result.Add(child.gameObject);
         }
         return result;
+    }
+
+    private void ApplyMapEnemySetup()
+    {
+        if (currentMap == null) return;
+
+        MapEnemySetup setup = currentMap.GetComponent<MapEnemySetup>();
+        if (setup == null)
+        {
+            Debug.LogWarning("MapEnemySetup missing on map!");
+            return;
+        }
+
+        EnemySpawnManager spawner = EnemySpawnManager.Instance;
+        spawner.isBossRoom = setup.isBossRoom;
+        if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
+            spawner.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs); ;
+
+        spawner.bossPrefab = setup.bossPrefab;
     }
 }

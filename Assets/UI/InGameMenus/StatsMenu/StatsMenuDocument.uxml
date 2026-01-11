@@ -6,7 +6,7 @@
     <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
     <ui:VisualElement name="mainContainer" enabled="true" picking-mode="Ignore" class="mainContainerClass SlideIn" style="flex-direction: row;">
         <ui:VisualElement name="sideContainer" class="pauseMenuBcakground" style="flex-shrink: 0; height: 100%; align-items: center; justify-content: flex-start;">
-            <ui:Label text="Label" name="statsMenuHeadline" class="sub-headline" style="margin-top: 4%; position: relative; white-space: normal;" />
+            <ui:Label text="Label" name="statsMenuHeadline" class="sub-headline paper-Text" style="margin-top: 4%; position: relative; white-space: normal; font-size: 50px;" />
             <ui:VisualElement name="upperButtonContainer" style="width: 100%; height: 55%; align-items: center; justify-content: flex-end;">
                 <ui:Button text="Button" name="resumeButton" class="paperButton" />
                 <ui:Button text="Button" focusable="false" name="pauseMenuButton" class="paperButton" />

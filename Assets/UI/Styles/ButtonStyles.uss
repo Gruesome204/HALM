@@ -11,12 +11,12 @@
 }
 
 .paperButton:hover {
-    color: rgb(94, 58, 39);
+    color: rgb(79, 52, 34);
     padding: 13px;
 }
 
 .paperButton:active {
-    color: rgb(132, 96, 61);
+    color: rgb(94, 58, 39);
     padding: 13px;
 }
 
@@ -33,11 +33,11 @@
 }
 
 .smallPaperButton:hover {
-    color: rgb(94, 58, 39);
+    color: rgb(79, 52, 34);
 }
 
 .smallPaperButton:active {
-    color: rgb(132, 96, 61);
+    color: rgb(94, 58, 39);
 }
 
 .woodButton {
@@ -71,7 +71,7 @@
 }
 
 .smallWoodButton {
-    width: 100%;
+    width: auto;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
     -unity-font-style: bold;

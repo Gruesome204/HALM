@@ -55,25 +55,6 @@ public class MapProgressionManager : MonoBehaviour
         spawner.PrepareForNewRoom();
 
         MapEnemySetup setup = map.GetComponent<MapEnemySetup>();
-
-
-        //bool shouldSpawnBoss = mapsClearedSinceBoss >= mapsBeforeBoss;
-        if (setup != null)
-        {
-            if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
-                    spawner.enemyPrefabs = setup.enemyPrefabs;
-
-                // Apply overrides
-                if (setup.spawnAmountOverride > 0)
-                    spawner.spawnAmount = setup.spawnAmountOverride;
-
-                if (setup.spawnIntervalOverride > 0)
-                    spawner.spawnInterval = setup.spawnIntervalOverride;
-
-                if (setup.spawnIntervalOverride > 0)
-                    spawner.spawnInterval = setup.spawnIntervalOverride;
-        }
-
         bool isBossRoom = mapsClearedSinceBoss >= mapsBeforeBoss;
 
         if (isBossRoom)

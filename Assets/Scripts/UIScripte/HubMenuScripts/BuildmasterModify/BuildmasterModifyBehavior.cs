@@ -185,9 +185,7 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
         string turretCost = new string("");
         foreach (var cost in openModifierDetails.options.costs)
         {
-            var temporary = new string(table.GetEntry($"{cost.resourceType}").GetLocalizedString());
-
-            turretCost = turretCost + $"<br>{temporary} {cost.amount}";
+            turretCost = turretCost + $"{table.GetEntry($"{cost.resourceType}").GetLocalizedString()} {cost.amount}<br>";
         }
         cost.text = turretCost;
     }
