@@ -87,7 +87,6 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         float finalRange = scaledRange + (upgrade?.rangeBonus ?? 0f);
         int finalProjectiles = turretBlueprint.projectilesPerSalve + (upgrade?.projectilesPerSalve ?? 0) + (global?.globalProjectilesPerSalve ?? 0);
         float finalProjectileSpeed = scaledProjectileSpeed * (upgrade?.projectileSpeed ?? 1f) * (global?.globalProjectileSpeed ?? 1f);
-
         int finalPierce = turretBlueprint.baseProjectilePierceCount + (upgrade?.piercingHits ?? 0);
 
 
