@@ -16,6 +16,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     public float currentAttackDamage;
     public float currentFireRate;
     public float currentProjectileSpeed;
+    public float currentProjectilePierce;
     public float currentAttackRange;
 
     public float currentFireCountdown;
@@ -65,40 +66,69 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         {
             health.AttachHealthBar(healthBarPrefab, new Vector3(0, 1.5f, 0));
         }
-
     }
+
+    public TurretStatData CalculateFinalStats(int level)
+    {
+        if (turretBlueprint == null) return default;
+
+        var global = TurretGlobalModifierManager.Instance;
+        var upgrade = TurretUpgradeChoiceManager.Instance.GetCombinedModifier(turretBlueprint.turretType);
+
+        // Level scaling
+        float scaledDamage = turretBlueprint.baseAttackDamage * (1 + turretBlueprint.baseDamageGrowthFactor * (level - 1));
+        float scaledFireRate = turretBlueprint.baseFireRate * (1 + turretBlueprint.baseFireRateGrowthFactor * (level - 1));
+        float scaledRange = turretBlueprint.baseAttackRange + turretBlueprint.baseRangeGrowthFlat * (level - 1);
+        float scaledProjectileSpeed = turretBlueprint.baseProjectileSpeed;
+
+        // Apply multipliers
+        float finalDamage = scaledDamage * (upgrade?.damageMultiplier ?? 1f) * (global?.globalDamageMultiplier ?? 1f);
+        float finalFireRate = scaledFireRate * (upgrade?.fireRateMultiplier ?? 1f) * (global?.globalFireRateMultiplier ?? 1f);
+        float finalRange = scaledRange + (upgrade?.rangeBonus ?? 0f);
+        int finalProjectiles = turretBlueprint.projectilesPerSalve + (upgrade?.projectilesPerSalve ?? 0) + (global?.globalProjectilesPerSalve ?? 0);
+        float finalProjectileSpeed = scaledProjectileSpeed * (upgrade?.projectileSpeed ?? 1f) * (global?.globalProjectileSpeed ?? 1f);
+
+        int finalPierce = turretBlueprint.baseProjectilePierceCount + (upgrade?.piercingHits ?? 0);
+
+
+        Debug.Log($"{finalDamage} turret upgraded! Level {level} | " +
+        $"Damage={finalDamage}, " +
+        $"FireRate={finalFireRate}, " +
+        $"Range={finalRange}, " +
+        $"Projectiles={finalProjectiles}, " +
+        $"ProjSpeed={finalProjectileSpeed}");
+
+        return new TurretStatData
+        {
+            damage = finalDamage,
+            fireRate = finalFireRate,
+            range = finalRange,
+            projectileSpeed = finalProjectileSpeed,
+            projectilesPerSalve = finalProjectiles,
+            pierceCount = finalPierce,
+            knockbackStrength = turretBlueprint.baseKnockbackStrength,
+            knockbackDuration = turretBlueprint.baseKnockbackDuration
+
+        };
+    }
+
+
+
     public void RecalculateStats()
     {
-        if (turretBlueprint == null) return;
-        var global = TurretGlobalModifierManager.Instance;
+        int level = TurretLevelManager.Instance?.GetLevel(turretBlueprint.turretType) ?? 1;
+        TurretStatData stats = CalculateFinalStats(level);
 
-        float globalFireRateMult = global?.globalFireRateMultiplier ?? 1f;
-        float globalDamageMult = global?.globalDamageMultiplier ?? 1f;
-        float globalProjectileSpeed = Mathf.Max(0.01f, global?.globalProjectileSpeed ?? 1f);
-        int globalExtraProjectiles = global?.globalProjectilesPerSalve ?? 0;
+        currentAttackDamage = stats.damage;
+        currentFireRate = stats.fireRate;
+        currentAttackRange = stats.range;
+        currentProjectileSpeed = stats.projectileSpeed;
+        projectilesPerSalve = stats.projectilesPerSalve;
 
-        currentAttackDamage = turretBlueprint.baseAttackDamage * globalDamageMult;
-        currentFireRate = turretBlueprint.baseFireRate * globalFireRateMult;
-        currentFireCountdown = turretBlueprint.BaseFireCountdown / globalFireRateMult;
-        currentAttackRange = turretBlueprint.baseAttackRange;
+        currentProjectilePierce = stats.pierceCount;
 
-        currentProjectileSpeed =
-            turretBlueprint.baseProjectileSpeed *
-            TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType) *
-            globalProjectileSpeed;
-
-        int upgradeExtraProjectiles =
-            TurretUpgradeChoiceManager.Instance.GetProjectilesPerSalve(turretBlueprint.turretType);
-
-        projectilesPerSalve =
-            turretBlueprint.projectilesPerSalve
-            + globalExtraProjectiles
-            + upgradeExtraProjectiles;
-
-        currentProjectileType = turretBlueprint.turretProjectileType;
-
-        currentKnockbackStrength = turretBlueprint.baseKnockbackStrength;
-        currentKnockbackDuration = turretBlueprint.baseKnockbackDuration;
+        currentKnockbackStrength = stats.knockbackStrength;
+        currentKnockbackDuration = stats.knockbackDuration;
     }
 
     void Update()
