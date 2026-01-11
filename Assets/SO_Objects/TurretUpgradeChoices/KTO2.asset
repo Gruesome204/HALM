@@ -20,12 +20,12 @@ MonoBehaviour:
     description: +25% Nachladegeschwindigkeit
     icon: {fileID: 0}
     modifier:
-      turretPlacementCooldownMultiplier: 1
-      healthMultiplier: 1
-      damageMultiplier: 1
-      fireRateMultiplier: 1.25
-      projectileSpeed: 1
-      projectilesPerSalve: 1
+      turretPlacementCooldownMultiplier: 0
+      healthMultiplier: 0
+      damageMultiplier: 0
+      fireRateMultiplier: 0.25
+      projectileSpeed: 0
+      projectilesPerSalve: 0
       rangeBonus: 0
       piercingHits: 0
       projectileType: {fileID: 0}

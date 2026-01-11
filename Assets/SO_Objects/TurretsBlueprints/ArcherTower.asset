@@ -33,8 +33,8 @@ MonoBehaviour:
   baseKnockbackStrength: 1
   baseKnockbackDuration: 1
   baseHealthGrowthFactor: 0
-  baseDamageGrowthFactor: 1.1
-  baseFireRateGrowthFactor: 1.1
+  baseDamageGrowthFactor: 0.1
+  baseFireRateGrowthFactor: 0.1
   baseRangeGrowthFlat: 0
   buyCost: []
   height: 1

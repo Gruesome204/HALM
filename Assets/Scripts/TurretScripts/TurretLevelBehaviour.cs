@@ -67,64 +67,7 @@ public class TurretLevelBehaviour : MonoBehaviour
 
     public void ApplyUpgrades(int level)
     {
-        int safeLevel = Mathf.Max(1, level); // level cannot be below 1
-        float baseDamage = Mathf.Max(0.01f, blueprint.baseAttackDamage);
-        float baseFireRate = Mathf.Max(0.01f, blueprint.baseFireRate);
-        float baseRange = Mathf.Max(0f, blueprint.baseAttackRange);
-        float baseProjectileSpeed = Mathf.Max(0.01f, blueprint.baseProjectileSpeed);
-
-        // --- BASE STATS WITH LEVEL SCALING (0 = no growth) ---
-        float scaledDamage = (blueprint.baseDamageGrowthFactor == 0f)
-                             ? baseDamage
-                             : baseDamage + baseDamage * blueprint.baseDamageGrowthFactor * (safeLevel - 1);
-
-        float scaledFireRate = (blueprint.baseFireRateGrowthFactor == 0f)
-                               ? baseFireRate
-                               : baseFireRate + baseFireRate * blueprint.baseFireRateGrowthFactor * (safeLevel - 1);
-
-        float scaledRange = (blueprint.baseRangeGrowthFlat == 0f)
-                            ? baseRange
-                            : baseRange + blueprint.baseRangeGrowthFlat * (safeLevel - 1);
-
-        // --- TURRET-SPECIFIC UPGRADE MODIFIERS ---
-        float turretDamageMult = TurretUpgradeChoiceManager.Instance.GetDamageMultiplier(blueprint.turretType);
-        float turretFireRateMult = TurretUpgradeChoiceManager.Instance.GetFireRateMultiplier(blueprint.turretType);
-        float turretRangeBonus = TurretUpgradeChoiceManager.Instance.GetRangeBonus(blueprint.turretType);
-        int turretProjectiles = TurretUpgradeChoiceManager.Instance.GetProjectilesPerSalve(blueprint.turretType);
-        float turretProjectileSpeed = TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(blueprint.turretType);
-
-        // --- GLOBAL MODIFIERS ---
-        var global = TurretGlobalModifierManager.Instance;
-        float globalDamageMult = global?.globalDamageMultiplier ?? 1f;
-        float globalFireRateMult = global?.globalFireRateMultiplier ?? 1f;
-        float globalRangeBonus = 0f; // Add if needed
-        int globalProjectiles = global?.globalProjectilesPerSalve ?? 0;
-        float globalProjectileSpeed = global?.globalProjectileSpeed ?? 1f;
-        Debug.Log($"BaseDamage: {scaledDamage}, TurretMult: {turretDamageMult}, GlobalMult: {globalDamageMult}");
-        Debug.Log($"scaledDamage={scaledDamage}, turretDamageMult={turretDamageMult}, globalDamageMult={globalDamageMult}");
-
-        // --- FINAL STATS ---
-        turretBehaviour.currentAttackDamage = scaledDamage * turretDamageMult * globalDamageMult;
-        turretBehaviour.currentFireRate = scaledFireRate * turretFireRateMult * globalFireRateMult;
-        turretBehaviour.currentAttackRange = scaledRange + turretRangeBonus + globalRangeBonus;
-        turretBehaviour.projectilesPerSalve = turretProjectiles + globalProjectiles;
-        turretBehaviour.currentProjectileSpeed = Mathf.Max(0.01f, blueprint.baseProjectileSpeed
-                                                             * turretProjectileSpeed
-                                                             * globalProjectileSpeed);
-
-        // --- Change projectile prefab if upgrade provides one ---
-        //ProjectileTypeSO newProjectile = TurretUpgradeChoiceManager.Instance.GetCombinedModifier(blueprint.turretType).projectileType;
-        //if (newProjectile != null)
-        //{
-        //    turretBehaviour.SetProjectile(newProjectile);
-        //}
-
-        Debug.Log($"{blueprint.turretType} turret upgraded! Level {level} | " +
-                  $"Damage={turretBehaviour.currentAttackDamage}, " +
-                  $"FireRate={turretBehaviour.currentFireRate}, " +
-                  $"Range={turretBehaviour.currentAttackRange}, " +
-                  $"Projectiles={turretBehaviour.projectilesPerSalve}, " +
-                  $"ProjSpeed={turretBehaviour.currentProjectileSpeed}");
+        turretBehaviour.RecalculateStats();
     }
 
 
