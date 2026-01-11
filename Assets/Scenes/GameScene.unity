@@ -957,7 +957,7 @@ MonoBehaviour:
     m_Bits: 1024
   previewObject: {fileID: 0}
   defaultMaxTurretCapacity: 6
-  maxTurretCapacity: 6
+  maxTurretCapacity: 10
   turretContainer: {fileID: 278887215}
   defaultPlacementRadius: 30
   placementRadius: 30
@@ -2726,7 +2726,7 @@ MonoBehaviour:
   globalFireRateMultiplier: 1
   globalProjectilesPerSalve: 1
   globalProjectileSpeed: 1
-  globalMaxTurretCapacityBonus: 0
+  globalMaxTurretCapacityBonus: 2
   globalPlacementRadiusMultiplier: 1
 --- !u!1 &1463319342
 GameObject:

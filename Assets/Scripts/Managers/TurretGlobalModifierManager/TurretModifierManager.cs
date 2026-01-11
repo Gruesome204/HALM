@@ -32,11 +32,24 @@ public class TurretGlobalModifierManager : MonoBehaviour
     {
         appliedModifiers.Clear(); // remove all at once
 
-        // Apply modifiers from the SO
         foreach (var modifierSO in GameManager.Instance.gameDataSO.GetSelectedModifiers())
         {
             if (modifierSO?.options != null)
-                appliedModifiers.Add(modifierSO.options);
+            {
+                // Make a runtime copy of the modifier
+                var runtimeModifier = new BuildMasterModifier.Modifier
+                {
+                    name = modifierSO.options.name,
+                    description = modifierSO.options.description,
+                    icon = modifierSO.options.icon,
+                    costs = modifierSO.options.costs,
+                    additionalStats = modifierSO.options.additionalStats
+                };
+
+                appliedModifiers.Add(runtimeModifier);
+
+                Debug.Log($"Read modifier from SO: {runtimeModifier.name}, Damage x{runtimeModifier.additionalStats.turretDamageMultiplier}");
+            }
         }
 
         RecalculateGlobalModifiers();
@@ -114,6 +127,12 @@ public class TurretGlobalModifierManager : MonoBehaviour
             int activeCount = tp.GetActiveTurrets().Count;
             tp.maxTurretCapacity = Mathf.Max(activeCount, tp.defaultMaxTurretCapacity + globalMaxTurretCapacityBonus);
             tp.placementRadius = tp.defaultPlacementRadius + tp.defaultPlacementRadius * (globalPlacementRadiusMultiplier - 1f);
+        }
+
+        Debug.Log("Recalculating global modifiers...");
+        foreach (var mod in appliedModifiers)
+        {
+            Debug.Log($"Modifier: {mod.name}, Damage x{mod.additionalStats.turretDamageMultiplier}, FireRate x{mod.additionalStats.turretFireRateMultiplier}");
         }
 
         OnModifiersChanged?.Invoke();
