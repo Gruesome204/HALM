@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: BTO3
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevels: 0a00000014000000
+  triggerLevels: 1300000014000000
   options:
-  - optionId: 8e974993-ffe1-4969-9f40-7ea8b3017f42
+  - optionId: 1aa8b72a-d154-4133-8e8a-b160ada74305
     name: BTO3
-    description: +1 Salve
+    description: +50% Schaden
     icon: {fileID: 0}
     modifier:
       turretPlacementCooldownMultiplier: 0
       healthMultiplier: 0
-      damageMultiplier: 0
+      damageMultiplier: 0.5
       fireRateMultiplier: 0
       projectileSpeed: 0
-      projectilesPerSalve: 1
+      projectilesPerSalve: 0
       rangeBonus: 0
       piercingHits: 0
       projectileType: {fileID: 0}

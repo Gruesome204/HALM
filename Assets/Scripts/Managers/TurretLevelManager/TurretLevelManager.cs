@@ -13,14 +13,14 @@ public class TurretLevelManager : MonoBehaviour
     {
      [SerializeField] public int currentLevel = 1;
      [SerializeField] public float currentXP = 0;
-     [SerializeField] public float xpToNextLevel = 50f;
+     [SerializeField] public float xpToNextLevel = 100f;
     }
 
     private Dictionary<TurretType, TurretProgress> turretProgressDict = new();
 
     [Header("Level Settings")]
     public int maxLevel = 10;
-    public float xpGrowthMultiplier = 1.5f;
+    public float xpGrowthMultiplier = 1.2f;
 
     // Level-up event
     public delegate void LevelUpEvent(TurretType type, int newLevel);
