@@ -271,6 +271,10 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         rb.linearVelocity = direction * currentProjectileSpeed;
 
         Destroy(projectileObj, 5f);
+
+        // <-- Play shooting sound
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayShoot();
     }
 
     private void ResetFiringCooldown()
