@@ -35,7 +35,7 @@ public class CreditsMenuBehavior : MonoBehaviour, IMenu
         backBtn.RegisterCallback<ClickEvent>(OnBackBtnClicked);
 
         creditsHeadline = root.Q<Label>("headline");
-        creditsHeadline.SetBinding("text", new LocalizedString("MenuTranslationaTable", "creditsHeadline"));
+        creditsHeadline.SetBinding("text", new LocalizedString("CreditsMenuTranslationaTable", "headline"));
     }
 
     void OnBackBtnClicked(ClickEvent clicked)

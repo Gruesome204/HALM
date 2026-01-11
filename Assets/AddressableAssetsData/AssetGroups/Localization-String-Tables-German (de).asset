@@ -177,6 +177,12 @@ MonoBehaviour:
     - Locale-de
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f77825e061112444990b0fa8b6b57fa7
+    m_Address: CreditsMenuTranslationaTable_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f824c36ae6fd5f543b58b79dd95394ba
     m_Address: TurretTranslationBallistTower_de
     m_ReadOnly: 1
