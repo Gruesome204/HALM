@@ -97,12 +97,15 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         {
             if (kvp.Key.Item1 == type)
             {
+
                 var mod = kvp.Value.modifier;
-                combined.damageMultiplier *= mod.damageMultiplier;
-                combined.fireRateMultiplier *= mod.fireRateMultiplier;
-                combined.projectileSpeed *= mod.projectileSpeed;
-                combined.healthMultiplier *= mod.healthMultiplier;
-                combined.turretPlacementCooldownMultiplier *= mod.turretPlacementCooldownMultiplier;
+
+                // Additive approach: 0 = no change, positive = bonus, negative = penalty
+                combined.damageMultiplier += mod.damageMultiplier;
+                combined.fireRateMultiplier += mod.fireRateMultiplier;
+                combined.projectileSpeed += mod.projectileSpeed;
+                combined.healthMultiplier += mod.healthMultiplier;
+                combined.turretPlacementCooldownMultiplier += mod.turretPlacementCooldownMultiplier;
 
                 combined.projectilesPerSalve += mod.projectilesPerSalve;
                 combined.piercingHits += mod.piercingHits;
@@ -133,13 +136,36 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         }
     }
 
-    // Convenience getters
-    public float GetDamageMultiplier(TurretType type) => GetCombinedModifier(type).damageMultiplier;
-    public float GetFireRateMultiplier(TurretType type) => GetCombinedModifier(type).fireRateMultiplier;
-    public float GetProjectileSpeedMultiplier(TurretType type) => GetCombinedModifier(type).projectileSpeed;
+    // Convenience getters (percentage-based multipliers)
+    public float GetDamageMultiplier(TurretType type)
+    {
+        // 0 = no change → returns 1 for multiplication
+        return 1f + GetCombinedModifier(type).damageMultiplier;
+    }
+
+    public float GetFireRateMultiplier(TurretType type)
+    {
+        return 1f + GetCombinedModifier(type).fireRateMultiplier;
+    }
+
+    public float GetProjectileSpeedMultiplier(TurretType type)
+    {
+        return 1f + GetCombinedModifier(type).projectileSpeed;
+    }
+
+    public float GetHealthMultiplier(TurretType type)
+    {
+        return 1f + GetCombinedModifier(type).healthMultiplier;
+    }
+
+    public float GetTurretPlacementCooldownMultiplier(TurretType type)
+    {
+        return 1f + GetCombinedModifier(type).turretPlacementCooldownMultiplier;
+    }
+
+    // Additive fields remain additive (they are already flat bonuses)
     public int GetProjectilesPerSalve(TurretType type) => GetCombinedModifier(type).projectilesPerSalve;
-    public float GetHealthMultiplier(TurretType type) => GetCombinedModifier(type).healthMultiplier;
-    public float GetTurretPlacementCooldownMultiplier(TurretType type) => GetCombinedModifier(type).turretPlacementCooldownMultiplier;
+
     public float GetRangeBonus(TurretType type)
     {
         float bonus = 0f;
@@ -149,6 +175,17 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
                 bonus += kvp.Value.modifier.rangeBonus;
         }
         return bonus;
+    }
+
+    public int GetPiercingHits(TurretType type)
+    {
+        int total = 0;
+        foreach (var kvp in chosenUpgrades)
+        {
+            if (kvp.Key.Item1 == type)
+                total += kvp.Value.modifier.piercingHits;
+        }
+        return total;
     }
 
     public bool IsOptionUsed(string optionId)
