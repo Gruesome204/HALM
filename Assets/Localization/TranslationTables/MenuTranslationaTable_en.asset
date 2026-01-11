@@ -38,40 +38,24 @@ MonoBehaviour:
     m_Localized: Credits
     m_Metadata:
       m_Items: []
-  - m_Id: 22446000140288
-    m_Localized: Settings
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22550140514304
-    m_Localized: Languages
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22732009730048
-    m_Localized: English
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22863392108544
-    m_Localized: German
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22966500683776
-    m_Localized: Developer
-    m_Metadata:
-      m_Items: []
   - m_Id: 29026900865024
     m_Localized: Back
     m_Metadata:
       m_Items: []
-  - m_Id: 23246205716623360
-    m_Localized: Volume
-    m_Metadata:
-      m_Items: []
-  - m_Id: 42399922118070272
-    m_Localized: Hello, here are the Credits!
-    m_Metadata:
-      m_Items: []
   - m_Id: 78956426925051904
     m_Localized: Reset Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86608383043047424
+    m_Localized: Do you really want to reset the Game? You will lose all your progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86608385341526016
+    m_Localized: Reset the Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86608387166048256
+    m_Localized: Don't reset the Game
     m_Metadata:
       m_Items: []
   references:

@@ -39,41 +39,24 @@ MonoBehaviour:
     m_Localized: Verehrungen
     m_Metadata:
       m_Items: []
-  - m_Id: 22446000140288
-    m_Localized: "Zahnr\xE4der"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22550140514304
-    m_Localized: "F\xFCr die Unmultilingualen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22732009730048
-    m_Localized: The common Tongue
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22863392108544
-    m_Localized: The peasants Tongue
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22966500683776
-    m_Localized: The one true tongue
-    m_Metadata:
-      m_Items: []
   - m_Id: 29026900865024
     m_Localized: Retreat Coward
     m_Metadata:
       m_Items: []
-  - m_Id: 23246205716623360
-    m_Localized: Wie Taub bist du?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 42399922118070272
-    m_Localized: Jo, what soll ich sagen? Hier sollten seien Annerkennungen, but
-      hier seien nichts, Sad.
-    m_Metadata:
-      m_Items: []
   - m_Id: 78956426925051904
     m_Localized: Back to the Future
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86608383043047424
+    m_Localized: "Jo, kannste machen, musste nicht. Ich w\xFCrds nicht"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86608385341526016
+    m_Localized: Back to the Future!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86608387166048256
+    m_Localized: Nicht back to the Future
     m_Metadata:
       m_Items: []
   references:

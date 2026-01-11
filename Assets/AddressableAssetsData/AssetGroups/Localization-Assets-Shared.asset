@@ -111,6 +111,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c04ad4e8e1eab894c9a36f176149d53b
+    m_Address: Assets/Localization/CreditsMenuTranslationaTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d1e6a7f303ad1044d82355a4ea223c74
     m_Address: Assets/Localization/TranslationTables/BuildmasterModifyTranslationTable
       Shared Data.asset

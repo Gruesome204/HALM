@@ -22,6 +22,12 @@ MonoBehaviour:
     - Locale-de-DE
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08934e69ed0d6b24dae704ea1c7a86fc
+    m_Address: CreditsMenuTranslationaTable_de-DE
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de-DE
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0cc487e79bf223340ba2f02e99cf0040
     m_Address: EnterDungeonTranslationTable_de-DE
     m_ReadOnly: 1

@@ -43,32 +43,16 @@ MonoBehaviour:
     m_Key: backBtnText
     m_Metadata:
       m_Items: []
-  - m_Id: 22446000140288
-    m_Key: settingsHeadline
+  - m_Id: 86608383043047424
+    m_Key: headline
     m_Metadata:
       m_Items: []
-  - m_Id: 22550140514304
-    m_Key: settingsLanguageHeadline
+  - m_Id: 86608385341526016
+    m_Key: resetButton
     m_Metadata:
       m_Items: []
-  - m_Id: 22732009730048
-    m_Key: languageSettimgsEnglischBtn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22863392108544
-    m_Key: languageSettingsDeutschBtn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22966500683776
-    m_Key: languageSettingsDeveloperBtn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 23246205716623360
-    m_Key: soundSettingsHeadline
-    m_Metadata:
-      m_Items: []
-  - m_Id: 42399922118070272
-    m_Key: creditsHeadline
+  - m_Id: 86608387166048256
+    m_Key: noResetButton
     m_Metadata:
       m_Items: []
   m_Metadata:
