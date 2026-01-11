@@ -16,11 +16,8 @@ MonoBehaviour:
   triggerLevels: 0a00000014000000
   options:
   - optionId: 72893a29-5564-49b6-baef-985b8898d685
-    name: 
-    description: 'Hinterlader
-
-      Verbesserte die Nachladegeschwindigkeit von
-      Kanonen um +25%'
+    name: KTO2
+    description: +25% Nachladegeschwindigkeit
     icon: {fileID: 0}
     modifier:
       turretPlacementCooldownMultiplier: 1

@@ -16,11 +16,8 @@ MonoBehaviour:
   triggerLevels: 0a00000014000000
   options:
   - optionId: 90cbf88b-566c-4c10-9b90-6d2419fb6c2f
-    name: Wechselmagazin
-    description: 'Wechselmagazin
-
-      Verbesserte die Nachladegeschwindigkeit von
-      Kanonen.'
+    name: RTO3
+    description: +25% Nachladegeschwindigkeit
     icon: {fileID: 0}
     modifier:
       turretPlacementCooldownMultiplier: 0

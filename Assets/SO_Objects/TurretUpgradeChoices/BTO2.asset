@@ -16,13 +16,13 @@ MonoBehaviour:
   triggerLevels: 1300000014000000
   options:
   - optionId: 1aa8b72a-d154-4133-8e8a-b160ada74305
-    name: "Gesch\xE4rfte Pfeil Spitzen"
-    description: "Gesch\xE4rfte Pfeil Spitzen"
+    name: BTO2
+    description: +50% Schaden
     icon: {fileID: 0}
     modifier:
       turretPlacementCooldownMultiplier: 1
       healthMultiplier: 1
-      damageMultiplier: 1
+      damageMultiplier: 1.5
       fireRateMultiplier: 1
       projectileSpeed: 1
       projectilesPerSalve: 1

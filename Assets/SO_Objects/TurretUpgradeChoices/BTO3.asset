@@ -16,8 +16,8 @@ MonoBehaviour:
   triggerLevels: 0a00000014000000
   options:
   - optionId: 8e974993-ffe1-4969-9f40-7ea8b3017f42
-    name: "Zus\xE4tzliche Besatzung"
-    description: "Zus\xE4tzliche Besatzung"
+    name: BTO3
+    description: +1 Salve
     icon: {fileID: 0}
     modifier:
       turretPlacementCooldownMultiplier: 1
