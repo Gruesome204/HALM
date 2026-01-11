@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ArcherTower
   m_EditorClassIdentifier: 
   turretName: ArcherTower
-  towerIcon: {fileID: 7892373371436272380, guid: a8c81774cdfd55b46b00e047a78ba8ca, type: 3}
+  towerIcon: {fileID: 0}
   baseLevel: 1
   description: "Hoher Turm mit kleiner Grundfl\xE4che und moderaten Lebenspunkten,
     der aus Holz besteht und Pfeile verschie\xDFt."
@@ -28,6 +28,7 @@ MonoBehaviour:
   baseAttackDamage: 10
   baseFireRate: 1
   baseProjectileSpeed: 10
+  baseProjectilePierceCount: 0
   baseAttackRange: 10
   baseKnockbackStrength: 1
   baseKnockbackDuration: 1
@@ -40,4 +41,3 @@ MonoBehaviour:
   length: 1
   buildCapacityValue: 1
   placementCooldown: 10
-  unlockCost: 0

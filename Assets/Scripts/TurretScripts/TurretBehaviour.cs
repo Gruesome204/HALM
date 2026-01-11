@@ -267,7 +267,8 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         projectile.knockbackStrength = currentKnockbackStrength;
         projectile.knockbackDuration = currentKnockbackDuration;
 
-        projectile.InitializePiercing(modifier.piercingHits);
+        int pierceCount = turretBlueprint.baseProjectilePierceCount + modifier.piercingHits;
+        projectile.InitializePiercing(pierceCount);
         Vector2 direction = (target.position - firePoint.position).normalized;
         rb.linearVelocity = direction * currentProjectileSpeed;
 

@@ -16,9 +16,8 @@ MonoBehaviour:
   triggerLevels: 0a00000014000000
   options:
   - optionId: c608a50a-449f-43c4-9992-9977e6736299
-    name: "Gr\xF6\xDFeres Magazin"
-    description: "Gr\xF6\xDFeres Magazin\nErh\xF6hre die Magaziengr\xF6\xDFe(Salvengr\xF6\xDFe)
-      um +3."
+    name: RTO1
+    description: +3 Salve
     icon: {fileID: 0}
     modifier:
       turretPlacementCooldownMultiplier: 0
