@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Balistische Messger\xE4te"
   m_EditorClassIdentifier: 
   options:
-    name: "BalistischeMessger\xE4te"
+    name: BalistischeMessgerate
     description: '+30% Turmreichweite
 
       +20% Bauabklinzeit'

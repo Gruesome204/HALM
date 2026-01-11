@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: "BMTranslationsSorgf\xE4ltiegeBauweise Shared Data"
+  m_Name: BMTranslationsSorgfaltiegeBauweise Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: "BMTranslationsSorgf\xE4ltiegeBauweise"
+  m_TableCollectionName: BMTranslationsSorgfaltiegeBauweise
   m_TableCollectionNameGuidString: 1e2d2fbbe49395343a285a5a761ce7dd
   m_Entries:
   - m_Id: 4980346880

@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 9a8477400ee2cab4f91e957647a45b61
   m_SerializeEntries:
   - m_GUID: 0249ed222d49d1f49abfa2ed3b47fa85
-    m_Address: "BMTranslationsBalistischeMessger\xE4te_de-DE"
+    m_Address: BMTranslationsBalistischeMessgerate_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE
@@ -49,7 +49,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1bc5b0d25d3e37f41be4dcf634285345
-    m_Address: "BMTranslationsSchwereR\xFCstung_de-DE"
+    m_Address: BMTranslationsSchwereRustung_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE
@@ -184,7 +184,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f912bf427dbf6d445ba7b5b23894a4c9
-    m_Address: "BMTranslationsSorgf\xE4ltiegeBauweise_de-DE"
+    m_Address: BMTranslationsSorgfaltiegeBauweise_de-DE
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de-DE

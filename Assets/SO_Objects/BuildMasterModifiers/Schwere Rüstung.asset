@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Schwere R\xFCstung"
   m_EditorClassIdentifier: 
   options:
-    name: "SchwereR\xFCstung"
+    name: SchwereRustung
     description: "+2 R\xFCstung\n-0,5 Laufgeschwindigkeit"
     icon: {fileID: 0}
     costs:

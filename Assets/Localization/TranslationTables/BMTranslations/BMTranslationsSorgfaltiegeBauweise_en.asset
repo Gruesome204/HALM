@@ -10,20 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: "BMTranslationsSchwereR\xFCstung_de-DE"
+  m_Name: BMTranslationsSorgfaltiegeBauweise_en
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: de-DE
-  m_SharedData: {fileID: 11400000, guid: 7bb8e15572083754087ef783120a7a58, type: 2}
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 1e2d2fbbe49395343a285a5a761ce7dd, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 28225179648
-    m_Localized: "Schwere R\xFCstung"
+  - m_Id: 4980346880
+    m_Localized: Careful Buildingway
     m_Metadata:
       m_Items: []
-  - m_Id: 29923872768
-    m_Localized: "+2 R\xFCstung\n-0,5 Laufgeschwindigkeit"
+  - m_Id: 6951669760
+    m_Localized: '+20% Tower Hit Points
+
+      -1 Tower Capacity'
     m_Metadata:
       m_Items: []
   references:
