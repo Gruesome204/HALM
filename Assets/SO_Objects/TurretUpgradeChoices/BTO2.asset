@@ -17,7 +17,7 @@ MonoBehaviour:
   options:
   - optionId: 500c2b9e-5fc6-4eed-af1e-3804f4a07d29
     name: BTO1
-    description: "\xC4nderung des Projektiles zu Stahlpfeil"
+    description: "\xC4nderung des Projektiles zu Stahlpfeil Durchschlag +1 "
     icon: {fileID: 0}
     modifier:
       turretPlacementCooldownMultiplier: 0

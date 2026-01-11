@@ -15,7 +15,7 @@
             <ui:Button text="reset" name="resetGameBtn" class="stoneButton" />
         </ui:VisualElement>
         <ui:VisualElement name="certainContainer" style="flex-grow: 1;">
-            <ui:Label text="Label" name="headline" class="stone-Text sub-headline" style="margin-bottom: 15px; white-space: normal;" />
+            <ui:Label text="Label" name="headline" class="stone-Text sub-headline" style="margin-bottom: 15%; white-space: normal;" />
             <ui:Button text="Button" name="resetButton" class="stoneButton small-Text" />
             <ui:Button text="Button" name="noResetButton" class="stoneButton small-Text" />
         </ui:VisualElement>

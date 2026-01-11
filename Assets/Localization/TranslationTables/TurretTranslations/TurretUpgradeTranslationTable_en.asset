@@ -22,6 +22,104 @@ MonoBehaviour:
     m_Localized: A Tower can be upgraded!
     m_Metadata:
       m_Items: []
+  - m_Id: 34476950837399552
+    m_Localized: '+2 Arrows
+
+      -50% Reloadspeed'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479233809649664
+    m_Localized: Change of Projectile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479373308006400
+    m_Localized: Pierce +2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479626979512320
+    m_Localized: +1 Salve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479854222708736
+    m_Localized: 'Pierce +1 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479945062944768
+    m_Localized: +50% Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480046653181952
+    m_Localized: Change of Projectiles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480125673869312
+    m_Localized: +25% Reload speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480213691338752
+    m_Localized: +50% Attackrange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480300173692928
+    m_Localized: +3 Salve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480362295529472
+    m_Localized: Pierce +1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480534522040320
+    m_Localized: +25% Reload speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34476947909775360
+    m_Localized: Repeating magazines
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479231964155904
+    m_Localized: Bundle of arrows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479371223437312
+    m_Localized: Steel bolts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480298953150464
+    m_Localized: Bigger Magazine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480361054015488
+    m_Localized: Steel bolts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480528675180544
+    m_Localized: Removable magazine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480211640324096
+    m_Localized: Rifle barrel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480045055152128
+    m_Localized: Grapeshot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34480123492831232
+    m_Localized: Breech loader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479852649844736
+    m_Localized: Steel bolts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479942982569984
+    m_Localized: Sharpened arrowheads
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34479623498240000
+    m_Localized: Additional crew
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

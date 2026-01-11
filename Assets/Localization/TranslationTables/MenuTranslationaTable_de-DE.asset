@@ -47,8 +47,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 86608383043047424
-    m_Localized: "M\xF6chtest du wirklich das Spiel zur\xFCcksetzen? Du wirst deinen
-      gesamten Fortschritt verlieren"
+    m_Localized: "M\xF6chtest du wirklich das Spiel zur\xFCcksetzen? <br>(Du wirst
+      deinen gesamten Fortschritt verlieren)"
     m_Metadata:
       m_Items: []
   - m_Id: 86608385341526016
