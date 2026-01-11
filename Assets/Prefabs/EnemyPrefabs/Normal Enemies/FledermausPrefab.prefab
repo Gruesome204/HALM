@@ -347,8 +347,8 @@ MonoBehaviour:
   currentCritChance: 0
   currentCritMultiplier: 0
   currentAttackRange: 0
+  maxHealth: 0
   currentHealth: 0
-  currentMaxHealth: 0
   currentArmor: 0
   currentMagicResistance: 0
   currentKnockbackReduction: 0
@@ -469,7 +469,7 @@ RectTransform:
   m_GameObject: {fileID: 7091296239137866032}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.047847595, y: 0.16641255, z: 0.045847762}
+  m_LocalScale: {x: 0.060110934, y: 0.20906408, z: 0.045847762}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4035927375297181251}
@@ -477,8 +477,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.53, y: 1.96}
-  m_SizeDelta: {x: 100, y: 4.5}
+  m_AnchoredPosition: {x: -0.53, y: 2.204}
+  m_SizeDelta: {x: 100, y: 5.012}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8297080180027687139
 Canvas:

@@ -67,11 +67,24 @@ public class TurretLevelBehaviour : MonoBehaviour
 
     public void ApplyUpgrades(int level)
     {
+        int safeLevel = Mathf.Max(1, level); // level cannot be below 1
+        float baseDamage = Mathf.Max(0.01f, blueprint.baseAttackDamage);
+        float baseFireRate = Mathf.Max(0.01f, blueprint.baseFireRate);
+        float baseRange = Mathf.Max(0f, blueprint.baseAttackRange);
+        float baseProjectileSpeed = Mathf.Max(0.01f, blueprint.baseProjectileSpeed);
 
-        // --- BASE STATS FROM BLUEPRINT WITH LEVEL SCALING ---
-        float scaledDamage = blueprint.baseAttackDamage * Mathf.Pow(blueprint.baseDamageGrowthFactor, level - 1);
-        float scaledFireRate = blueprint.baseFireRate * Mathf.Pow(blueprint.baseFireRateGrowthFactor, level - 1);
-        float scaledRange = blueprint.baseAttackRange + blueprint.baseRangeGrowthFlat * (level - 1);
+        // --- BASE STATS WITH LEVEL SCALING (0 = no growth) ---
+        float scaledDamage = (blueprint.baseDamageGrowthFactor == 0f)
+                             ? baseDamage
+                             : baseDamage + baseDamage * blueprint.baseDamageGrowthFactor * (safeLevel - 1);
+
+        float scaledFireRate = (blueprint.baseFireRateGrowthFactor == 0f)
+                               ? baseFireRate
+                               : baseFireRate + baseFireRate * blueprint.baseFireRateGrowthFactor * (safeLevel - 1);
+
+        float scaledRange = (blueprint.baseRangeGrowthFlat == 0f)
+                            ? baseRange
+                            : baseRange + blueprint.baseRangeGrowthFlat * (safeLevel - 1);
 
         // --- TURRET-SPECIFIC UPGRADE MODIFIERS ---
         float turretDamageMult = TurretUpgradeChoiceManager.Instance.GetDamageMultiplier(blueprint.turretType);
@@ -87,6 +100,8 @@ public class TurretLevelBehaviour : MonoBehaviour
         float globalRangeBonus = 0f; // Add if needed
         int globalProjectiles = global?.globalProjectilesPerSalve ?? 0;
         float globalProjectileSpeed = global?.globalProjectileSpeed ?? 1f;
+        Debug.Log($"BaseDamage: {scaledDamage}, TurretMult: {turretDamageMult}, GlobalMult: {globalDamageMult}");
+        Debug.Log($"scaledDamage={scaledDamage}, turretDamageMult={turretDamageMult}, globalDamageMult={globalDamageMult}");
 
         // --- FINAL STATS ---
         turretBehaviour.currentAttackDamage = scaledDamage * turretDamageMult * globalDamageMult;

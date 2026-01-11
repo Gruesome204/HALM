@@ -27,6 +27,7 @@ public class PlayerAnimator : MonoBehaviour
             health.OnDeath += OnDeath;
 
         lastPosition = transform.position;
+        animator.speed = 0.5f;
     }
 
     private void Update()
@@ -36,20 +37,22 @@ public class PlayerAnimator : MonoBehaviour
 
     private void UpdateMovementAnimation()
     {
-        // Calculate actual speed
+        // Determine if player is moving
         Vector3 currentPosition = transform.position;
-        Vector3 delta = currentPosition - lastPosition;
-        moveSpeed = delta.magnitude / Time.deltaTime; // units per second
+        bool isMoving = (currentPosition - lastPosition).sqrMagnitude > 0.0001f;
         lastPosition = currentPosition;
 
-        // Update Animator parameters
-        Vector2 facing = movement.FacingDirection; // Use your existing facing direction
+        // Update facing direction
+        Vector2 facing = movement.FacingDirection;
         animator.SetFloat(MoveX, facing.x);
         animator.SetFloat(MoveY, facing.y);
-        animator.SetFloat(MoveSpeedParam, moveSpeed);
-        animator.SetBool(IsDashing, movement.IsDashing);
 
+        // Set MoveSpeedParam as a simple on/off
+        animator.SetFloat(MoveSpeedParam, isMoving ? 1f : 0f);
+        // Dashing still works as usual
+        animator.SetBool(IsDashing, movement.IsDashing);
     }
+
 
     private void OnDeath(PlayerHealth _, DamageData __)
     {

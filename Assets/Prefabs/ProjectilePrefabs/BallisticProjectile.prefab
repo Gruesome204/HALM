@@ -214,7 +214,7 @@ MonoBehaviour:
   knockbackStrength: 0
   knockbackDuration: 0
   direction: {x: 0, y: 0}
-  piercingHitsRemaining: 3
+  remainingPierces: 1
 --- !u!1 &6977538894313689766
 GameObject:
   m_ObjectHideFlags: 0

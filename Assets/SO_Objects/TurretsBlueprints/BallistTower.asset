@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   turretType: 4
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
-  turretPrefab: {fileID: 673453059274113653, guid: 130817ef7da155845abce0dd7b6b7f83, type: 3}
+  turretPrefab: {fileID: 5526581838746632432, guid: 492eb4217452d824cb11a54237893393, type: 3}
   turretProjectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}
   firingPattern: 1
   projectilesPerSalve: 1
