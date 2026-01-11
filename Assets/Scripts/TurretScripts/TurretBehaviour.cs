@@ -81,6 +81,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         currentFireRate = turretBlueprint.baseFireRate * globalFireRateMult;
         currentFireCountdown = turretBlueprint.BaseFireCountdown / globalFireRateMult;
         currentAttackRange = turretBlueprint.baseAttackRange;
+
         currentProjectileSpeed =
             turretBlueprint.baseProjectileSpeed *
             TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType) *
@@ -225,16 +226,16 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     private void Fire()
     {
-        ResetFiringCooldown();
-
         switch (currentFiringPattern)
         {
             case TurretBlueprint.FiringPattern.SingleShot:
                 ShootProjectileAt(targetEnemy);
+                ResetFiringCooldown();
                 break;
 
             case TurretBlueprint.FiringPattern.FireSalve:
                 StartCoroutine(ShootFireSalve());
+                ResetFiringCooldown();
                 break;
         }
     }
@@ -279,7 +280,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     private void ResetFiringCooldown()
     {
-        currentFireCountdown = turretBlueprint.BaseFireCountdown / currentFireRate;
+        currentFireCountdown = 1f / currentFireRate;
     }
 
     void OnDrawGizmosSelected()
