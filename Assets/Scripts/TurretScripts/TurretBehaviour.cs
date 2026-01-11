@@ -34,23 +34,20 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     private bool isPaused;
 
-    private TurretModifyStats baseStats;
-    private TurretModifyStats finalStats;
-
-
 
     private void OnEnable()
     {
         GameManager.Instance?.RegisterPausable(this);
         if (TurretGlobalModifierManager.Instance != null)
-            TurretGlobalModifierManager.Instance.OnModifiersChanged += RecalculateFinalStats;
+            TurretGlobalModifierManager.Instance.OnModifiersChanged += RecalculateStats;
+        RecalculateStats();
     }
 
     private void OnDisable()
     {
         GameManager.Instance?.UnregisterPausable(this);
         if (TurretGlobalModifierManager.Instance != null)
-            TurretGlobalModifierManager.Instance.OnModifiersChanged -= RecalculateFinalStats;
+            TurretGlobalModifierManager.Instance.OnModifiersChanged -= RecalculateStats;
     }
 
     // Pause system
@@ -70,32 +67,37 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         }
 
     }
-    public void RecalculateFinalStats()
+    public void RecalculateStats()
     {
-        finalStats = baseStats;
-
+        if (turretBlueprint == null) return;
         var global = TurretGlobalModifierManager.Instance;
-        if (global != null)
-        {
-            finalStats.damage *= global.globalDamageMultiplier;
-            finalStats.fireRate *= global.globalFireRateMultiplier;
-            finalStats.projectileSpeed *= global.globalProjectileSpeed;
-            finalStats.projectilesPerSalve += global.globalProjectilesPerSalve;
-        }
 
-        currentAttackDamage = finalStats.damage;
-        currentFireRate = Mathf.Max(0.01f, finalStats.fireRate);
-        currentAttackRange = finalStats.range;
-        currentProjectileSpeed = Mathf.Max(0.01f, finalStats.projectileSpeed);
-        projectilesPerSalve = Mathf.Max(1, finalStats.projectilesPerSalve);
+        float globalFireRateMult = global?.globalFireRateMultiplier ?? 1f;
+        float globalDamageMult = global?.globalDamageMultiplier ?? 1f;
+        float globalProjectileSpeed = Mathf.Max(0.01f, global?.globalProjectileSpeed ?? 1f);
+        int globalExtraProjectiles = global?.globalProjectilesPerSalve ?? 0;
 
-        ResetFiringCooldown();
-    }
+        currentAttackDamage = turretBlueprint.baseAttackDamage * globalDamageMult;
+        currentFireRate = turretBlueprint.baseFireRate * globalFireRateMult;
+        currentFireCountdown = turretBlueprint.BaseFireCountdown / globalFireRateMult;
+        currentAttackRange = turretBlueprint.baseAttackRange;
+        currentProjectileSpeed =
+            turretBlueprint.baseProjectileSpeed *
+            TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType) *
+            globalProjectileSpeed;
 
-    public void ApplyStats(TurretModifyStats stats)
-    {
-        baseStats = stats;
-        RecalculateFinalStats();
+        int upgradeExtraProjectiles =
+            TurretUpgradeChoiceManager.Instance.GetProjectilesPerSalve(turretBlueprint.turretType);
+
+        projectilesPerSalve =
+            turretBlueprint.projectilesPerSalve
+            + globalExtraProjectiles
+            + upgradeExtraProjectiles;
+
+        currentProjectileType = turretBlueprint.turretProjectileType;
+
+        currentKnockbackStrength = turretBlueprint.baseKnockbackStrength;
+        currentKnockbackDuration = turretBlueprint.baseKnockbackDuration;
     }
 
     void Update()

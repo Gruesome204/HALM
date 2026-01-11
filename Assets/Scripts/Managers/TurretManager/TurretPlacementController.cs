@@ -407,7 +407,7 @@ public class TurretPlacementController : MonoBehaviour
         if (behaviour != null)
         {
             behaviour.turretBlueprint = currentSelectedBlueprint;
-            behaviour.RecalculateFinalStats();
+            behaviour.RecalculateStats();
         }
 
 
