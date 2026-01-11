@@ -1900,7 +1900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 20
-  xpGrowthMultiplier: 1.5
+  xpGrowthMultiplier: 1.2
 --- !u!1 &747619961
 GameObject:
   m_ObjectHideFlags: 0
