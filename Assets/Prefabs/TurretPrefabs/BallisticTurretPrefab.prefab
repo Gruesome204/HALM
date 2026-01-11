@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1284506, y: 0.1284506, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4681634714649818291}
@@ -144,9 +144,9 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 4822189033948548198, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
   currentAttackDamage: 0
   currentFireRate: 0
-  currentFireCountdown: 0
   currentProjectileSpeed: 0
   currentAttackRange: 0
+  currentFireCountdown: 0
   currentKnockbackStrength: 0
   currentKnockbackDuration: 0
   enemyLayer:
