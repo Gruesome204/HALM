@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TurretBehaviour : MonoBehaviour, IPausable
 {
@@ -13,11 +12,13 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     [SerializeField] private GameObject healthBarPrefab;
 
     [Header("Values")]
+
     public float currentAttackDamage;
     public float currentFireRate;
-    public float currentFireCountdown;
     public float currentProjectileSpeed;
     public float currentAttackRange;
+
+    public float currentFireCountdown;
     public float currentKnockbackStrength;
     public float currentKnockbackDuration;
 
@@ -27,7 +28,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     public LayerMask enemyLayer; // New variable to select the enemy layer
 
     private TurretBlueprint.FiringPattern currentFiringPattern;
-    private bool isShootingSalve;
+    private bool salveInProgress;
     public int projectilesPerSalve; // Number of projectiles in a salve
     private float delayBetweenSalveProjectiles; // Delay between each projectile in a salve
 
@@ -80,9 +81,11 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         currentFireRate = turretBlueprint.baseFireRate * globalFireRateMult;
         currentFireCountdown = turretBlueprint.BaseFireCountdown / globalFireRateMult;
         currentAttackRange = turretBlueprint.baseAttackRange;
-        currentProjectileSpeed = turretBlueprint.baseProjectileSpeed
-                                * TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType)
-                                * TurretGlobalModifierManager.Instance.globalProjectileSpeed;
+
+        currentProjectileSpeed =
+            turretBlueprint.baseProjectileSpeed *
+            TurretUpgradeChoiceManager.Instance.GetProjectileSpeedMultiplier(turretBlueprint.turretType) *
+            globalProjectileSpeed;
 
         int upgradeExtraProjectiles =
             TurretUpgradeChoiceManager.Instance.GetProjectilesPerSalve(turretBlueprint.turretType);
@@ -102,33 +105,17 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     {
         if (isPaused) return;
 
+        currentFireCountdown -= Time.deltaTime;
+
+        if (currentFireCountdown > 0f || salveInProgress)
+            return;
         FindTarget();
-        if (targetEnemy != null)
-        {
-            if (currentFireCountdown <= 0f)
-            {
-                // Call the appropriate shooting pattern
-                switch (currentFiringPattern)
-                {
-                    case TurretBlueprint.FiringPattern.SingleShot:
-                        ShootProjectileAt(targetEnemy);
-                        break;
-                    case TurretBlueprint.FiringPattern.FireSalve:
-                        StartCoroutine(ShootFireSalve());
-                        break;
-                }
-                currentFireCountdown = turretBlueprint.BaseFireCountdown / currentFireRate;
-            }
-            currentFireCountdown -= Time.deltaTime;
-        }
-        else
-        {
-            // Optionally do something when no target is in range
-            // For example, reset turret rotation to default or stop rotating.
-        }
+        if (targetEnemy == null)
+            return;
+
+        Fire();
     }
 
-    //TODO: Add different Shooting Patterns
     void FindTarget()
     {
         Collider2D[] enemiesInRange =
@@ -176,12 +163,10 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     // Coroutine for shooting a fire salve
     IEnumerator ShootFireSalve()
     {
-        if (isShootingSalve)
+        if (salveInProgress)
             yield break;
 
-        isShootingSalve = true;
-        // normal cooldown after salve
-        currentFireCountdown = turretBlueprint.BaseFireCountdown / currentFireRate;
+        salveInProgress = true;
 
         float delay = delayBetweenSalveProjectiles;
 
@@ -190,7 +175,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
         if (targets.Count == 0)
         {
-            isShootingSalve = false;
+            salveInProgress = false;
             yield break;
         }
 
@@ -235,7 +220,24 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         }
 
 
-        isShootingSalve = false;
+        salveInProgress = false;
+    }
+
+
+    private void Fire()
+    {
+        switch (currentFiringPattern)
+        {
+            case TurretBlueprint.FiringPattern.SingleShot:
+                ShootProjectileAt(targetEnemy);
+                ResetFiringCooldown();
+                break;
+
+            case TurretBlueprint.FiringPattern.FireSalve:
+                StartCoroutine(ShootFireSalve());
+                ResetFiringCooldown();
+                break;
+        }
     }
 
     void ShootProjectileAt(Transform target)
@@ -270,23 +272,17 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         rb.linearVelocity = direction * currentProjectileSpeed;
 
         Destroy(projectileObj, 5f);
+
+        // <-- Play shooting sound
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayShoot();
     }
 
-    void ShootSingleProjectile()
+    private void ResetFiringCooldown()
     {
-        if (targetEnemy != null)
-            ShootProjectileAt(targetEnemy);
+        currentFireCountdown = 1f / currentFireRate;
     }
 
-
-    // This method will always draw the Gizmo in the Scene view
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, currentAttackRange);
-    //}
-
-    // You can remove OnDrawGizmosSelected if you only want the always-on Gizmo
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
