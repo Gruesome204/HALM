@@ -27,10 +27,11 @@ MonoBehaviour:
   baseAttackDamage: 0
   baseFireRate: 0
   baseProjectileSpeed: 0
+  baseProjectilePierceCount: 0
   baseAttackRange: 0
   baseKnockbackStrength: 0
   baseKnockbackDuration: 0
-  baseHealthGrowthFactor: 1.2
+  baseHealthGrowthFactor: 0.2
   baseDamageGrowthFactor: 0
   baseFireRateGrowthFactor: 0
   baseRangeGrowthFlat: 0
@@ -49,4 +50,3 @@ MonoBehaviour:
   length: 1
   buildCapacityValue: 0
   placementCooldown: 10
-  unlockCost: 10

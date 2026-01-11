@@ -31,9 +31,9 @@ MonoBehaviour:
   baseAttackRange: 20
   baseKnockbackStrength: 2
   baseKnockbackDuration: 1
-  baseHealthGrowthFactor: 1.1
+  baseHealthGrowthFactor: 0.1
   baseDamageGrowthFactor: 0
-  baseFireRateGrowthFactor: 1.1
+  baseFireRateGrowthFactor: 0.1
   baseRangeGrowthFlat: 0
   buyCost:
   - resourceType: 1

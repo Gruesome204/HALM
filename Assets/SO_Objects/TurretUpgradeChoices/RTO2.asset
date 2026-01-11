@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0159e403affb80447b1d89f5d87ec8ac, type: 3}
   m_Name: RTO2
   m_EditorClassIdentifier: 
-  turretType: 4
+  turretType: 5
   triggerLevels: 0a00000014000000
   options:
   - optionId: e7926181-96bc-4663-8680-b85e057cb1c3
