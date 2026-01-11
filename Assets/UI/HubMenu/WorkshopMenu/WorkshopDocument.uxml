@@ -11,7 +11,7 @@
             <ui:VisualElement name="nullSpace1" style="flex-shrink: 0; height: 3%;" />
             <ui:VisualElement name="availableTurrets" style="flex-grow: 1;" />
             <ui:VisualElement name="equippedTurrets" style="flex-grow: 0; flex-shrink: 0; width: 95%; height: 20%; flex-direction: row; justify-content: center;" />
-            <ui:Button text="X" name="backBtn" class="backBtnClass mainMenuBtnClass smallWoodButton" style="font-size: 25px;" />
+            <ui:Button text="X" name="backBtn" class="backBtnClass smallWoodButton" style="font-size: 25px;" />
         </ui:VisualElement>
         <ui:VisualElement name="towerDetailsContainer" style="flex-grow: 0; background-color: rgba(7, 17, 53, 0); flex-shrink: 0; height: 77%; align-items: flex-start;">
             <ui:VisualElement name="detailsMainContainer" class="SlideIn buildmasterModifyBackground2" style="flex-grow: 0; flex-shrink: 0; height: 100%; padding-top: 10%; padding-bottom: 20%; padding-right: 3%; padding-left: 3%;">

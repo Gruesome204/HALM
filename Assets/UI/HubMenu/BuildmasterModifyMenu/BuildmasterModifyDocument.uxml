@@ -12,7 +12,7 @@
                 <ui:ScrollView name="ScrollView" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1; align-content: center; align-items: center;" />
             </ui:VisualElement>
             <ui:VisualElement name="lowerContainer" style="flex-grow: 0; flex-shrink: 0; padding-left: 3%; height: 15%; align-items: flex-start; width: 100%;">
-                <ui:Label text="Label" name="informationTxt" class="wood-Text small-Text" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                <ui:Label text="Label" name="informationTxt" class="wood-Text" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 25px;" />
                 <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; height: auto; align-items: center;">
                     <ui:Button text="Button" name="buySelectButton" class="woodButton" style="width: auto; align-self: center;" />
                     <ui:VisualElement style="padding-left: 5px; flex-direction: row; height: auto; align-items: flex-start;">
