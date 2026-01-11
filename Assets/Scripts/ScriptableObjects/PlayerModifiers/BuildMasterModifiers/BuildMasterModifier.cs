@@ -9,8 +9,9 @@ public class BuildMasterModifier : ScriptableObject
 
     [Tooltip("List of modifier options the player can choose from.")]
     public Modifier options;
+
     [System.Serializable]
-    public struct Modifier
+    public class Modifier
     {
         public string name;
         [TextArea] public string description;
@@ -41,6 +42,20 @@ public class BuildMasterModifier : ScriptableObject
         public float turretProjectileSpeed;             // e.g., 1.1 for +10% projectile speed
         public int turretMaxCapacityBonus;
         public float turretPlacementRadiusMultiplier;
+
+        public void SetDefaults()
+        {
+            turretPlacementCooldownMultiplier = 1f;
+            turretHealthMultiplier = 1f;
+            turretDamageMultiplier = 1f;
+            turretFireRateMultiplier = 1f;
+            turretProjectilesPerSalve = 0;
+            turretProjectileSpeed = 1f;
+            turretMaxCapacityBonus = 0;
+            turretPlacementRadiusMultiplier = 1f;
+        }
     }
+
+
 
 }
