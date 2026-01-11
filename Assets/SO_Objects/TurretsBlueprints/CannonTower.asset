@@ -27,6 +27,7 @@ MonoBehaviour:
   baseAttackDamage: 50
   baseFireRate: 0.25
   baseProjectileSpeed: 15
+  baseProjectilePierceCount: 3
   baseAttackRange: 20
   baseKnockbackStrength: 2
   baseKnockbackDuration: 1

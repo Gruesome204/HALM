@@ -67,6 +67,8 @@ public class TurretBlueprint : ScriptableObject
     [Tooltip("Speed of the projectile when fired.")]
     public float baseProjectileSpeed = 10f;
 
+    public int baseProjectilePierceCount = 0;
+
     [Tooltip("Attack range of the turret.")]
     public float baseAttackRange = 5f;
 
