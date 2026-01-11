@@ -71,8 +71,8 @@
 .backBtnClass {
     top: 2%;
     left: 2%;
-    width: 10%;
     position: absolute;
+    width: auto;
 }
 
 .divider {
@@ -122,6 +122,13 @@
     font-size: 20px;
     -unity-font-style: bold;
     flex-wrap: wrap;
+}
+
+.stone-Text {
+    flex-wrap: wrap;
+    font-size: 20px;
+    color: rgb(176, 176, 176);
+    -unity-font-style: bold;
 }
 
 .headline {

@@ -1,8 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
-    <ui:VisualElement name="mainContainer" class="SlideIn" style="width: 100%; height: 100%; align-items: center; background-color: rgb(19, 0, 0);">
-        <ui:Label text="Label" name="headline" class="headline" style="margin-top: 15px; margin-right: 0; margin-bottom: 30px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+    <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
+    <ui:VisualElement name="mainContainer" class="SlideIn settingsBackground" style="width: 100%; height: 100%; align-items: center; background-color: rgb(19, 0, 0);">
+        <ui:Label text="Label" name="headline" class="headline stone-Text" style="margin-top: 15px; margin-right: 0; margin-bottom: 30px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
         <ui:Button text="X" name="backBtn" class="mainMenuBtnClass backBtnClass" />
     </ui:VisualElement>
 </ui:UXML>

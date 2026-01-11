@@ -60,7 +60,7 @@ public class EnterDungeonBehavior : MonoBehaviour, IMenu
 
     void OnStayInHubBtnClicked(ClickEvent evt)
     {
-        InGameMenuManager.Instance.OpenOrCloseOneMenu("EnterDungeonDoc", false);
+        InGameMenuManager.Instance.ReturnToGame();
         GameManager.Instance.SaveGame();
     }
 }

@@ -1,12 +1,11 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
-    <ui:VisualElement name="mainContainer" picking-mode="Ignore" style="flex-grow: 0; width: 350px; height: auto; flex-shrink: 0; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; margin-bottom: 5px;">
+    <ui:VisualElement name="mainContainer" picking-mode="Ignore" style="flex-grow: 0; width: auto; height: auto; flex-shrink: 0; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; margin-bottom: 5px;">
         <ui:Button name="button" class="woodButton" style="width: 90%; margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; flex-direction: row;">
-            <ui:VisualElement name="icon" style="flex-grow: 1;" />
             <ui:VisualElement name="textContainer" style="flex-grow: 2; justify-content: space-around; margin-left: 10px;">
-                <ui:Label text="Label" name="name" style="margin-top: 0; margin-right: 0; margin-bottom: 5px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-font-style: bold; white-space: normal; -unity-text-align: middle-left; font-size: 15px;" />
-                <ui:Label text="Label" name="description" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal; -unity-text-align: middle-left; -unity-font-style: normal; font-size: 15px;" />
+                <ui:Label text="Label" name="name" style="margin-top: 0; margin-right: 0; margin-bottom: 5px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal; -unity-text-align: middle-left; font-size: 20px;" />
+                <ui:Label text="Label" name="description" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal; -unity-text-align: middle-left; -unity-font-style: normal; font-size: 20px;" />
             </ui:VisualElement>
         </ui:Button>
         <ui:VisualElement picking-mode="Ignore" name="cooldownCover" style="flex-grow: 0; position: absolute; width: 90%; height: 0%; background-size: 100% 100%; flex-shrink: 0; align-self: center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; background-color: rgba(0, 0, 0, 0.59);" />

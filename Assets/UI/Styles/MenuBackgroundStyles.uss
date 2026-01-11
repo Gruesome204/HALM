@@ -50,3 +50,12 @@
     padding-bottom: 0.5%;
     padding-left: 1%;
 }
+
+.settingsBackground {
+    background-image: url("project://database/Assets/ArtAssets/UIAssets/MenuBackgrounds/SettingsMenu_Version1.png?fileID=2800000&guid=f391e9b38dad1254f97704e5569c4b13&type=3#SettingsMenu_Version1");
+    -unity-background-scale-mode: stretch-to-fill;
+    padding-top: 7%;
+    padding-right: 8%;
+    padding-bottom: 3%;
+    padding-left: 8%;
+}

@@ -20,6 +20,7 @@ public class HubInteractable : MonoBehaviour
 
         if (interactionName == "DungeonEntrance" && InGameMenuManager.Instance.CheckForAnOpenMenu("one") == false)
         {
+            InGameMenuManager.Instance.CloseAllMenus();
             InGameMenuManager.Instance.OpenOrCloseOneMenu("EnterDungeonDoc", true);
         }
 

@@ -2,12 +2,16 @@
     width: auto;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
-    -unity-font-style: bold;
+    -unity-font-style: bold-and-italic;
     font-size: 25px;
     color: rgb(58, 33, 24);
     -unity-text-align: middle-center;
     margin: 0;
     padding: 12px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
 }
 
 .paperButton:hover {
@@ -24,12 +28,16 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
-    -unity-font-style: bold;
+    -unity-font-style: bold-and-italic;
     font-size: 20px;
     color: rgb(58, 33, 24);
     -unity-text-align: upper-center;
     margin: 0;
     padding: 10px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
 }
 
 .smallPaperButton:hover {
@@ -52,7 +60,7 @@
     margin-left: 0;
     color: rgb(255, 204, 140);
     font-size: 25px;
-    -unity-font-style: bold;
+    -unity-font-style: bold-and-italic;
     background-color: rgba(0, 0, 0, 0);
     border-top-width: 0;
     border-right-width: 0;
@@ -74,12 +82,16 @@
     width: auto;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
-    -unity-font-style: bold;
+    -unity-font-style: bold-and-italic;
     font-size: 20px;
     color: rgb(255, 204, 140);
     -unity-text-align: upper-center;
     margin: 0;
     padding: 10px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
 }
 
 .smallWoodButton:hover {
@@ -88,6 +100,35 @@
 
 .smallWoodButton:active {
     color: rgb(253, 248, 207);
+}
+
+.stoneButton {
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    font-size: 25px;
+    -unity-font-style: bold-and-italic;
+    color: rgb(147, 147, 147);
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.stoneButton:hover {
+    color: rgb(176, 176, 176);
+    padding: 13px;
+}
+
+.stoneButton:active {
+    color: rgb(215, 215, 215);
+    padding: 13px;
 }
 
 .iconButton {
