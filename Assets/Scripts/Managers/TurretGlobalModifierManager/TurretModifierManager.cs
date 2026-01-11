@@ -130,7 +130,7 @@ public class TurretGlobalModifierManager : MonoBehaviour
             if (turret == null) continue;
 
             turret.GetComponentInChildren<TurretHealth>()?.RecalculateStatsAfterModifiers();
-            turret.GetComponentInChildren<TurretBehaviour>()?.RecalculateStats();
+            turret.GetComponentInChildren<TurretBehaviour>()?.RecalculateFinalStats();
         }
     }
 

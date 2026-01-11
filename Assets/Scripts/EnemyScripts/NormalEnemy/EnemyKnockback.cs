@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,7 +35,8 @@ public class EnemyKnockback : MonoBehaviour
     {
         if (hasKnockbackIFrames)
             return;
-        ApplyKnockback(knockbackData.direction, knockbackData.knockbackStrength);
+        Vector2 direction = ((Vector2)transform.position - knockbackData.direction).normalized;
+        ApplyKnockback(direction, knockbackData.knockbackStrength);
     }
     private void OnDisable()
     {
