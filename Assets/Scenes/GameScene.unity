@@ -957,7 +957,7 @@ MonoBehaviour:
     m_Bits: 1024
   previewObject: {fileID: 0}
   defaultMaxTurretCapacity: 6
-  maxTurretCapacity: 10
+  maxTurretCapacity: 6
   turretContainer: {fileID: 278887215}
   defaultPlacementRadius: 30
   placementRadius: 30
