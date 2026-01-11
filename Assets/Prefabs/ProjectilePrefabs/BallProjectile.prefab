@@ -106,7 +106,7 @@ MonoBehaviour:
   knockbackStrength: 0
   knockbackDuration: 0
   direction: {x: 0, y: 0}
-  piercingHitsRemaining: 3
+  remainingPierces: 0
 --- !u!50 &5522442266733711567
 Rigidbody2D:
   serializedVersion: 5
@@ -169,7 +169,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.8775654
 --- !u!1 &5070995725518221837
 GameObject:
   m_ObjectHideFlags: 0

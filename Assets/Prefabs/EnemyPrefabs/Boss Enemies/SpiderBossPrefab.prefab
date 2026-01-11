@@ -255,8 +255,8 @@ MonoBehaviour:
   currentCritChance: 0
   currentCritMultiplier: 0
   currentAttackRange: 0
+  maxHealth: 0
   currentHealth: 0
-  currentMaxHealth: 0
   currentArmor: 0
   currentMagicResistance: 0
   currentKnockbackReduction: 0
@@ -365,7 +365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2669047809251551381, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 223.3587
       objectReference: {fileID: 0}
     - target: {fileID: 2669047809251551381, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
       propertyPath: m_SizeDelta.y
@@ -401,11 +401,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2669047809251551381, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 2669047809251551381, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4.463
+      value: 4.51
       objectReference: {fileID: 0}
     - target: {fileID: 2669047809251551381, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

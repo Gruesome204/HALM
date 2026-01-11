@@ -16,6 +16,7 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int Death = Animator.StringToHash("Death");
 
     private PlayerMovement movement;
+    public float maxMoveSpeed = 1f;
 
     private void Awake()
     {
@@ -46,7 +47,10 @@ public class PlayerAnimator : MonoBehaviour
         Vector2 facing = movement.FacingDirection; // Use your existing facing direction
         animator.SetFloat(MoveX, facing.x);
         animator.SetFloat(MoveY, facing.y);
-        animator.SetFloat(MoveSpeedParam, moveSpeed);
+        // Normalize and clamp speed to 0–1
+        float normalizedSpeed = Mathf.Clamp01(moveSpeed / maxMoveSpeed);
+        animator.SetFloat(MoveSpeedParam, normalizedSpeed, 0.1f, Time.deltaTime); // smooth damping
+
         animator.SetBool(IsDashing, movement.IsDashing);
 
     }

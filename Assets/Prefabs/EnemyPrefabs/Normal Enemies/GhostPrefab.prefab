@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 2323439724470229143}
-  health: {fileID: 0}
+  health: {fileID: 3393257043857848876}
   knockbackForce: 10
   knockbackDuration: 0.5
   knockbackIFrameDuration: 0.4
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c63b6cc1eba7c24195124605f0e8d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStats: {fileID: 11400000, guid: d19f6c1be47a5564daf6db0ba36b68eb, type: 2}
+  baseStats: {fileID: 11400000, guid: 35d53fe72cd14de498d4279e7d3db8be, type: 2}
   currentLevel: 1
   currentDamage: 0
   currentAttackSpeed: 0

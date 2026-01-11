@@ -1899,7 +1899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018647224259d8241854d38b8376ce11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLevel: 10
+  maxLevel: 20
   xpGrowthMultiplier: 1.5
 --- !u!1 &747619961
 GameObject:
@@ -4166,6 +4166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e91386c673b9a458aa58003f39203f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxMoveSpeed: 5
 --- !u!95 &2135666372
 Animator:
   serializedVersion: 7
@@ -4179,7 +4180,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 11f54c7e5806be44086189b8710a6a90, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -4232,7 +4233,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 6238010593028434169, guid: a2d7f4cea6e5d2b429919633c1bff86b, type: 3}
+  m_Sprite: {fileID: 9143233820747108573, guid: 66e4ce538bb2efc4cb269c78eca90003, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
