@@ -36,6 +36,9 @@ public class W_AvailableTurretsButtonBejavior
 
     void OnButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         workshop.FillTurretDetails(representedTurret, turretUnlocked, turretSelected);
     }
 }

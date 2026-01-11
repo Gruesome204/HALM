@@ -89,15 +89,24 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
 
     void OnResumeBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         InGameMenuManager.Instance.ReturnToGame();
     }
     void OnPauseBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         InGameMenuManager.Instance.CloseAllMenus();
         InGameMenuManager.Instance.OpenOrCloseOneMenu("PauseMenuDoc", true);
     }
     void OnCharackterBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         ClearList();
 
         statsContainer.RemoveFromClassList("turretChoiceMenuSlideOut");
@@ -123,6 +132,9 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
     }
     void OnRelicsBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         ClearList();
         var scroll = new ScrollView();
         statsContainer.Add(scroll);
@@ -136,7 +148,9 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
             modifierElement.Q<Label>("description").SetBinding("text", new LocalizedString($"BMTranslations{modifier.options.name}", "description"));
 
             modifierElement.Q<Button>("button").pickingMode = PickingMode.Ignore;
-            modifierElement.Q<VisualElement>("icon").pickingMode = PickingMode.Ignore;
+            modifierElement.Q<Button>("button").RemoveFromClassList("woodButton");
+            modifierElement.Q<Button>("button").AddToClassList("paper-Text");
+
             modifierElement.Q<VisualElement>("textContainer").pickingMode = PickingMode.Ignore;
             modifierElement.Q<Label>("name").pickingMode = PickingMode.Ignore;
             modifierElement.Q<Label>("description").pickingMode = PickingMode.Ignore;
@@ -148,6 +162,9 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
     }
     void OnTowerBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         ClearList();
 
         //Creating List Elements for each Turretkind currently placed, giving them the turret they represent and a reference to the turret Detail Menu,

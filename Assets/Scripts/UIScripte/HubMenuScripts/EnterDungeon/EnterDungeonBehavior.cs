@@ -54,12 +54,18 @@ public class EnterDungeonBehavior : MonoBehaviour, IMenu
 
     void OnEnterDungeonBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         SceneManager.LoadScene("GameScene");
         GameManager.Instance.SaveGame();
     }
 
     void OnStayInHubBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         InGameMenuManager.Instance.ReturnToGame();
         GameManager.Instance.SaveGame();
     }

@@ -36,6 +36,13 @@ public class AR_ElementBehavior
 
         TurretPlacementController.Instance.OnPlacementCooldownStateChanged += HandleCooldown;
     }
+    void OnTurretButtonClicked(ClickEvent evt)
+    {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
+        TurretPlacementController.Instance.SelectTurretBlueprint(representedTurret);
+    }
 
     public void ChangeColor()
     {
@@ -47,11 +54,6 @@ public class AR_ElementBehavior
         {
             turretButton.style.unityBackgroundImageTintColor = new Color(202, 201, 201);
         }
-    }
-
-    void OnTurretButtonClicked(ClickEvent evt)
-    {
-        TurretPlacementController.Instance.SelectTurretBlueprint(representedTurret);
     }
 
     void HandleCooldown(TurretBlueprint _turret, Boolean _active)

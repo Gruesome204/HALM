@@ -193,6 +193,9 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
 
     void OnSellButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         if (GameManager.Instance.gameDataSO.HasResource(openRessourceDetails, slider.value))
         {
             //Hat genug zum Verkaufen
@@ -212,6 +215,9 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
 
     void OnBuyButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         if (GameManager.Instance.gameDataSO.HasResource(ResourceType.Currency, slider.value * buyingRate))
         {
             //Hat genug zum Kaufen
@@ -231,6 +237,9 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
 
     private void OnBackBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         InGameMenuManager.Instance.OpenOrCloseOneMenu("MarktMenuDoc", false);
     }
 }

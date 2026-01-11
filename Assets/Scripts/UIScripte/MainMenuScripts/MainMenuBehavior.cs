@@ -68,30 +68,48 @@ public class MainMenuBehavior : MonoBehaviour
 
     void OnPlayBtnClicked(ClickEvent clicked)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         SceneManager.LoadScene("HubScene");
     }
 
     void OnSettingsBtnClicked(ClickEvent clicked)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", true);
     }
     void OnCreditsBtnClicked(ClickEvent clicked)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         InGameMenuManager.Instance.OpenOrCloseOneMenu("CreditsMenuDoc", true);
     }
     void OnExitBtnClicked(ClickEvent clicked)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         Application.Quit();
     }
 
     void OnResetGameBtnClicked(ClickEvent clicked)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         btnContainer.AddToClassList("vanish");
         certainContainer.RemoveFromClassList("vanish");
     }
 
     void ResetGame(ClickEvent clicked)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         GameManager.Instance.ResetGame();
 
         btnContainer.RemoveFromClassList("vanish");
@@ -100,6 +118,9 @@ public class MainMenuBehavior : MonoBehaviour
 
     void NoResetGame(ClickEvent clicked)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         btnContainer.RemoveFromClassList("vanish");
         certainContainer.AddToClassList("vanish");
     }

@@ -39,10 +39,6 @@ public class GameOverBehavior : MonoBehaviour, IMenu
         headline = root.Q<Label>("headline");
         headline.SetBinding("text", new LocalizedString("GameOverTranslationaTable", "headline"));
 
-        retryLevelButton = root.Q<Button>("retryLevelButton");
-        retryLevelButton.SetBinding("text", new LocalizedString("GameOverTranslationaTable", "retryLevelButton"));
-        retryLevelButton.RegisterCallback<ClickEvent>(OnRetryLevelButtonClicked);
-
         returnToHubButton = root.Q<Button>("returnToHubButton");
         returnToHubButton.SetBinding("text", new LocalizedString("GameOverTranslationaTable", "returnToHubButton"));
         returnToHubButton.RegisterCallback<ClickEvent>(OnReturnToHubButtonClicked);
@@ -59,20 +55,32 @@ public class GameOverBehavior : MonoBehaviour, IMenu
 
     void OnRetryLevelButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         SceneManager.LoadScene($"{SceneManager.GetActiveScene().name}");
     }
     void OnReturnToHubButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         SceneManager.LoadScene("HubScene");
         GameManager.Instance.ChangeState(GameManager.GameState.Playing);
     }
     void OnReturnToMainMenuButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         SceneManager.LoadScene("MainMenu");
         GameManager.Instance.ChangeState(GameManager.GameState.Playing);
     }
     void OnExitButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         Application.Quit();
     }
 }

@@ -43,6 +43,9 @@ public class BM_ModifierButtonBehavior
 
     private void OnButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         buildmaster.ClearDetails();
         buildmaster.FillModifierDetails(representedModifier, modifierUnlocked, modifierSelected);
     }

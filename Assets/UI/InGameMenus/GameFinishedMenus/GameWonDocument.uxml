@@ -1,12 +1,14 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
-    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn settingsMenuSlideOut" style="flex-grow: 1; background-color: rgba(30, 22, 0, 0.75); flex-direction: column; justify-content: space-around;">
-        <ui:Label text="Label" name="headline" class="headline" />
-        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; justify-content: space-between; height: 40%;">
-            <ui:Button text="Button" name="returnToHubButton" class="mainMenuBtnClass" />
-            <ui:Button text="Button" name="returnToMainMenuButton" class="mainMenuBtnClass" />
-            <ui:Button text="Button" name="exitButton" class="mainMenuBtnClass" />
+    <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
+    <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
+    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn settingsBackground" style="flex-grow: 1; background-color: rgba(30, 22, 0, 0.75); flex-direction: column; justify-content: space-around;">
+        <ui:Label text="Label" name="headline" class="headline stone-Text" />
+        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; justify-content: space-between; height: 40%; align-items: center;">
+            <ui:Button text="Button" name="returnToHubButton" class="mainMenuBtnClass stoneButton" />
+            <ui:Button text="Button" name="returnToMainMenuButton" class="mainMenuBtnClass stoneButton" />
+            <ui:Button text="Button" name="exitButton" class="mainMenuBtnClass stoneButton" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
