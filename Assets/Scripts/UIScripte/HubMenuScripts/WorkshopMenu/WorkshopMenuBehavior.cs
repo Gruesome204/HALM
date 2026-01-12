@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 public class WorkshopMenuBehavior : MonoBehaviour, IMenu
 {
     private Label headline;
-    private VisualElement availableTurrets;
+    private ScrollView availableTurrets;
     private VisualElement equippedTurrets;
 
     //UI Elements Turret Details
@@ -64,7 +64,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         headline = root.Q<Label>("headline");
         headline.SetBinding("text", new LocalizedString("WorkshopMenuTranslationTable", "headline"));
 
-        availableTurrets = root.Q<VisualElement>("availableTurrets");
+        availableTurrets = root.Q<ScrollView>("availableTurrets");
         equippedTurrets = root.Q<VisualElement>("equippedTurrets");
 
         detailsMainContainer = root.Q<VisualElement>("detailsMainContainer");

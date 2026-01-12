@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: BMTranslationsSorgfaltiegeBauweise Shared Data
+  m_Name: BMTranslationsWegzeugeMitStiel Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: BMTranslationsSorgfaltiegeBauweise
-  m_TableCollectionNameGuidString: 1e2d2fbbe49395343a285a5a761ce7dd
+  m_TableCollectionName: BMTranslationsWegzeugeMitStiel
+  m_TableCollectionNameGuidString: ffe822c9f3fec3a42810a0e04022967f
   m_Entries:
-  - m_Id: 4980346880
+  - m_Id: 3738832896
     m_Key: name
     m_Metadata:
       m_Items: []
-  - m_Id: 6951669760
+  - m_Id: 5366222848
     m_Key: description
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 6828362448312730448
+    rid: 6828362448312730449
   references:
     version: 2
     RefIds:
-    - rid: 6828362448312730448
+    - rid: 6828362448312730449
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1766444600169
+        m_CustomEpoch: 1766444684944

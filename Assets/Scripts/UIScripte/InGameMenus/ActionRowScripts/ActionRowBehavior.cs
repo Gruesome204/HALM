@@ -82,7 +82,14 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     }
 
-
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.K) && Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("die");
+            Application.Quit();
+        }
+    }
     private void FixedUpdate()
     {
         foreach (var btn in turretBtnList)

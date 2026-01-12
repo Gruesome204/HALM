@@ -10,20 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: BMTranslationsBalistischeMessgerate_de
+  m_Name: BMTranslationsBallistischeMessgerate_en
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: de
+    m_Code: en
   m_SharedData: {fileID: 11400000, guid: 620bc351ac75a8e49b04dfd3cb12eb5e, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 307297390592
-    m_Localized: "bls r\xFCstung, weniger Tempo"
+  - m_Id: 304961163264
+    m_Localized: Balistic measuring Tool
     m_Metadata:
       m_Items: []
-  - m_Id: 304961163264
-    m_Localized: diese mehrfeuer Armbrust
+  - m_Id: 307297390592
+    m_Localized: '+30% Tower Reach
+
+      +20% Build Cooldown'
     m_Metadata:
       m_Items: []
   references:

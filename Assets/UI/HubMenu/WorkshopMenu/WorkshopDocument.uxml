@@ -9,7 +9,7 @@
         <ui:VisualElement name="workshopContainer" class="buildmasterModifyBackground" style="flex-grow: 0; flex-shrink: 0; align-self: flex-end;">
             <ui:Label text="Label" name="headline" class="headline wood-Text" style="height: 14%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             <ui:VisualElement name="nullSpace1" style="flex-shrink: 0; height: 3%;" />
-            <ui:VisualElement name="availableTurrets" style="flex-grow: 1;" />
+            <ui:ScrollView name="availableTurrets" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1; flex-shrink: 0;" />
             <ui:VisualElement name="equippedTurrets" style="flex-grow: 0; flex-shrink: 0; width: 95%; height: 20%; flex-direction: row; justify-content: center;" />
             <ui:Button text="X" name="backBtn" class="backBtnClass smallWoodButton" style="font-size: 25px;" />
         </ui:VisualElement>

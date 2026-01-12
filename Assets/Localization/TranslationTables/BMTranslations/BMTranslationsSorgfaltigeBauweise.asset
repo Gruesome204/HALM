@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
-  m_Name: BMTranslationsWergzeugemitStiel
+  m_Name: BMTranslationsSorgfaltigeBauweise
   m_EditorClassIdentifier: 
-  m_SharedTableData: {fileID: 11400000, guid: ffe822c9f3fec3a42810a0e04022967f, type: 2}
+  m_SharedTableData: {fileID: 11400000, guid: 1e2d2fbbe49395343a285a5a761ce7dd, type: 2}
   m_Tables:
-  - {fileID: 11400000, guid: 0de0eee3deebaaa4bb494f0834a46e34, type: 2}
-  - {fileID: 11400000, guid: f0dde9b6db544064ba5e689d8cb0b0d9, type: 2}
-  - {fileID: 11400000, guid: c4d914b761cc1f54f9188e9b26241e45, type: 2}
+  - {fileID: 11400000, guid: b22c1c527af803248b6e210df48b3af6, type: 2}
+  - {fileID: 11400000, guid: f912bf427dbf6d445ba7b5b23894a4c9, type: 2}
+  - {fileID: 11400000, guid: 376410957c89daf44899d2b758c17e9c, type: 2}
   m_Extensions: []
   m_Group: String Table
   references:

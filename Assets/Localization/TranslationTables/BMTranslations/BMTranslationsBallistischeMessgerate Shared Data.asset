@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: BMTranslationsWergzeugemitStiel Shared Data
+  m_Name: BMTranslationsBallistischeMessgerate Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: BMTranslationsWergzeugemitStiel
-  m_TableCollectionNameGuidString: ffe822c9f3fec3a42810a0e04022967f
+  m_TableCollectionName: BMTranslationsBallistischeMessgerate
+  m_TableCollectionNameGuidString: 620bc351ac75a8e49b04dfd3cb12eb5e
   m_Entries:
-  - m_Id: 3738832896
+  - m_Id: 304961163264
     m_Key: name
     m_Metadata:
       m_Items: []
-  - m_Id: 5366222848
+  - m_Id: 307297390592
     m_Key: description
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 6828362448312730449
+    rid: 6828362122966859850
   references:
     version: 2
     RefIds:
-    - rid: 6828362448312730449
+    - rid: 6828362122966859850
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1766444684944
+        m_CustomEpoch: 1765188308199
