@@ -66,13 +66,10 @@ public class EnemyMovement : MonoBehaviour
     {
         if (target == null || stats == null) return;
 
-        if(!isAggroed) return;
-
-        float distance = Vector2.Distance(transform.position, target.transform.position);
-
+        // always move toward target
         Vector2 dir = (target.transform.position - transform.position).normalized;
-        rb.linearVelocity = dir * stats.currentMovementSpeed; // simpler and more reliable than Lerp
-        enemyAnimator.SetMoveSpeed(rb.linearVelocity.magnitude);
+        rb.linearVelocity = dir * stats.currentMovementSpeed;
+        enemyAnimator?.SetMoveSpeed(rb.linearVelocity.magnitude);
     }
 
 
