@@ -64,8 +64,7 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour, IMenu
 
         turretUpgradeChoices.Clear();
 
-        var choices = TurretUpgradeChoiceManager.Instance
-     .  GetAvailableChoicesForLevel(type, level);
+        var choices = TurretUpgradeChoiceManager.Instance.GetAvailableChoicesForLevel(type, level);
 
         foreach (var choice in choices)
         {
