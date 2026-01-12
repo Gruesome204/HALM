@@ -21,13 +21,13 @@ MonoBehaviour:
   baseArmor: 0
   baseMagicResistance: 0
   baseKnockbackReduction: 0.5
-  baseKnockbackForce: 0
-  baseKnockbackDuration: 0.2
   baseDamage: 8
   baseAttackSpeed: 1
   baseCritChance: 0
   baseCritHitMultiplier: 0
-  baseAttackRange: 0
+  baseAttackRange: 1
+  baseKnockbackForce: 0
+  baseKnockbackDuration: 0.2
   baseDetectionRange: 10
   pursueRange: 10
   experienceYield: 100
