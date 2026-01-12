@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class TurretGlobalModifierManager : MonoBehaviour
@@ -16,6 +15,7 @@ public class TurretGlobalModifierManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
+
     private void Start()
     {
         GameManager.Instance.gameDataSO.OnBuildMasterModifiersChanged += UpdateModifiersFromSO;
@@ -24,19 +24,18 @@ public class TurretGlobalModifierManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.gameDataSO.OnBuildMasterModifiersChanged -= UpdateModifiersFromSO;
+        if (GameManager.Instance != null)
+            GameManager.Instance.gameDataSO.OnBuildMasterModifiersChanged -= UpdateModifiersFromSO;
     }
-
 
     private void UpdateModifiersFromSO()
     {
-        appliedModifiers.Clear(); // remove all at once
+        appliedModifiers.Clear();
 
         foreach (var modifierSO in GameManager.Instance.gameDataSO.GetSelectedModifiers())
         {
             if (modifierSO?.options != null)
             {
-                // Make a runtime copy of the modifier
                 var runtimeModifier = new BuildMasterModifier.Modifier
                 {
                     name = modifierSO.options.name,
@@ -48,23 +47,22 @@ public class TurretGlobalModifierManager : MonoBehaviour
 
                 appliedModifiers.Add(runtimeModifier);
 
-                Debug.Log($"Read modifier from SO: {runtimeModifier.name}, Damage x{runtimeModifier.additionalStats.turretDamageMultiplier}");
+                Debug.Log($"Read modifier from SO: {runtimeModifier.name}, Damage %+{runtimeModifier.additionalStats.turretDamageMultiplier * 100}%");
             }
         }
 
         RecalculateGlobalModifiers();
     }
 
-    // ---------------- GLOBAL MODIFIERS -------------------
-    // 1 == 100%, 1.1 == 110%
-    [Header("Global Turret Stats")]
-    public float globalTurretPlacementCooldownMultiplier = 0f;
+    // ---------------- GLOBAL MODIFIERS (percentage style) -------------------
+    [Header("Global Turret Stats (Percentage)")]
+    public float globalTurretPlacementCooldownMultiplier = 0f; // 0 = no change, 0.2 = +20%
     public float globalHealthMultiplier = 0f;
     public float globalDamageMultiplier = 0f;
     public float globalFireRateMultiplier = 0f;
-    public int globalProjectilesPerSalve = 0; // additive
+    public int globalProjectilesPerSalve = 0; // still additive
     public float globalProjectileSpeed = 0f;
-    public int globalMaxTurretCapacityBonus = 0;  // additive
+    public int globalMaxTurretCapacityBonus = 0;  // still additive
     public float globalPlacementRadiusMultiplier = 0f;
 
     // ---------------- APPLY / REMOVE MODIFIERS -------------------
@@ -85,7 +83,7 @@ public class TurretGlobalModifierManager : MonoBehaviour
     // ---------------- RECALCULATE GLOBALS -------------------
     private void RecalculateGlobalModifiers()
     {
-        // Reset all globals to default
+        // Reset all globals
         globalTurretPlacementCooldownMultiplier = 0f;
         globalHealthMultiplier = 0f;
         globalDamageMultiplier = 0f;
@@ -95,7 +93,7 @@ public class TurretGlobalModifierManager : MonoBehaviour
         globalMaxTurretCapacityBonus = 0;
         globalPlacementRadiusMultiplier = 0f;
 
-        // Reapply all active modifiers
+        // Add all modifiers
         foreach (var mod in appliedModifiers)
         {
             globalTurretPlacementCooldownMultiplier += mod.additionalStats.turretPlacementCooldownMultiplier;
@@ -109,7 +107,6 @@ public class TurretGlobalModifierManager : MonoBehaviour
             globalPlacementRadiusMultiplier += mod.additionalStats.turretPlacementRadiusMultiplier;
         }
 
-        // Apply to all existing turrets
         ApplyModifiersToAllExistingTurrets();
 
         // Update placement controller
@@ -118,13 +115,13 @@ public class TurretGlobalModifierManager : MonoBehaviour
         {
             int activeCount = tp.GetActiveTurrets().Count;
             tp.maxTurretCapacity = Mathf.Max(activeCount, tp.defaultMaxTurretCapacity + globalMaxTurretCapacityBonus);
-            tp.placementRadius = tp.defaultPlacementRadius + tp.defaultPlacementRadius * (globalPlacementRadiusMultiplier - 1f);
+            tp.placementRadius = tp.defaultPlacementRadius * (1f + globalPlacementRadiusMultiplier); // percentage-style
         }
 
-        Debug.Log("Recalculating global modifiers...");
+        Debug.Log("Recalculating global modifiers (percentage style)...");
         foreach (var mod in appliedModifiers)
         {
-            Debug.Log($"Modifier: {mod.name}, Damage x{mod.additionalStats.turretDamageMultiplier}, FireRate x{mod.additionalStats.turretFireRateMultiplier}");
+            Debug.Log($"Modifier: {mod.name}, Damage %+{mod.additionalStats.turretDamageMultiplier * 100}%, FireRate %+{mod.additionalStats.turretFireRateMultiplier * 100}%");
         }
 
         OnModifiersChanged?.Invoke();

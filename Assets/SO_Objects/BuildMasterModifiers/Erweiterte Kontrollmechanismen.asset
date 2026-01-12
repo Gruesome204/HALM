@@ -28,11 +28,11 @@ MonoBehaviour:
       maxHealth: 0
       armor: 0
       movementSpeed: 0
-      turretPlacementCooldownMultiplier: 1
-      turretHealthMultiplier: 1
-      turretDamageMultiplier: 1
-      turretFireRateMultiplier: 1
+      turretPlacementCooldownMultiplier: 0
+      turretHealthMultiplier: 0
+      turretDamageMultiplier: 0
+      turretFireRateMultiplier: 0
       turretProjectilesPerSalve: 0
-      turretProjectileSpeed: 1
-      turretMaxCapacityBonus: 2
-      turretPlacementRadiusMultiplier: 1
+      turretProjectileSpeed: 0
+      turretMaxCapacityBonus: 1
+      turretPlacementRadiusMultiplier: 0
