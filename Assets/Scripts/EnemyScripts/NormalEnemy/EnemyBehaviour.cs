@@ -68,6 +68,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         EnemySpawnManager.Instance.RegisterEnemy(this.gameObject);
         if (GameManager.Instance == null)
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
+
+        AcquirePlayerTarget(); // sets target
     }
 
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
@@ -87,7 +89,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         CheckProximityAggro();
 
 
-        if (target == null) return;
+        if (!isAggroed || target == null) return;
 
         HandleMovementTarget(target);
         TryAttack(target);
@@ -165,11 +167,9 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         if (newTarget == null) return;
 
         isAggroed = true;
-        movement.isAggroed = true;
         target = newTarget;
 
-        // Sync movement target
-        movement.target = newTarget;
+        movement.SetTarget(newTarget);
 
         // Sync ability target
         abilityBehaviour?.SetTarget(newTarget);
@@ -181,8 +181,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private void ClearAggro()
     {
         isAggroed = false;
+        target = null;
+
         movement.Stop();
-        movement.isAggroed = false;
+        movement.SetTarget(null);
         abilityBehaviour?.SetTarget(null);
     }
 
