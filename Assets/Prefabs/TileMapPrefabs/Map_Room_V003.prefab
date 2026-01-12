@@ -5115,7 +5115,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -5535,7 +5535,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 11
-      m_TileSpriteIndex: 11
+      m_TileSpriteIndex: 13
       m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -6138,8 +6138,8 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 01f41cf5eeb77e94681ea40b846c7fb9, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: -967982296, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -6160,14 +6160,14 @@ Tilemap:
     m_Data: {fileID: -1638660464, guid: e312fa9d0d5a51e46af09f8cf4112cf5, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 1929435897, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -967982296, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1827835125, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
   - m_RefCount: 1
@@ -6990,7 +6990,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBossRoom: 0
   enemyPrefabs:
-  - {fileID: 3645313828594104337, guid: 308205ce09e88f748958afa4ee758b79, type: 3}
+  - {fileID: 3645313828594104337, guid: 7bfd39ed4013ca345a07cf8e4d48ca67, type: 3}
+  - {fileID: 3645313828594104337, guid: 015b779532949344c837c8841fd97504, type: 3}
   spawnAmount: 5
   spawnInterval: 3
   bossPrefab: {fileID: 0}

@@ -2381,7 +2381,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 9
       m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3444,8 +3444,8 @@ Tilemap:
     m_Data: {fileID: 449376122, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
   - m_RefCount: 12
     m_Data: {fileID: 5040729611878868363, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1929435897, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 12
     m_Data: {fileID: -1135326295, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
   - m_RefCount: 10
@@ -3458,8 +3458,8 @@ Tilemap:
     m_Data: {fileID: 151799799, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
   - m_RefCount: 6
     m_Data: {fileID: 1354754902, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1929435897, guid: 38ed0d1c65d78f942bcf8b607ec33de7, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
@@ -7259,6 +7259,7 @@ MonoBehaviour:
   isBossRoom: 0
   enemyPrefabs:
   - {fileID: 3645313828594104337, guid: 308205ce09e88f748958afa4ee758b79, type: 3}
+  - {fileID: 3645313828594104337, guid: 7bfd39ed4013ca345a07cf8e4d48ca67, type: 3}
   spawnAmount: 5
   spawnInterval: 3
   bossPrefab: {fileID: 0}
