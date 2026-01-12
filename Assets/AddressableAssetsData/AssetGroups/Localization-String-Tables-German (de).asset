@@ -56,7 +56,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 376410957c89daf44899d2b758c17e9c
-    m_Address: BMTranslationsSorgfaltiegeBauweise_de
+    m_Address: BMTranslationsSorgfaltigeBauweise_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de
@@ -109,7 +109,7 @@ MonoBehaviour:
     - Locale-de
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 925fc98e611238c4491453977d379047
-    m_Address: BMTranslationsBalistischeMessgerate_de
+    m_Address: BMTranslationsBallistischeMessgerate_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de
@@ -150,7 +150,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c4d914b761cc1f54f9188e9b26241e45
-    m_Address: BMTranslationsWergzeugemitStiel_de
+    m_Address: BMTranslationsWegzeugeMitStiel_de
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de

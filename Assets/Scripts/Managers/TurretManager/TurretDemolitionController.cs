@@ -130,6 +130,9 @@ public class TurretDemolitionController : MonoBehaviour
             Debug.Log("Remove turret from grid");
         }
 
+        //Play a Click sound to give audio feedback to the Player
+        SoundManager.Instance.PlayTowerDestroy();
+
         // Remove from TurretPlacementController list
         TurretPlacementController.Instance.RemoveTurret(turret.transform.parent.gameObject);
         Destroy(turret);

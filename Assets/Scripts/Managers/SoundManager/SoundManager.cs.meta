@@ -1,2 +1,20 @@
 fileFormatVersion: 2
 guid: f495ae055d2571c468ffd506e7c8f021
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - paperButtonClick: {instanceID: 0}
+  - woodButtonClick: {instanceID: 0}
+  - stoneButtonClick: {instanceID: 0}
+  - paperMenuOpen: {instanceID: 0}
+  - woodMenuOpen: {instanceID: 0}
+  - stoneMenuOpen: {instanceID: 0}
+  - towerShootSound: {fileID: 8300000, guid: 787a011599bc77b49a4612705aea1972, type: 3}
+  - towerBuildSound: {instanceID: 0}
+  - towerDestroySound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

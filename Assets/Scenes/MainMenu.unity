@@ -707,11 +707,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paperButtonClick: {fileID: 0}
   woodButtonClick: {fileID: 0}
-  stoneButtonClick: {fileID: 0}
+  stoneButtonClick: {fileID: 8300000, guid: d96c7133aaf54774c87a20144f8b3444, type: 3}
   paperMenuOpen: {fileID: 0}
   woodMenuOpen: {fileID: 0}
   stoneMenuOpen: {fileID: 0}
-  towerShootSound: {fileID: 8300000, guid: eaecbe96d1235ae44b4b3f7de448be99, type: 3}
+  towerShootSound: {fileID: 8300000, guid: 787a011599bc77b49a4612705aea1972, type: 3}
   towerBuildSound: {fileID: 0}
   towerDestroySound: {fileID: 0}
 --- !u!1 &1207071052

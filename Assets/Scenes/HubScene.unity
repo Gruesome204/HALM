@@ -538,9 +538,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f495ae055d2571c468ffd506e7c8f021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paperButtonClick: {fileID: 0}
-  woodButtonClick: {fileID: 0}
-  stoneButtonClick: {fileID: 0}
+  paperButtonClick: {fileID: 8300000, guid: d96c7133aaf54774c87a20144f8b3444, type: 3}
+  woodButtonClick: {fileID: 8300000, guid: d96c7133aaf54774c87a20144f8b3444, type: 3}
+  stoneButtonClick: {fileID: 8300000, guid: d96c7133aaf54774c87a20144f8b3444, type: 3}
   paperMenuOpen: {fileID: 0}
   woodMenuOpen: {fileID: 0}
   stoneMenuOpen: {fileID: 0}

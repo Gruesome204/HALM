@@ -340,6 +340,9 @@ public class TurretPlacementController : MonoBehaviour
         cooldownEndTimes[currentSelectedBlueprint] = Time.time + cd;
         StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint));
 
+        //Play a Click sound to give audio feedback to the Player
+        SoundManager.Instance.PlayTowerBuild();
+
         DeselectTurretBlueprint();
         OnTurretsChanged?.Invoke();
     }

@@ -156,7 +156,7 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
 
 
         openModifierDetails = modifier;
-        informationTxt.text = $"{openModifierDetails.options.name}";
+        informationTxt.SetBinding("text", new LocalizedString($"BMTranslations{modifier.options.name}", "name"));
 
         buySelectButton.RemoveFromClassList("vanish");
 

@@ -1,9 +1,10 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
+    <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
     <ui:VisualElement name="border" style="flex-grow: 0; height: auto; width: auto; flex-shrink: 0;">
-        <ui:Button name="turretUpgradeChoice_Btn" class="mainMenuBtnClass" style="width: 100%; height: 100%;">
-            <ui:Label text="Label" name="name" style="-unity-font-style: bold;" />
-            <ui:Label text="Label" name="description" />
+        <ui:Button name="turretUpgradeChoice_Btn" class="mainMenuBtnClass paperButton" style="width: 100%; height: 100%;">
+            <ui:Label text="Label" name="name" style="-unity-font-style: bold; font-size: 20px;" />
+            <ui:Label text="Label" name="description" style="font-size: 20px;" />
         </ui:Button>
     </ui:VisualElement>
 </ui:UXML>
