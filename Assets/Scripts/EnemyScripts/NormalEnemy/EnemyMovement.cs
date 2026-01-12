@@ -70,10 +70,6 @@ public class EnemyMovement : MonoBehaviour
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
 
-        // Move if aggroed OR within pursue range
-        if (!ignorePursueRange && distance > stats.currentPursueRange)
-            return;
-
         Vector2 dir = (target.transform.position - transform.position).normalized;
         rb.linearVelocity = dir * stats.currentMovementSpeed; // simpler and more reliable than Lerp
         enemyAnimator.SetMoveSpeed(rb.linearVelocity.magnitude);

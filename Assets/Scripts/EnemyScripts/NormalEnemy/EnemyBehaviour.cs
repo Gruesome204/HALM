@@ -36,6 +36,12 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     #endregion
 
 
+    #region Turret Damage Tracking
+    private bool aggroedByTurret = false;
+    private float turretAggroDuration = 5f; // seconds to keep aggro after turret hit
+    private float turretAggroTimer = 0f;
+    #endregion
+
     #region Unity Callbacks
     private void Awake()
     {
@@ -70,6 +76,13 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (isPaused || (knockback != null && knockback.IsKnockedBack))
             return;
+
+        if (aggroedByTurret)
+        {
+            turretAggroTimer -= Time.deltaTime;
+            if (turretAggroTimer <= 0f)
+                aggroedByTurret = false;
+        }
 
         CheckProximityAggro();
 
@@ -107,19 +120,25 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         target = cachedPlayer;
         return target;
     }
-
     private void CheckProximityAggro()
-    {    
-        
-        // Acquire the player if we don't have a target yet
+    {
         if (target == null)
-            AcquirePlayerTarget(); // this sets target = cachedPlayer
+            AcquirePlayerTarget();
 
-        if (target == null) return; // no player found, do nothing
+        if (target == null) return;
 
-        if (Vector2.Distance(transform.position, target.transform.position) <= stats.currentDetectionRange)
-        SetAggro(target);
-        AlertNearbyEnemies();
+        float distance = Vector2.Distance(transform.position, target.transform.position);
+
+        // Only set aggro if within detection range or turret damage
+        if (!isAggroed && !aggroedByTurret && distance > stats.currentDetectionRange)
+            return;
+
+        if (!isAggroed)
+            SetAggro(target);
+
+        // Only alert nearby enemies if this enemy is aggroed
+        if (isAggroed)
+            AlertNearbyEnemies();
     }
 
     private void AlertNearbyEnemies()
@@ -132,18 +151,17 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         {
             if (hit.TryGetComponent(out EnemyBehaviour enemy) && enemy != this)
             {
-                SetAggro(target);
+                enemy.SetAggro(target); // <-- call on the other enemy
             }
         }
     }
 
     private void SetAggro(GameObject newTarget)
     {
-        // Only skip if already aggroed and not forcing
-        if (isAggroed) return;
         isAggroed = true;
         movement.isAggroed = true;
         abilityBehaviour?.SetTarget(newTarget);
+        Debug.Log("Set Aggro True");
     }
 
 
@@ -157,7 +175,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     private void CheckLoseAggro()
     {
-        if (!isAggroed || target == null) return;
+        if (!isAggroed || target == null || aggroedByTurret) return;
 
         float loseDistance = stats.currentDetectionRange * loseAggroMultiplier;
         float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
@@ -225,12 +243,16 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             return;
         }
 
-        if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out var turret))
+        // Check if damage came from a turret
+        if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out _))
         {
-            Debug.Log("Enemy Took Damage from Turret");
-            SetAggro(target);
-            AlertNearbyEnemies();
+            aggroedByTurret = true;
+            turretAggroTimer = turretAggroDuration;
         }
+
+        SetAggro(target);
+        AlertNearbyEnemies();
+        
     }
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
