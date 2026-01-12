@@ -84,21 +84,36 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         float scaledRange = turretBlueprint.baseAttackRange + turretBlueprint.baseRangeGrowthFlat * (level - 1);
         float scaledProjectileSpeed = turretBlueprint.baseProjectileSpeed;
 
-        // Apply multipliers
-        float finalDamage = scaledDamage * (upgrade?.damageMultiplier ?? 1f) * (global?.globalDamageMultiplier ?? 1f);
-        float finalFireRate = scaledFireRate * (upgrade?.fireRateMultiplier ?? 1f) * (global?.globalFireRateMultiplier ?? 1f);
-        float finalRange = scaledRange + (upgrade?.rangeBonus ?? 0f);
-        int finalProjectiles = turretBlueprint.projectilesPerSalve + (upgrade?.projectilesPerSalve ?? 0) + (global?.globalProjectilesPerSalve ?? 0);
-        float finalProjectileSpeed = scaledProjectileSpeed * (upgrade?.projectileSpeed ?? 1f) * (global?.globalProjectileSpeed ?? 1f);
-        int finalPierce = turretBlueprint.baseProjectilePierceCount + (upgrade?.piercingHits ?? 0);
+        // Apply additive bonuses
+        float finalDamage = scaledDamage
+                            + (upgrade?.damageMultiplier ?? 0f)
+                            + (global?.globalDamageMultiplier ?? 0f);
 
+        float finalFireRate = scaledFireRate
+                              + (upgrade?.fireRateMultiplier ?? 0f)
+                              + (global?.globalFireRateMultiplier ?? 0f);
 
-        Debug.Log($"{finalDamage} turret upgraded! Level {level} | " +
-        $"Damage={finalDamage}, " +
-        $"FireRate={finalFireRate}, " +
-        $"Range={finalRange}, " +
-        $"Projectiles={finalProjectiles}, " +
-        $"ProjSpeed={finalProjectileSpeed}");
+        float finalProjectileSpeed = scaledProjectileSpeed
+                                     + (upgrade?.projectileSpeed ?? 0f)
+                                     + (global?.globalProjectileSpeed ?? 0f);
+
+        float finalRange = scaledRange
+                           + (upgrade?.rangeBonus ?? 0f)
+                           + (global?.globalPlacementRadiusMultiplier ?? 0f); // if you want range affected by global radius
+
+        int finalProjectiles = turretBlueprint.projectilesPerSalve
+                               + (upgrade?.projectilesPerSalve ?? 0)
+                               + (global?.globalProjectilesPerSalve ?? 0);
+
+        int finalPierce = turretBlueprint.baseProjectilePierceCount
+                          + (upgrade?.piercingHits ?? 0);
+
+        Debug.Log($"T{turretBlueprint.turretName} upgraded! Level {level} | " +
+                  $"Damage={finalDamage}, " +
+                  $"FireRate={finalFireRate}, " +
+                  $"Range={finalRange}, " +
+                  $"Projectiles={finalProjectiles}, " +
+                  $"ProjSpeed={finalProjectileSpeed}");
 
         return new TurretStatData
         {
@@ -110,10 +125,8 @@ public class TurretBehaviour : MonoBehaviour, IPausable
             pierceCount = finalPierce,
             knockbackStrength = turretBlueprint.baseKnockbackStrength,
             knockbackDuration = turretBlueprint.baseKnockbackDuration
-
         };
     }
-
 
 
     public void RecalculateStats()
@@ -303,7 +316,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         projectile.InitializePiercing(pierceCount);
         Vector2 direction = (target.position - firePoint.position).normalized;
         rb.linearVelocity = direction * currentProjectileSpeed;
-
+            
         Destroy(projectileObj, 5f);
 
         // <-- Play shooting sound
