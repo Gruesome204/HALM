@@ -270,6 +270,7 @@ MonoBehaviour:
   towerShootSound: {fileID: 8300000, guid: 787a011599bc77b49a4612705aea1972, type: 3}
   towerBuildSound: {fileID: 8300000, guid: 7bc746d8cdf807c4697ef7c577f9afb2, type: 3}
   towerDestroySound: {fileID: 8300000, guid: 773f99b72494faf4db7499190c5c084a, type: 3}
+  roomClearedSound: {fileID: 8300000, guid: 019b0fd886f066f4aa606e86fc1837d4, type: 3}
 --- !u!1 &605637674
 GameObject:
   m_ObjectHideFlags: 0

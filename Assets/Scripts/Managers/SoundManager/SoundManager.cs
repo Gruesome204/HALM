@@ -18,6 +18,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip towerShootSound;
     public AudioClip towerBuildSound;
     public AudioClip towerDestroySound;
+
+    public AudioClip roomClearedSound;
+
     // Add more clips here as needed
 
     private void Awake()
@@ -33,7 +36,14 @@ public class SoundManager : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
     }
-
+    private void OnEnable()
+    {
+        EnemySpawnManager.Instance.OnAllEnemiesDefeated += PlayRoomCleared;
+    }
+    private void OnDisable()
+    {
+        EnemySpawnManager.Instance.OnAllEnemiesDefeated -= PlayRoomCleared;
+    }
     // Play a specific clip
     public void PlaySFX(AudioClip clip)
     {
@@ -64,4 +74,6 @@ public class SoundManager : MonoBehaviour
     public void PlayTowerBuild() => PlaySFX(towerBuildSound);
     public void PlayTowerDestroy() => PlaySFX(towerDestroySound);
 
+    //Enemies Defeated
+    public void PlayRoomCleared() => PlaySFX(roomClearedSound);
 }

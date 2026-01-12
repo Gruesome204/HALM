@@ -173,7 +173,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         FillDetailValue("baseHealth", openTurretDetails.baseHealth, ref turretStats);
         FillDetailValue("baseAttackDamage", openTurretDetails.baseAttackDamage, ref turretStats);
         FillDetailValue("baseAttackRange", openTurretDetails.baseAttackRange, ref turretStats);
-        FillDetailValue("turretSize", openTurretDetails.height + openTurretDetails.length, ref turretStats);
+        FillDetailValue("turretSize", openTurretDetails.height * openTurretDetails.length, ref turretStats);
         FillDetailValue("placementCooldown", openTurretDetails.placementCooldown, ref turretStats);
         FillDetailValue("buildCapacityValue", openTurretDetails.buildCapacityValue, ref turretStats);
         if (!_turretUnlocked)
