@@ -31,8 +31,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
     public void Initialize(TurretBlueprint turretBlueprint)
     {
         if (turretBlueprint == null || stats == null) return;
-
-        stats.currentMaxHealth = turretBlueprint.baseHealth + TurretGlobalModifierManager.Instance.globalHealthMultiplier;
+        stats.currentMaxHealth = turretBlueprint.baseHealth * (1f + TurretGlobalModifierManager.Instance.globalHealthMultiplier);
         stats.currentHealth = stats.currentMaxHealth;
 
         RecalculateStatsAfterModifiers();
@@ -43,7 +42,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
     {
         float healthPercent = stats.currentHealth / stats.currentMaxHealth;
 
-        stats.currentMaxHealth = stats.GetBlueprint().baseHealth + TurretGlobalModifierManager.Instance.globalHealthMultiplier;
+        stats.currentMaxHealth = stats.GetBlueprint().baseHealth * (1f + TurretGlobalModifierManager.Instance.globalHealthMultiplier);
         stats.currentHealth = Mathf.Max(1, stats.currentMaxHealth * healthPercent);
     }
 
