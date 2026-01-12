@@ -7,7 +7,22 @@ public class HubInteractable : MonoBehaviour
 
     // Event to notify listeners of an interaction
     public event System.Action<string> OnInteractedEvent;
+    [Header("Glow")]
+    [SerializeField] private GameObject glowObject;
 
+
+    private void OnMouseEnter()
+    {
+        Debug.Log("Test");
+        if (glowObject != null)
+            glowObject.SetActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        if (glowObject != null)
+            glowObject.SetActive(false);
+    }
     private void OnMouseDown()
     {
         Interact();
@@ -40,15 +55,4 @@ public class HubInteractable : MonoBehaviour
         }
     }
 
-    //Activate after Implementation of HubUIController
-    //private void OnEnable()
-    //{
-    //    // Notify a manager that this interactable exists
-    //    HubUIController.RegisterInteractable(this);
-    //}
-
-    //private void OnDisable()
-    //{
-    //    HubUIController.UnregisterInteractable(this);
-    //}
 }
