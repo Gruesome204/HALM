@@ -7592,10 +7592,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430db78da1ab4ad48aca778cb2277c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBossRoom: 0
+  isBossRoom: 1
   enemyPrefabs:
   - {fileID: 3645313828594104337, guid: 308205ce09e88f748958afa4ee758b79, type: 3}
-  spawnAmount: 5
+  spawnAmount: 50
   spawnInterval: 3
   bossPrefab: {fileID: 0}
 --- !u!1 &6636609605688708527

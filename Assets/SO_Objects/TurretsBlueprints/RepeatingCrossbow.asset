@@ -21,11 +21,11 @@ MonoBehaviour:
   turretPrefab: {fileID: 2143098689819666265, guid: e7ba0ce86f14b9c49bff82f2efd22797, type: 3}
   turretProjectileType: {fileID: 1397600981807428680, guid: d3df5105a70605c43a377002780ecfe3, type: 3}
   firingPattern: 1
-  projectilesPerSalve: 5
+  projectilesPerSalve: 3
   delayBetweenSalveProjectiles: 0.5
   baseHealth: 100
   baseAttackDamage: 10
-  baseFireRate: 2
+  baseFireRate: 1
   baseProjectileSpeed: 15
   baseProjectilePierceCount: 0
   baseAttackRange: 5
@@ -33,8 +33,8 @@ MonoBehaviour:
   baseKnockbackDuration: 0.4
   baseHealthGrowthFactor: 0.2
   baseDamageGrowthFactor: 0.2
-  baseFireRateGrowthFactor: 0.95
-  baseRangeGrowthFlat: 0.5
+  baseFireRateGrowthFactor: 0.15
+  baseRangeGrowthFlat: 0.1
   buyCost:
   - resourceType: 2
     amount: 4
