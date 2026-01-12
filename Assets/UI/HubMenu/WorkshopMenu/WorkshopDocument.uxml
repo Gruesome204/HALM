@@ -5,11 +5,11 @@
     <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
     <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
-    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn turretChoiceMenuSlideOut" style="flex-grow: 1; flex-direction: row; justify-content: center; align-items: flex-end;">
+    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn" style="flex-grow: 1; flex-direction: row; justify-content: center; align-items: flex-end;">
         <ui:VisualElement name="workshopContainer" class="buildmasterModifyBackground" style="flex-grow: 0; flex-shrink: 0; align-self: flex-end;">
             <ui:Label text="Label" name="headline" class="headline wood-Text" style="height: 14%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             <ui:VisualElement name="nullSpace1" style="flex-shrink: 0; height: 3%;" />
-            <ui:ScrollView name="availableTurrets" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1; flex-shrink: 0;" />
+            <ui:ScrollView name="availableTurrets" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 0; flex-shrink: 0; height: 63%;" />
             <ui:VisualElement name="equippedTurrets" style="flex-grow: 0; flex-shrink: 0; width: 95%; height: 20%; flex-direction: row; justify-content: center;" />
             <ui:Button text="X" name="backBtn" class="backBtnClass smallWoodButton" style="font-size: 25px;" />
         </ui:VisualElement>
