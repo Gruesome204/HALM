@@ -7668,7 +7668,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 3645313828594104337, guid: 015b779532949344c837c8841fd97504, type: 3}
   spawnAmount: 50
-  spawnInterval: 3
+  spawnInterval: 1.5
   bossPrefab: {fileID: 0}
 --- !u!1 &6636609605688708527
 GameObject:

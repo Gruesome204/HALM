@@ -80,14 +80,14 @@ public class TurretBlueprint : ScriptableObject
     public float baseKnockbackDuration = 0.5f;
 
     [Header("Per-Level Growth")]
-    [Tooltip("Health scaling factor per turret level (1.2 = +20% per level).")]
-    public float baseHealthGrowthFactor = 1.2f;
+    [Tooltip("Health scaling factor per turret level (0.2 = +20% per level).")]
+    public float baseHealthGrowthFactor = 0.2f;
 
-    [Tooltip("Damage scaling factor per turret level (1.2 = +20% per level).")]
-    public float baseDamageGrowthFactor = 1.2f;
+    [Tooltip("Damage scaling factor per turret level (0.2 = +20% per level).")]
+    public float baseDamageGrowthFactor = 0.2f;
 
-    [Tooltip("Fire rate scaling per level (0.95 = 5% faster per level).")]
-    public float baseFireRateGrowthFactor = 0.95f;
+    [Tooltip("Fire rate scaling per level (0.5 = 5% faster per level).")]
+    public float baseFireRateGrowthFactor = 0.15f;
 
     [Tooltip("Flat increase in range per level.")]
     public float baseRangeGrowthFlat = 0.5f;

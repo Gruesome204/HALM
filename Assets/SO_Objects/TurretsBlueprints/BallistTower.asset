@@ -33,7 +33,7 @@ MonoBehaviour:
   baseKnockbackDuration: 0.7
   baseHealthGrowthFactor: 0.2
   baseDamageGrowthFactor: 0.2
-  baseFireRateGrowthFactor: 0.95
+  baseFireRateGrowthFactor: 0.15
   baseRangeGrowthFlat: 0.5
   buyCost:
   - resourceType: 2

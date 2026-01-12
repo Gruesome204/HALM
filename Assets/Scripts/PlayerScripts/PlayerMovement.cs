@@ -111,6 +111,14 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
             spriteRenderer.flipX = false;  // Facing left
     }
 
+    private void FlipSprite(Vector2 direction)
+    {
+        if (direction.x > 0.01f)
+            spriteRenderer.flipX = true;  // Facing right
+        else if (direction.x < -0.01f)
+            spriteRenderer.flipX = false; // Facing left
+    }
+
     void FixedUpdate()
     {
         if (isDashing)
@@ -183,7 +191,8 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
         dashTimer = duration;
 
         rb.linearVelocity = Vector2.zero;
-
+        // Flip sprite to dash direction instantly
+        FlipSprite(dashDirection);
         // Enable i-frames if PlayerHealth is present
         if (iFrameDuration != 0f)
         {
