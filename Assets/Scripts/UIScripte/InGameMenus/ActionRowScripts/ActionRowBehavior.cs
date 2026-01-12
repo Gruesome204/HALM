@@ -130,7 +130,7 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     void PauseBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("wood");
+        SoundManager.Instance.PlayWoodClick();
 
         InGameMenuManager.Instance.CloseAllMenus();
         InGameMenuManager.Instance.OpenOrCloseOneMenu("PauseMenuDoc", true);
@@ -140,7 +140,7 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     void StatsBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("wood");
+        SoundManager.Instance.PlayWoodClick();
 
         InGameMenuManager.Instance.CloseAllMenus();
         InGameMenuManager.Instance.OpenOrCloseOneMenu("StatsMenuDoc", true);

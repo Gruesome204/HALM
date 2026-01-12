@@ -24,6 +24,9 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("turretChoiceMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
             GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+
+            //Play a Click sound to give audio feedback to the Player
+            SoundManager.Instance.PlayPaperMenuOpen();
         }
         else
         {

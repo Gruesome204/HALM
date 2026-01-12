@@ -41,7 +41,7 @@ public class CreditsMenuBehavior : MonoBehaviour, IMenu
     void OnBackBtnClicked(ClickEvent clicked)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         InGameMenuManager.Instance.OpenOrCloseOneMenu("CreditsMenuDoc", false);
     }

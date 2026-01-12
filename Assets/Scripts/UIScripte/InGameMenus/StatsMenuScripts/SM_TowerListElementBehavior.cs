@@ -25,7 +25,7 @@ public class SM_TowerListElementBehavior
     void onListButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         statsMenu.FillTurretStatsDetails(turret);
     }

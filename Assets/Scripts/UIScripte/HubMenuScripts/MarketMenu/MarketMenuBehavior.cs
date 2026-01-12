@@ -39,6 +39,9 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
             Fill();
 
+            //Play a Click sound to give audio feedback to the Player
+            SoundManager.Instance.PlayWoodMenuOpen();
+
             //This ensures that the picture in the back can grow as large as possible while keeping it's correct scale :D
             //It can only be run when the Menu is actually on screen, otherwise the numbers go hairwire O.o
             // I wanted to run this once in the Enable Method, but due to the above that didn't work :C
@@ -194,7 +197,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
     void OnSellButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("wood");
+        SoundManager.Instance.PlayWoodClick();
 
         if (GameManager.Instance.gameDataSO.HasResource(openRessourceDetails, slider.value))
         {
@@ -216,7 +219,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
     void OnBuyButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("wood");
+        SoundManager.Instance.PlayWoodClick();
 
         if (GameManager.Instance.gameDataSO.HasResource(ResourceType.Currency, slider.value * buyingRate))
         {
@@ -238,7 +241,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
     private void OnBackBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("wood");
+        SoundManager.Instance.PlayWoodClick();
 
         InGameMenuManager.Instance.OpenOrCloseOneMenu("MarktMenuDoc", false);
     }

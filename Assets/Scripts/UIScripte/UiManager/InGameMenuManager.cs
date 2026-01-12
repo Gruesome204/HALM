@@ -14,10 +14,6 @@ public class InGameMenuManager : MonoBehaviour
 
     public event Action<BuildMasterModifier, bool> OnBuildmasterModifierChanged;
 
-    public AudioSource paperClick;
-    public AudioSource woodClick;
-    public AudioSource stoneClick;
-
     void Start()
     {
         // Ensuring that all menues are active and closed
@@ -165,24 +161,5 @@ public class InGameMenuManager : MonoBehaviour
     {
         CloseAllMenus();
         OpenOrCloseOneMenu("GameWonDoc", true);
-    }
-
-    public void PlayClickSound(string sound)
-    {
-        switch (sound)
-        {
-            case "paper":
-                paperClick.volume = GameManager.Instance.gameDataSO.masterVolume * GameManager.Instance.gameDataSO.soundVolume;
-                paperClick.Play();
-                break;
-            case "wood":
-                woodClick.volume = GameManager.Instance.gameDataSO.masterVolume * GameManager.Instance.gameDataSO.soundVolume;
-                woodClick.Play();
-                break;
-            case "stone":
-                stoneClick.volume = GameManager.Instance.gameDataSO.masterVolume * GameManager.Instance.gameDataSO.soundVolume;
-                stoneClick.Play();
-                break;
-        }
     }
 }

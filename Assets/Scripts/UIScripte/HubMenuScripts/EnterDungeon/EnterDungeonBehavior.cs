@@ -21,6 +21,9 @@ public class EnterDungeonBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("settingsMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
 
+            //Play a Click sound to give audio feedback to the Player
+            SoundManager.Instance.PlayWoodMenuOpen();
+
             //This ensures that the picture in the back can grow as large as possible while keeping it's correct scale :D
             //It can only be run when the Menu is actually on screen, otherwise the numbers go hairwire O.o
             // I wanted to run this once in the Enable Method, but due to the above that didn't work :C
@@ -55,7 +58,7 @@ public class EnterDungeonBehavior : MonoBehaviour, IMenu
     void OnEnterDungeonBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("wood");
+        SoundManager.Instance.PlayWoodClick();
 
         SceneManager.LoadScene("GameScene");
         GameManager.Instance.SaveGame();
@@ -64,7 +67,7 @@ public class EnterDungeonBehavior : MonoBehaviour, IMenu
     void OnStayInHubBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("wood");
+        SoundManager.Instance.PlayWoodClick();
 
         InGameMenuManager.Instance.ReturnToGame();
         GameManager.Instance.SaveGame();

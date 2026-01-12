@@ -69,7 +69,7 @@ public class MainMenuBehavior : MonoBehaviour
     void OnPlayBtnClicked(ClickEvent clicked)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         SceneManager.LoadScene("HubScene");
     }
@@ -77,21 +77,21 @@ public class MainMenuBehavior : MonoBehaviour
     void OnSettingsBtnClicked(ClickEvent clicked)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", true);
     }
     void OnCreditsBtnClicked(ClickEvent clicked)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         InGameMenuManager.Instance.OpenOrCloseOneMenu("CreditsMenuDoc", true);
     }
     void OnExitBtnClicked(ClickEvent clicked)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         Application.Quit();
     }
@@ -99,7 +99,7 @@ public class MainMenuBehavior : MonoBehaviour
     void OnResetGameBtnClicked(ClickEvent clicked)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         btnContainer.AddToClassList("vanish");
         certainContainer.RemoveFromClassList("vanish");
@@ -108,7 +108,7 @@ public class MainMenuBehavior : MonoBehaviour
     void ResetGame(ClickEvent clicked)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         GameManager.Instance.ResetGame();
 
@@ -119,7 +119,7 @@ public class MainMenuBehavior : MonoBehaviour
     void NoResetGame(ClickEvent clicked)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         btnContainer.RemoveFromClassList("vanish");
         certainContainer.AddToClassList("vanish");

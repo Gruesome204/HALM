@@ -28,6 +28,9 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
             GameManager.Instance.ChangeState(GameManager.GameState.Paused);
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
 
+            //Play a Click sound to give audio feedback to the Player
+            SoundManager.Instance.PlayPaperMenuOpen();
+
             //This ensures that the picture in the back can grow as large as possible while keeping it's correct scale :D
             //It can only be run when the Menu is actually on screen, otherwise the numbers go hairwire O.o
             // I wanted to run this once in the Enable Method, but due to the above that didn't work :C
@@ -96,14 +99,14 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
     void OnResumeBtnCicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         InGameMenuManager.Instance.ReturnToGame();
     }
     void OnStatsMenuButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         InGameMenuManager.Instance.CloseAllMenus();
         InGameMenuManager.Instance.OpenOrCloseOneMenu("StatsMenuDoc", true);
@@ -111,28 +114,28 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
     void OnSettingsBtnCicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", true);
     }
     void OnCancelRunBtnCicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         SceneManager.LoadScene("HubScene");
     }
     void OnMainMenuBtnCicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         SceneManager.LoadScene("MainMenu");
     }
     void OnExitBtnCicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         Application.Quit();
     }

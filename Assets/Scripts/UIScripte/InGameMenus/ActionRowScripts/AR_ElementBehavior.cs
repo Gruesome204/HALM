@@ -39,7 +39,7 @@ public class AR_ElementBehavior
     void OnTurretButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("wood");
+        SoundManager.Instance.PlayWoodClick();
 
         TurretPlacementController.Instance.SelectTurretBlueprint(representedTurret);
     }
