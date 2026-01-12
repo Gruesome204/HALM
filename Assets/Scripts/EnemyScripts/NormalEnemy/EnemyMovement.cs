@@ -10,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody2D rb;
     private bool isPaused;
     private bool ignorePursueRange;
+    public bool isAggroed = false;
 
     public GameObject target;
 
@@ -21,20 +22,31 @@ public class EnemyMovement : MonoBehaviour
         enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
+    private void Start()
+    {
+        AcquirePlayerTarget();
+        isAggroed = false;
+    }
+    public void AcquirePlayerTarget()
+    {
+        if (target != null) return; // Already have a target
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            target = player;
+        }
+        else
+        {
+            Debug.LogWarning($"{name}: Player not found in scene!");
+        }
+    }
+
     private void FixedUpdate()
     {
         if (isPaused) return;
-        if (knockback != null && knockback.IsKnockedBack) return;
-
-        if (target != null)
-            MoveTowardTarget(target);
-        else
-            Stop(); // Stop if no target
-    }
-
-    public void SetTarget(GameObject newTarget)
-    {
-        target = newTarget;
+        if (knockback != null && knockback.IsKnockedBack)
+            return; 
+        MoveTowardTarget();
     }
 
     //Enables or disables movement and physics interaction
@@ -50,12 +62,13 @@ public class EnemyMovement : MonoBehaviour
 
     // Moves the enemy toward the current target if within pursue range
 
-    public void MoveTowardTarget(GameObject moveTarget)
+    public void MoveTowardTarget()
     {
         if (target == null || stats == null) return;
 
-        Vector2 direction = (moveTarget.transform.position - transform.position).normalized;
-        rb.linearVelocity = direction * stats.currentMovementSpeed;
+        // always move toward target
+        Vector2 dir = (target.transform.position - transform.position).normalized;
+        rb.linearVelocity = dir * stats.currentMovementSpeed;
         enemyAnimator?.SetMoveSpeed(rb.linearVelocity.magnitude);
     }
 

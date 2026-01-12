@@ -118,30 +118,41 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     public GameObject AcquirePlayerTarget()
     {
-        cachedPlayer ??= GameObject.FindGameObjectWithTag("Player");
-        target = cachedPlayer;
+        // Always find the player, do not rely on static
+        if (target == null || !target.activeInHierarchy)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                target = player;
+                cachedPlayer = player; // keep cached for other enemies
+            }
+            else
+            {
+                Debug.LogWarning($"{name}: Player not found in scene!");
+            }
+        }
         return target;
     }
     private void CheckProximityAggro()
     {
-        if (target == null)
-            AcquirePlayerTarget();
-
+        AcquirePlayerTarget();
+        // Ensure we have a target
         if (target == null) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
 
-        // Only set aggro if within detection range or turret damage
-        if (!isAggroed && !aggroedByTurret && distance > stats.currentDetectionRange)
-            return;
-
-        if (!isAggroed)
+        // If within detection range OR aggroed by turret, set aggro
+        if (!isAggroed && (distance <= stats.currentDetectionRange || aggroedByTurret))
+        {
             SetAggro(target);
+        }
 
-        // Only alert nearby enemies if this enemy is aggroed
+        // Alert nearby enemies only if this enemy is aggroed
         if (isAggroed)
             AlertNearbyEnemies();
     }
+
 
     private void AlertNearbyEnemies()
     {
