@@ -26,9 +26,9 @@ public class TU_ChoiceElementBehavior
 
         border = choiceElement.Q<VisualElement>("border");
 
-        choiceElement.Q<Label>("name").SetBinding("text", new LocalizedString("", $"{option.name}"));
+        choiceElement.Q<Label>("name").SetBinding("text", new LocalizedString("TurretUpgradeTranslationTable", $"{option.name}"));
 
-        choiceElement.Q<Label>("description").SetBinding("text", new LocalizedString("", $"{option.name}Description"));
+        choiceElement.Q<Label>("description").SetBinding("text", new LocalizedString("TurretUpgradeTranslationTable", $"{option.name}Description"));
 
         button = choiceElement.Q<Button>("turretUpgradeChoice_Btn");
         button.RegisterCallback<ClickEvent>(OnClicked);

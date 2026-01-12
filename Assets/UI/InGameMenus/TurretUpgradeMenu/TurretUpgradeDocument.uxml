@@ -5,7 +5,7 @@
     <Style src="project://database/Assets/UI/Styles/IconStyles.uss?fileID=7433441132597879392&amp;guid=0dcc98a28ec31584d95733bd9b7a2066&amp;type=3#IconStyles" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
     <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn popUpMenuBackground" style="flex-grow: 0; flex-shrink: 0; flex-direction: column; align-content: auto; justify-content: flex-start; align-items: center; width: 36%; align-self: center;">
-        <ui:Label text="Label" name="headline" class="headline paper-Text" style="height: 20%;" />
+        <ui:Label text="Label" name="headline" class="paper-Text sub-headline" style="height: 20%;" />
         <ui:VisualElement name="icon" style="flex-grow: 0; align-self: auto; width: 40%; height: 20%; flex-shrink: 0;" />
         <ui:Label text="Label" name="towerName" class="paper-Text" style="height: 5%;" />
         <ui:ScrollView name="turretUpgradeChoices" style="flex-shrink: 0; flex-grow: 1;" />
