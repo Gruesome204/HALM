@@ -162,7 +162,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -1554173658331148535, guid: 469df3b79ad2cee488413b9ced93c494, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -347,8 +347,8 @@ MonoBehaviour:
   currentCritChance: 0
   currentCritMultiplier: 0
   currentAttackRange: 0
+  maxHealth: 0
   currentHealth: 0
-  currentMaxHealth: 0
   currentArmor: 0
   currentMagicResistance: 0
   currentKnockbackReduction: 0

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour, IPausable, IDashable
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
     private Vector2 dashDirection;
     private float dashSpeed;
 
+    private SpriteRenderer spriteRenderer;
     public bool IsDashing => isDashing;
     public bool IsMoving => movementInput.sqrMagnitude > 0.01f;
 
@@ -24,6 +26,9 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
 
     private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
+
+
+
     public void OnPause()
     {
         isPaused = true;
@@ -69,10 +74,17 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         if (rb == null)
         {
             Debug.LogError("Rigidbody2D component not found on this GameObject!");
             enabled = false; // Disable the script if no Rigidbody2D is present
+        }
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer component not found on this GameObject!");
+            enabled = false;
         }
     }
 
@@ -85,6 +97,18 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
         ).normalized;
 
         FacingDirection = GetMouseDirection();
+
+        FlipSprite();
+
+    }
+
+
+    private void FlipSprite()
+    {
+        if (movementInput.x > 0.01f)
+            spriteRenderer.flipX = true; // Facing right
+        else if (movementInput.x < -0.01f)
+            spriteRenderer.flipX = false;  // Facing left
     }
 
     void FixedUpdate()
