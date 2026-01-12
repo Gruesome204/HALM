@@ -18,18 +18,17 @@ MonoBehaviour:
   baseLevel: 1
   baseMovementSpeed: 3
   baseMaxHealth: 40
-  baseHealth: 40
   baseArmor: 1
   baseMagicResistance: 0
   baseKnockbackReduction: 0
-  baseKnockbackForce: 0
-  baseKnockbackDuration: 0
   baseDamage: 7
   baseAttackSpeed: 1
   baseCritChance: 0
   baseCritHitMultiplier: 0
   baseAttackRange: 1
-  baseDetectionRange: 10
+  baseKnockbackForce: 0
+  baseKnockbackDuration: 0
+  baseDetectionRange: 13
   pursueRange: 10
   experienceYield: 100
   goldYield: 0
