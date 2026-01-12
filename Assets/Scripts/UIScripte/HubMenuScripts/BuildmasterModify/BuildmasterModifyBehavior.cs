@@ -15,7 +15,7 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     private Label costName;
     private Label cost;
 
-    private VisualElement btnContainer;
+    private ScrollView modifierList;
     private VisualElement appliedModifierContainer;
 
     private Button backBtn;
@@ -75,7 +75,7 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
         cost = root.Q<Label>("cost");
         cost.text = "";
 
-        btnContainer = root.Q<VisualElement>("btnContainer");
+        modifierList = root.Q<ScrollView>("modifierList");
 
         appliedModifierContainer = root.Q<VisualElement>("appliedModifierContainer");
 
@@ -104,14 +104,14 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
                 //All Unlocked, but not Selected modifiers end here
                 var btn = new BM_ModifierButtonBehavior(modifierButtonAsset, modifier, this);
                 btn.modifierUnlocked = true;
-                uiDocument.rootVisualElement.Q("unity-content-container").Add(btn.mainContainer);
+                modifierList.Add(btn.mainContainer);
             }
             else
             {
                 //All Locked Modifiers end here
                 var btn = new BM_ModifierButtonBehavior(modifierButtonAsset, modifier, this);
                 btn.cooldownCover.style.height = new Length(100, LengthUnit.Percent);
-                uiDocument.rootVisualElement.Q("unity-content-container").Add(btn.mainContainer);
+                modifierList.Q("unity-content-container").Add(btn.mainContainer);
             }       
         }
     }
