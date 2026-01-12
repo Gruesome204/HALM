@@ -2726,7 +2726,7 @@ MonoBehaviour:
   globalFireRateMultiplier: 1
   globalProjectilesPerSalve: 1
   globalProjectileSpeed: 1
-  globalMaxTurretCapacityBonus: 2
+  globalMaxTurretCapacityBonus: 0
   globalPlacementRadiusMultiplier: 1
 --- !u!1 &1463319342
 GameObject:

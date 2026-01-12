@@ -71,13 +71,13 @@ public class ProjectileBehaviour : MonoBehaviour
             damagable.TakeDamage(damageData, knockbackData);
 
             // Reduce piercing hits remaining
-            if (remainingPierces > 0)
-            {
                 remainingPierces--;
 
                 if (remainingPierces < 0)
+                {
                     Destroy(gameObject);
-            }
+                }
+            
         }
     }
 }

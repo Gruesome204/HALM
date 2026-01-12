@@ -215,6 +215,9 @@ MonoBehaviour:
   knockbackDuration: 0
   direction: {x: 0, y: 0}
   remainingPierces: 1
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 640
 --- !u!1 &6977538894313689766
 GameObject:
   m_ObjectHideFlags: 0
