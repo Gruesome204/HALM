@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 5991395328
-    m_Localized: Bogen Turm
+    m_Localized: "Bogensch\xFCtzen Turm"
     m_Metadata:
       m_Items: []
   references:

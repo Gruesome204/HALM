@@ -4,7 +4,7 @@
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
     <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
-    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn turretChoiceMenuSlideOut" style="flex-direction: row; align-items: flex-end; justify-content: center;">
+    <ui:VisualElement name="mainContainer" class="mainContainerClass SlideIn" style="flex-direction: row; align-items: flex-end; justify-content: center;">
         <ui:VisualElement name="optionsContainer" class="buildmasterModifyBackground" style="padding-top: 0%;">
             <ui:Label text="Label" name="headline" class="wood-Text headline" style="height: 14%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center;" />
             <ui:VisualElement name="nullSpace1" style="flex-grow: 0; flex-shrink: 0; height: 3%;" />
@@ -12,9 +12,9 @@
             <ui:Button name="backBtn" text="X" class="backBtnClass smallWoodButton" style="font-size: 25px;" />
         </ui:VisualElement>
         <ui:VisualElement name="detailsContainer" style="align-items: center; justify-content: center; height: 77%; flex-shrink: 0; -unity-background-scale-mode: scale-to-fit;">
-            <ui:VisualElement name="detailsMainContainer" class="SlideIn buildmasterModifyBackground2" style="flex-grow: 0; flex-shrink: 0; height: 100%; padding-top: 9%; padding-bottom: 20%; padding-right: 3%; padding-left: 3%;">
+            <ui:VisualElement name="detailsMainContainer" class="SlideIn buildmasterModifyBackground2" style="flex-grow: 0; flex-shrink: 0; height: 100%; padding-top: 9%; padding-bottom: 20%; padding-right: 3%; padding-left: 3%; justify-content: space-around;">
                 <ui:Label text="Label" name="subHeadline" class="sub-headline wood-Text" style="flex-grow: 0; height: 10%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
-                <ui:VisualElement style="flex-grow: 1; flex-shrink: 0; height: auto;">
+                <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; height: 15%;">
                     <ui:VisualElement name="icon" style="height: 100%; -unity-background-scale-mode: scale-to-fit;" />
                 </ui:VisualElement>
                 <ui:Label text="Label" name="goingRateTxt" class="wood-Text" style="flex-grow: 0; height: 20%; -unity-text-align: upper-center;" />
