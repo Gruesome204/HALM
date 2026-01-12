@@ -19,8 +19,6 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     [Header("Boss Settings")]
     public bool isBossRoom = false; // new flag
-    public GameObject bossPrefab;
-
 
     [Header("Global Enemy Limit")]
     public static int maxEnemies = 20; // Shared across all spawners
@@ -224,7 +222,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         }
     }
 
-    public void SpawnBoss()
+    public void SpawnBoss(GameObject bossPrefab)
     {
         if (MapLoaderManager.Instance == null)
         {
@@ -234,39 +232,8 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
         // Get spawn points
         Transform bSpawn = MapLoaderManager.Instance.bossSpawnPoint;
-        Transform pSpawn = MapLoaderManager.Instance.playerSpawnPoint;
-        Transform[] enemySpawns = spawnPoints;
 
-        Vector3 spawnPos;
-
-        if (bSpawn != null)
-        {
-            spawnPos = bSpawn.position;
-            Debug.Log("[Spawner] Boss spawning at BossSpawnPoint.");
-        }
-        else if (enemySpawns != null && enemySpawns.Length > 0)
-        {
-            spawnPos = enemySpawns[0].position;
-            Debug.Log("[Spawner] Boss spawn fallback: EnemySpawnPoint[0].");
-        }
-        else if (pSpawn != null)
-        {
-            spawnPos = pSpawn.position + new Vector3(3f, 0, 0);
-            Debug.Log("[Spawner] Boss spawn fallback: PlayerSpawnPoint.");
-        }
-        else
-        {
-            spawnPos = Vector3.zero;
-            Debug.LogWarning("[Spawner] No spawn points found! Boss at (0,0,0).");
-        }
-
-        if (bossPrefab == null)
-        {
-            Debug.LogError("BossPrefab not assigned in EnemySpawnManager!");
-            return;
-        }
-
-        GameObject boss = Instantiate(bossPrefab, spawnPos, Quaternion.identity);
+        GameObject boss = Instantiate(bossPrefab, bSpawn.position, Quaternion.identity);
 
         // Optionally scale boss stats
         EnemyStats stats = boss.GetComponent<EnemyStats>();
@@ -280,8 +247,10 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
         // Reset spawner counters
         ResetSpawner();
-        // Track globally
-        activeEnemies.Add(boss);
+        RegisterEnemy(boss);
+
+        totalSpawned = 1;
+        allEnemiesSpawned = true;
     }
 
     public void PrepareForNewRoom()

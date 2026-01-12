@@ -4,13 +4,8 @@ public class MapProgressionManager : MonoBehaviour
 {
     public static MapProgressionManager Instance { get; private set; }
 
-    [Header("Progression Settings")]
-    public int mapsBeforeBoss = 3;
-
     [Header("Runtime")]
     public int currentMapIndex = 0;
-    private int mapsClearedSinceBoss = 0;
-    private bool bossActive = false;
 
     [Header("Enemy Level Scaling")]
     public int baseEnemyLevel = 1;
@@ -55,31 +50,32 @@ public class MapProgressionManager : MonoBehaviour
         spawner.PrepareForNewRoom();
 
         MapEnemySetup setup = map.GetComponent<MapEnemySetup>();
-        bool isBossRoom = mapsClearedSinceBoss >= mapsBeforeBoss;
 
-        if (isBossRoom)
+        // Detect boss room from MapEnemySetup
+        if (setup != null && setup.isBossRoom)
         {
-            bossActive = true;
-            spawner.SpawnBoss();
-            mapsClearedSinceBoss = 0; // reset after boss
+            spawner.OnBossDefeated -= OnRoomCleared; // safe unsubscribe
+            spawner.OnBossDefeated += OnRoomCleared;
+            spawner.SpawnBoss(setup.bossPrefab);
+            Debug.Log($"[Progression] Boss room loaded: {setup.bossPrefab?.name}");
         }
         else
         {
-            bossActive = false;
-            mapsClearedSinceBoss++;
-            // SAFE subscription
+            // Normal room: subscribe to OnAllEnemiesDefeated safely
             spawner.OnAllEnemiesDefeated -= OnRoomCleared;
             spawner.OnAllEnemiesDefeated += OnRoomCleared;
         }
-
+        // Increment enemy level
+        CurrentEnemyLevel += enemyLevelIncreasePerMap;
         currentMapIndex++;
     }
     private void OnRoomCleared()
     {
         // Prevent multiple fires
         EnemySpawnManager.Instance.OnAllEnemiesDefeated -= OnRoomCleared;
+        EnemySpawnManager.Instance.OnBossDefeated -= OnRoomCleared;
 
-        Debug.Log("[Progression] Room cle   ared!");
+        Debug.Log("[Progression] Room cleared!");
 
         if (autoProgress)
         {

@@ -156,7 +156,5 @@ public class MapLoaderManager : MonoBehaviour
         spawner.isBossRoom = setup.isBossRoom;
         if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
             spawner.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs); ;
-
-        spawner.bossPrefab = setup.bossPrefab;
     }
 }

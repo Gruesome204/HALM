@@ -17,7 +17,7 @@ MonoBehaviour:
   enemyType: 1
   baseLevel: 25
   baseMovementSpeed: 3
-  baseMaxHealth: 300
+  baseMaxHealth: 5
   baseArmor: 2
   baseMagicResistance: 0
   baseKnockbackReduction: 0.8

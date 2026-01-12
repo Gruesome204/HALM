@@ -14,8 +14,6 @@ public class MapEnemySetup : MonoBehaviour
     [Tooltip("-1 uses default from EnemySpawnManager")]
     public float spawnInterval = -1f;
 
-
-
     [Header("Boss")]
     public GameObject bossPrefab;
 }
