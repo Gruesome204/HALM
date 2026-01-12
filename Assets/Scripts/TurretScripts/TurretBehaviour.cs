@@ -84,27 +84,31 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         float scaledRange = turretBlueprint.baseAttackRange + turretBlueprint.baseRangeGrowthFlat * (level - 1);
         float scaledProjectileSpeed = turretBlueprint.baseProjectileSpeed;
 
-        // Apply percentage-style multipliers safely
+        // Apply additive bonuses
         float finalDamage = scaledDamage
-                            * (1f + (upgrade?.damageMultiplier ?? 0f))
-                            * (1f + (global?.globalDamageMultiplier ?? 0f));
+                            + (upgrade?.damageMultiplier ?? 0f)
+                            + (global?.globalDamageMultiplier ?? 0f);
 
         float finalFireRate = scaledFireRate
-                              * (1f + (upgrade?.fireRateMultiplier ?? 0f))
-                              * (1f + (global?.globalFireRateMultiplier ?? 0f));
+                              + (upgrade?.fireRateMultiplier ?? 0f)
+                              + (global?.globalFireRateMultiplier ?? 0f);
 
         float finalProjectileSpeed = scaledProjectileSpeed
-                                     * (1f + (upgrade?.projectileSpeed ?? 0f))
-                                     * (1f + (global?.globalProjectileSpeed ?? 0f));
+                                     + (upgrade?.projectileSpeed ?? 0f)
+                                     + (global?.globalProjectileSpeed ?? 0f);
 
-        float finalRange = scaledRange + (upgrade?.rangeBonus ?? 0f);
+        float finalRange = scaledRange
+                           + (upgrade?.rangeBonus ?? 0f)
+                           + (global?.globalPlacementRadiusMultiplier ?? 0f); // if you want range affected by global radius
+
         int finalProjectiles = turretBlueprint.projectilesPerSalve
                                + (upgrade?.projectilesPerSalve ?? 0)
                                + (global?.globalProjectilesPerSalve ?? 0);
 
-        int finalPierce = turretBlueprint.baseProjectilePierceCount + (upgrade?.piercingHits ?? 0);
+        int finalPierce = turretBlueprint.baseProjectilePierceCount
+                          + (upgrade?.piercingHits ?? 0);
 
-        Debug.Log($"{finalDamage} turret upgraded! Level {level} | " +
+        Debug.Log($"T{turretBlueprint.turretName} upgraded! Level {level} | " +
                   $"Damage={finalDamage}, " +
                   $"FireRate={finalFireRate}, " +
                   $"Range={finalRange}, " +

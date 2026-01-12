@@ -118,7 +118,7 @@ public class TurretLevelManager : MonoBehaviour
     {
         var progress = turretProgressDict[type];
         return Mathf.Clamp01(progress.currentXP / progress.xpToNextLevel);
-    }
+    }   
     public void DebugAllTurretLevels()
     {
         foreach (var kvp in turretProgressDict)
