@@ -43,15 +43,15 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
         FillResourceRow();
 
     }
-    private void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            GameManager.Instance.gameDataSO.AddResource(ResourceType.Currency, 10);
-            GameManager.Instance.gameDataSO.AddResource(ResourceType.Wood, 10);
-            GameManager.Instance.gameDataSO.AddResource(ResourceType.Stone, 10);
-            GameManager.Instance.gameDataSO.AddResource(ResourceType.Metal, 10);
-            GameManager.Instance.gameDataSO.AddResource(ResourceType.Pulver, 10);
+            GameManager.Instance.gameDataSO.AddResource(ResourceType.Currency, 100);
+            GameManager.Instance.gameDataSO.AddResource(ResourceType.Wood, 100);
+            GameManager.Instance.gameDataSO.AddResource(ResourceType.Stone, 100);
+            GameManager.Instance.gameDataSO.AddResource(ResourceType.Metal, 100);
+            GameManager.Instance.gameDataSO.AddResource(ResourceType.Pulver, 100);
         }
     }
 

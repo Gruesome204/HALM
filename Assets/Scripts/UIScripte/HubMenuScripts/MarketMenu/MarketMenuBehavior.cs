@@ -113,7 +113,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
     void Fill()
     {
         Clear();
-        CreateRessourceButton(ResourceType.Currency);
+        //CreateRessourceButton(ResourceType.Currency);
         CreateRessourceButton(ResourceType.Wood);
         CreateRessourceButton(ResourceType.Stone);
         CreateRessourceButton(ResourceType.Metal);

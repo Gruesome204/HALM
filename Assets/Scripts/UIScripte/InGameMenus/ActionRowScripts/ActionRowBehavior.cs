@@ -82,11 +82,10 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
 
     }
 
-    private void Update()
+    void Update()
     {
-        if (Input.GetKey(KeyCode.K) && Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.K) && Input.GetKey(KeyCode.LeftShift))
         {
-            Debug.Log("die");
             Application.Quit();
         }
     }

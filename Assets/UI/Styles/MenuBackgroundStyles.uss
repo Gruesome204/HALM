@@ -58,4 +58,5 @@
     padding-right: 8%;
     padding-bottom: 3%;
     padding-left: 8%;
+    background-color: rgb(39, 33, 33);
 }
