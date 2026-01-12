@@ -13,6 +13,7 @@ public class HubInteractable : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        Debug.Log("Test");
         if (glowObject != null)
             glowObject.SetActive(true);
     }
