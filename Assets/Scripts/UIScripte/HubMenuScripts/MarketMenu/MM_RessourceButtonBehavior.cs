@@ -33,5 +33,8 @@ public class MM_RessourceButtonBehaviior
         SoundManager.Instance.PlayWoodClick();
 
         marketMenu.FillRessourceDetails(represendetRessource);
+
+        marketMenu.slider.value = 2;
+        marketMenu.slider.value = 1;
     }
 }

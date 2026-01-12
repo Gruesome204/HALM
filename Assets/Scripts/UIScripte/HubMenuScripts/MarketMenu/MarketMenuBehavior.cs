@@ -15,7 +15,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
     private VisualElement icon;
     private Label goingRateTxt;
     private Label informationTxt;
-    private SliderInt slider;
+    public SliderInt slider;
 
     private Label sellLabel;
     private Button sellButton;
@@ -85,17 +85,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
         slider = root.Q<SliderInt>("howMuchToSellSlider");
         slider.RegisterValueChangedCallback(v =>
         {
-            informationTxt.text = $"x{slider.value} "
-                                + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{openRessourceDetails}").GetLocalizedString()
-                                + LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"selectedAmount").GetLocalizedString();
-
-            sellLabel.text = LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"sellLabel").GetLocalizedString()
-                            + $"{slider.value * sellingRate}x "
-                            + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{ResourceType.Currency}").GetLocalizedString();
-
-            buyLabel.text = LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"buyLabel").GetLocalizedString()
-                            + $"{slider.value * buyingRate}x "
-                            + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{ResourceType.Currency}").GetLocalizedString();
+            SetInformationTexts();
         });
 
         sellLabel = root.Q<Label>("sellLabel");
@@ -189,8 +179,8 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
         sellLabel.text = "";
         buyLabel.text = "";
 
-        slider.value = 2;
-        slider.value = 1;
+        //slider.value = 2;
+        //slider.value = 1;
         icon.RemoveFromClassList($"{openRessourceDetails}Icon");
     }
 
@@ -206,6 +196,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             GameManager.Instance.gameDataSO.AddResource(ResourceType.Currency, slider.value * sellingRate);
             Fill();
             FillRessourceDetails(openRessourceDetails);
+            SetInformationTexts();
         }
         else
         {
@@ -228,6 +219,7 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             GameManager.Instance.gameDataSO.AddResource(openRessourceDetails, slider.value);
             Fill();
             FillRessourceDetails(openRessourceDetails);
+            SetInformationTexts();
         }
         else
         {
@@ -238,6 +230,20 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
         GameManager.Instance.SaveGame();
     }
 
+    void SetInformationTexts()
+    {
+        informationTxt.text = $"x{slider.value} "
+                    + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{openRessourceDetails}").GetLocalizedString()
+                    + LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"selectedAmount").GetLocalizedString();
+
+        sellLabel.text = LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"sellLabel").GetLocalizedString()
+                        + $"{slider.value * sellingRate}x "
+                        + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{ResourceType.Currency}").GetLocalizedString();
+
+        buyLabel.text = LocalizationSettings.StringDatabase.GetTable("MarketMenuTranslationTable").GetEntry($"buyLabel").GetLocalizedString()
+                        + $"{slider.value * buyingRate}x "
+                        + LocalizationSettings.StringDatabase.GetTable("WorkshopMenuTranslationTable").GetEntry($"{ResourceType.Currency}").GetLocalizedString();
+    }
     private void OnBackBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player

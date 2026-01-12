@@ -107,8 +107,9 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
         soundVolumeSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderSoundVolume"));
 
         musicTrackSlider = root.Q<SliderInt>("musicTrackSlider");
-        musicTrackSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicTrack"));
-        musicTrackSlider.highValue = AllMusicTracks.Count - 1;
+        musicTrackSlider.AddToClassList("vanish");
+        //musicTrackSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicTrack"));
+        //musicTrackSlider.highValue = AllMusicTracks.Count - 1;
     }
     #endregion
 
@@ -118,10 +119,10 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
         masterVolumeSlider.value = gameDataSO.masterVolume;
         musicVolumeSlider.value = gameDataSO.musicVolume;
         soundVolumeSlider.value = gameDataSO.soundVolume;
-        musicTrackSlider.value = gameDataSO.musicTrack;
+        //musicTrackSlider.value = gameDataSO.musicTrack;
 
         SetAllMusicVolume(gameDataSO.masterVolume * gameDataSO.musicVolume);
-        PlayThisMusic(gameDataSO.musicTrack);
+        PlayThisMusic(0);
     }
     #endregion
 
@@ -145,11 +146,11 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
             gameDataSO.soundVolume = evt.newValue;
         });
 
-        musicTrackSlider.RegisterValueChangedCallback(evt =>
-        {
-            gameDataSO.musicTrack = evt.newValue;
-            PlayThisMusic(evt.newValue);
-        });
+        //musicTrackSlider.RegisterValueChangedCallback(evt =>
+        //{
+        //    gameDataSO.musicTrack = evt.newValue;
+        //    PlayThisMusic(evt.newValue);
+        //});
     }
     #endregion
 

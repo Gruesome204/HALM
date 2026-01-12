@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d64c8f82c6826d44ca9be301a5084f9b
+guid: a51a20836ee2b4a4d863d257f221e78e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2195869295051307916
-    second: HALM_Buttonpressed_0
+      213: 6141109036966581825
+    second: 20260112_Feld_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HALM_Buttonpressed_0
+      name: 20260112_Feld_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 400
-        height: 400
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 200, y: 0, z: 180, w: 0}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4748747a284b681e0800000000000000
-      internalID: -2195869295051307916
+      spriteID: 1469553d12a993550800000000000000
+      internalID: 6141109036966581825
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 30a00fd06ee6e9a42a6effc0f3a93326
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HALM_Buttonpressed_0: -2195869295051307916
+      20260112_Feld_0: 6141109036966581825
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
