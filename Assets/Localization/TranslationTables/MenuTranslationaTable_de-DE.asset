@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 104960192512
-    m_Localized: Wilkommen im Spiel!
+    m_Localized: 'Descending Caverns: Tinkerer''s Path'
     m_Metadata:
       m_Items: []
   - m_Id: 143518429184

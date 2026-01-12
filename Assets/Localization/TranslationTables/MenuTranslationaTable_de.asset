@@ -19,8 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 104960192512
-    m_Localized: "Was soll hier stehen? Das ist die Developer \xDCbersetzung hier
-      wird wohl kaum was koherentes stehen"
+    m_Localized: "Tiefe H\xF6hle: Bob der Baumeister"
     m_Metadata:
       m_Items: []
   - m_Id: 143518429184
