@@ -28,4 +28,4 @@ MonoBehaviour:
       projectilesPerSalve: 0
       rangeBonus: 0
       piercingHits: 0
-      projectileType: {fileID: 0}
+      projectileType: {fileID: 1759283730849935406, guid: 35da1b0dcddb8ae4aba1d2ccafe97370, type: 3}

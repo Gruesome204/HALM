@@ -35,4 +35,4 @@ MonoBehaviour:
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
       turretMaxCapacityBonus: 0
-      turretPlacementRadiusMultiplier: 0.5
+      turretPlacementRadiusMultiplier: 5
