@@ -64,25 +64,24 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour, IMenu
 
         turretUpgradeChoices.Clear();
 
-        var choices = TurretUpgradeChoiceManager.Instance.GetAvailableChoicesForLevel(type, level);
+        var options = TurretUpgradeChoiceManager.Instance
+             .GetAvailableOptionsForLevel(type, level);
 
-        foreach (var choice in choices)
+        foreach (var option in options)
         {
-            foreach (var option in choice.options)
-            {
-      
-                if (TurretUpgradeChoiceManager.Instance.IsOptionUsed(option.optionId))
-                    continue;
-                var element = new TU_ChoiceElementBehavior(
-                    choiceListElement,
-                    type,
-                    level,
-                    choice,
-                    option
-                );
+            // Skip if already used (optional, but safe)
+            if (TurretUpgradeChoiceManager.Instance.IsOptionUsed(option.optionId))
+                continue;
 
-                turretUpgradeChoices.Add(element.border);
-            }
+            var element = new TU_ChoiceElementBehavior(
+                choiceListElement,
+                type,
+                level,
+                null, // or pass the parent SO if needed
+                option
+            );
+            Debug.Log($"Adding option: {option.name}, ID: {option.optionId}");
+            turretUpgradeChoices.Add(element.border);
         }
     }
-   }
+}

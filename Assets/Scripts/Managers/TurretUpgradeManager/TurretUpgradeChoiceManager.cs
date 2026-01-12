@@ -41,24 +41,22 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         }
     }
 
-    public IEnumerable<TurretUpgradeChoiceSO.UpgradeOption> GetAllOptionsForLevel(TurretType type, int level)
+    public IEnumerable<TurretUpgradeChoiceSO.UpgradeOption> GetAvailableOptionsForLevel(
+    TurretType type, int level)
     {
+        HashSet<string> seenOptionIds = new HashSet<string>();
+
         foreach (var choice in upgradeChoices)
         {
-            if (choice != null && choice.turretType == type && choice.triggerLevels.Contains(level))
+            if (choice == null || choice.turretType != type || !choice.triggerLevels.Contains(level))
+                continue;
+
+            foreach (var option in choice.options)
             {
-                foreach (var option in choice.options)
+                if (!IsOptionUsed(option.optionId) && seenOptionIds.Add(option.optionId))
+                {
                     yield return option;
-            }
-        }
-    }
-    public IEnumerable<TurretUpgradeChoiceSO> GetAllSOOptionsForLevel(TurretType type, int level)
-    {
-        foreach (var choice in upgradeChoices)
-        {
-            if (choice != null && choice.turretType == type && choice.triggerLevels.Contains(level))
-            {
-                yield return choice;
+                }
             }
         }
     }
@@ -79,7 +77,6 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         {
             TurretLevelManager.Instance.ForceReapplyUpgrades(type);
         }
-
     }
 
     public TurretUpgradeChoiceSO.UpgradeOption GetChosenUpgrade(TurretType type, int level)
@@ -116,25 +113,6 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         return combined;
     }
 
-    public IEnumerable<TurretUpgradeChoiceSO> GetAvailableChoicesForLevel(
-    TurretType type,
-    int level)
-    {
-        foreach (var choice in upgradeChoices)
-        {
-            if (choice == null)
-                continue;
-
-             // Check turret type AND that this choice appears at this level
-            if (choice.turretType != type || !choice.triggerLevels.Contains(level))
-                continue;
-
-            if (usedChoices.Contains((type, level, choice)))
-                continue;
-
-            yield return choice;
-        }
-    }
 
     // Convenience getters (percentage-based multipliers)
     public float GetDamageMultiplier(TurretType type)
@@ -197,7 +175,6 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
     {
         usedOptionIds.Add(optionId);
     }
-
 
     [System.Serializable]
     public struct UpgradeSaveData

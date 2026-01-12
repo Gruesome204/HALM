@@ -28,7 +28,7 @@ MonoBehaviour:
   baseAttackRange: 1
   baseKnockbackForce: 0
   baseKnockbackDuration: 0.2
-  baseDetectionRange: 10
+  baseDetectionRange: 13
   pursueRange: 10
   experienceYield: 100
   goldYield: 0
