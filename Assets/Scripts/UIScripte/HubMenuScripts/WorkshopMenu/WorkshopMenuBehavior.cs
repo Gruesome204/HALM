@@ -87,9 +87,7 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
         {
             if (GameManager.Instance.gameDataSO.GetSelectedBlueprints().Contains<TurretBlueprint>(turret))
             {
-                //Fill Space with all selected Turrets
-                W_EquippedTurretsButtonBehavior availableTurret = new W_EquippedTurretsButtonBehavior(turretButtons, turret, this);
-                equippedTurrets.Add(availableTurret.turretBorder);
+
             }
             else if (GameManager.Instance.gameDataSO.GetUnlockedBlueprints().Contains<TurretBlueprint>(turret))
             {
@@ -105,6 +103,13 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
                 availableTurrets.Add(availableTurret.turretBorder);
                 availableTurret.cooldownCover.style.height = new Length(100, LengthUnit.Percent);
             }
+        }
+
+        foreach (var turret in GameManager.Instance.gameDataSO.GetSelectedBlueprints())
+        {
+            //Fill Space with all selected Turrets
+            W_EquippedTurretsButtonBehavior availableTurret = new W_EquippedTurretsButtonBehavior(turretButtons, turret, this);
+            equippedTurrets.Add(availableTurret.turretBorder);
         }
     }
     private void Clear()
