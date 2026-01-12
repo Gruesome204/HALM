@@ -2376,10 +2376,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapPrefabs:
-  - {fileID: 5085846882595726355, guid: 19d2ffbe8aa8d6c41b4e870fd9803276, type: 3}
-  - {fileID: 3257179516557822654, guid: ddb4a1fae52a1e04bbcda48d26d30380, type: 3}
   - {fileID: 5872725842470093268, guid: 7f508c1744ad44d4eb1be191b2662796, type: 3}
-  - {fileID: 8897411324710292980, guid: 2d6e84168c43aff40be9099a45442bb7, type: 3}
+  - {fileID: 5872725842470093268, guid: 70f41d854223720458656997bd2db4d3, type: 3}
+  - {fileID: 5872725842470093268, guid: 4ef99126c0ff639429429a9ae816b9ec, type: 3}
+  - {fileID: 5872725842470093268, guid: 1b8b890b6eee3b744b7e770c61ae4d04, type: 3}
+  - {fileID: 5872725842470093268, guid: b8e0fe70a6237f44bad8a87cd0fda3c1, type: 3}
+  - {fileID: 5872725842470093268, guid: b8e0fe70a6237f44bad8a87cd0fda3c1, type: 3}
+  - {fileID: 5872725842470093268, guid: 8f7c6032d954a004bba6391f009bab1d, type: 3}
+  - {fileID: 5872725842470093268, guid: 9c71e1348145f5b498f8b89ca2a26c75, type: 3}
+  - {fileID: 5872725842470093268, guid: 364916cd7f69f704286f7c3eac0645f0, type: 3}
+  - {fileID: 5872725842470093268, guid: a02a971409da10d45903c95f016f2063, type: 3}
+  - {fileID: 5872725842470093268, guid: 7f53b94edef1c1e4ab383266d0d5bb6a, type: 3}
   mapParent: {fileID: 855785565}
   playerSpawnPoint: {fileID: 0}
   bossSpawnPoint: {fileID: 0}
