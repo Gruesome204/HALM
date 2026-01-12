@@ -1518,8 +1518,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018647224259d8241854d38b8376ce11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLevel: 10
-  xpGrowthMultiplier: 10
+  maxLevel: 20
+  xpGrowthMultiplier: 5
 --- !u!1 &747619961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,7 +1866,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapPrefabs:
-  - {fileID: 5872725842470093268, guid: 7f508c1744ad44d4eb1be191b2662796, type: 3}
   - {fileID: 5872725842470093268, guid: 70f41d854223720458656997bd2db4d3, type: 3}
   - {fileID: 5872725842470093268, guid: 4ef99126c0ff639429429a9ae816b9ec, type: 3}
   - {fileID: 5872725842470093268, guid: 1b8b890b6eee3b744b7e770c61ae4d04, type: 3}
