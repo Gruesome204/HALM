@@ -16,8 +16,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     #region Targeting
     [Header("Targeting")]
-    [SerializeField] private float groupAggroRadius = 10f;
-    [SerializeField] private float loseAggroMultiplier = 1.3f;
+    [SerializeField] private float groupAggroRadius = 20f;
+    [SerializeField] private float loseAggroMultiplier = 1.5f;
 
     private static GameObject cachedPlayer;
     public GameObject target;
@@ -84,6 +84,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         HandleMovementTarget(target);
         TryAttack(target);
         TryUseAbilities(target);
+
+        CheckLoseAggro();
     }
     #endregion
 
@@ -150,6 +152,19 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         movement.Stop();
         movement.target = null;
         abilityBehaviour?.SetTarget(null);
+    }
+
+    private void CheckLoseAggro()
+    {
+        if (!isAggroed || target == null) return;
+
+        float loseDistance = stats.currentDetectionRange * loseAggroMultiplier;
+        float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
+
+        if (distanceToTarget > loseDistance)
+        {
+            ClearAggro();
+        }
     }
     #endregion
 
