@@ -36,16 +36,10 @@ MonoBehaviour:
   baseFireRateGrowthFactor: 0
   baseRangeGrowthFlat: 0
   buyCost:
-  - resourceType: 0
-    amount: 1
   - resourceType: 1
-    amount: 1
+    amount: 150
   - resourceType: 2
-    amount: 1
-  - resourceType: 3
-    amount: 1
-  - resourceType: 4
-    amount: 1
+    amount: 50
   height: 1
   length: 1
   buildCapacityValue: 0

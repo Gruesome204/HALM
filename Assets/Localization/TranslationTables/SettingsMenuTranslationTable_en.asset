@@ -58,6 +58,47 @@ MonoBehaviour:
     m_Localized: Music Tracks
     m_Metadata:
       m_Items: []
+  - m_Id: 37374305622429696
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37374307644084224
+    m_Localized: 'Left Click: Select Tower, build Tower, demolish Tower, remove Stones
+
+      Right
+      Click: Deselect Tower
+
+      X: Toggle demolition mode
+
+      Spacebar: Dash
+
+      
+
+      1:
+      Select first tower in bar
+
+      2: Select second tower in bar
+
+      3:
+      Select third tower in bar
+
+      4: Select fourth tower in bar
+
+      5:
+      Select fifth tower in bar
+
+      
+
+      Esc: Pause Menu, close open Menu
+
+      Tab:
+      Open Status Menu
+
+      
+
+      K: Secret ability'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

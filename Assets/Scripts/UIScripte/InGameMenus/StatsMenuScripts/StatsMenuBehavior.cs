@@ -204,7 +204,7 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
         FillDetailValue("baseAttackDamage", _turret.baseAttackDamage, ref turretDetails);
         FillDetailValue("baseFireRate", _turret.baseFireRate, ref turretDetails);
         FillDetailValue("baseAttackRange", _turret.baseAttackRange, ref turretDetails);
-        FillDetailValue("turretSize", _turret.height + _turret.length, ref turretDetails);
+        FillDetailValue("turretSize", _turret.height * _turret.length, ref turretDetails);
         FillDetailValue("placementCooldown", _turret.placementCooldown, ref turretDetails);
         FillDetailValue("buildCapacityValue", _turret.buildCapacityValue, ref turretDetails);
     }

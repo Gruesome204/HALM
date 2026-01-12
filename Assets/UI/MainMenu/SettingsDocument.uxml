@@ -3,23 +3,27 @@
     <Style src="project://database/Assets/UI/Styles/MenuAnimationStyles.uss?fileID=7433441132597879392&amp;guid=315aee7341933ab40a32d620f236ea2f&amp;type=3#MenuAnimationStyles" />
     <Style src="project://database/Assets/UI/Styles/MenuBackgroundStyles.uss?fileID=7433441132597879392&amp;guid=3943508a6d9d1374aacf5e0e327636f9&amp;type=3#MenuBackgroundStyles" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
-    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass SlideIn settingsBackground settingsMenuSlideOut" style="width: 100%; height: 100%; align-items: center;">
+    <ui:VisualElement name="mainContainer" picking-mode="Ignore" class="mainContainerClass SlideIn settingsBackground" style="width: 100%; height: 100%; align-items: center;">
         <ui:VisualElement name="container" style="flex-grow: 1; flex-shrink: 0; width: 100%; height: 100%; align-items: center;">
             <ui:Button text="X" name="backBtn" class="backBtnClass stone-Text stoneButton" style="font-size: 30px;" />
             <ui:Label text="Label" name="headline" class="headline stone-Text" style="margin-top: 15px; margin-right: 0; margin-bottom: 30px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="ScrollView" style="width: 60%; height: 80%; align-items: flex-start; border-top-width: 3px; border-right-width: 0; border-bottom-width: 3px; border-left-width: 0; border-left-color: rgb(70, 0, 0); border-right-color: rgb(70, 0, 0); border-top-color: rgb(70, 0, 0); border-bottom-color: rgb(70, 0, 0);">
-                <ui:VisualElement name="LanguageSettings" enabled="true" style="width: 100%; height: 250px; align-items: flex-start;">
+                <ui:VisualElement name="LanguageSettings" enabled="true" style="width: 100%; height: auto; align-items: flex-start;">
                     <ui:Label text="Label" name="languageSettingsHeadline" class="sub-headline stone-Text" />
                     <ui:Button text="Button" name="englishBtn" class="settingsButtons stoneButton" style="align-self: flex-start;" />
                     <ui:Button text="Button" name="germanBtn" class="settingsButtons stoneButton" style="align-self: flex-start;" />
                     <ui:Button text="Button" name="developerBtn" class="settingsButtons stoneButton" style="align-self: flex-start;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="SoundSettings" style="width: 100%; height: 250px; padding-top: 10px;">
+                <ui:VisualElement name="SoundSettings" style="width: 100%; height: auto; padding-top: 20px;">
                     <ui:Label text="Label" name="soundSettingsHeadline" class="sub-headline stone-Text" style="align-self: flex-start;" />
                     <ui:Slider label="Master Volume" value="50" high-value="1" name="masterVolumeSlider" class="stone-Text" style="margin-top: 10px; margin-right: 5%; margin-bottom: 0; margin-left: 0;" />
                     <ui:Slider label="Music Volume" value="50" high-value="1" name="musicVolumeSlider" class="stone-Text" style="margin-top: 10px; margin-right: 5%; margin-bottom: 0; margin-left: 0;" />
                     <ui:Slider label="Sound Volume" value="50" high-value="1" name="soundVolumeSlider" fill="false" class="stone-Text" style="margin-top: 10px; margin-right: 5%; margin-bottom: 0; margin-left: 0;" />
                     <ui:SliderInt label="Music Track" value="42" high-value="8" name="musicTrackSlider" low-value="0" fill="false" class="stone-Text" style="width: 94.5%;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="ControlContainer" style="flex-grow: 1; align-items: flex-start; padding-top: 20px;">
+                    <ui:Label text="Label" name="controlHeadline" class="sub-headline stone-Text" />
+                    <ui:Label text="Label" name="controlText" class="stone-Text" style="white-space: normal;" />
                 </ui:VisualElement>
             </ui:ScrollView>
         </ui:VisualElement>

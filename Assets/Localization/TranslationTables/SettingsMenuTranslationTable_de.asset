@@ -58,6 +58,20 @@ MonoBehaviour:
     m_Localized: Chaos, that is all i am willing to say
     m_Metadata:
       m_Items: []
+  - m_Id: 37374305622429696
+    m_Localized: Tasten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37374307644084224
+    m_Localized: "Links Klick: Turm ausw\xE4hlen, Turm bauen, Turm abrei\xDFen, Steine
+      entfernen\nRechts Klick: Turm abw\xE4hlen\nX: Abrei\xDF Modus einschalten/
+      abschalten\nLeertaste: Sprint\n\n\n1: Erster Turm in Leiste ausw\xE4hlen\n2:
+      Zweiter Turm in Leiste ausw\xE4hlen\n3: Dritter Turm in Leiste ausw\xE4hlen\n4:
+      Vierter Turm in Leiste ausw\xE4hlen\n5: F\xFCnfter Turm in Leiste ausw\xE4hlen\n\nEsc:
+      Pause Men\xFC \xF6ffnen, Offenes Men\xFC schlie\xDFen\nTab: Status Men\xFC
+      \xF6ffnen\n\nK: Geheime F\xE4higkeit"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

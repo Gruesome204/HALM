@@ -36,9 +36,11 @@ MonoBehaviour:
   baseFireRateGrowthFactor: 0.15
   baseRangeGrowthFlat: 0.5
   buyCost:
+  - resourceType: 1
+    amount: 100
   - resourceType: 2
-    amount: 10
-  - resourceType: 0
+    amount: 150
+  - resourceType: 3
     amount: 50
   height: 2
   length: 2

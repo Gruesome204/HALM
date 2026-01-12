@@ -24,6 +24,9 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     private Slider musicVolumeSlider;
     private Slider soundVolumeSlider;
 
+    private Label controlHeadline;
+    private Label controlText;
+
     [Header("Audio Tracks")]
     public List<AudioSource> AllMusicTracks = new List<AudioSource>();
 
@@ -110,6 +113,13 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
         musicTrackSlider.AddToClassList("vanish");
         //musicTrackSlider.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "soundSliderMusicTrack"));
         //musicTrackSlider.highValue = AllMusicTracks.Count - 1;
+
+        //Control
+        controlHeadline = root.Q<Label>("controlHeadline");
+        controlHeadline.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "controlHeadline"));
+
+        controlText = root.Q<Label>("controlText");
+        controlText.SetBinding("text", new LocalizedString("SettingsMenuTranslationTable", "controlText"));
     }
     #endregion
 
