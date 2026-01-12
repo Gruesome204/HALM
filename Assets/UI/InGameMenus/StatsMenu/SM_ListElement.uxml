@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/DefaultStyleSheet.uss?fileID=7433441132597879392&amp;guid=8854b630f3fe425458e5fee956427a5f&amp;type=3#DefaultStyleSheet" />
     <Style src="project://database/Assets/UI/Styles/ButtonStyles.uss?fileID=7433441132597879392&amp;guid=813001e3c76b3b94fad224be3f89348b&amp;type=3#ButtonStyles" />
-    <ui:Button text="Button" name="listElement" class="smallPaperButton" style="width: 250px; height: 50px; -unity-text-align: upper-left;">
+    <ui:Button text="Button" name="listElement" class="smallPaperButton" style="width: auto; height: 50px; -unity-text-align: upper-left;">
         <ui:VisualElement name="listElementIcon" style="align-self: flex-end; height: 100%; position: relative; flex-shrink: 0; flex-grow: 1; width: 50%;" />
     </ui:Button>
 </ui:UXML>

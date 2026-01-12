@@ -22,6 +22,58 @@ MonoBehaviour:
     m_Localized: Hallo, hier sind die Anerkennungen
     m_Metadata:
       m_Items: []
+  - m_Id: 399259721142272
+    m_Localized: '
+
+      Project Manager
+
+      Lead Game Designer
+
+      Game Designer
+
+      Level
+      Designer
+
+      Grossmann Translation
+
+
+
+      Lead Programmer
+
+      Gameplay
+      Programmer
+
+      UI Programmer
+
+      Sound Programmer
+
+
+
+      Lead Artist
+
+      Game
+      Asset Artist
+
+      UI Artist
+
+      Post-Processing Artist
+
+
+
+
+
+
+      https://ovanisound.com/policies/terms-of-service'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 403112105480192
+    m_Localized: "Game Design\nHendrik Schmidt\nHendrik Schmidt\nLukas Loc Schneider\nHendrik
+      Schmidt\nMichelle Nicola\n\nProgramming\nLukas Loc Schneider \nLukas Loc Schneider
+      \nMichelle Nicola Grossmann\nMichelle Nicola Grossmann\n\nArt\nAlicia Jaschinski\nAlicia
+      Jaschinski\nMichelle Nicola Grossmann\nHendrik Schmidt\n\nSound Design\nMichelle
+      Nicola Grossmann\n\nExternal Material\nSound Libraries"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

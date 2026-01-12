@@ -12,18 +12,19 @@ public class AR_TowerLimitElementBehavior
         assignedNumber = _assignedNumber;
 
         border = resourceElemente.Q<VisualElement>("border");
-        border.style.backgroundColor = Color.red;
     }
 
     public void UpdateColor(int towersPlaced)
     {
         if (assignedNumber <= towersPlaced)
         {
-            border.style.backgroundColor = Color.red;
+            border.AddToClassList("towerLimitFilled");
+            border.RemoveFromClassList("towerLimitEmpty");
         }
         else
         {
-            border.style.backgroundColor = Color.white;
+            border.AddToClassList("towerLimitEmpty");
+            border.RemoveFromClassList("towerLimitFilled");
         }
     }
 }

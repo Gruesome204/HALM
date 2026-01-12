@@ -60,3 +60,7 @@
     padding-left: 8%;
     background-color: rgb(39, 33, 33);
 }
+
+.test {
+    background-color: rgba(255, 0, 0, 0.47);
+}

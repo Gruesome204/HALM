@@ -7,6 +7,12 @@
         <ui:VisualElement name="container" style="flex-grow: 1; width: 100%; height: 100%;">
             <ui:Label text="Label" name="headline" class="headline stone-Text" style="margin-top: 15px; margin-right: 0; margin-bottom: 30px; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             <ui:Button text="X" name="backBtn" class="backBtnClass stoneButton" />
+            <ui:ScrollView name="ScrollView" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="height: 75%; width: 70%; align-self: center;">
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                    <ui:Label text="Label" name="creditsNames" class="stone-Text" />
+                    <ui:Label text="Label" name="creditsText" class="stone-Text" style="-unity-font-style: normal;" />
+                </ui:VisualElement>
+            </ui:ScrollView>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

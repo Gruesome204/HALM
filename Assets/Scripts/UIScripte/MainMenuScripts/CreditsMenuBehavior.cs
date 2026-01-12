@@ -8,6 +8,8 @@ public class CreditsMenuBehavior : MonoBehaviour, IMenu
 {
     private Button backBtn;
     private Label creditsHeadline;
+    private Label creditsText;
+    private Label creditsNames;
 
     public void OpenOrClose(Boolean open)
     {
@@ -36,6 +38,12 @@ public class CreditsMenuBehavior : MonoBehaviour, IMenu
 
         creditsHeadline = root.Q<Label>("headline");
         creditsHeadline.SetBinding("text", new LocalizedString("CreditsMenuTranslationaTable", "headline"));
+
+        creditsText = root.Q<Label>("creditsText");
+        creditsText.SetBinding("text", new LocalizedString("CreditsMenuTranslationaTable", "creditsText"));
+
+        creditsNames = root.Q<Label>("creditsNames");
+        creditsNames.SetBinding("text", new LocalizedString("CreditsMenuTranslationaTable", "creditsNames"));
     }
 
     void OnBackBtnClicked(ClickEvent clicked)

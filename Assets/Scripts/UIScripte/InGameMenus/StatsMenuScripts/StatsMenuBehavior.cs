@@ -152,12 +152,15 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
 
             modifierElement.Q<Button>("button").pickingMode = PickingMode.Ignore;
             modifierElement.Q<Button>("button").RemoveFromClassList("woodButton");
-            modifierElement.Q<Button>("button").AddToClassList("paper-Text");
+            modifierElement.Q<Button>("button").AddToClassList("paperButton");
 
             modifierElement.Q<VisualElement>("textContainer").pickingMode = PickingMode.Ignore;
             modifierElement.Q<Label>("name").pickingMode = PickingMode.Ignore;
             modifierElement.Q<Label>("description").pickingMode = PickingMode.Ignore;
 
+            scroll.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+            scroll.verticalScrollerVisibility = ScrollerVisibility.Hidden;
+            scroll.style.flexGrow = 1;
             scroll.Add(modifierElement);
         }
 
@@ -222,13 +225,11 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
     {
         var valueName = new Label();
         valueName.AddToClassList("paper-Text");
-        valueName.AddToClassList("small-Text");
         valueName.SetBinding("text", new LocalizedString("ClassTranslationCommon", $"{value}"));
         _turretDetails.Q<VisualElement>("detailNames").Add(valueName);
 
         var valueNumbers = new Label();
         valueNumbers.AddToClassList("paper-Text");
-        valueNumbers.AddToClassList("small-Text");
         valueNumbers.text = $"{turretValue}";
         _turretDetails.Q<VisualElement>("detailNumbers").Add(valueNumbers);
     }

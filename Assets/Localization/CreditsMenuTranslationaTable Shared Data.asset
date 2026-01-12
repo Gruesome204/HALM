@@ -19,6 +19,14 @@ MonoBehaviour:
     m_Key: headline
     m_Metadata:
       m_Items: []
+  - m_Id: 403112105480192
+    m_Key: creditsNames
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399259721142272
+    m_Key: creditsText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
