@@ -70,7 +70,7 @@ public class TurretLevelManager : MonoBehaviour
 
     private void ApplyUpgradesForLevel(TurretType type, int level)
     {
-        var options = TurretUpgradeChoiceManager.Instance.GetAllOptionsForLevel(type, level);
+        var options = TurretUpgradeChoiceManager.Instance.GetAvailableOptionsForLevel(type, level);
 
         foreach (var option in options)
         {
