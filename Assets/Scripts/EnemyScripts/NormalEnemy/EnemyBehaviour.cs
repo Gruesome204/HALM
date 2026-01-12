@@ -36,6 +36,12 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     #endregion
 
 
+    #region Turret Damage Tracking
+    private bool aggroedByTurret = false;
+    private float turretAggroDuration = 5f; // seconds to keep aggro after turret hit
+    private float turretAggroTimer = 0f;
+    #endregion
+
     #region Unity Callbacks
     private void Awake()
     {
@@ -62,8 +68,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         EnemySpawnManager.Instance.RegisterEnemy(this.gameObject);
         if (GameManager.Instance == null)
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
-
-        AcquirePlayerTarget();
     }
 
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
@@ -73,11 +77,15 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         if (isPaused || (knockback != null && knockback.IsKnockedBack))
             return;
 
-        if (!isAggroed)
+        if (aggroedByTurret)
         {
-            CheckProximityAggro();
-            return;
+            turretAggroTimer -= Time.deltaTime;
+            if (turretAggroTimer <= 0f)
+                aggroedByTurret = false;
         }
+
+        CheckProximityAggro();
+
 
         if (target == null) return;
 
@@ -106,20 +114,31 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         movement.target = newTarget;
     }
 
-    public void AcquirePlayerTarget()
+    public GameObject AcquirePlayerTarget()
     {
-        if (target != null) return;
         cachedPlayer ??= GameObject.FindGameObjectWithTag("Player");
         target = cachedPlayer;
+        return target;
     }
-
     private void CheckProximityAggro()
     {
-        AcquirePlayerTarget();
+        if (target == null)
+            AcquirePlayerTarget();
+
         if (target == null) return;
 
-        if (Vector2.Distance(transform.position, target.transform.position) <= stats.currentDetectionRange)
+        float distance = Vector2.Distance(transform.position, target.transform.position);
+
+        // Only set aggro if within detection range or turret damage
+        if (!isAggroed && !aggroedByTurret && distance > stats.currentDetectionRange)
+            return;
+
+        if (!isAggroed)
             SetAggro(target);
+
+        // Only alert nearby enemies if this enemy is aggroed
+        if (isAggroed)
+            AlertNearbyEnemies();
     }
 
     private void AlertNearbyEnemies()
@@ -132,20 +151,17 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         {
             if (hit.TryGetComponent(out EnemyBehaviour enemy) && enemy != this)
             {
-                enemy.SetAggro(target);
+                enemy.SetAggro(target); // <-- call on the other enemy
             }
         }
     }
 
     private void SetAggro(GameObject newTarget)
     {
-        if (target == null) target = newTarget;
-
-        isAggroed = true; // always set aggro
-
-        SetMovementTarget(newTarget);
+        isAggroed = true;
         movement.isAggroed = true;
         abilityBehaviour?.SetTarget(newTarget);
+        Debug.Log("Set Aggro True");
     }
 
 
@@ -153,13 +169,13 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         isAggroed = false;
         movement.Stop();
-        movement.target = null;
+        movement.isAggroed = false;
         abilityBehaviour?.SetTarget(null);
     }
 
     private void CheckLoseAggro()
     {
-        if (!isAggroed || target == null) return;
+        if (!isAggroed || target == null || aggroedByTurret) return;
 
         float loseDistance = stats.currentDetectionRange * loseAggroMultiplier;
         float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
@@ -226,13 +242,17 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             Debug.LogWarning($"{name} took damage but no player found!");
             return;
         }
-        target = cachedPlayer;
-        // Aggro this enemy
-        if (!isAggroed)
+
+        // Check if damage came from a turret
+        if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out _))
         {
-            SetAggro(target);
+            aggroedByTurret = true;
+            turretAggroTimer = turretAggroDuration;
         }
+
+        SetAggro(target);
         AlertNearbyEnemies();
+        
     }
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
@@ -243,7 +263,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out var turret))
         {
             TurretLevelManager.Instance.AddXP(turret.blueprint.turretType, stats.currentExperienceYield);
-        }
+        }               
 
         EnemySpawnManager.Instance.UnregisterEnemy(gameObject);
         Destroy(gameObject);
