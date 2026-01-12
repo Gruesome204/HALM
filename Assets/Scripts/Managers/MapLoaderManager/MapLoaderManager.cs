@@ -22,6 +22,7 @@ public class MapLoaderManager : MonoBehaviour
 
     [Header("Objects(auto-detected)")]
     public List<GameObject> ExitBlockerObjects = new List<GameObject>(); // Multiple clickable blockers
+    [Header("Exit Object(Auto-detected)")]
     public GameObject ExitTriggerObject; // The trigger the player can walk into
 
     private void Awake()
@@ -96,8 +97,6 @@ public class MapLoaderManager : MonoBehaviour
 
         EnemySpawnManager.Instance.spawnPoints = spawnPoints;
 
-
-        //Debug.Log($"Loaded {spawnPoints.Length} enemy spawn points from current map.");
 
         // Player spawn point
         Transform pSpawn = currentMap.transform.Find("PlayerSpawnPoint");

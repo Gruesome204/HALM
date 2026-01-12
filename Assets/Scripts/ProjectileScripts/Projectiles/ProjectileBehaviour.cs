@@ -14,6 +14,9 @@ public class ProjectileBehaviour : MonoBehaviour
 
     public int remainingPierces;
 
+    [SerializeField] private LayerMask ignoreLayers;
+
+
     public void InitializePiercing(int pierces)
     {
         remainingPierces = pierces;
@@ -42,12 +45,11 @@ public class ProjectileBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Turret"))
-            return;
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (((1 << other.gameObject.layer) & ignoreLayers) != 0)
             return;
         if (other.gameObject == owner)
             return;
+
         // Try to get the IDamagable interface from the collided object
         IDamagable damagable = other.GetComponent<IDamagable>();
 
@@ -72,10 +74,9 @@ public class ProjectileBehaviour : MonoBehaviour
             if (remainingPierces > 0)
             {
                 remainingPierces--;
-            }
-            else
-            {
-                Destroy(gameObject);
+
+                if (remainingPierces < 0)
+                    Destroy(gameObject);
             }
         }
     }
