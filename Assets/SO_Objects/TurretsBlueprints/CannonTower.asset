@@ -26,7 +26,7 @@ MonoBehaviour:
   baseHealth: 250
   baseAttackDamage: 50
   baseFireRate: 0.25
-  baseProjectileSpeed: 12
+  baseProjectileSpeed: 15
   baseProjectilePierceCount: 3
   baseAttackRange: 20
   baseKnockbackStrength: 2

@@ -62,8 +62,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         EnemySpawnManager.Instance.RegisterEnemy(this.gameObject);
         if (GameManager.Instance == null)
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
-
-        AcquirePlayerTarget();
     }
 
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
@@ -73,11 +71,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         if (isPaused || (knockback != null && knockback.IsKnockedBack))
             return;
 
-        if (!isAggroed)
-        {
-            CheckProximityAggro();
-            return;
-        }
+        CheckProximityAggro();
+
 
         if (target == null) return;
 
@@ -106,20 +101,25 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         movement.target = newTarget;
     }
 
-    public void AcquirePlayerTarget()
+    public GameObject AcquirePlayerTarget()
     {
-        if (target != null) return;
         cachedPlayer ??= GameObject.FindGameObjectWithTag("Player");
         target = cachedPlayer;
+        return target;
     }
 
     private void CheckProximityAggro()
-    {
-        AcquirePlayerTarget();
-        if (target == null) return;
+    {    
+        
+        // Acquire the player if we don't have a target yet
+        if (target == null)
+            AcquirePlayerTarget(); // this sets target = cachedPlayer
+
+        if (target == null) return; // no player found, do nothing
 
         if (Vector2.Distance(transform.position, target.transform.position) <= stats.currentDetectionRange)
-            SetAggro(target);
+        SetAggro(target);
+        AlertNearbyEnemies();
     }
 
     private void AlertNearbyEnemies()
@@ -132,18 +132,16 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         {
             if (hit.TryGetComponent(out EnemyBehaviour enemy) && enemy != this)
             {
-                enemy.SetAggro(target);
+                SetAggro(target);
             }
         }
     }
 
     private void SetAggro(GameObject newTarget)
     {
-        if (target == null) target = newTarget;
-
-        isAggroed = true; // always set aggro
-
-        SetMovementTarget(newTarget);
+        // Only skip if already aggroed and not forcing
+        if (isAggroed) return;
+        isAggroed = true;
         movement.isAggroed = true;
         abilityBehaviour?.SetTarget(newTarget);
     }
@@ -153,7 +151,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         isAggroed = false;
         movement.Stop();
-        movement.target = null;
+        movement.isAggroed = false;
         abilityBehaviour?.SetTarget(null);
     }
 
@@ -226,13 +224,13 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             Debug.LogWarning($"{name} took damage but no player found!");
             return;
         }
-        target = cachedPlayer;
-        // Aggro this enemy
-        if (!isAggroed)
+
+        if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out var turret))
         {
+            Debug.Log("Enemy Took Damage from Turret");
             SetAggro(target);
+            AlertNearbyEnemies();
         }
-        AlertNearbyEnemies();
     }
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
@@ -243,7 +241,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out var turret))
         {
             TurretLevelManager.Instance.AddXP(turret.blueprint.turretType, stats.currentExperienceYield);
-        }
+        }               
 
         EnemySpawnManager.Instance.UnregisterEnemy(gameObject);
         Destroy(gameObject);

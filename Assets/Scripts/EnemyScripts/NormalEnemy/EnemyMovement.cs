@@ -5,7 +5,6 @@ public class EnemyMovement : MonoBehaviour
     [Header("References")]
     [SerializeField] private EnemyStats stats;
     private EnemyAnimator enemyAnimator;
-    public GameObject target;
     public EnemyKnockback knockback;
 
     private Rigidbody2D rb;
@@ -13,12 +12,33 @@ public class EnemyMovement : MonoBehaviour
     private bool ignorePursueRange;
     public bool isAggroed = false;
 
+    public GameObject target;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         stats = GetComponent<EnemyStats>();
         knockback = GetComponent<EnemyKnockback>();
-                enemyAnimator = GetComponent<EnemyAnimator>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
+    }
+
+    private void Start()
+    {
+        AcquirePlayerTarget();
+        isAggroed = false;
+    }
+    public void AcquirePlayerTarget()
+    {
+        if (target != null) return; // Already have a target
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            target = player;
+        }
+        else
+        {
+            Debug.LogWarning($"{name}: Player not found in scene!");
+        }
     }
 
     private void FixedUpdate()
@@ -46,10 +66,12 @@ public class EnemyMovement : MonoBehaviour
     {
         if (target == null || stats == null) return;
 
+        if(!isAggroed) return;
+
         float distance = Vector2.Distance(transform.position, target.transform.position);
 
         // Move if aggroed OR within pursue range
-        if (!isAggroed && !ignorePursueRange && distance > stats.currentPursueRange)
+        if (!ignorePursueRange && distance > stats.currentPursueRange)
             return;
 
         Vector2 dir = (target.transform.position - transform.position).normalized;
