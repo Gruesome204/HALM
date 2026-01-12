@@ -58,14 +58,14 @@ public class TurretGlobalModifierManager : MonoBehaviour
     // ---------------- GLOBAL MODIFIERS -------------------
     // 1 == 100%, 1.1 == 110%
     [Header("Global Turret Stats")]
-    public float globalTurretPlacementCooldownMultiplier = 1f;
-    public float globalHealthMultiplier = 1f;
-    public float globalDamageMultiplier = 1f;
-    public float globalFireRateMultiplier = 1f;
+    public float globalTurretPlacementCooldownMultiplier = 0f;
+    public float globalHealthMultiplier = 0f;
+    public float globalDamageMultiplier = 0f;
+    public float globalFireRateMultiplier = 0f;
     public int globalProjectilesPerSalve = 0; // additive
-    public float globalProjectileSpeed = 1f;
+    public float globalProjectileSpeed = 0f;
     public int globalMaxTurretCapacityBonus = 0;  // additive
-    public float globalPlacementRadiusMultiplier = 1f;
+    public float globalPlacementRadiusMultiplier = 0f;
 
     // ---------------- APPLY / REMOVE MODIFIERS -------------------
     public void AddModifier(BuildMasterModifier.Modifier modifier)
@@ -86,36 +86,28 @@ public class TurretGlobalModifierManager : MonoBehaviour
     private void RecalculateGlobalModifiers()
     {
         // Reset all globals to default
-        globalTurretPlacementCooldownMultiplier = 1f;
-        globalHealthMultiplier = 1f;
-        globalDamageMultiplier = 1f;
-        globalFireRateMultiplier = 1f;
+        globalTurretPlacementCooldownMultiplier = 0f;
+        globalHealthMultiplier = 0f;
+        globalDamageMultiplier = 0f;
+        globalFireRateMultiplier = 0f;
         globalProjectilesPerSalve = 0;
-        globalProjectileSpeed = 1f;
+        globalProjectileSpeed = 0f;
         globalMaxTurretCapacityBonus = 0;
-        globalPlacementRadiusMultiplier = 1f;
+        globalPlacementRadiusMultiplier = 0f;
 
         // Reapply all active modifiers
         foreach (var mod in appliedModifiers)
         {
-            globalTurretPlacementCooldownMultiplier *= mod.additionalStats.turretPlacementCooldownMultiplier;
-            globalHealthMultiplier *= mod.additionalStats.turretHealthMultiplier;
-            globalDamageMultiplier *= mod.additionalStats.turretDamageMultiplier;
-            globalFireRateMultiplier *= mod.additionalStats.turretFireRateMultiplier;
-            globalProjectileSpeed *= mod.additionalStats.turretProjectileSpeed;
+            globalTurretPlacementCooldownMultiplier += mod.additionalStats.turretPlacementCooldownMultiplier;
+            globalHealthMultiplier += mod.additionalStats.turretHealthMultiplier;
+            globalDamageMultiplier += mod.additionalStats.turretDamageMultiplier;
+            globalFireRateMultiplier += mod.additionalStats.turretFireRateMultiplier;
+            globalProjectileSpeed += mod.additionalStats.turretProjectileSpeed;
 
             globalProjectilesPerSalve += mod.additionalStats.turretProjectilesPerSalve;
             globalMaxTurretCapacityBonus += mod.additionalStats.turretMaxCapacityBonus;
-            globalPlacementRadiusMultiplier *= mod.additionalStats.turretPlacementRadiusMultiplier;
+            globalPlacementRadiusMultiplier += mod.additionalStats.turretPlacementRadiusMultiplier;
         }
-
-        // Clamp AFTER all modifiers are applied
-        globalTurretPlacementCooldownMultiplier = Mathf.Max(0.01f, globalTurretPlacementCooldownMultiplier);
-        globalHealthMultiplier = Mathf.Max(0.1f, globalHealthMultiplier);
-        globalDamageMultiplier = Mathf.Max(0.1f, globalDamageMultiplier);
-        globalFireRateMultiplier = Mathf.Max(0.1f, globalFireRateMultiplier);
-        globalProjectileSpeed = Mathf.Max(0.01f, globalProjectileSpeed);
-        globalPlacementRadiusMultiplier = Mathf.Max(0.1f, globalPlacementRadiusMultiplier);
 
         // Apply to all existing turrets
         ApplyModifiersToAllExistingTurrets();

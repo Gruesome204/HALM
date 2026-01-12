@@ -150,18 +150,31 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         foreach (var hit in hits)
         {
             if (hit.TryGetComponent(out EnemyBehaviour enemy) && enemy != this)
-            {
-                enemy.SetAggro(target); // <-- call on the other enemy
+            {   
+                // Only alert if the other enemy is not already aggroed or has no target
+                if (!enemy.isAggroed || enemy.target == null)
+                {
+                    enemy.SetAggro(target);
+                }
             }
         }
     }
 
     private void SetAggro(GameObject newTarget)
     {
+        if (newTarget == null) return;
+
         isAggroed = true;
         movement.isAggroed = true;
+        target = newTarget;
+
+        // Sync movement target
+        movement.target = newTarget;
+
+        // Sync ability target
         abilityBehaviour?.SetTarget(newTarget);
-        Debug.Log("Set Aggro True");
+
+        Debug.Log($"{name} set aggro on {newTarget.name}");
     }
 
 
