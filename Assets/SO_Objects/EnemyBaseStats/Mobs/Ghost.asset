@@ -20,9 +20,9 @@ MonoBehaviour:
   baseMaxHealth: 40
   baseArmor: 0
   baseMagicResistance: 0
-  baseKnockbackReduction: 5
+  baseKnockbackReduction: 0.5
   baseKnockbackForce: 0
-  baseKnockbackDuration: 0
+  baseKnockbackDuration: 0.2
   baseDamage: 8
   baseAttackSpeed: 1
   baseCritChance: 0

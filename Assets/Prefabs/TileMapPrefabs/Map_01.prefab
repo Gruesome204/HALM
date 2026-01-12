@@ -2685,7 +2685,6 @@ MonoBehaviour:
   isBossRoom: 0
   enemyPrefabs:
   - {fileID: 3645313828594104337, guid: 015b779532949344c837c8841fd97504, type: 3}
-  - {fileID: 3645313828594104337, guid: 7bfd39ed4013ca345a07cf8e4d48ca67, type: 3}
   spawnAmount: 5
   spawnInterval: 5
   bossPrefab: {fileID: 0}

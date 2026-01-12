@@ -86,9 +86,9 @@ GameObject:
   - component: {fileID: 2514377703225192388}
   - component: {fileID: 250192274628413378}
   - component: {fileID: 5967064363165784254}
-  - component: {fileID: 2538539538853416944}
   - component: {fileID: 7883716132835968374}
   - component: {fileID: 7015037455521178482}
+  - component: {fileID: 2538539538853416944}
   - component: {fileID: 3393257043857848876}
   - component: {fileID: 2922399955341994198}
   - component: {fileID: 643710246349556837}
@@ -196,23 +196,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2538539538853416944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3645313828594104337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17ffd5b0590513e409c7b7b089b126e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groupAggroRadius: 30
-  loseAggroMultiplier: 1.3
-  target: {fileID: 0}
-  abilityCheckInterval: 1
-  stopBuffer: 0.2
 --- !u!58 &7883716132835968374
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -276,6 +259,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &2538539538853416944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645313828594104337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ffd5b0590513e409c7b7b089b126e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupAggroRadius: 30
+  loseAggroMultiplier: 1.3
+  target: {fileID: 0}
+  abilityCheckInterval: 1
+  stopBuffer: 0.2
 --- !u!114 &3393257043857848876
 MonoBehaviour:
   m_ObjectHideFlags: 0

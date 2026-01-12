@@ -21,9 +21,6 @@ public class EnemyBaseStats : ScriptableObject
     public float baseArmor;
     public float baseMagicResistance;
     public float baseKnockbackReduction;
-    public float baseKnockbackForce;
-    public float baseKnockbackDuration;
-
 
     [Header("Offensive Stats")]
     public float baseDamage;
@@ -31,6 +28,10 @@ public class EnemyBaseStats : ScriptableObject
     public float baseCritChance;
     public float baseCritHitMultiplier;
     public float baseAttackRange;
+
+    [Header("Knockback Stats")]
+    public float baseKnockbackForce;
+    public float baseKnockbackDuration;
 
     [Header("Detection")]
     public float baseDetectionRange = 2f;

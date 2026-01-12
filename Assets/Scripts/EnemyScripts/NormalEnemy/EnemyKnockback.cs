@@ -10,8 +10,8 @@ public class EnemyKnockback : MonoBehaviour
     public EnemyHealth health;
 
     [Header("Knockback Settings")]
-    public float knockbackForce = 10f;
-    public float knockbackDuration = 0.5f;
+    public float knockbackForce = 5f;
+    public float knockbackDuration = 0.2f;
 
     private Rigidbody2D rb;
     private bool isKnockedBack;
@@ -34,7 +34,9 @@ public class EnemyKnockback : MonoBehaviour
     {
         if (hasKnockbackIFrames)
             return;
-        ApplyKnockback(knockbackData.direction, knockbackData.knockbackStrength);
+        ApplyKnockback(knockbackData.direction,
+                  knockbackData.knockbackStrength,
+                  knockbackData.knockbackDuration);
     }
     private void OnDisable()
     {
@@ -47,13 +49,13 @@ public class EnemyKnockback : MonoBehaviour
         stats ??= GetComponent<EnemyStats>();
     }
     // Applies a knockback force in the specified direction if not already knocked back.
-    public void ApplyKnockback(Vector2 direction, float strength)
+    public void ApplyKnockback(Vector2 direction, float strength, float knockbackDuration)
     {
         if (isKnockedBack || stats == null) return;
-        StartCoroutine(KnockbackRoutine(direction, strength));
+        StartCoroutine(KnockbackRoutine(direction, strength, knockbackDuration));
     }
     // Coroutine that applies and resolves knockback b  
-    private IEnumerator KnockbackRoutine(Vector2 direction, float strength)
+    private IEnumerator KnockbackRoutine(Vector2 direction, float strength, float knockbackDuration)
     {
         isKnockedBack = true;
         hasKnockbackIFrames = true;
@@ -62,11 +64,14 @@ public class EnemyKnockback : MonoBehaviour
         float adjustedForce =
             strength * knockbackForce * (1f - Mathf.Clamp01(stats.currentKnockbackReduction));
 
+        if (direction.sqrMagnitude < 0.001f)
+            direction = Vector2.up;
+
         rb.AddForce(direction.normalized * adjustedForce, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(knockbackDuration);
 
-        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity *= 0.1f;
         isKnockedBack = false;
 
         // Remaining i-frame duration (if any)
