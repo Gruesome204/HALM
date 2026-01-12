@@ -360,32 +360,38 @@ public class GameDataSO : ScriptableObject
         pulverResource = save.pulverResource;
 
         // Player upgrades
-        unlockedBuildMasterModifiers = allBuildMasterModifiers
-            .Where(m => save.unlockedBuildMasterModifierNames.Contains(m.name))
+        unlockedBuildMasterModifiers = save.unlockedBuildMasterModifierNames
+            .Select(name => allBuildMasterModifiers.FirstOrDefault(m => m.name == name))
+            .Where(m => m != null)
+            .Take(limitOfUnlockableModifiers)
             .ToList();
 
-        buildMasterModifiers = allBuildMasterModifiers
-            .Where(m => save.selectedBuildMasterModifierNames.Contains(m.name))
-            .ToList();
 
+        buildMasterModifiers = save.selectedBuildMasterModifierNames
+            .Select(name => allBuildMasterModifiers.FirstOrDefault(m => m.name == name))
+            .Where(m => m != null)
+            .Where(m => unlockedBuildMasterModifiers.Contains(m))
+            .Take(limitOfSelectableModifiers)
+            .ToList();
         // Turrets
-        unlockedBlueprints = allTurretBlueprints
-            .Where(b => save.unlockedBlueprintNames.Contains(b.name))
+        unlockedBlueprints = save.unlockedBlueprintNames
+            .Select(name => allTurretBlueprints.FirstOrDefault(b => b.name == name))
+            .Where(b => b != null)
+            .Take(limitOfUnlockableTurrets)
             .ToList();
 
-        selectedBlueprints = allTurretBlueprints
-          .Where(b => save.selectedBlueprintNames.Contains(b.name))
-          .ToList();
+        selectedBlueprints = save.selectedBlueprintNames
+       .Select(name => allTurretBlueprints.FirstOrDefault(b => b.name == name))
+       .Where(b => b != null)
+       .Where(b => unlockedBlueprints.Contains(b))
+       .Take(limitOfSelectableTurrets)
+       .ToList();
 
         // Sanitize blueprint selection
         selectedBlueprints = selectedBlueprints
             .Where(IsUnlocked)
             .Distinct()
             .Take(limitOfSelectableTurrets)
-            .ToList();
-        unlockedBlueprints = unlockedBlueprints
-            .Distinct()
-            .Take(limitOfUnlockableTurrets)
             .ToList();
 
         // Sanitize modifier selection

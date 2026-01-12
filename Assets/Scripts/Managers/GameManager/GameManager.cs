@@ -99,9 +99,6 @@ public class GameManager : MonoBehaviour
     private void LoadOrCreateSave()
     {
         TempSaveData saveData = SaveSystem.Load();
-
-
-
         if (saveData != null)
         {
             // Apply loaded data
