@@ -41,6 +41,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 40748bb504db2554c91a3400f59bc5b8, type: 2}
   - {fileID: 11400000, guid: e1d09ff082bc4f447a0e806ed2410fd9, type: 2}
   - {fileID: 11400000, guid: 2fc5e4ef1149ae745af940e75217bee3, type: 2}
-  defaultModifiers:
-  - {fileID: 11400000, guid: 909bf050f53471b48b52a65858383ff2, type: 2}
+  defaultModifiers: []
   defaultSelectedModifiers: []
