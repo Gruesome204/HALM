@@ -127,9 +127,9 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
 
         var player = FindFirstObjectByType<PlayerStats>();
 
-        FillCharacterDetailValue("playerHitpoints", player.currentHealth, ref charackterDetails);
-        FillCharacterDetailValue("playerArmor", player.currentArmor, ref charackterDetails);
-        FillCharacterDetailValue("playerMoveSpeed", player.currentMoveSpeed, ref charackterDetails);
+        FillCharacterDetailValue("playerHitpoints", player.baseHealth, ref charackterDetails);
+        FillCharacterDetailValue("playerArmor", player.baseArmor, ref charackterDetails);
+        FillCharacterDetailValue("playerMoveSpeed", player.moveSpeed, ref charackterDetails);
         FillCharacterDetailValue("playerBuildRadius", TurretPlacementController.Instance.placementRadius, ref charackterDetails);
 
     }
