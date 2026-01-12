@@ -16,8 +16,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     #region Targeting
     [Header("Targeting")]
-    [SerializeField] private float groupAggroRadius = 10f;
-    [SerializeField] private float loseAggroMultiplier = 1.3f;
+    [SerializeField] private float groupAggroRadius = 20f;
+    [SerializeField] private float loseAggroMultiplier = 1.5f;
 
     private static GameObject cachedPlayer;
     public GameObject target;
@@ -84,6 +84,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         HandleMovementTarget(target);
         TryAttack(target);
         TryUseAbilities(target);
+
+        CheckLoseAggro();
     }
     #endregion
 
@@ -122,27 +124,30 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     private void AlertNearbyEnemies()
     {
-        AcquirePlayerTarget();
         if (target == null) return;
 
+        // Detect all colliders within radius (temporarily without LayerMask for testing)
         var hits = Physics2D.OverlapCircleAll(transform.position, groupAggroRadius);
         foreach (var hit in hits)
         {
             if (hit.TryGetComponent(out EnemyBehaviour enemy) && enemy != this)
+            {
                 enemy.SetAggro(target);
+            }
         }
     }
 
     private void SetAggro(GameObject newTarget)
     {
-        if (isAggroed) return;
+        if (target == null) target = newTarget;
 
-        isAggroed = true;
-        AcquirePlayerTarget();
+        isAggroed = true; // always set aggro
+
         SetMovementTarget(newTarget);
-        movement.isAggroed = true; 
+        movement.isAggroed = true;
         abilityBehaviour?.SetTarget(newTarget);
     }
+
 
     private void ClearAggro()
     {
@@ -150,6 +155,19 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         movement.Stop();
         movement.target = null;
         abilityBehaviour?.SetTarget(null);
+    }
+
+    private void CheckLoseAggro()
+    {
+        if (!isAggroed || target == null) return;
+
+        float loseDistance = stats.currentDetectionRange * loseAggroMultiplier;
+        float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
+
+        if (distanceToTarget > loseDistance)
+        {
+            ClearAggro();
+        }
     }
     #endregion
 
@@ -198,21 +216,29 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     {
         if (isPaused) return;
         enemyAnimator?.PlayHit();
-        AcquirePlayerTarget();
-        if (target == null)
+
+        // Ensure we have a valid player target
+        if (cachedPlayer == null)
+            cachedPlayer = GameObject.FindGameObjectWithTag("Player");
+
+        if (cachedPlayer == null)
         {
-            Debug.LogWarning("Enemy damaged but no player found to chase!");
+            Debug.LogWarning($"{name} took damage but no player found!");
             return;
         }
-        Debug.Log($"{name} is now aggroed on {target.name}");
-        SetAggro(target);
+        target = cachedPlayer;
+        // Aggro this enemy
+        if (!isAggroed)
+        {
+            SetAggro(target);
+        }
         AlertNearbyEnemies();
     }
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {
         enemyAnimator?.PlayDeath();
-        DropResources();
+        DropResources();    
 
         if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out var turret))
         {

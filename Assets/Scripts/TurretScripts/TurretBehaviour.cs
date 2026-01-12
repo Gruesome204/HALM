@@ -58,6 +58,9 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     void Start()
     {
+        if (turretBlueprint != null && currentProjectileType == null)
+            currentProjectileType = turretBlueprint.turretProjectileType;
+
         currentFiringPattern = turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
         delayBetweenSalveProjectiles = turretBlueprint?.delayBetweenSalveProjectiles ?? 0.1f;
 
