@@ -392,12 +392,12 @@ public class TurretPlacementController : MonoBehaviour
 
     private bool IsPlacementBlocked(Vector3 position, Vector2 size)
     {
-        Vector2 checkSize = size * 0.9f;
+        Vector2 checkSize = size * GridManager.Instance.cellSize * 0.9f;
 
         return Physics2D.OverlapBox(position, checkSize, 0f, playerLayer) != null ||
-               Physics2D.OverlapBox(position, checkSize, 0f, enemyLayer) != null;
+               Physics2D.OverlapBox(position, checkSize, 0f, enemyLayer) != null ||
+               Physics2D.OverlapBox(position, checkSize, 0f, turretLayer) != null;
     }
-
     private void RegisterPlacedTurret(GameObject turret, Vector2Int gridCoords)
     {
         if (turret.TryGetComponent(out PlacableObject placable))

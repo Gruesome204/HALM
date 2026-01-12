@@ -36,7 +36,8 @@ public class SoundManager : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
     }
-    private void OnEnable()
+
+    private void Start()
     {
         EnemySpawnManager.Instance.OnAllEnemiesDefeated += PlayRoomCleared;
     }
