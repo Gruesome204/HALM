@@ -305,7 +305,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
         // <-- Play shooting sound
         if (SoundManager.Instance != null)
-            SoundManager.Instance.PlayShoot();
+            SoundManager.Instance.PlayTowerShoot();
     }
 
     private void ResetFiringCooldown()

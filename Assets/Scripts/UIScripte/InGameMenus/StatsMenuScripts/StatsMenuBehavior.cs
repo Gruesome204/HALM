@@ -38,6 +38,9 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
             GameManager.Instance.ChangeState(GameManager.GameState.Paused);
             ClearList();
 
+            //Play a Click sound to give audio feedback to the Player
+            SoundManager.Instance.PlayPaperMenuOpen();
+
             //This ensures that the picture in the back can grow as large as possible while keeping it's correct scale :D
             //It can only be run when the Menu is actually on screen, otherwise the numbers go hairwire O.o
             // I wanted to run this once in the Enable Method, but due to the above that didn't work :C
@@ -90,14 +93,14 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
     void OnResumeBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         InGameMenuManager.Instance.ReturnToGame();
     }
     void OnPauseBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         InGameMenuManager.Instance.CloseAllMenus();
         InGameMenuManager.Instance.OpenOrCloseOneMenu("PauseMenuDoc", true);
@@ -105,7 +108,7 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
     void OnCharackterBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         ClearList();
 
@@ -133,7 +136,7 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
     void OnRelicsBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         ClearList();
         var scroll = new ScrollView();
@@ -163,7 +166,7 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
     void OnTowerBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayPaperClick();
 
         ClearList();
 

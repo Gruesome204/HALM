@@ -22,6 +22,9 @@ public class GameWonBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("settingsMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
             GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+
+            //Play a Click sound to give audio feedback to the Player
+            SoundManager.Instance.PlayStoneMenuOpen();
         }
         else
         {
@@ -55,7 +58,7 @@ public class GameWonBehavior : MonoBehaviour, IMenu
     void OnReturnToHubButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         SceneManager.LoadScene("HubScene");
         GameManager.Instance.ChangeState(GameManager.GameState.HubMenu);
@@ -63,7 +66,7 @@ public class GameWonBehavior : MonoBehaviour, IMenu
     void OnReturnToMainMenuButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         SceneManager.LoadScene("MainMenu");
         GameManager.Instance.ChangeState(GameManager.GameState.MainMenu);
@@ -71,7 +74,7 @@ public class GameWonBehavior : MonoBehaviour, IMenu
     void OnExitButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         Application.Quit();
     }

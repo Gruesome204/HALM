@@ -35,6 +35,9 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
         {
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("settingsMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
+
+            //Play a Click sound to give audio feedback to the Player
+            SoundManager.Instance.PlayStoneMenuOpen();
         }
         else
         {
@@ -173,7 +176,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     private void SetNewLocale(string code)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         switch (code)
         {
@@ -193,7 +196,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     private void OnBackBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", false);
     }

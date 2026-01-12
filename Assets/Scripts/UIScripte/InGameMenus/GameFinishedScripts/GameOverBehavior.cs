@@ -23,6 +23,9 @@ public class GameOverBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("settingsMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
             GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+
+            //Play a Click sound to give audio feedback to the Player
+            SoundManager.Instance.PlayStoneMenuOpen();
         }
         else
         {
@@ -53,17 +56,10 @@ public class GameOverBehavior : MonoBehaviour, IMenu
 
     }
 
-    void OnRetryLevelButtonClicked(ClickEvent evt)
-    {
-        //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
-
-        SceneManager.LoadScene($"{SceneManager.GetActiveScene().name}");
-    }
     void OnReturnToHubButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         SceneManager.LoadScene("HubScene");
         GameManager.Instance.ChangeState(GameManager.GameState.Playing);
@@ -71,7 +67,7 @@ public class GameOverBehavior : MonoBehaviour, IMenu
     void OnReturnToMainMenuButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         SceneManager.LoadScene("MainMenu");
         GameManager.Instance.ChangeState(GameManager.GameState.Playing);
@@ -79,7 +75,7 @@ public class GameOverBehavior : MonoBehaviour, IMenu
     void OnExitButtonClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("stone");
+        SoundManager.Instance.PlayStoneClick();
 
         Application.Quit();
     }

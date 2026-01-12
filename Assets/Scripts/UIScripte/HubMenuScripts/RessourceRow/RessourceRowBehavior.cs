@@ -47,7 +47,7 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
     void PauseBtnClicked(ClickEvent evt)
     {
         //Play a Click sound to give audio feedback to the Player
-        InGameMenuManager.Instance.PlayClickSound("paper");
+        SoundManager.Instance.PlayWoodClick();
 
         InGameMenuManager.Instance.CloseAllMenus();
         InGameMenuManager.Instance.OpenOrCloseOneMenu("PauseMenuDoc", true);
