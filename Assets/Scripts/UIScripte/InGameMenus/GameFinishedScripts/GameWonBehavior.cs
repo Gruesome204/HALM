@@ -54,16 +54,25 @@ public class GameWonBehavior : MonoBehaviour, IMenu
 
     void OnReturnToHubButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         SceneManager.LoadScene("HubScene");
         GameManager.Instance.ChangeState(GameManager.GameState.HubMenu);
     }
     void OnReturnToMainMenuButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         SceneManager.LoadScene("MainMenu");
         GameManager.Instance.ChangeState(GameManager.GameState.MainMenu);
     }
     void OnExitButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         Application.Quit();
     }
 }

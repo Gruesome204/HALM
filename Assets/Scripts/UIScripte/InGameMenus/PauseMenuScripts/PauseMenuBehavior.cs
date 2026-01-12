@@ -95,27 +95,45 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
 
     void OnResumeBtnCicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         InGameMenuManager.Instance.ReturnToGame();
     }
     void OnStatsMenuButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         InGameMenuManager.Instance.CloseAllMenus();
         InGameMenuManager.Instance.OpenOrCloseOneMenu("StatsMenuDoc", true);
     }
     void OnSettingsBtnCicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", true);
     }
     void OnCancelRunBtnCicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         SceneManager.LoadScene("HubScene");
     }
     void OnMainMenuBtnCicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         SceneManager.LoadScene("MainMenu");
     }
     void OnExitBtnCicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         Application.Quit();
     }
 }

@@ -172,6 +172,9 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     #region Language
     private void SetNewLocale(string code)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         switch (code)
         {
             case "en":
@@ -189,6 +192,9 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
     private void OnBackBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("stone");
+
         InGameMenuManager.Instance.OpenOrCloseOneMenu("SettingsMenuDoc", false);
     }
 }

@@ -14,6 +14,9 @@ public class InGameMenuManager : MonoBehaviour
 
     public event Action<BuildMasterModifier, bool> OnBuildmasterModifierChanged;
 
+    public AudioSource paperClick;
+    public AudioSource woodClick;
+    public AudioSource stoneClick;
 
     void Start()
     {
@@ -164,8 +167,22 @@ public class InGameMenuManager : MonoBehaviour
         OpenOrCloseOneMenu("GameWonDoc", true);
     }
 
-    public void BuildmasterModifierAdded(BuildMasterModifier _modifier, bool _added)
+    public void PlayClickSound(string sound)
     {
-        OnBuildmasterModifierChanged.Invoke(_modifier, _added);
+        switch (sound)
+        {
+            case "paper":
+                paperClick.volume = GameManager.Instance.gameDataSO.masterVolume * GameManager.Instance.gameDataSO.soundVolume;
+                paperClick.Play();
+                break;
+            case "wood":
+                woodClick.volume = GameManager.Instance.gameDataSO.masterVolume * GameManager.Instance.gameDataSO.soundVolume;
+                woodClick.Play();
+                break;
+            case "stone":
+                stoneClick.volume = GameManager.Instance.gameDataSO.masterVolume * GameManager.Instance.gameDataSO.soundVolume;
+                stoneClick.Play();
+                break;
+        }
     }
 }

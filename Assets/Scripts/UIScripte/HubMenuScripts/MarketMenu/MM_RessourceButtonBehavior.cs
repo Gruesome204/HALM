@@ -29,6 +29,9 @@ public class MM_RessourceButtonBehaviior
 
     void OnButtonClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         marketMenu.FillRessourceDetails(represendetRessource);
     }
 }

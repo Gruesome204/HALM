@@ -36,6 +36,9 @@ public class TU_ChoiceElementBehavior
 
     void OnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("paper");
+
         ApplyUpgrade(option);
         InGameMenuManager.Instance.ReturnToGame();
     }

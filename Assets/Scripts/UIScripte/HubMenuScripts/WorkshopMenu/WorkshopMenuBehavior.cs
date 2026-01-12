@@ -225,6 +225,9 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     }
     void TurretSelected(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         GameManager.Instance.gameDataSO.DeselectBlueprint(openTurretDetails);
         Clear();
         Fill();
@@ -232,6 +235,9 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     }
     void TurretUnlocked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         if (GameManager.Instance.gameDataSO.SelectBlueprint(openTurretDetails))
         {
             Clear();
@@ -245,6 +251,9 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
     }
     void TurretLocked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         if (TurretCanBeBought())
         {
             foreach (var cost in openTurretDetails.buyCost)
@@ -274,6 +283,9 @@ public class WorkshopMenuBehavior : MonoBehaviour, IMenu
 
     void OnBackBtnClicked(ClickEvent clicked)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         InGameMenuManager.Instance.OpenOrCloseOneMenu("WorkshopDoc", false);
     }
 }

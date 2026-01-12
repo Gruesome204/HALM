@@ -212,6 +212,9 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
 
     private void ModifierLocked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         if (ModifierCanBeBought())
         {
             foreach (var cost in openModifierDetails.options.costs)
@@ -229,6 +232,9 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     }
     private void ModifierUnlocked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         if (GameManager.Instance.gameDataSO.SelectModifier(openModifierDetails))
         {
             FillMenu();
@@ -241,12 +247,18 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
     }
     private void ModifierSelected(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         GameManager.Instance.gameDataSO.DeselectModifier(openModifierDetails);
         FillMenu();
         FillModifierDetails(openModifierDetails, true, false);
     }
     private void OnBackBtnClicked(ClickEvent evt)
     {
+        //Play a Click sound to give audio feedback to the Player
+        InGameMenuManager.Instance.PlayClickSound("wood");
+
         InGameMenuManager.Instance.OpenOrCloseOneMenu("BuildmasterModifyDoc", false);
     }
 }
