@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BTO3
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevels: 1300000014000000
+  triggerLevels: 0200000014000000
   options:
   - optionId: 1aa8b72a-d154-4133-8e8a-b160ada74305
     name: BTO3
