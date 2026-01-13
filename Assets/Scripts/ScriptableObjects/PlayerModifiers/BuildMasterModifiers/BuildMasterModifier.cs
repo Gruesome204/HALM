@@ -35,13 +35,13 @@ public class BuildMasterModifier : ScriptableObject
 
         [Header("Turret Global Stats")]
 
-        [Tooltip("Multiplier applied to turret placement cooldown. 1 = no change, 0.9 = 10% faster.")]
+        [Tooltip("Multiplier applied to turret placement cooldown. 0 = no change, 0.1 = 10% faster.")]
         public float turretPlacementCooldownMultiplier;
 
-        [Tooltip("Multiplier applied to turret health. 1 = no change, 1.1 = +10% HP.")]
+        [Tooltip("Multiplier applied to turret health. 0 = no change, 0.1 = +10% HP.")]
         public float turretHealthMultiplier;
 
-        [Tooltip("Multiplier applied to turret damage. 1 = no change, 1.2 = +20% damage.")]
+        [Tooltip("Multiplier applied to turret damage. 0 = no change, 0.2 = +20% damage.")]
         public float turretDamageMultiplier;
 
         [Tooltip("Additive bonus to shots per second for all turrets.")]
@@ -50,13 +50,13 @@ public class BuildMasterModifier : ScriptableObject
         [Tooltip("Additive bonus to number of projectiles per salve.")]
         public int turretProjectilesPerSalve;
 
-        [Tooltip("Multiplier applied to projectile speed. 1 = no change, 1.1 = +10% speed.")]
+        [Tooltip("Multiplier applied to projectile speed. 0 = no change, 0.1 = +10% speed.")]
         public float turretProjectileSpeed;
 
         [Tooltip("Additive bonus to maximum turret capacity.")]
         public int turretMaxCapacityBonus;
 
-        [Tooltip("Multiplier applied to turret placement radius. 1 = no change, 1.2 = +20% radius.")]
+        [Tooltip("Multiplier applied to turret placement radius. 0 = no change, 0.2 = +20% radius.")]
         public float turretPlacementRadiusMultiplier;
 
         public void SetDefaults()
