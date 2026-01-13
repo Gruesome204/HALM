@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] public PlayerHealth playerHealth;
     private PlayerBehaviour playerBehaviour;
     public PlayerStats playerStats;
     public event Action OnPlayerDeath;

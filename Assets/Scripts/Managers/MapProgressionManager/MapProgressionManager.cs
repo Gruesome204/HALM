@@ -36,6 +36,8 @@ public class MapProgressionManager : MonoBehaviour
 
     public void LoadNextRoom()
     {
+        PlayerHealth playerHealth = PlayerManager.Instance.playerHealth;
+        playerHealth.Heal(10);
 
         // Clear all towers before loading a new map
         TurretPlacementController.Instance?.ClearAllTurrets();

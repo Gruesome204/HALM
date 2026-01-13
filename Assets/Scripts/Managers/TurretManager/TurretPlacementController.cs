@@ -97,7 +97,7 @@ public class TurretPlacementController : MonoBehaviour
 
     public void SetupFromGameData(GameDataSO gameData)
     {
-        turretBlueprintList = new List<TurretBlueprint>(gameData.GetUnlockedBlueprints());
+        turretBlueprintList = new List<TurretBlueprint>(gameData.GetSelectedBlueprints());
         Debug.Log($"[TurretPlacement] Loaded {turretBlueprintList.Count} unlocked turrets from GameDataSO.");
         OnTurretsChanged?.Invoke();
     }
