@@ -25,7 +25,7 @@ MonoBehaviour:
   delayBetweenSalveProjectiles: 0.5
   baseHealth: 250
   baseAttackDamage: 50
-  baseFireRate: 0.25
+  baseShotsPerSecond: 0.25
   baseProjectileSpeed: 10
   baseProjectilePierceCount: 3
   baseAttackRange: 20
@@ -33,7 +33,7 @@ MonoBehaviour:
   baseKnockbackDuration: 1
   baseHealthGrowthFactor: 0.1
   baseDamageGrowthFactor: 0
-  baseFireRateGrowthFactor: 0.1
+  shotsPerSecondGrowthFactor: 0.1
   baseRangeGrowthFlat: 0
   buyCost:
   - resourceType: 2
