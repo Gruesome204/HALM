@@ -16,7 +16,7 @@ MonoBehaviour:
     name: BallistischeMessgerate
     description: '+30% Turmreichweite
 
-      +20% Bauabklinzeit'
+      +10% Bauabklinzeit'
     icon: {fileID: 0}
     costs:
     - resourceType: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
       maxHealth: 0
       armor: 0
       movementSpeed: 0
-      turretPlacementCooldownMultiplier: 0.2
+      turretPlacementCooldownMultiplier: -0.1
       turretHealthMultiplier: 0
       turretDamageMultiplier: 0
       shotsPerSecondBonus: 0

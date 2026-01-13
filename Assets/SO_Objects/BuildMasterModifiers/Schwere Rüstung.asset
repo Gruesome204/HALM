@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   options:
     name: SchwereRustung
-    description: "+2 R\xFCstung\n-0,5 Laufgeschwindigkeit"
+    description: "+3 R\xFCstung\n-0,5 Laufgeschwindigkeit"
     icon: {fileID: 0}
     costs:
     - resourceType: 0
@@ -24,12 +24,12 @@ MonoBehaviour:
     additionalStats:
       health: 0
       maxHealth: 0
-      armor: 2
+      armor: 3
       movementSpeed: -0.5
       turretPlacementCooldownMultiplier: 0
       turretHealthMultiplier: 0
       turretDamageMultiplier: 0
-      turretFireRateMultiplier: 0
+      shotsPerSecondBonus: 0
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
       turretMaxCapacityBonus: 0

@@ -23,10 +23,10 @@ MonoBehaviour:
   turretProjectileType: {fileID: 1397600981807428680, guid: d3df5105a70605c43a377002780ecfe3, type: 3}
   firingPattern: 1
   projectilesPerSalve: 1
-  delayBetweenSalveProjectiles: 0.5
+  delayBetweenSalveProjectiles: 0.2
   baseHealth: 100
   baseAttackDamage: 10
-  baseFireRate: 1
+  baseShotsPerSecond: 1
   baseProjectileSpeed: 10
   baseProjectilePierceCount: 0
   baseAttackRange: 10
@@ -34,7 +34,7 @@ MonoBehaviour:
   baseKnockbackDuration: 0.3
   baseHealthGrowthFactor: 0
   baseDamageGrowthFactor: 0.1
-  baseFireRateGrowthFactor: 0.1
+  shotsPerSecondGrowthFactor: 0.15
   baseRangeGrowthFlat: 0
   buyCost: []
   height: 1

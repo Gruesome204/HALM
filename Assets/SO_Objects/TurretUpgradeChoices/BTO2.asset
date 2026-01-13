@@ -22,8 +22,8 @@ MonoBehaviour:
     modifier:
       turretPlacementCooldownMultiplier: 0
       healthMultiplier: 0
-      damageMultiplier: 0.5
-      fireRateMultiplier: 0
+      damageMultiplier: 0
+      shotsPerSecondBonus: 0
       projectileSpeed: 0
       projectilesPerSalve: 0
       rangeBonus: 0

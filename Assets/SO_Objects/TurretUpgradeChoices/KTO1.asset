@@ -17,13 +17,13 @@ MonoBehaviour:
   options:
   - optionId: 952e971e-35d4-479d-ae7f-eb2dc08a0363
     name: KTO1
-    description: "\xC4nderung der Geschosse"
+    description: +50% Lebenspunkte
     icon: {fileID: 0}
     modifier:
       turretPlacementCooldownMultiplier: 0
-      healthMultiplier: 0
+      healthMultiplier: 0.5
       damageMultiplier: 0
-      fireRateMultiplier: 0
+      shotsPerSecondBonus: 0
       projectileSpeed: 0
       projectilesPerSalve: 0
       rangeBonus: 0

@@ -22,7 +22,7 @@ MonoBehaviour:
   turretProjectileType: {fileID: 1397600981807428680, guid: e9f44b8e117439b4fab06d30c6b070a8, type: 3}
   firingPattern: 2
   projectilesPerSalve: 5
-  delayBetweenSalveProjectiles: 0.5
+  delayBetweenSalveProjectiles: 0.2
   baseHealth: 100
   baseAttackDamage: 10
   baseShotsPerSecond: 0.5
