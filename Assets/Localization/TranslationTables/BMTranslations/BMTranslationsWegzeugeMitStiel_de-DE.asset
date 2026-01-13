@@ -25,7 +25,7 @@ MonoBehaviour:
   - m_Id: 5366222848
     m_Localized: '+50% Baureichweite
 
-      +20% Bauabklinzeit'
+      +10% Bauabklinzeit'
     m_Metadata:
       m_Items: []
   references:

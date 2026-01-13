@@ -23,9 +23,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 29923872768
-    m_Localized: '+2 Armor
+    m_Localized: '+3 Armor
 
-      -0,5 Movement Speed'
+      -50% Movement Speed'
     m_Metadata:
       m_Items: []
   references:

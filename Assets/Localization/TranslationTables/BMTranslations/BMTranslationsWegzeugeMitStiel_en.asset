@@ -25,7 +25,7 @@ MonoBehaviour:
   - m_Id: 5366222848
     m_Localized: '+50% Build Reach
 
-      +20% Building Cooldown'
+      +10% Building Cooldown'
     m_Metadata:
       m_Items: []
   references:

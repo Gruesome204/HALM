@@ -25,7 +25,7 @@ MonoBehaviour:
   - m_Id: 307297390592
     m_Localized: '+30% Tower Reach
 
-      +20% Build Cooldown'
+      +10% Build Cooldown'
     m_Metadata:
       m_Items: []
   references:

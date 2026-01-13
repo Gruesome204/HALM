@@ -200,6 +200,8 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
         var turretIcon = turretDetails.Q<VisualElement>("icon");
         turretIcon.AddToClassList($"{_turret.turretName}Icon");
 
+        FillDetailValue("turretLevel", TurretLevelManager.Instance.GetLevel(_turret.turretType), ref turretDetails);
+
         FillDetailValue("baseHealth", _turret.baseHealth, ref turretDetails);
         FillDetailValue("baseAttackDamage", _turret.baseAttackDamage, ref turretDetails);
         FillDetailValue("baseShotsPerSecond", _turret.baseShotsPerSecond, ref turretDetails);

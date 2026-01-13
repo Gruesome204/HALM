@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 29923872768
-    m_Localized: "+2 R\xFCstung\n-0,5 Laufgeschwindigkeit"
+    m_Localized: "+3 R\xFCstung\n-50% Laufgeschwindigkeit"
     m_Metadata:
       m_Items: []
   references:
