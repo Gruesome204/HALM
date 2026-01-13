@@ -47,6 +47,10 @@ MonoBehaviour:
     m_Key: buildCapacityValue
     m_Metadata:
       m_Items: []
+  - m_Id: 72475811015127040
+    m_Key: turretLevel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

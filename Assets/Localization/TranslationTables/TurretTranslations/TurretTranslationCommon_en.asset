@@ -50,6 +50,10 @@ MonoBehaviour:
     m_Localized: 'Costs:  '
     m_Metadata:
       m_Items: []
+  - m_Id: 72475811015127040
+    m_Localized: 'Level: '
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
