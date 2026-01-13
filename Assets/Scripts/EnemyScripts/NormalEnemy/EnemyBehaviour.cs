@@ -180,7 +180,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         isAggroed = true;
         target = newTarget;
 
-        movement.SetTarget(newTarget);
+        //movement.SetTarget(newTarget);
 
         // Sync ability target
         abilityBehaviour?.SetTarget(newTarget);
@@ -195,7 +195,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         target = null;
 
         movement.Stop();
-        movement.SetTarget(null);
+        //movement.SetTarget(null);
         abilityBehaviour?.SetTarget(null);
     }
 

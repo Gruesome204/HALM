@@ -71,7 +71,7 @@ public class TurretPlacementController : MonoBehaviour
     public Transform playerTransform;
 
     // Active turret tracking
-    private List<GameObject> activeTurrets = new();
+    public List<GameObject> activeTurrets = new();
     private List<TurretHealth> placedTurrets = new();
     private Dictionary<TurretBlueprint, float> cooldownEndTimes = new();
 
@@ -144,6 +144,7 @@ public class TurretPlacementController : MonoBehaviour
     public void UnregisterTurret(TurretHealth turret)
     {
         placedTurrets.Remove(turret);
+        OnTurretsChanged.Invoke();
     }
 
     public bool IsBlueprintOnCooldown(TurretBlueprint blueprint)
@@ -438,6 +439,7 @@ public class TurretPlacementController : MonoBehaviour
         if (turret != null && activeTurrets.Contains(turret.gameObject))
             activeTurrets.Remove(turret.gameObject);
 
+        activeTurrets.Remove(turret.transform.parent.gameObject);
         OnTurretsChanged?.Invoke();
     }
 
