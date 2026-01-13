@@ -164,24 +164,38 @@
         currentProjectilePierce = stats.pierceCount;
         currentKnockbackStrength = stats.knockbackStrength;
         currentKnockbackDuration = stats.knockbackDuration;
+
+        // --- Dynamically choose firing pattern ---
+        if (projectilesPerSalve > 1)
+        {
+            currentFiringPattern = TurretBlueprint.FiringPattern.FireSalve;
+        }
+        else
+        {
+            // If the base blueprint is single shot, use that; otherwise fallback
+            currentFiringPattern = (turretBlueprint?.firingPattern == TurretBlueprint.FiringPattern.FireSalve)
+                ? TurretBlueprint.FiringPattern.SingleShot
+                : turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
+        }
     }
 
     void Update()
-        {
-            if (isPaused) return;
+    {
+        if (isPaused) return;
 
-            currentShotCooldown -= Time.deltaTime;
+        currentShotCooldown -= Time.deltaTime;
 
-            if (currentShotCooldown > 0f || salveInProgress)
-                return;
-            FindTarget();
-            if (targetEnemy == null)
-                return;
+        if (currentShotCooldown > 0f)
+            return;
 
-            Fire();
-        }
+        FindTarget();
+        if (targetEnemy == null)
+            return;
 
-        void FindTarget()
+        Fire();
+    }
+
+    void FindTarget()
         {
             Collider2D[] enemiesInRange =
                 Physics2D.OverlapCircleAll(transform.position, currentAttackRange, enemyLayer);
@@ -224,88 +238,23 @@
             return enemies;
         }
 
-
-        // Coroutine for shooting a fire salve
-        IEnumerator ShootFireSalve()
+    private void Fire()
+    {
+        switch (currentFiringPattern)
         {
-            if (salveInProgress)
-                yield break;
+            case TurretBlueprint.FiringPattern.SingleShot:
+                ShootProjectileAt(targetEnemy);
+                ResetFiringCooldown();
+                break;
 
-            salveInProgress = true;
-
-            float delay = delayBetweenSalveProjectiles;
-
-            // snapshot of all enemies in range at the moment the salve starts
-            List<Transform> targets = GetEnemiesInRange();
-
-            if (targets.Count == 0)
-            {
-                salveInProgress = false;
-                yield break;
-            }
-
-            // Optional: shuffle targets for more dynamic salve
-            for (int t = 0; t < targets.Count; t++)
-            {
-                int r = UnityEngine.Random.Range(t, targets.Count);
-                var temp = targets[t];
-                targets[t] = targets[r];
-                targets[r] = temp;
-            }
-
-            int targetIndex = 0;
-
-            for (int i = 0; i < projectilesPerSalve; i++)
-            {
-                // Pause-safe waiting
-                while (isPaused)
-                    yield return null;
-
-                // Filter alive and in-range targets
-                targets.RemoveAll(t => t == null || Vector2.Distance(transform.position, t.position) > currentAttackRange);
-                if (targets.Count == 0)
-                    break;
-
-                Transform currentTarget = targets[targetIndex % targets.Count];
-
-                ShootProjectileAt(currentTarget);
-
-                // Move to next target in the next shot
-                targetIndex++;
-
-                // Wait between shots
-                float elapsed = 0f;
-                while (elapsed < delay)
-                {
-                    if (!isPaused)
-                        elapsed += Time.deltaTime;
-
-                    yield return null;
-                }
-            }
-
-
-            salveInProgress = false;
+            case TurretBlueprint.FiringPattern.FireSalve:
+                if (!salveInProgress)
+                    StartCoroutine(FireSalveWithCooldown());
+                break;
         }
+    }
 
-
-        private void Fire()
-        {
-            switch (currentFiringPattern)
-            {
-                case TurretBlueprint.FiringPattern.SingleShot:
-                    ShootProjectileAt(targetEnemy);
-                    ResetFiringCooldown();
-                    break;
-
-                case TurretBlueprint.FiringPattern.FireSalve:
-                    StartCoroutine(ShootFireSalve());
-                    ResetFiringCooldown();
-                    break;
-            }
-        }
-
-        void ShootProjectileAt(Transform target)
+    void ShootProjectileAt(Transform target)
         {
             if (currentProjectileType == null || target == null || firePoint == null)
                 return;
@@ -343,6 +292,59 @@
         {
             currentShotCooldown = 1f / currentShotsPerSecond;
         }
+    private IEnumerator FireSalveWithCooldown()
+    {
+        salveInProgress = true;
+
+        // Get all enemies in range at start
+        List<Transform> targets = GetEnemiesInRange();
+        if (targets.Count == 0)
+        {
+            salveInProgress = false;
+            yield break;
+        }
+
+        // Shuffle targets for dynamic salve
+        for (int t = 0; t < targets.Count; t++)
+        {
+            int r = UnityEngine.Random.Range(t, targets.Count);
+            var temp = targets[t];
+            targets[t] = targets[r];
+            targets[r] = temp;
+        }
+
+        int targetIndex = 0;
+
+        for (int i = 0; i < projectilesPerSalve; i++)
+        {
+            // Pause-safe waiting
+            while (isPaused)
+                yield return null;
+
+            // Remove dead or out-of-range targets
+            targets.RemoveAll(t => t == null || Vector2.Distance(transform.position, t.position) > currentAttackRange);
+            if (targets.Count == 0)
+                break;
+
+            Transform currentTarget = targets[targetIndex % targets.Count];
+            ShootProjectileAt(currentTarget);
+
+            targetIndex++;
+
+            // Wait between shots
+            float elapsed = 0f;
+            while (elapsed < delayBetweenSalveProjectiles)
+            {
+                if (!isPaused)
+                    elapsed += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        ResetFiringCooldown(); // cooldown applied after full salve
+        salveInProgress = false;
+    }
+
 
     void OnDrawGizmosSelected()
         {
