@@ -31,8 +31,8 @@ MonoBehaviour:
       turretPlacementCooldownMultiplier: 0
       turretHealthMultiplier: 0.2
       turretDamageMultiplier: 0
-      turretFireRateMultiplier: 0
+      shotsPerSecondBonus: 0
       turretProjectilesPerSalve: 0
       turretProjectileSpeed: 0
-      turretMaxCapacityBonus: 0
+      turretMaxCapacityBonus: -1
       turretPlacementRadiusMultiplier: 0
