@@ -320,6 +320,7 @@ public class TurretPlacementController : MonoBehaviour
 
     private void TryPlaceTurret()
     {
+
         if (playerTransform == null) return;
 
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -336,9 +337,11 @@ public class TurretPlacementController : MonoBehaviour
         GameObject turret = Instantiate(currentSelectedBlueprint.turretPrefab, snappedPos, Quaternion.identity, turretContainer);
         RegisterPlacedTurret(turret, gridCoords);
 
-        float cd = currentSelectedBlueprint.placementCooldown * TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
+
+        float cd = GetModifiedPlacementCooldown(currentSelectedBlueprint);
         cooldownEndTimes[currentSelectedBlueprint] = Time.time + cd;
-        StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint));
+
+        StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint, cd));
 
         //Play a Click sound to give audio feedback to the Player
         SoundManager.Instance.PlayTowerBuild();
@@ -431,10 +434,10 @@ public class TurretPlacementController : MonoBehaviour
         activeTurrets.Add(turret);
     }
 
-    private IEnumerator StartAndEndCooldown(TurretBlueprint blueprint)
+    private IEnumerator StartAndEndCooldown(TurretBlueprint blueprint, float cooldown)
     {
         OnPlacementCooldownStateChanged?.Invoke(blueprint, true);
-        yield return new WaitForSeconds(blueprint.placementCooldown);
+        yield return new WaitForSeconds(cooldown);
         OnPlacementCooldownStateChanged?.Invoke(blueprint, false);
     }
 
@@ -451,6 +454,13 @@ public class TurretPlacementController : MonoBehaviour
     {
         if (currentSelectedBlueprint == blueprint)
             Debug.Log($"Cooldown changed: {blueprint.name} active={active}");
+    }
+
+    public float GetModifiedPlacementCooldown(TurretBlueprint blueprint)
+    {
+        float baseCooldown = blueprint.placementCooldown;
+        float multiplier = 1f - TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
+        return Mathf.Max(0.05f, baseCooldown * multiplier); // prevent zero or negative cooldown
     }
 
     // ========================

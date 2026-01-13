@@ -28,7 +28,7 @@ MonoBehaviour:
       maxHealth: 0
       armor: 0
       movementSpeed: 0
-      turretPlacementCooldownMultiplier: -0.3
+      turretPlacementCooldownMultiplier: 0.3
       turretHealthMultiplier: 0
       turretDamageMultiplier: 0
       shotsPerSecondBonus: 0
