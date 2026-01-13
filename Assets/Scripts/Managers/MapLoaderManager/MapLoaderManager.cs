@@ -41,6 +41,12 @@ public class MapLoaderManager : MonoBehaviour
 
     private GameObject LoadMapFromPrefab(GameObject prefab)
     {
+        if (EnemySpawnManager.Instance == null)
+        {
+            Debug.LogError("EnemySpawnManager missing!");
+            return null;
+        }
+
         if (currentMap != null)
             Destroy(currentMap);
 

@@ -14,7 +14,7 @@ public class MapProgressionManager : MonoBehaviour
     public bool autoProgress = false;
 
     public bool roomClearedWaitingForPlayer = false;
-
+    private bool isLoadingNextRoom = false;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,17 +29,22 @@ public class MapProgressionManager : MonoBehaviour
     {
         CurrentEnemyLevel = baseEnemyLevel;
 
-        MapLoaderManager.Instance.GenerateMapSequence();
         LoadNextRoom();
     }
 
     public void LoadNextRoom()
     {
+        if (isLoadingNextRoom) return;
+        isLoadingNextRoom = true;
         PlayerManager.Instance.playerHealth.Heal(10);
         TurretPlacementController.Instance?.ClearAllTurrets();
 
         GameObject map = MapLoaderManager.Instance.LoadNextMap();
-        if (map == null) return;
+        if (map == null)
+        {
+            isLoadingNextRoom = false;
+            return;
+        }
 
         EnemySpawnManager spawner = EnemySpawnManager.Instance;
         spawner.PrepareForNewRoom();
@@ -48,17 +53,19 @@ public class MapProgressionManager : MonoBehaviour
 
         if (setup != null && setup.isBossRoom)
         {
+            if (setup.bossPrefab == null)
+            {
+                Debug.LogError("[Progression] Boss room has no boss prefab!");
+                return;
+            }
+
             spawner.OnBossDefeated -= OnRoomCleared;
             spawner.OnBossDefeated += OnRoomCleared;
             spawner.SpawnBoss(setup.bossPrefab);
         }
-        else
-        {
-            spawner.OnAllEnemiesDefeated -= OnRoomCleared;
-            spawner.OnAllEnemiesDefeated += OnRoomCleared;
-        }
 
         CurrentEnemyLevel += enemyLevelIncreasePerMap;
+        isLoadingNextRoom = false;
     }
 
     private void OnRoomCleared()
