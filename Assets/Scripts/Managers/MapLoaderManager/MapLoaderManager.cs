@@ -52,7 +52,6 @@ public class MapLoaderManager : MonoBehaviour
 
         currentMap = Instantiate(prefab, mapParent);
 
-        AssignSpawnPointsToEnemyManager();
         ApplyMapEnemySetup();
 
         ExitBlockerObjects = FindAllObjectsInChildrenWithTag(currentMap, "ExitBlocker");

@@ -276,6 +276,13 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         ResetSpawner();
         isBossRoom = false;
         activeEnemies.Clear();
+
+        // If CurrentSpawnAmount is 0, mark as all spawned so room clears
+        if (CurrentSpawnAmount <= 0)
+        {
+            allEnemiesSpawned = true;
+            CheckIfAllEnemiesDefeated();
+        }
     }
 
     public void OnPause()
