@@ -51,6 +51,10 @@ public class MapProgressionManager : MonoBehaviour
 
         MapEnemySetup setup = map.GetComponent<MapEnemySetup>();
 
+        // Unsubscribe first to avoid multiple calls
+        spawner.OnAllEnemiesDefeated -= OnRoomCleared;
+        spawner.OnBossDefeated -= OnRoomCleared;
+
         if (setup != null && setup.isBossRoom)
         {
             if (setup.bossPrefab == null)
@@ -59,9 +63,13 @@ public class MapProgressionManager : MonoBehaviour
                 return;
             }
 
-            spawner.OnBossDefeated -= OnRoomCleared;
             spawner.OnBossDefeated += OnRoomCleared;
             spawner.SpawnBoss(setup.bossPrefab);
+        }
+        else
+        {
+            // Subscribe to normal room completion
+            spawner.OnAllEnemiesDefeated += OnRoomCleared;
         }
 
         CurrentEnemyLevel += enemyLevelIncreasePerMap;

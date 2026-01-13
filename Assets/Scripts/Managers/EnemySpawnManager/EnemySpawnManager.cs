@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -44,6 +45,21 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     public float CurrentSpawnInterval => (CurrentMapSetup != null && CurrentMapSetup.spawnInterval > 0f)
         ? CurrentMapSetup.spawnInterval : 3f;
 
+    [Header("Debug / Inspector")]
+    [SerializeField, ReadOnly] private int enemiesRemainingInspector;
+
+    [SerializeField] public int EnemiesRemaining
+    {
+        get
+        {
+            // Clean null references first
+            activeEnemies.RemoveAll(e => e == null);
+
+            // Only count remaining normal enemies (exclude bosses if you want separate handling)
+            return activeEnemies.Count;
+        }
+    }
+
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
     private void Awake()
@@ -65,6 +81,8 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
     void Update()
     {
         if (isPaused) return;
+
+        enemiesRemainingInspector = EnemiesRemaining;
 
         // Don't spawn normal enemies in boss rooms
         if (isBossRoom)

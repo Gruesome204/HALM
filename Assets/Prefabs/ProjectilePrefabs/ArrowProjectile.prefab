@@ -302,6 +302,6 @@ MonoBehaviour:
   knockbackDuration: 0
   direction: {x: 0, y: 0}
   remainingPierces: 0
-  ignoreLayers:
+  enemyLayer:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 256

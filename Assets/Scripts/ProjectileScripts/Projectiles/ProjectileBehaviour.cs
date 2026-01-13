@@ -14,7 +14,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
     public int remainingPierces;
 
-    [SerializeField] private LayerMask ignoreLayers;
+    [SerializeField] private LayerMask enemyLayer;
 
 
     public void InitializePiercing(int pierces)
@@ -45,7 +45,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (((1 << other.gameObject.layer) & ignoreLayers) != 0)
+        if (((1 << other.gameObject.layer) & enemyLayer) == 0)
             return;
         if (other.gameObject == owner)
             return;
