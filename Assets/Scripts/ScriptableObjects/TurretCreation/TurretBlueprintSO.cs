@@ -59,10 +59,7 @@ public class TurretBlueprint : ScriptableObject
 
     [Header("Base Values")]
     [Tooltip("Shots fired per second.")]
-    public float baseFireRate = 1f;
-
-    [Tooltip("Time between shots calculated from fire rate.")]
-    public float BaseFireCountdown => 1f / baseFireRate;
+    public float baseShotsPerSecond = 1f;
 
     [Tooltip("Speed of the projectile when fired.")]
     public float baseProjectileSpeed = 10f;
@@ -87,7 +84,7 @@ public class TurretBlueprint : ScriptableObject
     public float baseDamageGrowthFactor = 0.2f;
 
     [Tooltip("Fire rate scaling per level (0.5 = 5% faster per level).")]
-    public float baseFireRateGrowthFactor = 0.15f;
+    public float shotsPerSecondGrowthFactor = 0.15f;
 
     [Tooltip("Flat increase in range per level.")]
     public float baseRangeGrowthFlat = 0.5f;

@@ -321,6 +321,7 @@ public class TurretPlacementController : MonoBehaviour
 
     private void TryPlaceTurret()
     {
+
         if (playerTransform == null) return;
 
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -337,9 +338,11 @@ public class TurretPlacementController : MonoBehaviour
         GameObject turret = Instantiate(currentSelectedBlueprint.turretPrefab, snappedPos, Quaternion.identity, turretContainer);
         RegisterPlacedTurret(turret, gridCoords);
 
-        float cd = currentSelectedBlueprint.placementCooldown * TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
+
+        float cd = GetModifiedPlacementCooldown(currentSelectedBlueprint);
         cooldownEndTimes[currentSelectedBlueprint] = Time.time + cd;
-        StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint));
+
+        StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint, cd));
 
         //Play a Click sound to give audio feedback to the Player
         SoundManager.Instance.PlayTowerBuild();
@@ -393,12 +396,12 @@ public class TurretPlacementController : MonoBehaviour
 
     private bool IsPlacementBlocked(Vector3 position, Vector2 size)
     {
-        Vector2 checkSize = size * 0.9f;
+        Vector2 checkSize = size * GridManager.Instance.cellSize * 0.9f;
 
         return Physics2D.OverlapBox(position, checkSize, 0f, playerLayer) != null ||
-               Physics2D.OverlapBox(position, checkSize, 0f, enemyLayer) != null;
+               Physics2D.OverlapBox(position, checkSize, 0f, enemyLayer) != null ||
+               Physics2D.OverlapBox(position, checkSize, 0f, turretLayer) != null;
     }
-
     private void RegisterPlacedTurret(GameObject turret, Vector2Int gridCoords)
     {
         if (turret.TryGetComponent(out PlacableObject placable))
@@ -411,7 +414,13 @@ public class TurretPlacementController : MonoBehaviour
         if (behaviour != null)
         {
             behaviour.turretBlueprint = currentSelectedBlueprint;
-            behaviour.RecalculateStats();
+
+            int level = 1; // default level
+            var stats = turret.GetComponentInChildren<TurretStats>();
+            if (stats != null)
+                level = stats.currentLevel;
+
+            behaviour.RecalculateStats(level);
         }
 
 
@@ -426,10 +435,10 @@ public class TurretPlacementController : MonoBehaviour
         activeTurrets.Add(turret);
     }
 
-    private IEnumerator StartAndEndCooldown(TurretBlueprint blueprint)
+    private IEnumerator StartAndEndCooldown(TurretBlueprint blueprint, float cooldown)
     {
         OnPlacementCooldownStateChanged?.Invoke(blueprint, true);
-        yield return new WaitForSeconds(blueprint.placementCooldown);
+        yield return new WaitForSeconds(cooldown);
         OnPlacementCooldownStateChanged?.Invoke(blueprint, false);
     }
 
@@ -447,6 +456,13 @@ public class TurretPlacementController : MonoBehaviour
     {
         if (currentSelectedBlueprint == blueprint)
             Debug.Log($"Cooldown changed: {blueprint.name} active={active}");
+    }
+
+    public float GetModifiedPlacementCooldown(TurretBlueprint blueprint)
+    {
+        float baseCooldown = blueprint.placementCooldown;
+        float multiplier = 1f - TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
+        return Mathf.Max(0.05f, baseCooldown * multiplier); // prevent zero or negative cooldown
     }
 
     // ========================

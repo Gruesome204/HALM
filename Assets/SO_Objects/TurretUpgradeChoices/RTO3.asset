@@ -23,7 +23,7 @@ MonoBehaviour:
       turretPlacementCooldownMultiplier: 0
       healthMultiplier: 0
       damageMultiplier: 0
-      fireRateMultiplier: 0.25
+      shotsPerSecondBonus: 0.25
       projectileSpeed: 0
       projectilesPerSalve: 0
       rangeBonus: 0

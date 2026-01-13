@@ -12,7 +12,10 @@ public class TurretStats : MonoBehaviour
     public float currentMaxHealth;
     public float currentAttackDamage;
     public float currentAttackRange;
-    public float currentFireRate;
+
+    public float currentShotsPerSecond;
+    public float currentShotInterval;
+
     public float currentProjectileSpeed;
     public float currentKnockbackStrength;
     public float currentKnockbackDuration;
@@ -20,8 +23,8 @@ public class TurretStats : MonoBehaviour
     [Header("Scaling Factors")]
     public float healthScaleFactor;
     public float damageScaleFactor;
-    public float rangeScaleFactor;
-    public float fireRateScaleFactor;
+    public float rangeScaleFlat;
+    public float shotsPerSecondScaleFactor;
 
     private void Awake()
     {
@@ -40,15 +43,19 @@ public class TurretStats : MonoBehaviour
 
         healthScaleFactor = baseStats.baseHealthGrowthFactor;
         damageScaleFactor = baseStats.baseDamageGrowthFactor;
-        rangeScaleFactor = baseStats.baseRangeGrowthFlat;
-        fireRateScaleFactor = baseStats.baseFireRateGrowthFactor;
+        rangeScaleFlat = baseStats.baseRangeGrowthFlat;
+        shotsPerSecondScaleFactor = baseStats.shotsPerSecondGrowthFactor;
 
         currentMaxHealth = baseStats.baseHealth * GetLevelScaling(healthScaleFactor);
         currentHealth = currentMaxHealth;
 
         currentAttackDamage = baseStats.baseAttackDamage * GetLevelScaling(damageScaleFactor);
-        currentAttackRange = baseStats.baseAttackDamage * GetLevelScaling(rangeScaleFactor);
-        currentFireRate = baseStats.baseFireRate * GetLevelScaling(fireRateScaleFactor);
+        currentAttackRange = baseStats.baseAttackRange * GetLevelScaling(rangeScaleFlat);
+
+        currentShotsPerSecond =
+            baseStats.baseShotsPerSecond * GetLevelScaling(shotsPerSecondScaleFactor);
+
+        currentShotInterval = 1f / currentShotsPerSecond;
 
         currentProjectileSpeed = baseStats.baseProjectileSpeed;
         currentKnockbackStrength = baseStats.baseKnockbackStrength;

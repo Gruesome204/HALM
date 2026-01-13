@@ -8,7 +8,10 @@ public class TurretLevelBehaviour : MonoBehaviour
     private void OnEnable()
     {
         if (blueprint != null && TurretLevelManager.Instance != null)
+        { 
             SyncWithCurrentLevel();
+            TurretLevelManager.Instance.OnLevelUp += HandleLevelUp;
+        }
 
 
         if (TurretGlobalModifierManager.Instance != null)
@@ -39,13 +42,6 @@ public class TurretLevelBehaviour : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-        // Sync upgrades with current level
-        SyncWithCurrentLevel();
-
-    }
         
     private void OnDestroy()
     {
@@ -55,6 +51,9 @@ public class TurretLevelBehaviour : MonoBehaviour
 
     public void SyncWithCurrentLevel()
     {
+        if (blueprint == null || TurretLevelManager.Instance == null)
+            return;
+
         int currentLevel = TurretLevelManager.Instance.GetLevel(blueprint.turretType);
         ApplyUpgrades(currentLevel);
     }
@@ -67,7 +66,7 @@ public class TurretLevelBehaviour : MonoBehaviour
 
     public void ApplyUpgrades(int level)
     {
-        turretBehaviour.RecalculateStats();
+        turretBehaviour.RecalculateStats(level);
     }
 
 

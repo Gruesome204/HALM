@@ -2,7 +2,7 @@
 public struct TurretStatData
 {
     public float damage;
-    public float fireRate;
+    public float shotsPerSecond;
     public float range;
     public float projectileSpeed;
     public int projectilesPerSalve;

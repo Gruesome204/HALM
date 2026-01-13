@@ -99,7 +99,7 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
 
                 // Additive approach: 0 = no change, positive = bonus, negative = penalty
                 combined.damageMultiplier += mod.damageMultiplier;
-                combined.fireRateMultiplier += mod.fireRateMultiplier;
+                combined.shotsPerSecondBonus += mod.shotsPerSecondBonus;
                 combined.projectileSpeed += mod.projectileSpeed;
                 combined.healthMultiplier += mod.healthMultiplier;
                 combined.turretPlacementCooldownMultiplier += mod.turretPlacementCooldownMultiplier;
@@ -121,9 +121,9 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
         return 1f + GetCombinedModifier(type).damageMultiplier;
     }
 
-    public float GetFireRateMultiplier(TurretType type)
+    public float GetShotsBonus(TurretType type)
     {
-        return 1f + GetCombinedModifier(type).fireRateMultiplier;
+        return 1f + GetCombinedModifier(type).shotsPerSecondBonus;
     }
 
     public float GetProjectileSpeedMultiplier(TurretType type)
