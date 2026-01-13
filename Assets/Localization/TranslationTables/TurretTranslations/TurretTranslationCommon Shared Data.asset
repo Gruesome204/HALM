@@ -28,7 +28,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 70744115475255296
-    m_Key: baseFireRate
+    m_Key: baseShotsPerSecond
     m_Metadata:
       m_Items: []
   - m_Id: 70744242084515840
