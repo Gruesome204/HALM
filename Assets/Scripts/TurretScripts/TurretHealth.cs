@@ -15,7 +15,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     [Header("Settings")]
     [Tooltip("Cooldown between collisions to avoid rapid repeated damage.")]
-    [SerializeField] private float collisionDamageCooldown = 1f;
+    [SerializeField] private float collisionDamageCooldown = 0.5f;
 
 
     private float lastCollisionTime;
@@ -49,10 +49,10 @@ public class TurretHealth : MonoBehaviour, IDamagable
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
 
+        Debug.Log($"Attack Damage Received = {damageData.amount}");
         if (IsInvulnerable || stats == null) return;
-
         stats.currentHealth -= damageData.amount;
-        stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0, stats.currentMaxHealth);
+        //stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0, stats.currentMaxHealth);
         UpdateHealthBar();
 
         Debug.Log($"{gameObject.name} took {damageData.amount} {damageData.type} damage. Remaining HP: {stats.currentHealth}");
@@ -145,7 +145,7 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       // Debug.Log("Test Collision");
+       Debug.Log("Test Collision");
         if (Time.time < lastCollisionTime + collisionDamageCooldown) return;
 
         if (collision.gameObject.CompareTag("Enemy"))
@@ -155,9 +155,10 @@ public class TurretHealth : MonoBehaviour, IDamagable
             {
                 var damageData = new DamageData
                 {
-                    amount = stats.currentAttackDamage,
+                    amount = enemyStats.currentDamage,
                     type = DamageType.Physical,
                     source = collision.gameObject
+
                 };
 
                 TakeDamage(damageData, new KnockbackData());
