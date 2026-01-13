@@ -410,7 +410,13 @@ public class TurretPlacementController : MonoBehaviour
         if (behaviour != null)
         {
             behaviour.turretBlueprint = currentSelectedBlueprint;
-            behaviour.RecalculateStats();
+
+            int level = 1; // default level
+            var stats = turret.GetComponentInChildren<TurretStats>();
+            if (stats != null)
+                level = stats.currentLevel;
+
+            behaviour.RecalculateStats(level);
         }
 
 

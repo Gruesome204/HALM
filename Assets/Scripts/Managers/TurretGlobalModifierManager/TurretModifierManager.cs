@@ -59,7 +59,8 @@ public class TurretGlobalModifierManager : MonoBehaviour
     public float globalTurretPlacementCooldownMultiplier = 0f; // 0 = no change, 0.2 = +20%
     public float globalHealthMultiplier = 0f;
     public float globalDamageMultiplier = 0f;
-    public float globalFireRateMultiplier = 0f;
+
+    public float globalShotsPerSecondBonus = 0f;
     public int globalProjectilesPerSalve = 0; // still additive
     public float globalProjectileSpeed = 0f;
     public int globalMaxTurretCapacityBonus = 0;  // still additive
@@ -87,7 +88,7 @@ public class TurretGlobalModifierManager : MonoBehaviour
         globalTurretPlacementCooldownMultiplier = 0f;
         globalHealthMultiplier = 0f;
         globalDamageMultiplier = 0f;
-        globalFireRateMultiplier = 0f;
+        globalShotsPerSecondBonus = 0f;
         globalProjectilesPerSalve = 0;
         globalProjectileSpeed = 0f;
         globalMaxTurretCapacityBonus = 0;
@@ -99,7 +100,7 @@ public class TurretGlobalModifierManager : MonoBehaviour
             globalTurretPlacementCooldownMultiplier += mod.additionalStats.turretPlacementCooldownMultiplier;
             globalHealthMultiplier += mod.additionalStats.turretHealthMultiplier;
             globalDamageMultiplier += mod.additionalStats.turretDamageMultiplier;
-            globalFireRateMultiplier += mod.additionalStats.turretFireRateMultiplier;
+            globalShotsPerSecondBonus += mod.additionalStats.shotsPerSecondBonus;
             globalProjectileSpeed += mod.additionalStats.turretProjectileSpeed;
 
             globalProjectilesPerSalve += mod.additionalStats.turretProjectilesPerSalve;
@@ -121,7 +122,7 @@ public class TurretGlobalModifierManager : MonoBehaviour
         Debug.Log("Recalculating global modifiers (percentage style)...");
         foreach (var mod in appliedModifiers)
         {
-            Debug.Log($"Modifier: {mod.name}, Damage %+{mod.additionalStats.turretDamageMultiplier * 100}%, FireRate %+{mod.additionalStats.turretFireRateMultiplier * 100}%");
+            Debug.Log($"Modifier: {mod.name}, Damage %+{mod.additionalStats.turretDamageMultiplier * 100}%, BonusShots %+{mod.additionalStats.shotsPerSecondBonus }");
         }
 
         OnModifiersChanged?.Invoke();
@@ -137,8 +138,16 @@ public class TurretGlobalModifierManager : MonoBehaviour
         {
             if (turret == null) continue;
 
+            // Recalculate health first
             turret.GetComponentInChildren<TurretHealth>()?.RecalculateStatsAfterModifiers();
-            turret.GetComponentInChildren<TurretBehaviour>()?.RecalculateStats();
+
+            // Recalculate turret stats with level
+            var turretBehaviour = turret.GetComponentInChildren<TurretBehaviour>();
+            if (turretBehaviour != null && turretBehaviour.turretBlueprint != null)
+            {
+                int level = TurretLevelManager.Instance.GetLevel(turretBehaviour.turretBlueprint.turretType);
+                turretBehaviour.RecalculateStats(level);
+            }
         }
     }
 

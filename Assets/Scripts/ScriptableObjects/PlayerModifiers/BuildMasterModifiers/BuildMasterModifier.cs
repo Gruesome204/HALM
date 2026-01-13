@@ -34,13 +34,29 @@ public class BuildMasterModifier : ScriptableObject
         public float movementSpeed;
 
         [Header("Turret Global Stats")]
-        public float turretPlacementCooldownMultiplier; // e.g., 0.9 for 10% faster placement
-        public float turretHealthMultiplier;            // e.g., 1.1 for +10% turret HP
-        public float turretDamageMultiplier;            // e.g., 1.2 for +20% turret damage
-        public float turretFireRateMultiplier;          // e.g., 1.15 for +15% fire rate
-        public int turretProjectilesPerSalve;           // e.g., +1 projectile per attack
-        public float turretProjectileSpeed;             // e.g., 1.1 for +10% projectile speed
+
+        [Tooltip("Multiplier applied to turret placement cooldown. 1 = no change, 0.9 = 10% faster.")]
+        public float turretPlacementCooldownMultiplier;
+
+        [Tooltip("Multiplier applied to turret health. 1 = no change, 1.1 = +10% HP.")]
+        public float turretHealthMultiplier;
+
+        [Tooltip("Multiplier applied to turret damage. 1 = no change, 1.2 = +20% damage.")]
+        public float turretDamageMultiplier;
+
+        [Tooltip("Additive bonus to shots per second for all turrets.")]
+        public float shotsPerSecondBonus;
+
+        [Tooltip("Additive bonus to number of projectiles per salve.")]
+        public int turretProjectilesPerSalve;
+
+        [Tooltip("Multiplier applied to projectile speed. 1 = no change, 1.1 = +10% speed.")]
+        public float turretProjectileSpeed;
+
+        [Tooltip("Additive bonus to maximum turret capacity.")]
         public int turretMaxCapacityBonus;
+
+        [Tooltip("Multiplier applied to turret placement radius. 1 = no change, 1.2 = +20% radius.")]
         public float turretPlacementRadiusMultiplier;
 
         public void SetDefaults()
@@ -48,10 +64,10 @@ public class BuildMasterModifier : ScriptableObject
             turretPlacementCooldownMultiplier = 1f;
             turretHealthMultiplier = 1f;
             turretDamageMultiplier = 1f;
-            turretFireRateMultiplier = 1f;
-            turretProjectilesPerSalve = 0;
+            shotsPerSecondBonus = 0f;                // additive
+            turretProjectilesPerSalve = 0;           // additive
             turretProjectileSpeed = 1f;
-            turretMaxCapacityBonus = 0;
+            turretMaxCapacityBonus = 0;              // additive
             turretPlacementRadiusMultiplier = 1f;
         }
     }

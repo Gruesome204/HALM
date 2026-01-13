@@ -76,7 +76,7 @@ public class TurretLevelManager : MonoBehaviour
         {
             var mod = option.modifier;
             Debug.Log($"[LevelManager] Upgrade Option: {option.name} | " +
-                      $"Damage x{mod.damageMultiplier} | FireRate x{mod.fireRateMultiplier} | " +
+                      $"Damage x{mod.damageMultiplier} | FireRate x{mod.shotsPerSecondBonus} | " +
                       $"Range +{mod.rangeBonus} | Projectiles +{mod.projectilesPerSalve} | Speed x{mod.projectileSpeed}");
         }
 
@@ -100,11 +100,14 @@ public class TurretLevelManager : MonoBehaviour
         {
             if (turret == null) continue;
 
-            var levelBehaviour = turret.GetComponentInChildren<TurretLevelBehaviour>();
-            if (levelBehaviour != null && levelBehaviour.blueprint != null &&
-                levelBehaviour.blueprint.turretType == type)
+            turret.GetComponentInChildren<TurretHealth>()?.RecalculateStatsAfterModifiers();
+
+            var turretBehaviour = turret.GetComponentInChildren<TurretBehaviour>();
+            if (turretBehaviour != null && turretBehaviour.turretBlueprint != null)
             {
-                levelBehaviour.SyncWithCurrentLevel();
+                int level = TurretLevelManager.Instance.GetLevel(turretBehaviour.turretBlueprint.turretType);
+                turretBehaviour.RecalculateStats(level);
+
             }
         }
     }
