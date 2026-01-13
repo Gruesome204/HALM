@@ -29,7 +29,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34479233809649664
-    m_Localized: Change of Projectile
+    m_Localized: +50% Damge on Bolts
     m_Metadata:
       m_Items: []
   - m_Id: 34479373308006400
@@ -49,7 +49,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34480046653181952
-    m_Localized: Change of Projectiles
+    m_Localized: +50% Hit Points
     m_Metadata:
       m_Items: []
   - m_Id: 34480125673869312
@@ -77,7 +77,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34479231964155904
-    m_Localized: Bundle of arrows
+    m_Localized: Sharpened heads
     m_Metadata:
       m_Items: []
   - m_Id: 34479371223437312
@@ -101,7 +101,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34480045055152128
-    m_Localized: Grapeshot
+    m_Localized: Strenghend Construction
     m_Metadata:
       m_Items: []
   - m_Id: 34480123492831232

@@ -29,7 +29,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34479233809649664
-    m_Localized: "\xC4nderung der Geschosse"
+    m_Localized: +50% Schaden auf Artilerie Bolzen
     m_Metadata:
       m_Items: []
   - m_Id: 34479373308006400
@@ -49,7 +49,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34480046653181952
-    m_Localized: "\xC4nderung der Geschosse"
+    m_Localized: +50% Lebenspunkte
     m_Metadata:
       m_Items: []
   - m_Id: 34480125673869312
@@ -77,7 +77,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34479231964155904
-    m_Localized: "Pfeilb\xFCndel"
+    m_Localized: "Gesch\xE4rfte Spitzen"
     m_Metadata:
       m_Items: []
   - m_Id: 34479371223437312
@@ -101,7 +101,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34480045055152128
-    m_Localized: "Kart\xE4tsche"
+    m_Localized: "Verst\xE4rkte Konstruktion"
     m_Metadata:
       m_Items: []
   - m_Id: 34480123492831232
