@@ -247,16 +247,18 @@ public class GameManager : MonoBehaviour
 
 #region Load Game Routine
 
-private System.Collections.IEnumerator LoadGameRoutine()
-    {
+        private System.Collections.IEnumerator LoadGameRoutine()
+        {
         ChangeState(GameState.Loading);
-
+      
         // Setup systems
         TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
-        MapLoaderManager.Instance?.LoadMap(0);
+        MapLoaderManager.Instance?.GenerateMapSequence();
+
 
         yield return new WaitUntil(() => PlayerManager.Instance != null);
-
+        MapProgressionManager.Instance.ResetProgression();
+        MapProgressionManager.Instance.LoadNextRoom();
         ChangeState(GameState.Playing);
     }
 

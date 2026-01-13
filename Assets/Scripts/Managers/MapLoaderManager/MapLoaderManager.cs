@@ -8,7 +8,11 @@ public class MapLoaderManager : MonoBehaviour
     public static MapLoaderManager Instance { get; private set; }
 
     [Header("Map Prefabs")]
-    public GameObject[] mapPrefabs;
+    public GameObject[] normalMapPrefabs;
+    public GameObject bossMapPrefab;
+
+    private List<GameObject> mapSequence = new List<GameObject>();
+    private int currentMapIndex = -1;
 
     [Header("Instances")]
     public Transform mapParent;
@@ -35,41 +39,59 @@ public class MapLoaderManager : MonoBehaviour
         Instance = this;
     }
 
-    public GameObject LoadMap(int index)
+    private GameObject LoadMapFromPrefab(GameObject prefab)
     {
-        if (index < 0 || index >= mapPrefabs.Length)
-        {
-            Debug.LogError("Map index out of range!");
-            return null;
-        }
-
-        // Destroy old map
         if (currentMap != null)
             Destroy(currentMap);
 
-        // Load new map prefab
-        currentMap = Instantiate(mapPrefabs[index], mapParent);
+        currentMap = Instantiate(prefab, mapParent);
+
         AssignSpawnPointsToEnemyManager();
         ApplyMapEnemySetup();
 
-
-        // Auto-assign exit objects by tag
         ExitBlockerObjects = FindAllObjectsInChildrenWithTag(currentMap, "ExitBlocker");
         ExitTriggerObject = FindObjectInChildrenWithTag(currentMap, "ExitTrigger");
 
-        if (ExitBlockerObjects == null)
-            Debug.LogWarning("ExitBlockerObject not found in the map!");
-        if (ExitTriggerObject == null)
-            Debug.LogWarning("ExitTriggerObject not found in the map!");
-
         EnemySpawnManager.Instance.ResetSpawner();
-        // Send spawn points to EnemySpawnManager
         AssignSpawnPointsToEnemyManager();
-
         SetPlayerPosition();
 
         return currentMap;
     }
+    public GameObject LoadNextMap()
+    {
+        currentMapIndex++;
+
+        if (currentMapIndex >= mapSequence.Count)
+        {
+            Debug.Log("No more maps to load.");
+            return null;
+        }
+
+        return LoadMapFromPrefab(mapSequence[currentMapIndex]);
+    }
+
+    public void GenerateMapSequence()
+    {
+        mapSequence.Clear();
+
+        List<GameObject> shuffledMaps = new List<GameObject>(normalMapPrefabs);
+
+        // Fisher–Yates shuffle
+        for (int i = 0; i < shuffledMaps.Count; i++)
+        {
+            int r = UnityEngine.Random.Range(i, shuffledMaps.Count);
+            (shuffledMaps[i], shuffledMaps[r]) = (shuffledMaps[r], shuffledMaps[i]);
+        }
+
+        mapSequence.AddRange(shuffledMaps);
+
+        if (bossMapPrefab != null)
+            mapSequence.Add(bossMapPrefab);
+
+        currentMapIndex = -1;
+    }
+
 
     private void SetPlayerPosition()
     {

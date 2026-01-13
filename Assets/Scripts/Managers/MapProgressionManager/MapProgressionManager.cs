@@ -4,9 +4,6 @@ public class MapProgressionManager : MonoBehaviour
 {
     public static MapProgressionManager Instance { get; private set; }
 
-    [Header("Runtime")]
-    public int currentMapIndex = 0;
-
     [Header("Enemy Level Scaling")]
     public int baseEnemyLevel = 1;
     public int enemyLevelIncreasePerMap = 1;
@@ -31,46 +28,39 @@ public class MapProgressionManager : MonoBehaviour
     private void Start()
     {
         CurrentEnemyLevel = baseEnemyLevel;
+
+        MapLoaderManager.Instance.GenerateMapSequence();
         LoadNextRoom();
     }
 
     public void LoadNextRoom()
     {
-        PlayerHealth playerHealth = PlayerManager.Instance.playerHealth;
-        playerHealth.Heal(10);
-
-        // Clear all towers before loading a new map
+        PlayerManager.Instance.playerHealth.Heal(10);
         TurretPlacementController.Instance?.ClearAllTurrets();
 
-        // Clamp map index
-        int safeMapIndex = Mathf.Min(currentMapIndex, MapLoaderManager.Instance.mapPrefabs.Length - 1);
-
-        // Load map normally
-        GameObject map = MapLoaderManager.Instance.LoadMap(safeMapIndex);
+        GameObject map = MapLoaderManager.Instance.LoadNextMap();
+        if (map == null) return;
 
         EnemySpawnManager spawner = EnemySpawnManager.Instance;
         spawner.PrepareForNewRoom();
 
         MapEnemySetup setup = map.GetComponent<MapEnemySetup>();
 
-        // Detect boss room from MapEnemySetup
         if (setup != null && setup.isBossRoom)
         {
-            spawner.OnBossDefeated -= OnRoomCleared; // safe unsubscribe
+            spawner.OnBossDefeated -= OnRoomCleared;
             spawner.OnBossDefeated += OnRoomCleared;
             spawner.SpawnBoss(setup.bossPrefab);
-            Debug.Log($"[Progression] Boss room loaded: {setup.bossPrefab?.name}");
         }
         else
         {
-            // Normal room: subscribe to OnAllEnemiesDefeated safely
             spawner.OnAllEnemiesDefeated -= OnRoomCleared;
             spawner.OnAllEnemiesDefeated += OnRoomCleared;
         }
-        // Increment enemy level
+
         CurrentEnemyLevel += enemyLevelIncreasePerMap;
-        currentMapIndex++;
     }
+
     private void OnRoomCleared()
     {
         // Prevent multiple fires
@@ -119,5 +109,10 @@ public class MapProgressionManager : MonoBehaviour
         // Activate trigger so player can walk through
         if (MapLoaderManager.Instance.ExitTriggerObject != null)
             MapLoaderManager.Instance.ExitTriggerObject.SetActive(true);
+    }
+
+    public void ResetProgression()
+    {
+        CurrentEnemyLevel = baseEnemyLevel;
     }
 }
