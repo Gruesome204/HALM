@@ -61,14 +61,17 @@ public class BuildMasterModifier : ScriptableObject
 
         public void SetDefaults()
         {
-            turretPlacementCooldownMultiplier = 1f;
-            turretHealthMultiplier = 1f;
-            turretDamageMultiplier = 1f;
-            shotsPerSecondBonus = 0f;                // additive
-            turretProjectilesPerSalve = 0;           // additive
-            turretProjectileSpeed = 1f;
-            turretMaxCapacityBonus = 0;              // additive
-            turretPlacementRadiusMultiplier = 1f;
+            // percentage-style → 0 = no change
+            turretPlacementCooldownMultiplier = 0f;
+            turretHealthMultiplier = 0f;
+            turretDamageMultiplier = 0f;
+            turretProjectileSpeed = 0f;
+            turretPlacementRadiusMultiplier = 0f;
+
+            // additive stats
+            shotsPerSecondBonus = 0f;
+            turretProjectilesPerSalve = 0;
+            turretMaxCapacityBonus = 0;
         }
     }
 

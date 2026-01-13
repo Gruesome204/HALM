@@ -28,6 +28,30 @@ public class TurretGlobalModifierManager : MonoBehaviour
             GameManager.Instance.gameDataSO.OnBuildMasterModifiersChanged -= UpdateModifiersFromSO;
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("K");
+            AddDamageModifier();
+        }
+    }
+
+    private void AddDamageModifier()
+    {
+        var mod = new BuildMasterModifier.Modifier
+        {
+            name = "Damage +100%",
+            description = "Doubles turret damage",
+            additionalStats = new BuildMasterModifier.Stats
+            {
+                turretDamageMultiplier = 5.0f
+            }
+        };
+        AddModifier(mod);
+    }
+
+
     private void UpdateModifiersFromSO()
     {
         appliedModifiers.Clear();
