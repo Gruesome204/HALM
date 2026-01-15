@@ -1566,12 +1566,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs: []
-  spawnRadius: 5
+  spawnRadius: 3
   spawnPoints: []
   useRandomSpawnPoint: 1
   isBossRoom: 0
   totalSpawned: 0
   isPaused: 0
+  enemiesRemainingInspector: 0
 --- !u!1 &825843164
 GameObject:
   m_ObjectHideFlags: 0
