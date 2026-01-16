@@ -66,6 +66,7 @@ public class TurretLevelManager : MonoBehaviour
             // Apply upgrades automatically
             ApplyUpgradesForLevel(type, progress.currentLevel);
         }
+        Debug.Log($"[XP] {type} XP: {progress.currentXP}/{progress.xpToNextLevel} | Level {progress.currentLevel}");
     }
 
     private void ApplyUpgradesForLevel(TurretType type, int level)
@@ -100,16 +101,17 @@ public class TurretLevelManager : MonoBehaviour
         {
             if (turret == null) continue;
 
-            turret.GetComponentInChildren<TurretHealth>()?.RecalculateStatsAfterModifiers();
 
             var turretBehaviour = turret.GetComponentInChildren<TurretBehaviour>();
-            if (turretBehaviour != null && turretBehaviour.turretBlueprint != null)
-            {
-                int level = TurretLevelManager.Instance.GetLevel(turretBehaviour.turretBlueprint.turretType);
-                turretBehaviour.RecalculateStats(level);
+            if (turretBehaviour == null || turretBehaviour.turretBlueprint == null)
+                continue;
+            if (turretBehaviour.turretBlueprint.turretType != type)
+                continue;
 
-            }
+            int level = GetLevel(type);
+            turretBehaviour.RecalculateStats(level);
         }
+        Debug.Log($"[Reapply] {type} ->");
     }
     // Convenience method to trigger upgrade reapplication.
     public void OnTurretLevelChanged(TurretType type)

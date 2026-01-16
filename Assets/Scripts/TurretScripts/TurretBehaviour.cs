@@ -43,18 +43,11 @@
     private void OnEnable()
     {
         GameManager.Instance?.RegisterPausable(this);
-
-        if (TurretGlobalModifierManager.Instance != null)
-            TurretGlobalModifierManager.Instance.OnModifiersChanged += RecalculateStatsFromLevelManager;
-
-        RecalculateStatsFromLevelManager();
     }
 
     private void OnDisable()
     {
             GameManager.Instance?.UnregisterPausable(this);
-            if (TurretGlobalModifierManager.Instance != null)
-            TurretGlobalModifierManager.Instance.OnModifiersChanged -= RecalculateStatsFromLevelManager;
     }
 
     // Pause system

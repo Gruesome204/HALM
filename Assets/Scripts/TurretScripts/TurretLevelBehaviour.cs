@@ -3,26 +3,16 @@ using UnityEngine;
 public class TurretLevelBehaviour : MonoBehaviour
 {
     [Header("References")]
-    public TurretBlueprint blueprint;
-    private TurretBehaviour turretBehaviour;
+    public TurretBehaviour turretBehaviour;
     private void OnEnable()
     {
-        if (blueprint != null && TurretLevelManager.Instance != null)
-        { 
-            SyncWithCurrentLevel();
-            TurretLevelManager.Instance.OnLevelUp += HandleLevelUp;
-        }
-
-
+        SyncWithCurrentLevel();
         if (TurretGlobalModifierManager.Instance != null)
             TurretGlobalModifierManager.Instance.OnModifiersChanged += HandleGlobalModifiersChanged;
     }
 
     private void OnDisable()
     {
-        if (TurretLevelManager.Instance != null)
-            TurretLevelManager.Instance.OnLevelUp -= HandleLevelUp;
-
         if (TurretGlobalModifierManager.Instance != null)
             TurretGlobalModifierManager.Instance.OnModifiersChanged -= HandleGlobalModifiersChanged;
     }
@@ -35,6 +25,7 @@ public class TurretLevelBehaviour : MonoBehaviour
     private void Awake()
     {
         turretBehaviour = GetComponent<TurretBehaviour>();
+
         if (turretBehaviour == null)
         {
             Debug.LogError($"{name} has no TurretBehaviour attached!");
@@ -42,39 +33,25 @@ public class TurretLevelBehaviour : MonoBehaviour
         }
     }
 
-        
+
     private void OnDestroy()
     {
-        if (TurretLevelManager.Instance != null)
-            TurretLevelManager.Instance.OnLevelUp -= HandleLevelUp;
     }
 
     public void SyncWithCurrentLevel()
     {
-        if (blueprint == null || TurretLevelManager.Instance == null)
-            return;
+        if (turretBehaviour?.turretBlueprint == null) return;
 
-        int currentLevel = TurretLevelManager.Instance.GetLevel(blueprint.turretType);
-        ApplyUpgrades(currentLevel);
+        int level = TurretLevelManager.Instance.GetLevel(
+            turretBehaviour.turretBlueprint.turretType
+        );
+
+        turretBehaviour.RecalculateStats(level);
     }
 
-    private void HandleLevelUp(TurretType type, int newLevel)
-    {
-        if (type == blueprint.turretType)
-            ApplyUpgrades(newLevel);
-    }
 
     public void ApplyUpgrades(int level)
     {
         turretBehaviour.RecalculateStats(level);
     }
-
-
-#if UNITY_EDITOR
-    [ContextMenu("Give XP Test")]
-    private void DebugGiveXP()
-    {
-        TurretLevelManager.Instance.AddXP(blueprint.turretType, 100f);
-    }
-#endif
 }

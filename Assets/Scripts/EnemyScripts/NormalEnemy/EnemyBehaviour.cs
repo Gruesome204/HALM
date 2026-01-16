@@ -185,7 +185,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         // Sync ability target
         abilityBehaviour?.SetTarget(newTarget);
 
-        Debug.Log($"{name} set aggro on {newTarget.name}");
+       // Debug.Log($"{name} set aggro on {newTarget.name}");
     }
 
 
@@ -282,12 +282,23 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
     {
         enemyAnimator?.PlayDeath();
-        DropResources();    
+        DropResources();
 
-        if (damageData.source != null && damageData.source.TryGetComponent<TurretLevelBehaviour>(out var turret))
+        if (damageData.source != null &&
+            damageData.source.TryGetComponent<TurretBehaviour>(out var turretBehaviour))
         {
-            TurretLevelManager.Instance.AddXP(turret.blueprint.turretType, stats.currentExperienceYield);
-        }               
+            TurretBlueprint blueprint = turretBehaviour.turretBlueprint;
+
+            if (blueprint != null)
+            {
+                TurretLevelManager.Instance.AddXP(
+                    blueprint.turretType,
+                    stats.currentExperienceYield
+                );
+
+                Debug.Log($"XP added to {blueprint.turretType}: {stats.currentExperienceYield}");
+            }
+        }
 
         EnemySpawnManager.Instance.UnregisterEnemy(gameObject);
         Destroy(gameObject);

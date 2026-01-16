@@ -1520,7 +1520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 15
-  xpGrowthMultiplier: 5
+  xpGrowthMultiplier: 3
 --- !u!1 &747619961
 GameObject:
   m_ObjectHideFlags: 0
