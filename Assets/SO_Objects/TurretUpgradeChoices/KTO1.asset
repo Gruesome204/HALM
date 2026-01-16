@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KTO1
   m_EditorClassIdentifier: 
   turretType: 2
-  triggerLevels: 0a00000014000000
+  triggerLevels: 050000000a000000
   options:
   - optionId: 952e971e-35d4-479d-ae7f-eb2dc08a0363
     name: KTO1

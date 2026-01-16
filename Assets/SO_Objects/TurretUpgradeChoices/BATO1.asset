@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BATO1
   m_EditorClassIdentifier: 
   turretType: 4
-  triggerLevels: 0a00000014000000
+  triggerLevels: 050000000a000000
   options:
   - optionId: 0587679c-7a48-4594-bee7-2a0aa5aeb18e
     name: BATO1

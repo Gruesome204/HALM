@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BATO3
   m_EditorClassIdentifier: 
   turretType: 4
-  triggerLevels: 0a00000014000000
+  triggerLevels: 050000000a000000
   options:
   - optionId: 6e181fe0-1e9a-4034-aab5-304850d3a77c
     name: BATO3
@@ -23,7 +23,7 @@ MonoBehaviour:
       turretPlacementCooldownMultiplier: 0
       healthMultiplier: 0
       damageMultiplier: 0
-      fireRateMultiplier: 0
+      shotsPerSecondBonus: 0
       projectileSpeed: 0
       projectilesPerSalve: 0
       rangeBonus: 0

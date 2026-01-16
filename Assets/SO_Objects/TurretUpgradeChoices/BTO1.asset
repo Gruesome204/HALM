@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BTO1
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevels: 0a00000014000000
+  triggerLevels: 050000000a000000
   options:
   - optionId: 8e974993-ffe1-4969-9f40-7ea8b3017f42
     name: BTO1
@@ -23,7 +23,7 @@ MonoBehaviour:
       turretPlacementCooldownMultiplier: 0
       healthMultiplier: 0
       damageMultiplier: 0
-      fireRateMultiplier: 0
+      shotsPerSecondBonus: 0
       projectileSpeed: 0
       projectilesPerSalve: 1
       rangeBonus: 0

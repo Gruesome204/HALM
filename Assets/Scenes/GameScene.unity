@@ -1519,7 +1519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018647224259d8241854d38b8376ce11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLevel: 20
+  maxLevel: 15
   xpGrowthMultiplier: 5
 --- !u!1 &747619961
 GameObject:

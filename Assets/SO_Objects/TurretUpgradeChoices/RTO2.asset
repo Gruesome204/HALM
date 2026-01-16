@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RTO2
   m_EditorClassIdentifier: 
   turretType: 5
-  triggerLevels: 0a00000014000000
+  triggerLevels: 050000000a000000
   options:
   - optionId: e7926181-96bc-4663-8680-b85e057cb1c3
     name: RTO2
@@ -23,7 +23,7 @@ MonoBehaviour:
       turretPlacementCooldownMultiplier: 0
       healthMultiplier: 0
       damageMultiplier: 0
-      fireRateMultiplier: 0
+      shotsPerSecondBonus: 0
       projectileSpeed: 0
       projectilesPerSalve: 0
       rangeBonus: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BTO2
   m_EditorClassIdentifier: 
   turretType: 0
-  triggerLevels: 0a00000014000000
+  triggerLevels: 050000000a000000
   options:
   - optionId: 500c2b9e-5fc6-4eed-af1e-3804f4a07d29
     name: BTO2
@@ -27,5 +27,5 @@ MonoBehaviour:
       projectileSpeed: 0
       projectilesPerSalve: 0
       rangeBonus: 0
-      piercingHits: 0
+      piercingHits: 1
       projectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}

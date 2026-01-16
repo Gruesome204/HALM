@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RTO3
   m_EditorClassIdentifier: 
   turretType: 5
-  triggerLevels: 0a00000014000000
+  triggerLevels: 050000000a000000
   options:
   - optionId: 90cbf88b-566c-4c10-9b90-6d2419fb6c2f
     name: RTO3
