@@ -6,7 +6,6 @@ public class TurretLevelBehaviour : MonoBehaviour
     public TurretBehaviour turretBehaviour;
     private void OnEnable()
     {
-        SyncWithCurrentLevel();
         if (TurretGlobalModifierManager.Instance != null)
             TurretGlobalModifierManager.Instance.OnModifiersChanged += HandleGlobalModifiersChanged;
     }
@@ -31,6 +30,8 @@ public class TurretLevelBehaviour : MonoBehaviour
             Debug.LogError($"{name} has no TurretBehaviour attached!");
             return;
         }
+
+        SyncWithCurrentLevel();
     }
 
 
