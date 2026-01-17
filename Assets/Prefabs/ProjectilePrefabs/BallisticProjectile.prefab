@@ -218,6 +218,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &6977538894313689766
 GameObject:
   m_ObjectHideFlags: 0

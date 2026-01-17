@@ -15,6 +15,7 @@ public class ProjectileBehaviour : MonoBehaviour
     public int remainingPierces;
 
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask wallLayer;
 
 
     public void InitializePiercing(int pierces)
@@ -45,6 +46,13 @@ public class ProjectileBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Check if hit a wall
+        if (((1 << other.gameObject.layer) & wallLayer) != 0)
+        {
+            Destroy(gameObject); // Projectile stops at wall
+            return;
+        }
+
         if (((1 << other.gameObject.layer) & enemyLayer) == 0)
             return;
         if (other.gameObject == owner)
