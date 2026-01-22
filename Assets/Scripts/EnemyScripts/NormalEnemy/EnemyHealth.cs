@@ -11,8 +11,8 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 
     [Header("UI")]
     public Slider healthBar;                // Normal health bar
-    public BossBarUI bossBarUIPrefab;       // Boss health bar prefab
-    private BossBarUI bossBarUIInstance;    // Runtime instance of boss bar
+    public BossBarUI bossBarUIPrefab;       // Optional prefab for runtime instantiation
+    [SerializeField] private BossBarUI bossBarUIInstance; // Now assignable in inspector
     private Canvas canvas;
 
     [Header("Damage Flash")]
@@ -57,11 +57,30 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
     private void SetupHealthUI()
     {
 
-        if (stats.baseStats.enemyType == EnemyType.Boss && bossBarUIPrefab != null)
+        canvas ??= FindObjectOfType<Canvas>();
+
+        if (stats.baseStats.enemyType == EnemyType.Boss)
         {
-            bossBarUIInstance = Instantiate(bossBarUIPrefab, canvas.transform);
-            bossBarUIInstance.healthSlider = healthBar;
-            bossBarUIInstance.SetupBossBar(stats.baseStats);
+            // If no instance assigned in inspector, try to find one in children
+            if (bossBarUIInstance == null)
+            {
+                bossBarUIInstance = GetComponentInChildren<BossBarUI>();
+            }
+
+            // If still null, instantiate prefab
+            if (bossBarUIInstance == null && bossBarUIPrefab != null)
+            {
+                bossBarUIInstance = Instantiate(bossBarUIPrefab, canvas.transform);
+            }
+
+            if (bossBarUIInstance != null)
+            {
+                bossBarUIInstance.SetupBossBar(stats.baseStats);
+            }
+            else
+            {
+                Debug.LogWarning($"{name} has no BossBarUI assigned or found!");
+            }
         }
 
         // Update health dynamically
@@ -154,7 +173,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 
         flashRoutine = null;
     }
-
+        
     public bool IsAlive()
     {
         return stats.currentHealth > 0;
@@ -164,7 +183,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
     {
         return transform;
     }
-
+        
     public TargetType GetTargetType()
     {
         return TargetType.Enemy;
@@ -181,5 +200,33 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 
         // Optional: play parry hit effect
         Debug.Log($"{gameObject.name} was parried and took {counterDamage} damage!");
+    }
+    public void UpdatePhaseName(string phaseName)
+    {
+        if (bossBarUIInstance != null)
+            bossBarUIInstance.SetBossName(phaseName);
+    }
+    public void UpdateHealthBar()
+    {
+        float healthNormalized = 0f;
+
+        if (stats == null || stats.maxHealth <= 0)
+            return;
+
+        healthNormalized = stats.currentHealth / stats.maxHealth;
+
+        if (bossBarUIInstance != null)
+        {
+            bossBarUIInstance.SetHealth(stats.currentHealth);
+
+            if (!string.IsNullOrEmpty(stats.baseStats.baseName))
+            {
+                bossBarUIInstance.SetBossName(stats.baseStats.baseName);
+            }
+        }
+        else if (healthBar != null)
+        {
+            healthBar.SetValueWithoutNotify(healthNormalized);
+        }
     }
 }

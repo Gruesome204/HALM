@@ -23,6 +23,8 @@ public class EnemyStats : MonoBehaviour
     public float currentKnockbackForce;
     public float currentKnockbackDuration;
 
+    public bool isKnockbackImmune;
+
     [Header("Current Stats - Movement / Detection")]
     public float currentMovementSpeed;
     public float currentDetectionRange;
@@ -101,4 +103,21 @@ public class EnemyStats : MonoBehaviour
         // Optional: keep currentHealth relative to new max
         currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
+
+    public void Heal(float amount)
+    {
+        if (currentHealth <= 0) return; // dead enemies can't be healed
+
+        currentHealth += amount;
+        currentHealth = Mathf.Min(currentHealth, maxHealth); // clamp to maxHealth
+
+        Debug.Log($"{name} healed {amount} HP. Current health: {currentHealth}");
+
+        // Optional: update health bar if using UI
+        var healthComponent = GetComponent<EnemyHealth>();
+        if (healthComponent != null)
+            healthComponent.UpdateHealthBar();
+    }
+
+
 }

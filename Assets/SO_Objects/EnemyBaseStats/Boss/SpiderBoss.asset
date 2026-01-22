@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4be238d9b295624192c160bdbfda97a, type: 3}
   m_Name: SpiderBoss
   m_EditorClassIdentifier: 
-  baseName: Spinne
+  baseName: '[Spider Queen]'
   baseDescription: Der Grund warum Mitchel kein Testing betreiben wird.
   enemyType: 1
   baseLevel: 25
-  baseMovementSpeed: 3
-  baseMaxHealth: 300
-  baseArmor: 2
+  baseMovementSpeed: 4
+  baseMaxHealth: 500
+  baseArmor: 5
   baseMagicResistance: 0
-  baseKnockbackReduction: 0.8
+  baseKnockbackReduction: 1
   baseDamage: 20
   baseAttackSpeed: 1
   baseCritChance: 0

@@ -10,6 +10,8 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
     private float abilityTimer = 0f; // deltaTime-based timer
     [SerializeField] private float abilityCheckInterval = 1f;
 
+    private float aggressionMultiplier = 1f;
+
     private void Start()
     {
         if (abilities == null || abilities.Length == 0)
@@ -32,7 +34,7 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
         if (abilities == null || abilities.Length == 0 || AbilityManager.Instance == null || isPaused)
             return;
 
-        abilityTimer += Time.deltaTime;
+        abilityTimer += Time.deltaTime * aggressionMultiplier;
         if (abilityTimer < abilityCheckInterval)
             return;
 
@@ -87,7 +89,10 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
     {
         target = newTarget;
     }
-
+    public void SetAggressionMultiplier(float value)
+    {
+        aggressionMultiplier = value;
+    }
 
     public void OnPause()
     {

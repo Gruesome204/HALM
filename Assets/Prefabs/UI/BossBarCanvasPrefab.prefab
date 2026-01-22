@@ -27,14 +27,14 @@ RectTransform:
   m_GameObject: {fileID: 2133110772601978905}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.3612, y: 2.3612, z: 2.3612}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5310856038406004045}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 126.5}
+  m_AnchoredPosition: {x: 0, y: 3.0100098}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9051525077471210875
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Spider
+  m_text: '[Boss Name]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -162,7 +162,7 @@ RectTransform:
   m_GameObject: {fileID: 2990833657084878777}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.3612, y: 2.3612, z: 2.3612}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3943181949976439803}
@@ -171,7 +171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 124.79999}
+  m_AnchoredPosition: {x: 0, y: -1}
   m_SizeDelta: {x: 300, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6696069379500600860
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -440,7 +440,7 @@ RectTransform:
   m_GameObject: {fileID: 9203545354338518443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.21339, y: 0.21339, z: 0.21339}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4182104073942003502}
@@ -449,9 +449,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 569, y: 320}
+  m_SizeDelta: {x: 1138, y: 640}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8438107788271000390
 Canvas:
   m_ObjectHideFlags: 0
@@ -461,7 +461,7 @@ Canvas:
   m_GameObject: {fileID: 9203545354338518443}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c7129f6edcd144fa42eb56f1d846a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthSlider: {fileID: 0}
+  healthSlider: {fileID: 6696069379500600860}
   bossNameText: {fileID: 8459130000345273009}
   bossPortraitImage: {fileID: 0}
 --- !u!114 &7751874240049465809

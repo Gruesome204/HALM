@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class BossBarUI : MonoBehaviour
     private float maxHealth;
     public void SetupBossBar(EnemyBaseStats bossStats)
     {
+        Debug.Log($"SetupBossBar");
         if (bossStats == null)
         {
             Debug.LogError("BossBarUI: bossStats is null!");
@@ -19,6 +21,7 @@ public class BossBarUI : MonoBehaviour
         }
 
         maxHealth = bossStats.baseMaxHealth;
+        
 
         if (bossNameText != null)
             bossNameText.text = bossStats.baseName;
@@ -27,6 +30,8 @@ public class BossBarUI : MonoBehaviour
             bossPortraitImage.sprite = bossStats.bossPortrait;
 
         SetHealth(maxHealth);
+        SetBossName(bossNameText.text);
+        Debug.Log($"{bossNameText}");
     }
     public void SetHealth(float currentHealth)
     {
@@ -36,4 +41,12 @@ public class BossBarUI : MonoBehaviour
             currentHealth / maxHealth
         );
     }
+
+    public void SetBossName(string newName)
+    {
+        if (bossNameText != null)
+            bossNameText.text = newName;
+    }
+
+
 }

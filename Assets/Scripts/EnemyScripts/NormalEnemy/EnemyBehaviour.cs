@@ -43,7 +43,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     #endregion
 
     #region Unity Callbacks
-    private void Awake()
+    protected virtual void Awake()
     {
         // Cache components
         stats = GetComponent<EnemyStats>();
@@ -139,7 +139,8 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         if (target == null) return;
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
-
+        if (target == null)
+            return;
         // If within detection range OR aggroed by turret, set aggro
         if (!isAggroed && (distance <= stats.currentDetectionRange || aggroedByTurret))
         {

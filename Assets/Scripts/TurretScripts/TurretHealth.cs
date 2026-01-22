@@ -15,10 +15,9 @@ public class TurretHealth : MonoBehaviour, IDamagable
 
     [Header("Settings")]
     [Tooltip("Cooldown between collisions to avoid rapid repeated damage.")]
-    [SerializeField] private float collisionDamageCooldown = 0.5f;
+    [SerializeField] private float damageTickRate = 0.5f; // damage every 0.5s
+    private float lastDamageTime;
 
-
-    private float lastCollisionTime;
     public bool IsInvulnerable { get; set; }
     public event Action<TurretHealth, DamageData> OnDeath;
 
@@ -143,26 +142,33 @@ public class TurretHealth : MonoBehaviour, IDamagable
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-       Debug.Log("Test Collision");
-        if (Time.time < lastCollisionTime + collisionDamageCooldown) return;
+        if (Time.time < lastDamageTime + damageTickRate) return;
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
         {
             EnemyStats enemyStats = collision.gameObject.GetComponentInChildren<EnemyStats>();
             if (enemyStats != null)
             {
+                // Base damage
+                float damageAmount = enemyStats.currentDamage;
+
+                // Check if the enemy is a boss
+                if (collision.gameObject.TryGetComponent(out BossEnemyBehaviour boss))
+                {
+                    damageAmount *= 2f; // Double damage for bosses
+                }
                 var damageData = new DamageData
                 {
-                    amount = enemyStats.currentDamage,
-                    type = DamageType.Physical,
+                    amount = damageAmount,
+                    type = DamageData.DamageType.Physical,
                     source = collision.gameObject
-
                 };
 
+
                 TakeDamage(damageData, new KnockbackData());
-                lastCollisionTime = Time.time;
+                lastDamageTime = Time.time;
 
                 Debug.Log($"{gameObject.name} collided with {collision.gameObject.name} and took {stats.currentAttackDamage} damage.");
             }
