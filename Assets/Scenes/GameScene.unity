@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 113610905}
   - component: {fileID: 113610906}
   m_Layer: 0
-  m_Name: -PathNodeManager-
+  m_Name: -GridPathfindingManager-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
