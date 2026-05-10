@@ -61,7 +61,7 @@ public class EnterDungeonBehavior : MonoBehaviour, IMenu
         SoundManager.Instance.PlayWoodClick();
 
         SceneManager.LoadScene("GameScene");
-        GameManager.Instance.SaveGame();
+        SaveManager.Instance.SaveGame();
     }
 
     void OnStayInHubBtnClicked(ClickEvent evt)
@@ -70,6 +70,6 @@ public class EnterDungeonBehavior : MonoBehaviour, IMenu
         SoundManager.Instance.PlayWoodClick();
 
         InGameMenuManager.Instance.ReturnToGame();
-        GameManager.Instance.SaveGame();
+        SaveManager.Instance.SaveGame();
     }
 }

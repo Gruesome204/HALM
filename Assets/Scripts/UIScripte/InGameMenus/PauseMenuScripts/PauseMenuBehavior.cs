@@ -44,7 +44,7 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").AddToClassList("pauseMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
         }
-        GameManager.Instance.SaveGame();
+        SaveManager.Instance.SaveGame();    
     }
     void OnEnable()
     {

@@ -10,9 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("Game Data")]
-    public GameDataSO gameDataSO;// Asset reference (defaults)
-    [SerializeField] private GameDataDefaultsSO defaultData;
+    [Header("References")]
+    [SerializeField] public GameDataSO gameDataSO;
 
     [Header("In-Game Timer")]
     [SerializeField] private float playTimeSeconds;
@@ -40,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        SaveGame();
+        SaveManager.Instance.SaveGame();
         SceneManager.LoadScene(sceneName);
     }
 
@@ -54,12 +53,7 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        gameDataSO = Instantiate(gameDataSO);
-
-        LoadOrCreateSave();
     }
-
 
     private void Start()
     {
@@ -90,48 +84,9 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         Debug.Log("[GameManager] Application quitting → saving.");
-        SaveGame();
+        SaveManager.Instance.SaveGame();
     }
 
-    #endregion
-
-    #region Save / Load
-    private void LoadOrCreateSave()
-    {
-        TempSaveData saveData = SaveSystem.Load();
-        if (saveData != null)
-        {
-            // Apply loaded data
-            gameDataSO.ApplySave(saveData);
-            Debug.Log("[GameManager] Save loaded successfully.");
-        }
-        else
-        {
-            // No save found → reset to defaults
-            gameDataSO.ResetToDefaults(defaultData);
-            playTimeSeconds = 0f;
-
-            // Save initial data
-            SaveGame();
-            Debug.Log("[GameManager] No save found. Initialized default game data.");
-        }
-        // Mark save as loaded
-        IsSaveLoaded = true;
-    }
-
-    public void SaveGame()
-    {
-        if (gameDataSO == null)
-        {
-            Debug.LogWarning("[GameManager] GameDataSO is null → cannot save!");
-            return;
-        }
-
-        // Convert SO to TempSaveData
-        TempSaveData saveData = gameDataSO.ToSaveData();
-
-        SaveSystem.Save(saveData);
-    }
     #endregion
 
     #region Gameplay Timer
@@ -161,14 +116,14 @@ public class GameManager : MonoBehaviour
         if (autosaveTimer >= autosaveInterval)
         {
             autosaveTimer = 0f;
-            SaveGame();
+            SaveManager.Instance.SaveGame();
         }
     }
 
     private void HandleDebugInput()
     {
         if (Input.GetKeyDown(KeyCode.H))
-            SaveGame();
+            SaveManager.Instance.SaveGame();
     }
 
     #endregion
@@ -250,10 +205,12 @@ public class GameManager : MonoBehaviour
         private System.Collections.IEnumerator LoadGameRoutine()
         {
             ChangeState(GameState.Loading);
-      
-            // Setup systems
-            TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
-            MapLoaderManager.Instance?.GenerateMapSequence();
+
+        // Setup systems
+        TurretPlacementController.Instance?.SetupFromGameData(
+            SaveManager.Instance.GetGameData()
+        );
+        MapLoaderManager.Instance?.GenerateMapSequence();
 
 
             yield return new WaitUntil(() => PlayerManager.Instance != null);
