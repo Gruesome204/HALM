@@ -292,6 +292,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   healthBar: {fileID: 5537807661464177235}
   bossBarUIPrefab: {fileID: 0}
+  bossBarUIInstance: {fileID: 0}
   spriteRenderer: {fileID: 250192274628413378}
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
@@ -325,9 +326,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 2323439724470229143}
-  target: {fileID: 0}
   knockback: {fileID: 0}
   isAggroed: 0
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  wallCheckDistance: 0.5
+  target: {fileID: 0}
 --- !u!114 &2323439724470229143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +359,7 @@ MonoBehaviour:
   currentKnockbackReduction: 0
   currentKnockbackForce: 0
   currentKnockbackDuration: 0
+  isKnockbackImmune: 0
   currentMovementSpeed: 0
   currentDetectionRange: 0
   currentVisionRange: 0

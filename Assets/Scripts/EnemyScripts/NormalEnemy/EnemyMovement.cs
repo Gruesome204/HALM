@@ -12,6 +12,9 @@ public class EnemyMovement : MonoBehaviour
     private bool ignorePursueRange;
     public bool isAggroed = false;
 
+    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private float wallCheckDistance = 0.5f;
+
     public GameObject target;
 
     private void Awake()
@@ -66,9 +69,26 @@ public class EnemyMovement : MonoBehaviour
     {
         if (target == null || stats == null) return;
 
-        // always move toward target
         Vector2 dir = (target.transform.position - transform.position).normalized;
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            dir,
+            wallCheckDistance,
+            obstacleLayer
+        );
+
+        if (hit.collider != null)
+        {
+            // Wall detected → stop or steer
+            rb.linearVelocity = Vector2.zero;
+            enemyAnimator?.SetMoveSpeed(0f);
+
+            return;
+        }
+
         rb.linearVelocity = dir * stats.currentMovementSpeed;
+
         enemyAnimator?.SetMoveSpeed(rb.linearVelocity.magnitude);
     }
 
