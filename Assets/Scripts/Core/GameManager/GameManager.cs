@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Game Data")]
-    public GameDataSO gameDataSO;                 // Asset reference (defaults)
+    public GameDataSO gameDataSO;// Asset reference (defaults)
     [SerializeField] private GameDataDefaultsSO defaultData;
 
     [Header("In-Game Timer")]
@@ -249,19 +249,18 @@ public class GameManager : MonoBehaviour
 
         private System.Collections.IEnumerator LoadGameRoutine()
         {
-        ChangeState(GameState.Loading);
+            ChangeState(GameState.Loading);
       
-        // Setup systems
-        TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
-        MapLoaderManager.Instance?.GenerateMapSequence();
+            // Setup systems
+            TurretPlacementController.Instance?.SetupFromGameData(gameDataSO);
+            MapLoaderManager.Instance?.GenerateMapSequence();
 
 
-        yield return new WaitUntil(() => PlayerManager.Instance != null);
-        MapProgressionManager.Instance.ResetProgression();
-        MapProgressionManager.Instance.LoadNextRoom();
-        ChangeState(GameState.Playing);
-    }
-
+            yield return new WaitUntil(() => PlayerManager.Instance != null);
+            MapProgressionManager.Instance.ResetProgression();
+            MapProgressionManager.Instance.LoadNextRoom();
+            ChangeState(GameState.Playing);
+         }
     #endregion
 
 }
