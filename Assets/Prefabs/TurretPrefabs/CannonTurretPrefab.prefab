@@ -56,15 +56,19 @@ MonoBehaviour:
   firePoint: {fileID: 5845866127659064707}
   healthBarPrefab: {fileID: 4822189033948548198, guid: 2c9be2bff76ff3b4087da192e5a877eb, type: 3}
   currentAttackDamage: 0
-  currentFireRate: 0
-  currentFireCountdown: 0
   currentProjectileSpeed: 0
+  currentProjectilePierce: 0
   currentAttackRange: 0
   currentKnockbackStrength: 0
   currentKnockbackDuration: 0
+  currentShotsPerSecond: 0
+  currentShotCooldown: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   projectilesPerSalve: 0
 --- !u!114 &3115784510726600488
 MonoBehaviour:
@@ -91,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70bc1a31c981814d8d8890bf295a7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueprint: {fileID: 11400000, guid: d57e7534158189347baee79ed9fa3fc1, type: 2}
+  turretBehaviour: {fileID: 0}
 --- !u!114 &5108720432163869033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 7035983546057845651}
   healthBarFollow: {fileID: 0}
-  collisionDamageCooldown: 1
+  damageTickRate: 0.5
 --- !u!114 &7035983546057845651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,14 +129,15 @@ MonoBehaviour:
   currentMaxHealth: 0
   currentAttackDamage: 0
   currentAttackRange: 0
-  currentFireRate: 0
+  currentShotsPerSecond: 0
+  currentShotInterval: 0
   currentProjectileSpeed: 0
   currentKnockbackStrength: 0
   currentKnockbackDuration: 0
   healthScaleFactor: 0
   damageScaleFactor: 0
-  rangeScaleFactor: 0
-  fireRateScaleFactor: 0
+  rangeScaleFlat: 0
+  shotsPerSecondScaleFactor: 0
 --- !u!61 &6930272753766211119
 BoxCollider2D:
   m_ObjectHideFlags: 0

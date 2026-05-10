@@ -13,7 +13,6 @@
 
 
         [Header("Values")]
-
         public float currentAttackDamage;
         public float currentProjectileSpeed;
         public float currentProjectilePierce;
@@ -29,7 +28,10 @@
         [Header("Targeting Settings")] // Optional: for better organization in Inspector
         public LayerMask enemyLayer; // New variable to select the enemy layer
 
-        private TurretBlueprint.FiringPattern currentFiringPattern;
+        [Header("Line of Sight")]
+        [SerializeField] private LayerMask obstacleLayer;
+
+    private TurretBlueprint.FiringPattern currentFiringPattern;
         private bool salveInProgress;
         public int projectilesPerSalve; // Number of projectiles in a salve
         private float delayBetweenSalveProjectiles; // Delay between each projectile in a salve
@@ -201,19 +203,26 @@
             foreach (Collider2D enemyCollider in enemiesInRange)
             {
                 EnemyBehaviour enemy = enemyCollider.GetComponent<EnemyBehaviour>();
+
                 if (enemy != null)
                 {
-                    float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
+                    // NEW CHECK
+                    if (!HasLineOfSight(enemy.transform))
+                        continue;
+
+                    float distanceToEnemy =
+                        Vector2.Distance(transform.position, enemy.transform.position);
+
                     if (distanceToEnemy < shortestDistance)
                     {
                         shortestDistance = distanceToEnemy;
-                        closestEnemyInThisScan = enemy.transform; // Assign to the temporary variable
+                        closestEnemyInThisScan = enemy.transform;
                     }
                 }
             }
 
-            // Assign the closest enemy found (or null if none) to the class-level targetEnemy
-            this.targetEnemy = closestEnemyInThisScan;
+        // Assign the closest enemy found (or null if none) to the class-level targetEnemy
+        this.targetEnemy = closestEnemyInThisScan;
         }
 
         private List<Transform> GetEnemiesInRange()
@@ -246,6 +255,31 @@
                 break;
         }
     }
+        private bool HasLineOfSight(Transform target)
+        {
+            if (target == null)
+                return false;
+
+            Vector2 origin = firePoint.position;
+            Vector2 direction = (target.position - firePoint.position);
+
+            float distance = direction.magnitude;
+
+            RaycastHit2D hit = Physics2D.Raycast(
+                origin,
+                direction.normalized,
+                distance,
+                obstacleLayer
+            );
+
+            Debug.DrawRay(
+                origin,
+                direction.normalized * distance,
+                hit.collider == null ? Color.green : Color.red
+            );
+
+            return hit.collider == null;
+        }
 
     void ShootProjectileAt(Transform target)
         {
@@ -320,8 +354,11 @@
                 break;
 
             Transform currentTarget = targets[targetIndex % targets.Count];
-            ShootProjectileAt(currentTarget);
 
+            if (currentTarget != null && HasLineOfSight(currentTarget))
+            {
+                ShootProjectileAt(currentTarget);
+            }
             targetIndex++;
 
             // Wait between shots
