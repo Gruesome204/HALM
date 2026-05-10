@@ -24,6 +24,12 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float pathUpdateRate = 1f;
     private float pathTimer;
 
+    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float slowDownDistance = 0.3f;
+    [SerializeField] private float arriveDistance = 0.08f;
+
+    private Vector2 smoothVelocity;
+
 
     public GameObject target;
 
@@ -143,16 +149,38 @@ public class EnemyMovement : MonoBehaviour
             return;
 
         if (currentIndex >= currentPath.Count)
+        {
+            rb.linearVelocity = Vector2.zero;
             return;
+        }
 
         Vector3 targetWorld =
             GridManager.Instance.GetWorldPosition(currentPath[currentIndex], Vector2Int.one);
 
-        Vector2 dir = (targetWorld - transform.position).normalized;
+        Vector2 toTarget = (targetWorld - transform.position);
+        float distance = toTarget.magnitude;
 
-        rb.linearVelocity = dir * stats.currentMovementSpeed;
+        Vector2 dir = toTarget.normalized;
 
-        if (Vector2.Distance(transform.position, targetWorld) < 0.1f)
+        //Smooth slowing near node
+        float speedMultiplier = 1f;
+        if (distance < slowDownDistance)
+        {
+            speedMultiplier = distance / slowDownDistance;
+        }
+
+        Vector2 targetVelocity = dir * stats.currentMovementSpeed * speedMultiplier;
+
+        //Smooth acceleration (no instant changes)
+        rb.linearVelocity = Vector2.SmoothDamp(
+            rb.linearVelocity,
+            targetVelocity,
+            ref smoothVelocity,
+            0.08f
+        );
+
+        //Only advance when truly close
+        if (distance < arriveDistance)
         {
             currentIndex++;
         }
