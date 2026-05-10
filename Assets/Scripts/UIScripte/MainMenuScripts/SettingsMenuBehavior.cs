@@ -58,7 +58,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
     private IEnumerator WaitForSaveLoad()
     {
         // Wait until GameManager has loaded the save
-        yield return new WaitUntil(() => GameManager.Instance != null && GameManager.Instance.IsSaveLoaded);
+        yield return new WaitUntil(() => SaveManager.Instance != null && SaveManager.Instance.IsSaveLoaded);
         {
             gameDataSO = GameManager.Instance.gameDataSO;
             ConnectUI();

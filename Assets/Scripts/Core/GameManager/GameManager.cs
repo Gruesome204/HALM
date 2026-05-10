@@ -28,13 +28,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private readonly List<IPausable> pausables = new();
 
-    [Header("Autosave")]
-    [SerializeField] private float autosaveInterval = 60f;
-    private float autosaveTimer = 0f;
-
-    public bool IsSaveLoaded { get; private set; } = false;
-
-
     #region Unity Callbacks
 
     public void LoadScene(string sceneName)
@@ -77,7 +70,6 @@ public class GameManager : MonoBehaviour
             return;
 
         UpdatePlayTimer();
-        HandleAutosave();
         HandleDebugInput();
     }
 
@@ -105,28 +97,11 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Autosave & Debug
-
-    private void HandleAutosave()
-    {
-        if (CurrentState != GameState.Playing)
-            return;
-        autosaveTimer += Time.deltaTime;
-
-        if (autosaveTimer >= autosaveInterval)
-        {
-            autosaveTimer = 0f;
-            SaveManager.Instance.SaveGame();
-        }
-    }
-
     private void HandleDebugInput()
     {
         if (Input.GetKeyDown(KeyCode.H))
             SaveManager.Instance.SaveGame();
     }
-
-    #endregion
 
     #region Game State & Pausables
 
@@ -194,13 +169,13 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         Debug.Log("[GameManager] FULL GAME RESET");
-        SaveSystem.DeleteSaveFiles();
+        SaveManager.Instance.DeleteSave();
         Debug.Log("[GameManager] Save deleted");
     }
 
     #endregion
 
-#region Load Game Routine
+    #region Load Game Routine
 
         private System.Collections.IEnumerator LoadGameRoutine()
         {
