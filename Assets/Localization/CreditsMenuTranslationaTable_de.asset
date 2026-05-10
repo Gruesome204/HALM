@@ -34,16 +34,16 @@ MonoBehaviour:
       Level
       Designer
 
-      Grossmann Translation
+      Translation
 
 
 
       Lead Programmer
 
-      Gameplay
-      Programmer
+      Gameplay Programmer
 
-      UI Programmer
+      UI
+      Programmer
 
       Sound Programmer
 
@@ -51,10 +51,10 @@ MonoBehaviour:
 
       Lead Artist
 
-      Game
-      Asset Artist
+      Game Asset Artist
 
-      UI Artist
+      UI
+      Artist
 
       Post-Processing Artist
 
@@ -68,10 +68,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 403112105480192
     m_Localized: "Game Design\nHendrik Schmidt\nHendrik Schmidt\nLukas Loc Schneider\nHendrik
-      Schmidt\nMichelle Nicola\n\nProgramming\nLukas Loc Schneider \nLukas Loc Schneider
-      \nMichelle Nicola Grossmann\nMichelle Nicola Grossmann\n\nArt\nAlicia Jaschinski\nAlicia
-      Jaschinski\nMichelle Nicola Grossmann\nHendrik Schmidt\n\nSound Design\nMichelle
-      Nicola Grossmann\n\nExternal Material\nSound Libraries"
+      Schmidt\nMichelle Nicola Grossmann\n\nProgramming\nLukas Loc Schneider \nLukas
+      Loc Schneider \nMichelle Nicola Grossmann\nMichelle Nicola Grossmann\n\nArt\nRedDun\nRedDun\nMichelle
+      Nicola Grossmann\nHendrik Schmidt\n\nSound Design\nMichelle Nicola Grossmann\n\nExternal
+      Material\nSound Libraries"
     m_Metadata:
       m_Items: []
   references:
