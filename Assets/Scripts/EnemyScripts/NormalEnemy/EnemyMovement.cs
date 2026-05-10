@@ -1,4 +1,5 @@
-    using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -14,6 +15,15 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private float wallCheckDistance = 0.5f;
+
+    private List<Vector2Int> currentPath = new();
+    private int currentIndex = 0;
+
+    [SerializeField] private float nodeReachDistance = 0.1f;
+
+    [SerializeField] private float pathUpdateRate = 1f;
+    private float pathTimer;
+
 
     public GameObject target;
 
@@ -44,12 +54,26 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        pathTimer += Time.deltaTime;
+
+        if (pathTimer >= pathUpdateRate)
+        {
+            pathTimer = 0f;
+
+            GeneratePath();
+        }
+    }
+
     private void FixedUpdate()
     {
         if (isPaused) return;
         if (knockback != null && knockback.IsKnockedBack)
             return; 
-        MoveTowardTarget();
+        //MoveTowardTarget();
+
+        FollowPath();
     }
 
     //Enables or disables movement and physics interaction
@@ -90,6 +114,48 @@ public class EnemyMovement : MonoBehaviour
         rb.linearVelocity = dir * stats.currentMovementSpeed;
 
         enemyAnimator?.SetMoveSpeed(rb.linearVelocity.magnitude);
+    }
+
+
+    public void GeneratePath()
+    {
+        if (target == null)
+        {
+            Debug.LogError("Enemy has NO target!");
+            return;
+        }
+
+        if (GridManager.Instance == null)
+        {
+            Debug.LogError("GridManager.Instance is NULL!");
+            return;
+        }
+
+        if (GridPathfinding.Instance == null)
+        {
+            Debug.LogError("GridPathfinding.Instance is NULL!");
+            return;
+        }
+    }
+    public void FollowPath()
+    {
+        if (currentPath == null || currentPath.Count == 0)
+            return;
+
+        if (currentIndex >= currentPath.Count)
+            return;
+
+        Vector3 targetWorld =
+            GridManager.Instance.GetWorldPosition(currentPath[currentIndex], Vector2Int.one);
+
+        Vector2 dir = (targetWorld - transform.position).normalized;
+
+        rb.linearVelocity = dir * stats.currentMovementSpeed;
+
+        if (Vector2.Distance(transform.position, targetWorld) < 0.1f)
+        {
+            currentIndex++;
+        }
     }
 
 
