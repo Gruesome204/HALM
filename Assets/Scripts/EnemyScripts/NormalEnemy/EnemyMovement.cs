@@ -24,9 +24,13 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float pathUpdateRate = 1f;
     private float pathTimer;
 
+    [SerializeField] private int lookAheadSteps = 2;
+
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float slowDownDistance = 0.3f;
     [SerializeField] private float arriveDistance = 0.08f;
+
+
 
     private Vector2 smoothVelocity;
 
@@ -138,7 +142,7 @@ public class EnemyMovement : MonoBehaviour
             GridManager.Instance.GetGridCoordinates(target.transform.position);
 
         currentPath = GridPathfinding.Instance.FindPath(start, goal);
-
+        currentPath = SmoothPath(currentPath);
         currentIndex = 0;
 
         Debug.Log($"Path length: {currentPath.Count}");
@@ -154,36 +158,69 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
+        int targetIndex = Mathf.Min(currentIndex + lookAheadSteps, currentPath.Count - 1);
+
         Vector3 targetWorld =
-            GridManager.Instance.GetWorldPosition(currentPath[currentIndex], Vector2Int.one);
+            GridManager.Instance.GetWorldPosition(currentPath[targetIndex], Vector2Int.one);
 
         Vector2 toTarget = (targetWorld - transform.position);
         float distance = toTarget.magnitude;
 
         Vector2 dir = toTarget.normalized;
 
-        //Smooth slowing near node
-        float speedMultiplier = 1f;
-        if (distance < slowDownDistance)
-        {
-            speedMultiplier = distance / slowDownDistance;
-        }
+        float speedMultiplier = Mathf.Clamp01(distance / 0.5f);
 
         Vector2 targetVelocity = dir * stats.currentMovementSpeed * speedMultiplier;
 
-        //Smooth acceleration (no instant changes)
-        rb.linearVelocity = Vector2.SmoothDamp(
-            rb.linearVelocity,
-            targetVelocity,
-            ref smoothVelocity,
-            0.08f
-        );
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.15f);
 
-        //Only advance when truly close
-        if (distance < arriveDistance)
+        // advance current index only when close to actual next node
+        Vector3 nextNode =
+            GridManager.Instance.GetWorldPosition(currentPath[currentIndex], Vector2Int.one);
+
+        if (Vector2.Distance(transform.position, nextNode) < 0.15f)
         {
             currentIndex++;
         }
+    }
+    public List<Vector2Int> SmoothPath(List<Vector2Int> path)
+    {
+        if (path.Count < 3)
+            return path;
+
+        List<Vector2Int> smooth = new();
+        smooth.Add(path[0]);
+
+        int current = 0;
+
+        while (current < path.Count - 1)
+        {
+            int next = path.Count - 1;
+
+            for (int i = path.Count - 1; i > current; i--)
+            {
+                if (HasLineOfSight(path[current], path[i]))
+                {
+                    next = i;
+                    break;
+                }
+            }
+
+            smooth.Add(path[next]);
+            current = next;
+        }
+
+        return smooth;
+    }
+    bool HasLineOfSight(Vector2Int a, Vector2Int b)
+    {
+        Vector3 worldA = GridManager.Instance.GetWorldPosition(a, Vector2Int.one);
+        Vector3 worldB = GridManager.Instance.GetWorldPosition(b, Vector2Int.one);
+
+        Vector2 dir = (worldB - worldA).normalized;
+        float dist = Vector2.Distance(worldA, worldB);
+
+        return !Physics2D.Raycast(worldA, dir, dist, obstacleLayer);
     }
 
 

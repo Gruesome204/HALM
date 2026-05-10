@@ -334,6 +334,9 @@ MonoBehaviour:
   wallCheckDistance: 0.5
   nodeReachDistance: 0.1
   pathUpdateRate: 1
+  acceleration: 10
+  slowDownDistance: 0.4
+  arriveDistance: 0.08
   target: {fileID: 0}
 --- !u!114 &2323439724470229143
 MonoBehaviour:
