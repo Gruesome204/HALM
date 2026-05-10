@@ -120,22 +120,22 @@ public class EnemyMovement : MonoBehaviour
     public void GeneratePath()
     {
         if (target == null)
-        {
-            Debug.LogError("Enemy has NO target!");
             return;
-        }
 
-        if (GridManager.Instance == null)
-        {
-            Debug.LogError("GridManager.Instance is NULL!");
+        if (GridManager.Instance == null || GridPathfinding.Instance == null)
             return;
-        }
 
-        if (GridPathfinding.Instance == null)
-        {
-            Debug.LogError("GridPathfinding.Instance is NULL!");
-            return;
-        }
+        Vector2Int start =
+            GridManager.Instance.GetGridCoordinates(transform.position);
+
+        Vector2Int goal =
+            GridManager.Instance.GetGridCoordinates(target.transform.position);
+
+        currentPath = GridPathfinding.Instance.FindPath(start, goal);
+
+        currentIndex = 0;
+
+        Debug.Log($"Path length: {currentPath.Count}");
     }
     public void FollowPath()
     {
