@@ -145,11 +145,11 @@ public class TurretStats : MonoBehaviour
         };
     }
     public void RecalculateStats(
-    TurretBehaviour behaviour,
-    TurretBlueprint blueprint,
-    int level,
-    TurretModifier upgrade,
-    TurretGlobalModifierManager global)
+        TurretBehaviour behaviour,
+        TurretBlueprint blueprint,
+        int level,
+        TurretModifier upgrade,
+        TurretGlobalModifierManager global)
     {
         TurretStatData finalStats =
             CalculateFinalStats(blueprint, level, upgrade, global);

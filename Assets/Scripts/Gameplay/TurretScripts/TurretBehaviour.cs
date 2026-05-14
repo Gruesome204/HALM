@@ -33,96 +33,96 @@
         private TurretUpgradeChoiceManager upgrades;
 
 
-    private void OnEnable()
-    {
-        GameManager.Instance?.RegisterPausable(this);
-    }
-
-    private void OnDisable()
-    {
-            GameManager.Instance?.UnregisterPausable(this);
-    }
-
-    // Pause system
-    public void OnPause() => isPaused = true;
-    public void OnResume() => isPaused = false;
-
-    private void Awake()
-    {
-        global = TurretGlobalModifierManager.Instance;
-        upgrades = TurretUpgradeChoiceManager.Instance;
-        stats = GetComponent<TurretStats>();
-    }
-
-
-    void Start()
-    {
-        if (turretBlueprint != null && currentProjectileType == null)
-            currentProjectileType = turretBlueprint.turretProjectileType;
-
-        currentFiringPattern = turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
-        delayBetweenSalveProjectiles = turretBlueprint?.delayBetweenSalveProjectiles ?? 0.1f;
-
-        var health = GetComponent<TurretHealth>();
-        if (health != null)
+        private void OnEnable()
         {
-            health.AttachHealthBar(healthBarPrefab, new Vector3(0, 1.5f, 0));
+            GameManager.Instance?.RegisterPausable(this);
         }
-    }
 
-    void Update()
-    {
-        if (isPaused) return;
-
-        currentShotCooldown -= Time.deltaTime;
-
-        if (currentShotCooldown > 0f)
-            return;
-
-        FindTarget();
-        if (targetEnemy == null)
-            return;
-
-        Fire();
-    }
-
-    void FindTarget()
+        private void OnDisable()
         {
-            Collider2D[] enemiesInRange =
-           Physics2D.OverlapCircleAll(
-    transform.position,
-    stats.currentAttackRange,
-    enemyLayer);
+                GameManager.Instance?.UnregisterPausable(this);
+        }
 
-        // Initialize shortestDistance to a very large value
-        float shortestDistance = Mathf.Infinity;
-            // Temporarily store the closest enemy found in this iteration
-            Transform closestEnemyInThisScan = null;
+        // Pause system
+        public void OnPause() => isPaused = true;
+        public void OnResume() => isPaused = false;
 
-            foreach (Collider2D enemyCollider in enemiesInRange)
+        private void Awake()
+        {
+            global = TurretGlobalModifierManager.Instance;
+            upgrades = TurretUpgradeChoiceManager.Instance;
+            stats = GetComponent<TurretStats>();
+        }
+
+
+        void Start()
+        {
+            if (turretBlueprint != null && currentProjectileType == null)
+                currentProjectileType = turretBlueprint.turretProjectileType;
+
+            currentFiringPattern = turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
+            delayBetweenSalveProjectiles = turretBlueprint?.delayBetweenSalveProjectiles ?? 0.1f;
+
+            var health = GetComponent<TurretHealth>();
+            if (health != null)
             {
-                EnemyBehaviour enemy = enemyCollider.GetComponent<EnemyBehaviour>();
+                health.AttachHealthBar(healthBarPrefab, new Vector3(0, 1.5f, 0));
+            }
+        }
 
-                if (enemy != null)
+        void Update()
+        {
+            if (isPaused) return;
+
+            currentShotCooldown -= Time.deltaTime;
+
+            if (currentShotCooldown > 0f)
+                return;
+
+            FindTarget();
+            if (targetEnemy == null)
+                return;
+
+            Fire();
+        }
+
+        void FindTarget()
+            {
+                Collider2D[] enemiesInRange =
+               Physics2D.OverlapCircleAll(
+        transform.position,
+        stats.currentAttackRange,
+        enemyLayer);
+
+            // Initialize shortestDistance to a very large value
+            float shortestDistance = Mathf.Infinity;
+                // Temporarily store the closest enemy found in this iteration
+                Transform closestEnemyInThisScan = null;
+
+                foreach (Collider2D enemyCollider in enemiesInRange)
                 {
-                    // NEW CHECK
-                    if (!HasLineOfSight(enemy.transform))
-                        continue;
+                    EnemyBehaviour enemy = enemyCollider.GetComponent<EnemyBehaviour>();
 
-                    float distanceToEnemy =
-                        Vector2.Distance(transform.position, enemy.transform.position);
-
-                    if (distanceToEnemy < shortestDistance)
+                    if (enemy != null)
                     {
-                        shortestDistance = distanceToEnemy;
-                        closestEnemyInThisScan = enemy.transform;
+                        // NEW CHECK
+                        if (!HasLineOfSight(enemy.transform))
+                            continue;
+
+                        float distanceToEnemy =
+                            Vector2.Distance(transform.position, enemy.transform.position);
+
+                        if (distanceToEnemy < shortestDistance)
+                        {
+                            shortestDistance = distanceToEnemy;
+                            closestEnemyInThisScan = enemy.transform;
+                        }
                     }
                 }
-            }
 
-        // Assign the closest enemy found (or null if none) to the class-level targetEnemy
-        this.targetEnemy = closestEnemyInThisScan;
-        }
+            // Assign the closest enemy found (or null if none) to the class-level targetEnemy
+            this.targetEnemy = closestEnemyInThisScan;
+            }
 
         private List<Transform> GetEnemiesInRange()
         {
@@ -139,154 +139,154 @@
             return enemies;
         }
 
-    private void Fire()
-    {
-        switch (currentFiringPattern)
+        private void Fire()
         {
-            case TurretBlueprint.FiringPattern.SingleShot:
-                ShootProjectileAt(targetEnemy);
-                ResetFiringCooldown();
-                break;
+            switch (currentFiringPattern)
+            {
+                case TurretBlueprint.FiringPattern.SingleShot:
+                    ShootProjectileAt(targetEnemy);
+                    ResetFiringCooldown();
+                    break;
 
-            case TurretBlueprint.FiringPattern.FireSalve:
-                if (!salveInProgress)
-                    StartCoroutine(FireSalveWithCooldown());
-                break;
+                case TurretBlueprint.FiringPattern.FireSalve:
+                    if (!salveInProgress)
+                        StartCoroutine(FireSalveWithCooldown());
+                    break;
+            }
         }
-    }
         private bool HasLineOfSight(Transform target)
-        {
-            if (target == null)
-                return false;
-
-            Vector2 origin = firePoint.position;
-            Vector2 direction = (target.position - firePoint.position);
-
-            float distance = direction.magnitude;
-
-            RaycastHit2D hit = Physics2D.Raycast(
-                origin,
-                direction.normalized,
-                distance,
-                obstacleLayer
-            );
-
-            Debug.DrawRay(
-                origin,
-                direction.normalized * distance,
-                hit.collider == null ? Color.green : Color.red
-            );
-
-            return hit.collider == null;
-        }
-
-    void ShootProjectileAt(Transform target)
-        {
-            if (currentProjectileType == null || target == null || firePoint == null)
-                return;
-
-            GameObject projectileObj = Instantiate(
-                currentProjectileType,
-                firePoint.position,
-                firePoint.rotation
-            );
-            var projectile = projectileObj.GetComponent<ProjectileBehaviour>();
-            var rb = projectileObj.GetComponent<Rigidbody2D>();
-
-            if (projectile == null || rb == null)
             {
-                Debug.LogWarning("Projectile prefab is missing components.");
-                Destroy(projectileObj);
-                return;
+                if (target == null)
+                    return false;
+
+                Vector2 origin = firePoint.position;
+                Vector2 direction = (target.position - firePoint.position);
+
+                float distance = direction.magnitude;
+
+                RaycastHit2D hit = Physics2D.Raycast(
+                    origin,
+                    direction.normalized,
+                    distance,
+                    obstacleLayer
+                );
+
+                Debug.DrawRay(
+                    origin,
+                    direction.normalized * distance,
+                    hit.collider == null ? Color.green : Color.red
+                );
+
+                return hit.collider == null;
             }
 
-        projectile.SetOwner(gameObject,stats.currentAttackDamage);
-        projectile.knockbackStrength = stats.currentKnockbackStrength;
-        projectile.knockbackDuration = stats.currentKnockbackDuration;
-        projectile.InitializePiercing(stats.currentProjectilePierce);
-        Vector2 direction = (target.position - firePoint.position).normalized;
-        rb.linearVelocity = direction * stats.currentProjectileSpeed;
+        void ShootProjectileAt(Transform target)
+            {
+                if (currentProjectileType == null || target == null || firePoint == null)
+                    return;
 
-        Destroy(projectileObj, 5f);
+                GameObject projectileObj = Instantiate(
+                    currentProjectileType,
+                    firePoint.position,
+                    firePoint.rotation
+                );
+                var projectile = projectileObj.GetComponent<ProjectileBehaviour>();
+                var rb = projectileObj.GetComponent<Rigidbody2D>();
 
-            // <-- Play shooting sound
-            if (SoundManager.Instance != null)
-                SoundManager.Instance.PlayTowerShoot();
+                if (projectile == null || rb == null)
+                {
+                    Debug.LogWarning("Projectile prefab is missing components.");
+                    Destroy(projectileObj);
+                    return;
+                }
+
+            projectile.SetOwner(gameObject,stats.currentAttackDamage);
+            projectile.knockbackStrength = stats.currentKnockbackStrength;
+            projectile.knockbackDuration = stats.currentKnockbackDuration;
+            projectile.InitializePiercing(stats.currentProjectilePierce);
+            Vector2 direction = (target.position - firePoint.position).normalized;
+            rb.linearVelocity = direction * stats.currentProjectileSpeed;
+
+            Destroy(projectileObj, 5f);
+
+                // <-- Play shooting sound
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayTowerShoot();
+            }
+
+            private void ResetFiringCooldown()
+            {
+            currentShotCooldown = stats.currentShotInterval;
         }
-
-        private void ResetFiringCooldown()
+        private IEnumerator FireSalveWithCooldown()
         {
-        currentShotCooldown = stats.currentShotInterval;
-    }
-    private IEnumerator FireSalveWithCooldown()
-    {
-        salveInProgress = true;
+            salveInProgress = true;
 
-        // Get all enemies in range at start
-        List<Transform> targets = GetEnemiesInRange();
-        if (targets.Count == 0)
-        {
-            salveInProgress = false;
-            yield break;
-        }
-
-        // Shuffle targets for dynamic salve
-        for (int t = 0; t < targets.Count; t++)
-        {
-            int r = UnityEngine.Random.Range(t, targets.Count);
-            var temp = targets[t];
-            targets[t] = targets[r];
-            targets[r] = temp;
-        }
-
-        int targetIndex = 0;
-
-        for (int i = 0; i < projectilesPerSalve; i++)
-        {
-            // Pause-safe waiting
-            while (isPaused)
-                yield return null;
-
-            // Remove dead or out-of-range targets
-            targets.RemoveAll(t => t == null || Vector2.Distance(transform.position, t.position) > stats.currentAttackRange);
+            // Get all enemies in range at start
+            List<Transform> targets = GetEnemiesInRange();
             if (targets.Count == 0)
-                break;
-
-            Transform currentTarget = targets[targetIndex % targets.Count];
-
-            if (currentTarget != null && HasLineOfSight(currentTarget))
             {
-                ShootProjectileAt(currentTarget);
+                salveInProgress = false;
+                yield break;
             }
-            targetIndex++;
 
-            // Wait between shots
-            float elapsed = 0f;
-            while (elapsed < delayBetweenSalveProjectiles)
+            // Shuffle targets for dynamic salve
+            for (int t = 0; t < targets.Count; t++)
             {
-                if (!isPaused)
-                    elapsed += Time.deltaTime;
-                yield return null;
+                int r = UnityEngine.Random.Range(t, targets.Count);
+                var temp = targets[t];
+                targets[t] = targets[r];
+                targets[r] = temp;
             }
+
+            int targetIndex = 0;
+
+            for (int i = 0; i < projectilesPerSalve; i++)
+            {
+                // Pause-safe waiting
+                while (isPaused)
+                    yield return null;
+
+                // Remove dead or out-of-range targets
+                targets.RemoveAll(t => t == null || Vector2.Distance(transform.position, t.position) > stats.currentAttackRange);
+                if (targets.Count == 0)
+                    break;
+
+                Transform currentTarget = targets[targetIndex % targets.Count];
+
+                if (currentTarget != null && HasLineOfSight(currentTarget))
+                {
+                    ShootProjectileAt(currentTarget);
+                }
+                targetIndex++;
+
+                // Wait between shots
+                float elapsed = 0f;
+                while (elapsed < delayBetweenSalveProjectiles)
+                {
+                    if (!isPaused)
+                        elapsed += Time.deltaTime;
+                    yield return null;
+                }
+            }
+
+            ResetFiringCooldown(); // cooldown applied after full salve
+            salveInProgress = false;
         }
-
-        ResetFiringCooldown(); // cooldown applied after full salve
-        salveInProgress = false;
-    }
-    public void SetFiringPattern(TurretBlueprint.FiringPattern pattern)
-    {
-        currentFiringPattern = pattern;
-    }
-
-    void OnDrawGizmosSelected()
+        public void SetFiringPattern(TurretBlueprint.FiringPattern pattern)
         {
-            Gizmos.color = Color.red;
-            if (stats != null)
-            {
-                Gizmos.DrawWireSphere(
-                    transform.position,
-                    stats.currentAttackRange);
-            }
+            currentFiringPattern = pattern;
         }
+
+        void OnDrawGizmosSelected()
+            {
+                Gizmos.color = Color.red;
+                if (stats != null)
+                {
+                    Gizmos.DrawWireSphere(
+                        transform.position,
+                        stats.currentAttackRange);
+                }
+            }
 
     }

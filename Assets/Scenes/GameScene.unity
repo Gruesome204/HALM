@@ -2000,7 +2000,6 @@ MonoBehaviour:
   - {fileID: 5872725842470093268, guid: 9c71e1348145f5b498f8b89ca2a26c75, type: 3}
   - {fileID: 5872725842470093268, guid: 364916cd7f69f704286f7c3eac0645f0, type: 3}
   - {fileID: 5872725842470093268, guid: a02a971409da10d45903c95f016f2063, type: 3}
-  - {fileID: 5872725842470093268, guid: 7f53b94edef1c1e4ab383266d0d5bb6a, type: 3}
   bossMapPrefab: {fileID: 5872725842470093268, guid: 7f53b94edef1c1e4ab383266d0d5bb6a, type: 3}
   mapParent: {fileID: 855785565}
   playerSpawnPoint: {fileID: 0}
@@ -2945,7 +2944,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
   playTimeSeconds: 0
-  autosaveInterval: 60
 --- !u!1 &2051609381
 GameObject:
   m_ObjectHideFlags: 0
