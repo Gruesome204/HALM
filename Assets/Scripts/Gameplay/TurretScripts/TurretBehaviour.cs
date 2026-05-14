@@ -22,7 +22,7 @@
         [Header("Line of Sight")]
         [SerializeField] private LayerMask obstacleLayer;
 
-    private TurretBlueprint.FiringPattern currentFiringPattern;
+        private TurretBlueprint.FiringPattern currentFiringPattern;
         private bool salveInProgress;
         public int projectilesPerSalve; // Number of projectiles in a salve
         private float delayBetweenSalveProjectiles; // Delay between each projectile in a salve
@@ -56,19 +56,19 @@
 
 
     void Start()
+    {
+        if (turretBlueprint != null && currentProjectileType == null)
+            currentProjectileType = turretBlueprint.turretProjectileType;
+
+        currentFiringPattern = turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
+        delayBetweenSalveProjectiles = turretBlueprint?.delayBetweenSalveProjectiles ?? 0.1f;
+
+        var health = GetComponent<TurretHealth>();
+        if (health != null)
         {
-            if (turretBlueprint != null && currentProjectileType == null)
-                currentProjectileType = turretBlueprint.turretProjectileType;
-
-            currentFiringPattern = turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
-            delayBetweenSalveProjectiles = turretBlueprint?.delayBetweenSalveProjectiles ?? 0.1f;
-
-            var health = GetComponent<TurretHealth>();
-            if (health != null)
-            {
-                health.AttachHealthBar(healthBarPrefab, new Vector3(0, 1.5f, 0));
-            }
+            health.AttachHealthBar(healthBarPrefab, new Vector3(0, 1.5f, 0));
         }
+    }
 
     private void RecalculateStatsFromLevelManager()
     {
@@ -78,8 +78,6 @@
         int level = TurretLevelManager.Instance.GetLevel(turretBlueprint.turretType);
         RecalculateStats(level);
     }
-
-
 
     public TurretStatData CalculateFinalStats(
         int level,
