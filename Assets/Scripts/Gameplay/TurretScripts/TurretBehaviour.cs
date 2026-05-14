@@ -7,20 +7,11 @@
     {
         [Header("References")]
         public TurretBlueprint turretBlueprint;
+        private TurretStats stats;
         public GameObject currentProjectileType;
         public Transform firePoint;
         [SerializeField] private GameObject healthBarPrefab;
 
-
-        [Header("Values")]
-        public float currentAttackDamage;
-        public float currentProjectileSpeed;
-        public float currentProjectilePierce;
-        public float currentAttackRange;
-        public float currentKnockbackStrength;
-        public float currentKnockbackDuration;
-
-        public float currentShotsPerSecond;
         public float currentShotCooldown;
 
         private Transform targetEnemy;
@@ -60,6 +51,7 @@
     {
         global = TurretGlobalModifierManager.Instance;
         upgrades = TurretUpgradeChoiceManager.Instance;
+        stats = GetComponent<TurretStats>();
     }
 
 
@@ -147,30 +139,44 @@
                 ? upgrades.GetCombinedModifier(turretBlueprint.turretType)
                 : null;
 
-        TurretStatData stats =
+        TurretStatData finalStats =
             CalculateFinalStats(level, upgrade, global);
 
-        currentAttackDamage = stats.damage;
-        currentShotsPerSecond = Mathf.Max(0.1f, stats.shotsPerSecond);  
-        currentAttackRange = stats.range;
-        currentProjectileSpeed = stats.projectileSpeed;
-        projectilesPerSalve = stats.projectilesPerSalve;
+        stats.currentAttackDamage = finalStats.damage;
 
-        currentProjectilePierce = stats.pierceCount;
-        currentKnockbackStrength = stats.knockbackStrength;
-        currentKnockbackDuration = stats.knockbackDuration;
+        stats.currentShotsPerSecond =
+            Mathf.Max(0.1f, finalStats.shotsPerSecond);
 
-        // --- Dynamically choose firing pattern ---
-        if (projectilesPerSalve > 1)
+        stats.currentShotInterval =
+            1f / stats.currentShotsPerSecond;
+
+        stats.currentAttackRange = finalStats.range;
+
+        stats.currentProjectileSpeed =
+            finalStats.projectileSpeed;
+
+        stats.currentProjectilePierce =
+            finalStats.pierceCount;
+
+        stats.currentKnockbackStrength =
+            finalStats.knockbackStrength;
+
+        stats.currentKnockbackDuration =
+            finalStats.knockbackDuration;
+
+        stats.currentProjectilesPerSalve =
+            finalStats.projectilesPerSalve;
+
+        // Determine firing mode
+        if (stats.currentProjectilesPerSalve > 1)
         {
-            currentFiringPattern = TurretBlueprint.FiringPattern.FireSalve;
+            currentFiringPattern =
+                TurretBlueprint.FiringPattern.FireSalve;
         }
         else
         {
-            // If the base blueprint is single shot, use that; otherwise fallback
-            currentFiringPattern = (turretBlueprint?.firingPattern == TurretBlueprint.FiringPattern.FireSalve)
-                ? TurretBlueprint.FiringPattern.SingleShot
-                : turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
+            currentFiringPattern =
+                turretBlueprint.firingPattern;
         }
     }
 
@@ -193,10 +199,13 @@
     void FindTarget()
         {
             Collider2D[] enemiesInRange =
-                Physics2D.OverlapCircleAll(transform.position, currentAttackRange, enemyLayer);
+           Physics2D.OverlapCircleAll(
+    transform.position,
+    stats.currentAttackRange,
+    enemyLayer);
 
-            // Initialize shortestDistance to a very large value
-            float shortestDistance = Mathf.Infinity;
+        // Initialize shortestDistance to a very large value
+        float shortestDistance = Mathf.Infinity;
             // Temporarily store the closest enemy found in this iteration
             Transform closestEnemyInThisScan = null;
 
@@ -227,7 +236,7 @@
 
         private List<Transform> GetEnemiesInRange()
         {
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, currentAttackRange, enemyLayer);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, stats.currentAttackRange, enemyLayer);
             List<Transform> enemies = new List<Transform>();
 
             foreach (Collider2D hit in hits)
@@ -301,14 +310,14 @@
                 return;
             }
 
-            projectile.SetOwner(gameObject, currentAttackDamage);
-            projectile.knockbackStrength = currentKnockbackStrength;
-            projectile.knockbackDuration = currentKnockbackDuration;
-            projectile.InitializePiercing((int)currentProjectilePierce);
-            Vector2 direction = (target.position - firePoint.position).normalized;
-            rb.linearVelocity = direction * currentProjectileSpeed;
-            
-            Destroy(projectileObj, 5f);
+        projectile.SetOwner(gameObject,stats.currentAttackDamage);
+        projectile.knockbackStrength = stats.currentKnockbackStrength;
+        projectile.knockbackDuration = stats.currentKnockbackDuration;
+        projectile.InitializePiercing(stats.currentProjectilePierce);
+        Vector2 direction = (target.position - firePoint.position).normalized;
+        rb.linearVelocity = direction * stats.currentProjectileSpeed;
+
+        Destroy(projectileObj, 5f);
 
             // <-- Play shooting sound
             if (SoundManager.Instance != null)
@@ -317,8 +326,8 @@
 
         private void ResetFiringCooldown()
         {
-            currentShotCooldown = 1f / currentShotsPerSecond;
-        }
+        currentShotCooldown = stats.currentShotInterval;
+    }
     private IEnumerator FireSalveWithCooldown()
     {
         salveInProgress = true;
@@ -349,7 +358,7 @@
                 yield return null;
 
             // Remove dead or out-of-range targets
-            targets.RemoveAll(t => t == null || Vector2.Distance(transform.position, t.position) > currentAttackRange);
+            targets.RemoveAll(t => t == null || Vector2.Distance(transform.position, t.position) > stats.currentAttackRange);
             if (targets.Count == 0)
                 break;
 
@@ -379,7 +388,12 @@
     void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, currentAttackRange);
+            if (stats != null)
+            {
+                Gizmos.DrawWireSphere(
+                    transform.position,
+                    stats.currentAttackRange);
+            }
         }
 
     }

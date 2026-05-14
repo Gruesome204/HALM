@@ -7,9 +7,11 @@ public class TurretStats : MonoBehaviour
     [Header("Level")]
     public int currentLevel = 1;
 
-    [Header("Current Stats")]
+    [Header("Health")]
     public float currentHealth;
     public float currentMaxHealth;
+
+    [Header("Combat Stats")]
     public float currentAttackDamage;
     public float currentAttackRange;
 
@@ -17,8 +19,13 @@ public class TurretStats : MonoBehaviour
     public float currentShotInterval;
 
     public float currentProjectileSpeed;
+    public int currentProjectilePierce;
+
     public float currentKnockbackStrength;
     public float currentKnockbackDuration;
+
+    [Header("Firing")]
+    public int currentProjectilesPerSalve;
 
     [Header("Scaling Factors")]
     public float healthScaleFactor;
@@ -46,20 +53,33 @@ public class TurretStats : MonoBehaviour
         rangeScaleFlat = baseStats.baseRangeGrowthFlat;
         shotsPerSecondScaleFactor = baseStats.shotsPerSecondGrowthFactor;
 
-        currentMaxHealth = baseStats.baseHealth * GetLevelScaling(healthScaleFactor);
+        currentMaxHealth =
+            baseStats.baseHealth *
+            GetLevelScaling(healthScaleFactor);
+
         currentHealth = currentMaxHealth;
 
-        currentAttackDamage = baseStats.baseAttackDamage * GetLevelScaling(damageScaleFactor);
-        currentAttackRange = baseStats.baseAttackRange * GetLevelScaling(rangeScaleFlat);
+        currentAttackDamage =
+            baseStats.baseAttackDamage *
+            GetLevelScaling(damageScaleFactor);
+
+        currentAttackRange =
+            baseStats.baseAttackRange +
+            (rangeScaleFlat * (currentLevel - 1));
 
         currentShotsPerSecond =
-            baseStats.baseShotsPerSecond * GetLevelScaling(shotsPerSecondScaleFactor);
+            baseStats.baseShotsPerSecond *
+            GetLevelScaling(shotsPerSecondScaleFactor);
 
         currentShotInterval = 1f / currentShotsPerSecond;
 
         currentProjectileSpeed = baseStats.baseProjectileSpeed;
+        currentProjectilePierce = baseStats.baseProjectilePierceCount;
+
         currentKnockbackStrength = baseStats.baseKnockbackStrength;
         currentKnockbackDuration = baseStats.baseKnockbackDuration;
+
+        currentProjectilesPerSalve = baseStats.projectilesPerSalve;
     }
 
     private float GetLevelScaling(float factor)
