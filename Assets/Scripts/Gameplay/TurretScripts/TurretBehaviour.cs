@@ -70,114 +70,6 @@
         }
     }
 
-    private void RecalculateStatsFromLevelManager()
-    {
-        if (turretBlueprint == null || TurretLevelManager.Instance == null)
-            return;
-
-        int level = TurretLevelManager.Instance.GetLevel(turretBlueprint.turretType);
-        RecalculateStats(level);
-    }
-
-    public TurretStatData CalculateFinalStats(
-        int level,
-        TurretModifier upgrade,
-        TurretGlobalModifierManager global)
-    {
-        if (turretBlueprint == null) return default;
-
-        // Level scaling
-        float scaledDamage = turretBlueprint.baseAttackDamage * (1 + turretBlueprint.baseDamageGrowthFactor * (level - 1));
-        float scaledShotsPerSecond =
-            turretBlueprint.baseShotsPerSecond *
-            (1 + turretBlueprint.shotsPerSecondGrowthFactor * (level - 1));
-        float scaledRange = turretBlueprint.baseAttackRange + turretBlueprint.baseRangeGrowthFlat * (level - 1);
-        float scaledProjectileSpeed = turretBlueprint.baseProjectileSpeed;
-
-        // --- Apply upgrades (additive) first ---
-        float damageWithUpgrade = scaledDamage + (upgrade?.damageMultiplier ?? 0f);
-        float shotsPerSecondWithUpgrade =
-            scaledShotsPerSecond + (upgrade?.shotsPerSecondBonus ?? 0f);
-        float projectileSpeedWithUpgrade = scaledProjectileSpeed + (upgrade?.projectileSpeed ?? 0f);
-        float rangeWithUpgrade = scaledRange + (upgrade?.rangeBonus ?? 0f);
-
-        int projectilesWithUpgrade = turretBlueprint.projectilesPerSalve + (upgrade?.projectilesPerSalve ?? 0);
-        int pierceWithUpgrade = turretBlueprint.baseProjectilePierceCount + (upgrade?.piercingHits ?? 0);
-
-        // --- Apply global modifiers (percentage) ---
-        float finalDamage = damageWithUpgrade * (1f + (global?.globalDamageMultiplier ?? 0f));
-        float finalShotsPerSecond =
-       shotsPerSecondWithUpgrade *
-       (1f + (global?.globalShotsPerSecondBonus ?? 0f));
-        float finalProjectileSpeed = projectileSpeedWithUpgrade * (1f + (global?.globalProjectileSpeed ?? 0f));
-        float finalRange = rangeWithUpgrade * (1f + (global?.globalPlacementRadiusMultiplier ?? 0f));
-        int finalProjectiles = projectilesWithUpgrade + (global?.globalProjectilesPerSalve ?? 0);
-
-        Debug.Log($"T{turretBlueprint.turretName} upgraded! Level {level} | " +
-                  $"Damage={finalDamage}, FireRate={finalShotsPerSecond}, Range={finalRange}, " +
-                  $"Projectiles={finalProjectiles}, ProjSpeed={finalProjectileSpeed}");
-
-        return new TurretStatData
-        {
-            damage = finalDamage,
-            shotsPerSecond = finalShotsPerSecond,
-            range = finalRange,
-            projectileSpeed = finalProjectileSpeed,
-            projectilesPerSalve = finalProjectiles,
-            pierceCount = pierceWithUpgrade,
-            knockbackStrength = turretBlueprint.baseKnockbackStrength,
-            knockbackDuration = turretBlueprint.baseKnockbackDuration
-        };
-    }
-
-    public void RecalculateStats(int level)
-    {
-        TurretModifier upgrade =
-            upgrades != null
-                ? upgrades.GetCombinedModifier(turretBlueprint.turretType)
-                : null;
-
-        TurretStatData finalStats =
-            CalculateFinalStats(level, upgrade, global);
-
-        stats.currentAttackDamage = finalStats.damage;
-
-        stats.currentShotsPerSecond =
-            Mathf.Max(0.1f, finalStats.shotsPerSecond);
-
-        stats.currentShotInterval =
-            1f / stats.currentShotsPerSecond;
-
-        stats.currentAttackRange = finalStats.range;
-
-        stats.currentProjectileSpeed =
-            finalStats.projectileSpeed;
-
-        stats.currentProjectilePierce =
-            finalStats.pierceCount;
-
-        stats.currentKnockbackStrength =
-            finalStats.knockbackStrength;
-
-        stats.currentKnockbackDuration =
-            finalStats.knockbackDuration;
-
-        stats.currentProjectilesPerSalve =
-            finalStats.projectilesPerSalve;
-
-        // Determine firing mode
-        if (stats.currentProjectilesPerSalve > 1)
-        {
-            currentFiringPattern =
-                TurretBlueprint.FiringPattern.FireSalve;
-        }
-        else
-        {
-            currentFiringPattern =
-                turretBlueprint.firingPattern;
-        }
-    }
-
     void Update()
     {
         if (isPaused) return;
@@ -381,7 +273,10 @@
         ResetFiringCooldown(); // cooldown applied after full salve
         salveInProgress = false;
     }
-
+    public void SetFiringPattern(TurretBlueprint.FiringPattern pattern)
+    {
+        currentFiringPattern = pattern;
+    }
 
     void OnDrawGizmosSelected()
         {

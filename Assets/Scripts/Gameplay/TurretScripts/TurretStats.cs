@@ -81,7 +81,104 @@ public class TurretStats : MonoBehaviour
 
         currentProjectilesPerSalve = baseStats.projectilesPerSalve;
     }
+    public TurretStatData CalculateFinalStats(
+    TurretBlueprint blueprint,
+    int level,
+    TurretModifier upgrade,
+    TurretGlobalModifierManager global)
+    {
+        if (blueprint == null)
+            return default;
 
+        float scaledDamage =
+            blueprint.baseAttackDamage *
+            (1 + blueprint.baseDamageGrowthFactor * (level - 1));
+
+        float scaledShotsPerSecond =
+            blueprint.baseShotsPerSecond *
+            (1 + blueprint.shotsPerSecondGrowthFactor * (level - 1));
+
+        float scaledRange =
+            blueprint.baseAttackRange +
+            blueprint.baseRangeGrowthFlat * (level - 1);
+
+        float scaledProjectileSpeed = blueprint.baseProjectileSpeed;
+
+        // upgrades (additive)
+        float damageWithUpgrade = scaledDamage + (upgrade?.damageMultiplier ?? 0f);
+        float shotsWithUpgrade = scaledShotsPerSecond + (upgrade?.shotsPerSecondBonus ?? 0f);
+        float speedWithUpgrade = scaledProjectileSpeed + (upgrade?.projectileSpeed ?? 0f);
+        float rangeWithUpgrade = scaledRange + (upgrade?.rangeBonus ?? 0f);
+
+        int projectilesWithUpgrade =
+            blueprint.projectilesPerSalve + (upgrade?.projectilesPerSalve ?? 0);
+
+        int pierceWithUpgrade =
+            blueprint.baseProjectilePierceCount + (upgrade?.piercingHits ?? 0);
+
+        // global multipliers
+        float finalDamage =
+            damageWithUpgrade * (1f + (global?.globalDamageMultiplier ?? 0f));
+
+        float finalShotsPerSecond =
+            shotsWithUpgrade * (1f + (global?.globalShotsPerSecondBonus ?? 0f));
+
+        float finalProjectileSpeed =
+            speedWithUpgrade * (1f + (global?.globalProjectileSpeed ?? 0f));
+
+        float finalRange =
+            rangeWithUpgrade * (1f + (global?.globalPlacementRadiusMultiplier ?? 0f));
+
+        int finalProjectiles =
+            projectilesWithUpgrade + (global?.globalProjectilesPerSalve ?? 0);
+
+        return new TurretStatData
+        {
+            damage = finalDamage,
+            shotsPerSecond = finalShotsPerSecond,
+            range = finalRange,
+            projectileSpeed = finalProjectileSpeed,
+            projectilesPerSalve = finalProjectiles,
+            pierceCount = pierceWithUpgrade,
+            knockbackStrength = blueprint.baseKnockbackStrength,
+            knockbackDuration = blueprint.baseKnockbackDuration
+        };
+    }
+    public void RecalculateStats(
+    TurretBehaviour behaviour,
+    TurretBlueprint blueprint,
+    int level,
+    TurretModifier upgrade,
+    TurretGlobalModifierManager global)
+    {
+        TurretStatData finalStats =
+            CalculateFinalStats(blueprint, level, upgrade, global);
+
+        currentAttackDamage = finalStats.damage;
+
+        currentShotsPerSecond = Mathf.Max(0.1f, finalStats.shotsPerSecond);
+        currentShotInterval = 1f / currentShotsPerSecond;
+
+        currentAttackRange = finalStats.range;
+        currentProjectileSpeed = finalStats.projectileSpeed;
+
+        currentProjectilePierce = finalStats.pierceCount;
+
+        currentKnockbackStrength = finalStats.knockbackStrength;
+        currentKnockbackDuration = finalStats.knockbackDuration;
+
+        currentProjectilesPerSalve = finalStats.projectilesPerSalve;
+
+        // firing pattern decision still belongs to behaviour (optional split later)
+        if (behaviour != null)
+        {
+            behaviour.SetFiringPattern(
+                currentProjectilesPerSalve > 1
+                    ? TurretBlueprint.FiringPattern.FireSalve
+                    : blueprint.firingPattern
+            );
+        }
+    }
     private float GetLevelScaling(float factor)
     {
         return ((currentLevel - 1) * factor) + 1;

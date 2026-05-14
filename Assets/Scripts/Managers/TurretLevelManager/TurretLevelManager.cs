@@ -108,8 +108,23 @@ public class TurretLevelManager : MonoBehaviour
             if (turretBehaviour.turretBlueprint.turretType != type)
                 continue;
 
-            int level = GetLevel(type);
-            turretBehaviour.RecalculateStats(level);
+                int level = GetLevel(type);
+                var stats = turret.GetComponentInChildren<TurretStats>();
+                if (stats == null || turretBehaviour == null || turretBehaviour.turretBlueprint == null)
+                    continue;
+
+                var upgrade =
+                    TurretUpgradeChoiceManager.Instance != null
+                        ? TurretUpgradeChoiceManager.Instance.GetCombinedModifier(type)
+                        : null;
+
+                stats.RecalculateStats(
+                    turretBehaviour,
+                    turretBehaviour.turretBlueprint,
+                    level,
+                    upgrade,
+                    TurretGlobalModifierManager.Instance
+                );
         }
         Debug.Log($"[Reapply] {type} ->");
     }

@@ -166,12 +166,29 @@ public class TurretGlobalModifierManager : MonoBehaviour
             turret.GetComponentInChildren<TurretHealth>()?.RecalculateStatsAfterModifiers();
 
             // Recalculate turret stats with level
-            var turretBehaviour = turret.GetComponentInChildren<TurretBehaviour>();
-            if (turretBehaviour != null && turretBehaviour.turretBlueprint != null)
-            {
-                int level = TurretLevelManager.Instance.GetLevel(turretBehaviour.turretBlueprint.turretType);
-                turretBehaviour.RecalculateStats(level);
-            }
+            var behaviour = turret.GetComponentInChildren<TurretBehaviour>();
+            var stats = turret.GetComponentInChildren<TurretStats>();
+
+            if (behaviour == null || stats == null || behaviour.turretBlueprint == null)
+                continue;
+
+            int level = TurretLevelManager.Instance.GetLevel(
+                behaviour.turretBlueprint.turretType
+            );
+
+            var upgrade =
+                TurretUpgradeChoiceManager.Instance != null
+                    ? TurretUpgradeChoiceManager.Instance.GetCombinedModifier(
+                        behaviour.turretBlueprint.turretType)
+                    : null;
+
+            stats.RecalculateStats(
+                behaviour,
+                behaviour.turretBlueprint,
+                level,
+                upgrade,
+                this // global
+            );
         }
     }
 

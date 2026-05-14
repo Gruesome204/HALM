@@ -411,16 +411,26 @@ public class TurretPlacementController : MonoBehaviour
         }
 
         var behaviour = turret.GetComponentInChildren<TurretBehaviour>();
-        if (behaviour != null)
+        var stats = turret.GetComponentInChildren<TurretStats>();
+
+        if (behaviour != null && stats != null)
         {
             behaviour.turretBlueprint = currentSelectedBlueprint;
 
-            int level = 1; // default level
-            var stats = turret.GetComponentInChildren<TurretStats>();
-            if (stats != null)
-                level = stats.currentLevel;
+            int level = TurretLevelManager.Instance.GetLevel(currentSelectedBlueprint.turretType);
 
-            behaviour.RecalculateStats(level);
+            var upgrade =
+                TurretUpgradeChoiceManager.Instance != null
+                    ? TurretUpgradeChoiceManager.Instance.GetCombinedModifier(currentSelectedBlueprint.turretType)
+                    : null;
+
+            stats.RecalculateStats(
+                behaviour,
+                currentSelectedBlueprint,
+                level,
+                upgrade,
+                TurretGlobalModifierManager.Instance
+            );
         }
 
 
