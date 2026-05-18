@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Handles turret blueprint selection, placement, previewing, and active turret management.
-/// </summary>
 public class TurretPlacementController : MonoBehaviour
 {
     public static TurretPlacementController Instance { get; private set; }
