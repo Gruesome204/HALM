@@ -138,6 +138,4 @@ public class TurretDemolitionController : MonoBehaviour
         Destroy(turret);
         Debug.Log($"[TurretDemolition] Turret:{turret.name} destroyed!");
     }
-
-
 }
