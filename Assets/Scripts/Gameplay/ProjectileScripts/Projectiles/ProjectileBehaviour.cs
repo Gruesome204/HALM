@@ -23,6 +23,7 @@ public class ProjectileBehaviour : MonoBehaviour
     private Transform chainTarget;
     private int currentBounces = 0;
     private List<Transform> hitEnemies = new List<Transform>(); // Track hit enemies for chain
+    [SerializeField] private LayerMask obstacleLayer; // Layer for obstacles that block chain
 
     [Header("Homing")]
     public float homingStrength = 2f;
@@ -109,12 +110,7 @@ public class ProjectileBehaviour : MonoBehaviour
         // Check if hit a wall
         if (((1 << other.gameObject.layer) & wallLayer) != 0)
         {
-            // If it's a chain lightning, we might want different behavior
-            if (chainBounceCount > 0)
-            {
-                // Chain lightning passes through walls (optional behavior)
-                // Or you can make it stop at walls - your choice
-            }
+            // Chain lightning stops at walls
             Destroy(gameObject);
             return;
         }
@@ -202,8 +198,9 @@ public class ProjectileBehaviour : MonoBehaviour
             if (hitEnemySet.Contains(enemyCollider.gameObject))
                 continue;
 
-            // Check line of sight for chain (optional)
-            // You might want to add line of sight check here
+            // Check line of sight for chain
+            if (!HasLineOfSight(currentTarget.position, enemyCollider.transform.position))
+                continue;
 
             float distance = Vector2.Distance(currentTarget.position, enemyCollider.transform.position);
             if (distance < shortestDistance)
@@ -249,6 +246,11 @@ public class ProjectileBehaviour : MonoBehaviour
                 {
                     HandleChainLightning(nearestEnemy);
                 }
+                else
+                {
+                    // Chain complete, destroy projectile
+                    Destroy(gameObject);
+                }
             }
         }
         else
@@ -258,11 +260,34 @@ public class ProjectileBehaviour : MonoBehaviour
         }
     }
 
+    // Line of sight check for chain lightning
+    private bool HasLineOfSight(Vector2 origin, Vector2 target)
+    {
+        Vector2 direction = (target - origin);
+        float distance = direction.magnitude;
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            origin,
+            direction.normalized,
+            distance,
+            obstacleLayer
+        );
+
+        // Debug visualization
+        Debug.DrawRay(
+            origin,
+            direction.normalized * distance,
+            hit.collider == null ? Color.green : Color.red,
+            0.5f
+        );
+
+        return hit.collider == null;
+    }
+
     private void CreateChainVisual(Vector2 start, Vector2 end)
     {
         // You can implement a visual effect here
         // For example, instantiate a line renderer or particle effect
-        // For now, we'll just draw a debug line
         Debug.DrawLine(start, end, Color.cyan, 0.5f);
 
         // Optional: Instantiate a lightning prefab
@@ -330,6 +355,7 @@ public class ProjectileBehaviour : MonoBehaviour
         }
     }
 
+    // Optional: Draw gizmos for debugging
     private void OnDrawGizmosSelected()
     {
         if (isAOE)
