@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MapLoaderManager : MonoBehaviour
+public class MapLoaderManager : MonoBehaviour, IGameSystem
 {
     public static MapLoaderManager Instance { get; private set; }
 
@@ -28,7 +28,16 @@ public class MapLoaderManager : MonoBehaviour
     public List<GameObject> ExitBlockerObjects = new List<GameObject>(); // Multiple clickable blockers
     [Header("Exit Object(Auto-detected)")]
     public GameObject ExitTriggerObject; // The trigger the player can walk into
+    public int InitializePriority => 4;
+    public void Initialize()
+    {
+        throw new System.NotImplementedException();
+    }
 
+    public void PostInitialize()
+    {
+        throw new System.NotImplementedException();
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)
