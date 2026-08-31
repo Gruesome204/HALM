@@ -5,9 +5,6 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
 
-    [Header("References")]
-    [SerializeField] private GameDataSO gameDataSO;
-    [SerializeField] private GameDataDefaultsSO defaultData;
 
     [Header("Autosave")]
     [SerializeField] private float autosaveInterval = 60f;
@@ -52,13 +49,13 @@ public class SaveManager : MonoBehaviour
 
     private void InitializeGameData()
     {
-        if (gameDataSO == null)
+        if (GameManager.Instance.gameDataSO == null)
         {
             Debug.LogError("[SaveManager] Missing GameDataSO reference!");
             return;
         }
 
-        gameDataSO = Instantiate(gameDataSO);
+        GameManager.Instance.gameDataSO = Instantiate(GameManager.Instance.gameDataSO);
     }
 
     #endregion
@@ -71,7 +68,7 @@ public class SaveManager : MonoBehaviour
 
         if (saveData != null)
         {
-            gameDataSO.ApplySave(saveData);
+            GameManager.Instance.gameDataSO.ApplySave(saveData);
             Debug.Log("[SaveManager] Save loaded.");
         }
         else
@@ -85,13 +82,13 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGame()
     {
-        if (gameDataSO == null)
+        if (GameManager.Instance.gameDataSO == null)
         {
             Debug.LogWarning("[SaveManager] GameDataSO is null!");
             return;
         }
 
-        TempSaveData saveData = gameDataSO.ToSaveData();
+        TempSaveData saveData = GameManager.Instance.gameDataSO.ToSaveData();
 
         SaveSystem.Save(saveData);
 
@@ -101,7 +98,7 @@ public class SaveManager : MonoBehaviour
 
     public void CreateNewSave()
     {
-        gameDataSO.ResetToDefaults(defaultData);
+        GameManager.Instance.gameDataSO.ResetToDefaults(GameManager.Instance.defaultDataSO);
 
         SaveGame();
 
@@ -142,7 +139,7 @@ public class SaveManager : MonoBehaviour
 
     public GameDataSO GetGameData()
     {
-        return gameDataSO;
+        return GameManager.Instance.gameDataSO;
     }
 
     #endregion

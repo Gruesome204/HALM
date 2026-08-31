@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] public GameDataSO gameDataSO;
+    [SerializeField] public GameDataDefaultsSO defaultDataSO;
 
 
     [Header("In-Game Timer")]
