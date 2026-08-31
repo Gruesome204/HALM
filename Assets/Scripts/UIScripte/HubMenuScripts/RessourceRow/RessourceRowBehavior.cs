@@ -21,7 +21,7 @@ public class RessourceRowBehavior : MonoBehaviour,IMenu
         {
             //Open the ActionRow and sets Game to playing
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
-            GameManager.Instance.ChangeState(GameManager.GameState.HubMenu);
+            GameManager.Instance.ChangeState(GameState.HubMenu);
         }
         else
         {

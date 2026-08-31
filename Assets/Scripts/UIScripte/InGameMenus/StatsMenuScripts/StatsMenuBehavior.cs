@@ -35,7 +35,7 @@ public class StatsMenuBehavior : MonoBehaviour, IMenu
             //Open the StatsMenu, adds to openMenu List and sets Game to paused
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
-            GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+            GameManager.Instance.ChangeState(GameState.Paused);
             ClearList();
 
             //Play a Click sound to give audio feedback to the Player

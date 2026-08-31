@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,15 +12,16 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] public GameDataSO gameDataSO;
 
+
     [Header("In-Game Timer")]
     [SerializeField] private float playTimeSeconds;
     public float PlayTimeSeconds => playTimeSeconds;
     public TimeSpan PlayTime => TimeSpan.FromSeconds(playTimeSeconds);
+    private float timerTick;
+    private const float TIMER_INTERVAL = 1f;
 
     public event Action<float> OnPlayTimeUpdated;
-    private float timerTick;
 
-    public enum GameState { MainMenu, HubMenu, Playing, Loading, Paused, Stats, GameOver }
     public GameState CurrentState { get; private set; }
     public GameState PreviousState { get; private set; }
     public event Action<GameState, GameState> OnGameStateChanged;
@@ -88,19 +88,42 @@ public class GameManager : MonoBehaviour
         playTimeSeconds += Time.deltaTime;
         timerTick += Time.deltaTime;
 
-        if (timerTick >= 1f)
+        if (timerTick >= TIMER_INTERVAL)
         {
-            timerTick = 0f;
+            timerTick -= TIMER_INTERVAL;
             OnPlayTimeUpdated?.Invoke(playTimeSeconds);
         }
+    }
+    public void ResetTimer()
+    {
+        playTimeSeconds = 0f;
+        timerTick = 0f;
+        OnPlayTimeUpdated?.Invoke(0f);
     }
 
     #endregion
 
     private void HandleDebugInput()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.H))
-            SaveManager.Instance.SaveGame();
+            SaveManager.Instance?.SaveGame();
+
+        if (Input.GetKeyDown(KeyCode.R))
+            ResetGame();
+
+        // Add more debug shortcuts
+        if (Input.GetKeyDown(KeyCode.P))
+            TogglePause();
+#endif
+    }
+
+    private void TogglePause()
+    {
+        if (CurrentState == GameState.Playing)
+            PauseGame();
+        else if (CurrentState == GameState.Paused)
+            ResumeGame();
     }
 
     #region Game State & Pausables
@@ -182,17 +205,31 @@ public class GameManager : MonoBehaviour
             ChangeState(GameState.Loading);
 
         // Setup systems
-        TurretPlacementController.Instance?.SetupFromGameData(
-            SaveManager.Instance.GetGameData()
-        );
+        var saveData = SaveManager.Instance?.GetGameData();
+        if (saveData != null)
+        {
+            TurretPlacementController.Instance?.SetupFromGameData(saveData);
+        }
+
         MapLoaderManager.Instance?.GenerateMapSequence();
 
+        float timeout = 10f;
+        float elapsed = 0f;
+        while (PlayerManager.Instance == null && elapsed < timeout)
+        {
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
 
-            yield return new WaitUntil(() => PlayerManager.Instance != null);
+        if (PlayerManager.Instance == null)
+        {
+            Debug.LogError("[GameManager] PlayerManager not found after timeout!");
+            ChangeState(GameState.GameOver);
+            yield break;
+        }
             MapProgressionManager.Instance.ResetProgression();
             MapProgressionManager.Instance.LoadNextRoom();
             ChangeState(GameState.Playing);
          }
     #endregion
-
 }

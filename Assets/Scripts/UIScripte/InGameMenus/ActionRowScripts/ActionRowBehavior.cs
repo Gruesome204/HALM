@@ -37,7 +37,7 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
             FillActionRow();
             //Open the ActionRow and sets Game to playing
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("actionRowSlideOut");
-            GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+            GameManager.Instance.ChangeState(GameState.Playing);
         }
         else
         {

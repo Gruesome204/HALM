@@ -1,0 +1,1 @@
+public enum GameState { MainMenu, HubMenu, Playing, Loading, Paused, Stats, GameOver }

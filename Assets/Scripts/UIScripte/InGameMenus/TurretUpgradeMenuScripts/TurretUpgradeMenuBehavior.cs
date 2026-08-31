@@ -23,7 +23,7 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour, IMenu
             //Open the TurretUpgrade Menu, adds to openMenu List and sets Game to paused
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("turretChoiceMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
-            GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+            GameManager.Instance.ChangeState(GameState.Paused);
 
             //Play a Click sound to give audio feedback to the Player
             SoundManager.Instance.PlayPaperMenuOpen();

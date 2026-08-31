@@ -22,7 +22,7 @@ public class GameOverBehavior : MonoBehaviour, IMenu
             //Open the GameOverMenu, pauses the Game and adds it to openMenu List
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("settingsMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
-            GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+            GameManager.Instance.ChangeState(GameState.Paused);
 
             //Play a Click sound to give audio feedback to the Player
             SoundManager.Instance.PlayStoneMenuOpen();
@@ -62,7 +62,7 @@ public class GameOverBehavior : MonoBehaviour, IMenu
         SoundManager.Instance.PlayStoneClick();
 
         SceneManager.LoadScene("HubScene");
-        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
     void OnReturnToMainMenuButtonClicked(ClickEvent evt)
     {
@@ -70,7 +70,7 @@ public class GameOverBehavior : MonoBehaviour, IMenu
         SoundManager.Instance.PlayStoneClick();
 
         SceneManager.LoadScene("MainMenu");
-        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
     void OnExitButtonClicked(ClickEvent evt)
     {

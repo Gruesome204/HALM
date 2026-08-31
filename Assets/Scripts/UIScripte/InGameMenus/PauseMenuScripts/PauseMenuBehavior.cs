@@ -25,7 +25,7 @@ public class PauseMenuBehavior : MonoBehaviour, IMenu
             InGameMenuManager.Instance.CloseAllMenus();
             //Open the Pause Menu, adds to openMenu List and sets Game to paused
             root.Q<VisualElement>("mainContainer").RemoveFromClassList("pauseMenuSlideOut");
-            GameManager.Instance.ChangeState(GameManager.GameState.Paused);
+            GameManager.Instance.ChangeState(GameState.Paused);
             InGameMenuManager.Instance.openMenus.Add(this.gameObject);
 
             //Play a Click sound to give audio feedback to the Player
