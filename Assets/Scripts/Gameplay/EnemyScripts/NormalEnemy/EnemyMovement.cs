@@ -145,7 +145,7 @@ public class EnemyMovement : MonoBehaviour
         currentPath = SmoothPath(currentPath);
         currentIndex = 0;
 
-        Debug.Log($"Path length: {currentPath.Count}");
+       // Debug.Log($"Path length: {currentPath.Count}");
     }
     public void FollowPath()
     {

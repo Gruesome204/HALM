@@ -411,4 +411,14 @@ public class GameDataSO : ScriptableObject
     {
         return new TempSaveData(this);
     }
+
+    [ContextMenu("Log Selected Blueprints")]
+    public void LogSelectedBlueprints()
+    {
+        Debug.Log($"Total selected blueprints: {selectedBlueprints.Count}");
+        foreach (var bp in selectedBlueprints)
+        {
+            Debug.Log($"- {bp.name}");
+        }
+    }
 }

@@ -97,6 +97,7 @@ public class TurretPlacementController : MonoBehaviour
     private void OnEnable() => OnPlacementCooldownStateChanged += HandleCooldownEvent;
     private void OnDisable() => OnPlacementCooldownStateChanged -= HandleCooldownEvent;
 
+
     private void Update()
     {
         HandleBlueprintSelectionInput();
@@ -104,6 +105,11 @@ public class TurretPlacementController : MonoBehaviour
 
         if (radiusLineRenderer != null)
             DrawRadiusCircle();
+    }
+
+    private void Start()
+    {
+        SetupFromGameData(GameManager.Instance.gameDataSO);
     }
 
     // ========================
@@ -117,10 +123,17 @@ public class TurretPlacementController : MonoBehaviour
             return;
         }
 
-        turretBlueprintList = new List<TurretBlueprint>(gameData.GetSelectedBlueprints());
-        OnTurretsChanged?.Invoke();
+        var selectedBlueprints = gameData.GetSelectedBlueprints();
 
-        Debug.Log($"[TurretPlacementController] Setup with {turretBlueprintList.Count} blueprints");
+        turretBlueprintList = new List<TurretBlueprint>(selectedBlueprints);
+
+        // If no blueprints loaded, try fallback
+        if (turretBlueprintList.Count == 0)
+        {
+            Debug.LogWarning("[TurretPlacementController] No blueprints selected in GameData, using default list");
+        }
+
+        OnTurretsChanged?.Invoke();
     }
 
     // ========================

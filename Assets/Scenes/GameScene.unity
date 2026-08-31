@@ -1443,37 +1443,6 @@ MonoBehaviour:
   towerBuildSound: {fileID: 8300000, guid: 7bc746d8cdf807c4697ef7c577f9afb2, type: 3}
   towerDestroySound: {fileID: 8300000, guid: 773f99b72494faf4db7499190c5c084a, type: 3}
   roomClearedSound: {fileID: 8300000, guid: 019b0fd886f066f4aa606e86fc1837d4, type: 3}
---- !u!1 &595509535
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 595509536}
-  m_Layer: 0
-  m_Name: -ObjectPoolManager-
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &595509536
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 595509535}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1512055815}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &617196784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,7 +2359,6 @@ Transform:
   - {fileID: 825843165}
   - {fileID: 726615953}
   - {fileID: 747619962}
-  - {fileID: 595509536}
   - {fileID: 1926278207}
   - {fileID: 1520240906}
   - {fileID: 582041610}
