@@ -23,6 +23,16 @@ MonoBehaviour:
   firingPattern: 2
   projectilesPerSalve: 5
   delayBetweenSalveProjectiles: 0.2
+  burstCount: 3
+  burstDelay: 0.1
+  scatterCount: 5
+  scatterAngle: 45
+  chainBounceCount: 3
+  chainBounceRange: 5
+  homingStrength: 2
+  aoeRadius: 3
+  sprayRate: 10
+  sprayAngle: 30
   baseHealth: 100
   baseAttackDamage: 10
   baseShotsPerSecond: 0.5
