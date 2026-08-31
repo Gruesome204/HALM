@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.ComponentModel;
 
 public class PlayerManager : MonoBehaviour, IGameSystem
 {
@@ -12,7 +13,7 @@ public class PlayerManager : MonoBehaviour, IGameSystem
     // ========================
     // REFERENCES
     // ========================
-    [Header("Player References")]
+    [Header("Player References - Auto Loaded")]
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private PlayerBehaviour playerBehaviour;
     [SerializeField] private PlayerStats playerStats;
