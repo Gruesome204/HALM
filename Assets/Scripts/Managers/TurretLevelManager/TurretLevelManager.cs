@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TurretLevelManager : MonoBehaviour
+public class TurretLevelManager : MonoBehaviour, IGameSystem
 {
     public static TurretLevelManager Instance { get; private set; }
 
@@ -30,6 +30,13 @@ public class TurretLevelManager : MonoBehaviour
     public delegate void MilestoneEvent(TurretType type, int level);
     public event MilestoneEvent OnMilestoneReached;
 
+    public int InitializePriority => 3;
+    public void Initialize()
+    {
+    }
+    public void PostInitialize()
+    {
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }

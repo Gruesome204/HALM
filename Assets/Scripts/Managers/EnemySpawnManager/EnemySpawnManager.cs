@@ -3,7 +3,7 @@ using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemySpawnManager : MonoBehaviour, IPausable
+public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 {
     public static EnemySpawnManager Instance { get; private set; }
 
@@ -62,6 +62,14 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
 
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
+
+    public int InitializePriority => 3;
+    public void Initialize()
+    {
+    }
+    public void PostInitialize()
+    {
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)
