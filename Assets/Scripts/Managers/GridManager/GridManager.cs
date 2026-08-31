@@ -19,16 +19,12 @@ public class GridManager : MonoBehaviour, IGameSystem
 
     private GameObject[,] gridOccupancy;
 
-
     public int InitializePriority => 2;
     public void Initialize()
     {
-      
     }
-
     public void PostInitialize()
     {
-  
     }
     private void Awake()
     {
