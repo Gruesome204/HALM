@@ -532,7 +532,6 @@ public class TurretBehaviour : MonoBehaviour, IPausable
         }
     }
 
-    // Additional public methods for accessing blueprint data
     public TurretType GetTurretType()
     {
         return turretBlueprint?.turretType ?? TurretType.ArcherTower;
@@ -540,7 +539,6 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     public void SetTurretBlueprint(TurretBlueprint blueprint)
     {
         turretBlueprint = blueprint;
-        // Re-initialize any dependent settings
         InitializeProjectileType();
         InitializeFiringPattern();
     }

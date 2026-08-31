@@ -355,7 +355,6 @@ public class ProjectileBehaviour : MonoBehaviour
         }
     }
 
-    // Optional: Draw gizmos for debugging
     private void OnDrawGizmosSelected()
     {
         if (isAOE)
