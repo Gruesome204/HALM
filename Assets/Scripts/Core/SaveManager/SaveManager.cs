@@ -43,7 +43,6 @@ public class SaveManager : MonoBehaviour, IGameSystem
 
     public void PostInitialize()
     {
-        // Additional setup if needed
         Debug.Log("[SaveManager] Post-Initialized");
     }
 
