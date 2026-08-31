@@ -1,12 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class AbilityManager : MonoBehaviour
+public class AbilityManager : MonoBehaviour, IGameSystem
 {
     public static AbilityManager Instance;
 
     private Dictionary<GameObject, List<AbilityRuntime>> runtimeAbilities = new();
-
+    public int InitializePriority => 3;
+    public void Initialize()
+    {
+    }
+    public void PostInitialize()
+    {
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)

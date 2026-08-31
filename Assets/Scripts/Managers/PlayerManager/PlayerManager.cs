@@ -1,13 +1,21 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour, IGameSystem
 {
     [SerializeField] public PlayerHealth playerHealth;
     private PlayerBehaviour playerBehaviour;
     public PlayerStats playerStats;
     public event Action OnPlayerDeath;
     public static PlayerManager Instance { get; private set; }
+
+    public int InitializePriority => 3;
+    public void Initialize()
+    {
+    }
+    public void PostInitialize()
+    {
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)
