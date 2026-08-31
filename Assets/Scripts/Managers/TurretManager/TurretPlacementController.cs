@@ -81,37 +81,139 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
     public List<GameObject> activeTurrets = new();
     private List<TurretHealth> placedTurrets = new();
     private Dictionary<TurretBlueprint, float> cooldownEndTimes = new();
+    private bool isInitialized = false;
 
-
+    // ========================
+    // IGameSystem Implementation
+    // ========================
     public int InitializePriority => 3;
+
     public void Initialize()
     {
+        if (isInitialized)
+        {
+            Debug.Log("[TurretPlacementController] Already initialized.");
+            return;
+        }
+
+        Debug.Log("[TurretPlacementController] Initializing...");
+
+        // Find required dependencies
+        if (playerTransform == null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+                playerTransform = player.transform;
+            else
+                Debug.LogWarning("[TurretPlacementController] Player not found!");
+        }
+
+        // Validate required components
+        if (GridManager.Instance == null)
+        {
+            Debug.LogError("[TurretPlacementController] GridManager not found!");
+            return;
+        }
+
+        if (SoundManager.Instance == null)
+        {
+            Debug.LogWarning("[TurretPlacementController] SoundManager not found!");
+        }
+
+        if (TurretGlobalModifierManager.Instance == null)
+        {
+            Debug.LogWarning("[TurretPlacementController] TurretGlobalModifierManager not found!");
+        }
+
+        // Setup turret container if not assigned
+        if (turretContainer == null)
+        {
+            GameObject container = new GameObject("Turrets");
+            container.transform.SetParent(transform);
+            turretContainer = container.transform;
+        }
+
+        // Reset state
+        activeTurrets.Clear();
+        placedTurrets.Clear();
+        cooldownEndTimes.Clear();
+        maxTurretCapacity = defaultMaxTurretCapacity;
+        placementRadius = defaultPlacementRadius;
+
+        isInitialized = true;
+        Debug.Log("[TurretPlacementController] Initialized successfully.");
     }
+
     public void PostInitialize()
     {
+        Debug.Log("[TurretPlacementController] Post-Initializing...");
+
+        // Load turret blueprints from GameData if available
+        if (GameManager.Instance != null && GameManager.Instance.gameDataSO != null)
+        {
+            SetupFromGameData(GameManager.Instance.gameDataSO);
+        }
+        else
+        {
+            Debug.LogWarning("[TurretPlacementController] No GameData available, using default blueprints.");
+        }
+
+        // Setup radius visual if we have a player
+        if (playerTransform != null)
+        {
+            ShowPlacementRadius();
+        }
     }
+
     // ========================
     // UNITY
     // ========================
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-
-        playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
-    private void OnEnable() => OnPlacementCooldownStateChanged += HandleCooldownEvent;
-    private void OnDisable() => OnPlacementCooldownStateChanged -= HandleCooldownEvent;
+    private void Start()
+    {
+        // Auto-initialize if not already done
+        if (!isInitialized)
+        {
+            Debug.LogWarning("[TurretPlacementController] Auto-initializing in Start()");
+            Initialize();
+            PostInitialize();
+        }
+    }
 
+    private void OnEnable()
+    {
+        OnPlacementCooldownStateChanged += HandleCooldownEvent;
+    }
+
+    private void OnDisable()
+    {
+        OnPlacementCooldownStateChanged -= HandleCooldownEvent;
+    }
 
     private void Update()
     {
+        if (!isInitialized) return;
+
         HandleBlueprintSelectionInput();
         HandlePlacementInput();
 
         if (radiusLineRenderer != null)
             DrawRadiusCircle();
+    }
+
+    private void OnDestroy()
+    {
+        // Cleanup
+        DestroyPreview();
+        HidePlacementRadius();
+        ClearAllTurrets();
     }
 
     // ========================
@@ -152,6 +254,12 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
     // ========================
     public void SelectTurretBlueprint(TurretBlueprint blueprint)
     {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("[TurretPlacementController] Not initialized!");
+            return;
+        }
+
         if (currentSelectedBlueprint == blueprint) return;
 
         if (TurretDemolitionController.Instance?.IsDestructionModeActive() == true)
@@ -295,6 +403,12 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
     // ========================
     private void TryPlaceTurret()
     {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("[TurretPlacementController] Cannot place turret - not initialized!");
+            return;
+        }
+
         if (playerTransform == null || currentSelectedBlueprint == null) return;
 
         Vector3 world = GetMouseWorld();
@@ -320,7 +434,8 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
 
         StartCoroutine(StartAndEndCooldown(currentSelectedBlueprint, cd));
 
-        SoundManager.Instance.PlayTowerBuild();
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayTowerBuild();
 
         DeselectTurretBlueprint();
         OnTurretsChanged?.Invoke();
@@ -397,12 +512,13 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
         {
             behaviour.SetTurretBlueprint(currentSelectedBlueprint);
 
-            int level = TurretLevelManager.Instance.GetLevel(currentSelectedBlueprint.turretType);
+            int level = TurretLevelManager.Instance != null
+                ? TurretLevelManager.Instance.GetLevel(currentSelectedBlueprint.turretType)
+                : 1;
 
-            var upgrade =
-                TurretUpgradeChoiceManager.Instance != null
-                    ? TurretUpgradeChoiceManager.Instance.GetCombinedModifier(currentSelectedBlueprint.turretType)
-                    : null;
+            var upgrade = TurretUpgradeChoiceManager.Instance != null
+                ? TurretUpgradeChoiceManager.Instance.GetCombinedModifier(currentSelectedBlueprint.turretType)
+                : null;
 
             stats.RecalculateStats(
                 behaviour,
@@ -443,7 +559,9 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
     public float GetModifiedPlacementCooldown(TurretBlueprint blueprint)
     {
         float baseCooldown = blueprint.placementCooldown;
-        float multiplier = 1f - TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier;
+        float multiplier = TurretGlobalModifierManager.Instance != null
+            ? 1f - TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier
+            : 1f;
         return Mathf.Max(0.05f, baseCooldown * multiplier);
     }
 
@@ -497,6 +615,10 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
             radiusLineRenderer = null;
         }
     }
+
+    // ========================
+    // PUBLIC METHODS
+    // ========================
     public bool IsBlueprintOnCooldown(TurretBlueprint blueprint)
     {
         if (!cooldownEndTimes.TryGetValue(blueprint, out float endTime))
@@ -519,6 +641,8 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
 
         foreach (var turret in activeTurrets)
         {
+            if (turret == null) continue;
+
             var behaviour = turret.GetComponentInChildren<TurretBehaviour>();
             if (behaviour?.TurretBlueprint != null)
                 total += behaviour.TurretBlueprint.buildCapacityValue;
@@ -527,8 +651,9 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
         return total;
     }
 
-    public List<GameObject> GetActiveTurrets() => activeTurrets;
-    public List<TurretBlueprint> GetTurretBlueprintList() => turretBlueprintList;
+    public List<GameObject> GetActiveTurrets() => new List<GameObject>(activeTurrets);
+    public List<TurretBlueprint> GetTurretBlueprintList() => new List<TurretBlueprint>(turretBlueprintList);
+    public bool IsInitialized => isInitialized;
 
     public void ClearAllTurrets()
     {
@@ -547,13 +672,17 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
     {
         UnregisterTurret(turret);
 
-        if (turret != null)
-            activeTurrets.Remove(turret.gameObject);
-
-        activeTurrets.Remove(turret.transform.parent.gameObject);
+        if (turret != null && turret.gameObject != null)
+        {
+            // Remove the parent turret object
+            GameObject turretParent = turret.transform.parent?.gameObject;
+            if (turretParent != null)
+                activeTurrets.Remove(turretParent);
+        }
 
         OnTurretsChanged?.Invoke();
     }
+
     public void RemoveTurret(GameObject turret)
     {
         if (turret == null) return;
@@ -575,5 +704,25 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
     {
         placedTurrets.Remove(turret);
         OnTurretsChanged?.Invoke();
+    }
+
+    // ========================
+    // GAME STATE HANDLING
+    // ========================
+    public void OnGamePaused(bool paused)
+    {
+        if (paused)
+        {
+            DeselectTurretBlueprint();
+        }
+    }
+
+    public void OnGameReset()
+    {
+        ClearAllTurrets();
+        DeselectTurretBlueprint();
+        cooldownEndTimes.Clear();
+        maxTurretCapacity = defaultMaxTurretCapacity;
+        placementRadius = defaultPlacementRadius;
     }
 }
