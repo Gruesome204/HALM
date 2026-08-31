@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretUpgradeChoiceManager : MonoBehaviour
+public class TurretUpgradeChoiceManager : MonoBehaviour, IGameSystem
 {
     public static TurretUpgradeChoiceManager Instance { get; private set; }
 
@@ -14,7 +14,13 @@ public class TurretUpgradeChoiceManager : MonoBehaviour
     private HashSet<(TurretType, int, TurretUpgradeChoiceSO)> usedChoices;
 
     private HashSet<string> usedOptionIds = new HashSet<string>();
-
+    public int InitializePriority => 3;
+    public void Initialize()
+    {
+    }
+    public void PostInitialize()
+    {
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)
