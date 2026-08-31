@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameBootstrapper : MonoBehaviour
 {
-    [SerializeField] private List<MonoBehaviour> systems; // assign in inspector
+    [SerializeField] private List<MonoBehaviour> systems;
 
     private List<IGameSystem> initializedSystems = new();
 
