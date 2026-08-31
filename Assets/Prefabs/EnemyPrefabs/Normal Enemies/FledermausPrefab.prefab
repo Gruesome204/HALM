@@ -338,7 +338,17 @@ MonoBehaviour:
   acceleration: 10
   slowDownDistance: 0.4
   arriveDistance: 0.08
+  detectionRange: 10
+  directMovementRange: 2
+  loseSightTimerMax: 3
   target: {fileID: 0}
+  showDebugGizmos: 1
+  showPathGizmos: 1
+  showDetectionRangeGizmo: 0
+  showLastKnownPositionGizmo: 1
+  pathColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  detectionRangeColor: {r: 1, g: 0, b: 0, a: 1}
+  lastKnownPositionColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &2323439724470229143
 MonoBehaviour:
   m_ObjectHideFlags: 0

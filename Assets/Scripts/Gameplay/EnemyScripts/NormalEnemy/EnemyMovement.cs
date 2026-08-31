@@ -42,6 +42,16 @@ public class EnemyMovement : MonoBehaviour
     private Vector2 smoothVelocity;
     public GameObject target;
 
+    // Debug settings
+    [Header("Debug")]
+    [SerializeField] private bool showDebugGizmos = true;
+    [SerializeField] private bool showPathGizmos = true;
+    [SerializeField] private bool showDetectionRangeGizmo = true;
+    [SerializeField] private bool showLastKnownPositionGizmo = true;
+    [SerializeField] private Color pathColor = Color.yellow;
+    [SerializeField] private Color detectionRangeColor = Color.red;
+    [SerializeField] private Color lastKnownPositionColor = Color.cyan;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -72,7 +82,6 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    // ADD THIS METHOD BACK - Enables or disables movement and physics interaction
     public void SetPaused(bool paused)
     {
         isPaused = paused;
@@ -509,27 +518,65 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (currentPath == null || currentPath.Count == 0) return;
+        // Master toggle for all gizmos
+        if (!showDebugGizmos) return;
 
-        Gizmos.color = Color.yellow;
-        for (int i = 0; i < currentPath.Count - 1; i++)
+        // Draw path
+        if (showPathGizmos && currentPath != null && currentPath.Count > 0)
         {
-            Vector3 a = GridManager.Instance.GetWorldPosition(currentPath[i], Vector2Int.one);
-            Vector3 b = GridManager.Instance.GetWorldPosition(currentPath[i + 1], Vector2Int.one);
-            Gizmos.DrawLine(a, b);
-            Gizmos.DrawWireSphere(a, 0.1f);
-        }
-
-        if (Application.isPlaying)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, detectionRange);
-
-            if (hasSeenPlayer)
+            Gizmos.color = pathColor;
+            for (int i = 0; i < currentPath.Count - 1; i++)
             {
-                Gizmos.color = Color.cyan;
-                Gizmos.DrawWireSphere(lastKnownPlayerPosition, 0.3f);
+                Vector3 a = GridManager.Instance.GetWorldPosition(currentPath[i], Vector2Int.one);
+                Vector3 b = GridManager.Instance.GetWorldPosition(currentPath[i + 1], Vector2Int.one);
+                Gizmos.DrawLine(a, b);
+                Gizmos.DrawWireSphere(a, 0.1f);
             }
         }
+
+        // Draw detection range
+        if (showDetectionRangeGizmo && Application.isPlaying)
+        {
+            Gizmos.color = detectionRangeColor;
+            Gizmos.DrawWireSphere(transform.position, detectionRange);
+        }
+
+        // Draw last known position
+        if (showLastKnownPositionGizmo && Application.isPlaying && hasSeenPlayer)
+        {
+            Gizmos.color = lastKnownPositionColor;
+            Gizmos.DrawWireSphere(lastKnownPlayerPosition, 0.3f);
+            // Draw a line from enemy to last known position
+            Gizmos.DrawLine(transform.position, lastKnownPlayerPosition);
+        }
+    }
+
+    // Public methods to toggle debug visualization at runtime
+    public void ToggleDebugGizmos(bool enabled)
+    {
+        showDebugGizmos = enabled;
+    }
+
+    public void TogglePathGizmos(bool enabled)
+    {
+        showPathGizmos = enabled;
+    }
+
+    public void ToggleDetectionRangeGizmo(bool enabled)
+    {
+        showDetectionRangeGizmo = enabled;
+    }
+
+    public void ToggleLastKnownPositionGizmo(bool enabled)
+    {
+        showLastKnownPositionGizmo = enabled;
+    }
+
+    // Method to set debug colors at runtime
+    public void SetDebugColors(Color path, Color detection, Color lastKnown)
+    {
+        pathColor = path;
+        detectionRangeColor = detection;
+        lastKnownPositionColor = lastKnown;
     }
 }
