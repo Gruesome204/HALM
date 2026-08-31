@@ -26,16 +26,20 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     public static List<GameObject> activeEnemies = new List<GameObject>();
     public bool AreEnemiesAlive => activeEnemies.Count > 0;
 
-    private float spawnTimer = 0f; 
+    private float spawnTimer = 0f;
     public int totalSpawned = 0; // How many enemies this spawner has spawned
     private bool allEnemiesSpawned = false; // Tracks if we've spawned all enemies
 
     public event System.Action OnAllEnemiesDefeated;
-
     public event System.Action OnBossDefeated;
 
-    [SerializeField]private bool isPaused;
+    [SerializeField] private bool isPaused;
+    private bool isInitialized = false;
+    private bool isSubscribedToEvents = false;
 
+    // ========================
+    // PROPERTIES
+    // ========================
     private MapEnemySetup CurrentMapSetup => MapLoaderManager.Instance?.CurrentMap?.GetComponent<MapEnemySetup>();
 
     public int CurrentSpawnAmount => (CurrentMapSetup != null && CurrentMapSetup.spawnAmount > -1)
@@ -48,7 +52,8 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     [Header("Debug / Inspector")]
     [SerializeField, ReadOnly] private int enemiesRemainingInspector;
 
-    [SerializeField] public int EnemiesRemaining
+    [SerializeField]
+    public int EnemiesRemaining
     {
         get
         {
@@ -60,41 +65,112 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         }
     }
 
-    private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
+    public bool IsInitialized => isInitialized;
 
-
+    // ========================
+    // IGameSystem Implementation
+    // ========================
     public int InitializePriority => 3;
+
     public void Initialize()
     {
+        if (isInitialized)
+        {
+            Debug.Log("[EnemySpawnManager] Already initialized.");
+            return;
+        }
+
+        Debug.Log("[EnemySpawnManager] Initializing...");
+
+        // Validate dependencies
+        ValidateDependencies();
+
+        // Reset state
+        ResetState();
+
+        // Clean up any stale enemies
+        CleanupStaleEnemies();
+
+        isInitialized = true;
+        Debug.Log("[EnemySpawnManager] Initialized successfully.");
     }
+
     public void PostInitialize()
     {
+        Debug.Log("[EnemySpawnManager] Post-Initializing...");
+
+        // Subscribe to events
+        SubscribeToEvents();
+
+        // Register with GameManager for pause functionality
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.RegisterPausable(this);
+            Debug.Log("[EnemySpawnManager] Registered with GameManager.");
+        }
+
+        // Prepare for first room
+        PrepareForNewRoom();
+
+        Debug.Log("[EnemySpawnManager] Post-Initialization complete.");
     }
+
+    // ========================
+    // UNITY LIFECYCLE
+    // ========================
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        GameManager.Instance.RegisterPausable(this);
+        // Auto-initialize if not already done
+        if (!isInitialized)
+        {
+            Debug.LogWarning("[EnemySpawnManager] Auto-initializing in Start()");
+            Initialize();
+            PostInitialize();
+        }
     }
-    void Update()
-    {
-        if (isPaused) return;
 
+    private void OnDestroy()
+    {
+        UnsubscribeFromEvents();
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.UnregisterPausable(this);
+        }
+
+        // Clean up active enemies
+        CleanupAllEnemies();
+        isInitialized = false;
+    }
+
+    private void Update()
+    {
+        if (!isInitialized || isPaused) return;
+
+        // Update inspector display
         enemiesRemainingInspector = EnemiesRemaining;
 
         // Don't spawn normal enemies in boss rooms
         if (isBossRoom)
             return;
+
+        // Don't spawn if we've spawned all enemies
+        if (allEnemiesSpawned)
+        {
+            CheckIfAllEnemiesDefeated();
+            return;
+        }
 
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= CurrentSpawnInterval)
@@ -104,6 +180,91 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         }
     }
 
+    // ========================
+    // VALIDATION
+    // ========================
+    private void ValidateDependencies()
+    {
+        if (MapLoaderManager.Instance == null)
+        {
+            Debug.LogWarning("[EnemySpawnManager] MapLoaderManager not found!");
+        }
+
+        if (enemyPrefabs == null || enemyPrefabs.Count == 0)
+        {
+            Debug.LogWarning("[EnemySpawnManager] No enemy prefabs assigned!");
+        }
+    }
+
+    // ========================
+    // EVENT SUBSCRIPTION
+    // ========================
+    private void SubscribeToEvents()
+    {
+        if (isSubscribedToEvents) return;
+
+        // Subscribe to map loaded events
+        if (MapLoaderManager.Instance != null)
+        {
+            MapLoaderManager.Instance.OnMapLoaded += OnMapLoadedHandler;
+            isSubscribedToEvents = true;
+            Debug.Log("[EnemySpawnManager] Subscribed to MapLoader events.");
+        }
+        else
+        {
+            Debug.LogWarning("[EnemySpawnManager] Cannot subscribe to MapLoader events - MapLoaderManager missing.");
+        }
+    }
+
+    private void UnsubscribeFromEvents()
+    {
+        if (isSubscribedToEvents && MapLoaderManager.Instance != null)
+        {
+            MapLoaderManager.Instance.OnMapLoaded -= OnMapLoadedHandler;
+            isSubscribedToEvents = false;
+            Debug.Log("[EnemySpawnManager] Unsubscribed from MapLoader events.");
+        }
+    }
+
+    private void OnMapLoadedHandler(GameObject map)
+    {
+        // Prepare for new room when map loads
+        PrepareForNewRoom();
+        Debug.Log($"[EnemySpawnManager] New map loaded: {map.name}");
+    }
+
+    // ========================
+    // STATE MANAGEMENT
+    // ========================
+    private void ResetState()
+    {
+        spawnTimer = 0f;
+        totalSpawned = 0;
+        allEnemiesSpawned = false;
+        isBossRoom = false;
+        isPaused = false;
+    }
+
+    private void CleanupStaleEnemies()
+    {
+        activeEnemies.RemoveAll(e => e == null);
+    }
+
+    private void CleanupAllEnemies()
+    {
+        foreach (var enemy in activeEnemies)
+        {
+            if (enemy != null)
+            {
+                Destroy(enemy);
+            }
+        }
+        activeEnemies.Clear();
+    }
+
+    // ========================
+    // SPAWNING LOGIC
+    // ========================
     private void TrySpawnEnemy()
     {
         // Clean up destroyed enemies from global list
@@ -117,14 +278,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             return;
         }
 
-        // Check global enemy limit (subtract this spawner's active enemies)
-        int spawnerActiveCount = 0;
-        foreach (var e in activeEnemies)
-        {
-            if (e != null && e.transform.parent == transform)
-                spawnerActiveCount++;
-        }
-
+        // Check global enemy limit
         if (activeEnemies.Count >= maxEnemies)
             return;
 
@@ -135,11 +289,11 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         spawnTimer = 0f;
     }
 
-    void SpawnEnemy()
+    private void SpawnEnemy()
     {
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
-            Debug.LogWarning($"No spawn points assigned on {name}, spawning at spawner position instead.");
+            Debug.LogWarning($"[EnemySpawnManager] No spawn points assigned on {name}, spawning at spawner position instead.");
             SpawnAtPoint(transform.position);
             return;
         }
@@ -152,11 +306,11 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         SpawnAtPoint(chosenPoint.position);
     }
 
-    void SpawnAtPoint(Vector3 position)
+    private void SpawnAtPoint(Vector3 position)
     {
         if (enemyPrefabs == null || enemyPrefabs.Count == 0)
         {
-            Debug.LogError("No enemy prefabs assigned!");
+            Debug.LogError("[EnemySpawnManager] No enemy prefabs assigned!");
             return;
         }
 
@@ -170,7 +324,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 
         if (spawnedEnemy == null)
         {
-            Debug.LogError("Failed to instantiate enemyPrefab!");
+            Debug.LogError("[EnemySpawnManager] Failed to instantiate enemyPrefab!");
             return;
         }
 
@@ -181,11 +335,11 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             if (MapProgressionManager.Instance != null)
                 stats.SetLevel(MapProgressionManager.Instance.CurrentEnemyLevel);
             else
-                Debug.LogWarning("MapProgressionManager.Instance is null!");
+                Debug.LogWarning("[EnemySpawnManager] MapProgressionManager.Instance is null!");
         }
         else
         {
-            Debug.LogWarning("EnemyStats component missing on prefab!");
+            Debug.LogWarning("[EnemySpawnManager] EnemyStats component missing on prefab!");
         }
 
         // Assign target
@@ -196,12 +350,17 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             if (player != null)
                 movement.target = player.gameObject;
             else
-                Debug.LogWarning("PlayerMovement not found in scene!");
+                Debug.LogWarning("[EnemySpawnManager] PlayerMovement not found in scene!");
         }
+
         // Track per-spawner
         totalSpawned++;
+        RegisterEnemy(spawnedEnemy, transform);
     }
 
+    // ========================
+    // ENEMY REGISTRATION
+    // ========================
     public void RegisterEnemy(GameObject enemy, Transform owner = null)
     {
         if (enemy == null)
@@ -221,6 +380,8 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 
     public void UnregisterEnemy(GameObject enemy)
     {
+        if (enemy == null) return;
+
         bool wasBoss = enemy.CompareTag("Boss"); // Make sure your boss prefab has the "Boss" tag!
 
         activeEnemies.Remove(enemy);
@@ -229,7 +390,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         // If it was a boss, trigger boss defeated event
         if (wasBoss)
         {
-            Debug.Log("[Spawner] Boss defeated!");
+            Debug.Log("[EnemySpawnManager] Boss defeated!");
             OnBossDefeated?.Invoke();
 
             // Reset boss room flag
@@ -239,25 +400,37 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         // Check normal enemies
         CheckIfAllEnemiesDefeated();
     }
-    private void CheckIfAllEnemiesDefeated()
-    {
-        // Only trigger when all have been spawned AND none remain alive
-        if (allEnemiesSpawned && activeEnemies.Count == 0)
-        {
-            OnAllEnemiesDefeated?.Invoke();
-        }
-    }
 
+    // ========================
+    // BOSS SPAWNING
+    // ========================
     public void SpawnBoss(GameObject bossPrefab)
     {
-        if (MapLoaderManager.Instance == null)
+        if (!isInitialized)
         {
-            Debug.LogError("Cannot spawn boss: MapLoaderManager missing!");
+            Debug.LogWarning("[EnemySpawnManager] Cannot spawn boss - not initialized!");
             return;
         }
 
-        // Get spawn points
+        if (MapLoaderManager.Instance == null)
+        {
+            Debug.LogError("[EnemySpawnManager] Cannot spawn boss: MapLoaderManager missing!");
+            return;
+        }
+
+        if (bossPrefab == null)
+        {
+            Debug.LogError("[EnemySpawnManager] Boss prefab is null!");
+            return;
+        }
+
+        // Get spawn point
         Transform bSpawn = MapLoaderManager.Instance.BossSpawnPoint;
+        if (bSpawn == null)
+        {
+            Debug.LogError("[EnemySpawnManager] Boss spawn point not found!");
+            return;
+        }
 
         GameObject boss = Instantiate(bossPrefab, bSpawn.position, Quaternion.identity);
 
@@ -277,13 +450,20 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 
         totalSpawned = 1;
         allEnemiesSpawned = true;
+
+        Debug.Log("[EnemySpawnManager] Boss spawned successfully!");
     }
 
+    // ========================
+    // ROOM MANAGEMENT
+    // ========================
     public void PrepareForNewRoom()
     {
+        if (!isInitialized) return;
+
         ResetSpawner();
         isBossRoom = false;
-        activeEnemies.Clear();
+        CleanupStaleEnemies();
 
         // If CurrentSpawnAmount is 0, mark as all spawned so room clears
         if (CurrentSpawnAmount <= 0)
@@ -291,22 +471,119 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             allEnemiesSpawned = true;
             CheckIfAllEnemiesDefeated();
         }
+
+        Debug.Log("[EnemySpawnManager] Prepared for new room.");
     }
 
+    private void CheckIfAllEnemiesDefeated()
+    {
+        // Clean up null references first
+        activeEnemies.RemoveAll(e => e == null);
+
+        // Only trigger when all have been spawned AND none remain alive
+        if (allEnemiesSpawned && activeEnemies.Count == 0)
+        {
+            Debug.Log("[EnemySpawnManager] All enemies defeated!");
+            OnAllEnemiesDefeated?.Invoke();
+        }
+    }
+
+    // ========================
+    // PUBLIC METHODS
+    // ========================
+    public void ResetSpawner()
+    {
+        totalSpawned = 0;
+        allEnemiesSpawned = false;
+        spawnTimer = 0f;
+    }
+
+    public void ClearAllEnemies()
+    {
+        CleanupAllEnemies();
+        ResetSpawner();
+        Debug.Log("[EnemySpawnManager] All enemies cleared.");
+    }
+
+    public int GetActiveEnemyCount()
+    {
+        CleanupStaleEnemies();
+        return activeEnemies.Count;
+    }
+
+    public List<GameObject> GetActiveEnemies()
+    {
+        CleanupStaleEnemies();
+        return new List<GameObject>(activeEnemies);
+    }
+
+    public bool HasEnemiesRemaining()
+    {
+        CleanupStaleEnemies();
+        return activeEnemies.Count > 0 || !allEnemiesSpawned;
+    }
+
+    // ========================
+    // IPausable Implementation
+    // ========================
     public void OnPause()
     {
         isPaused = true;
+        Debug.Log("[EnemySpawnManager] Paused.");
     }
 
     public void OnResume()
     {
         isPaused = false;
+        Debug.Log("[EnemySpawnManager] Resumed.");
     }
 
-    public void ResetSpawner()
+    // ========================
+    // DEBUG HELPERS
+    // ========================
+    public void DebugSpawnerState()
     {
-        totalSpawned = 0;
-        allEnemiesSpawned = false;
+        if (!isInitialized)
+        {
+            Debug.Log("[EnemySpawnManager] Not initialized!");
+            return;
+        }
+
+        Debug.Log("[EnemySpawnManager] Spawner State:");
+        Debug.Log($"  - Initialized: {isInitialized}");
+        Debug.Log($"  - Paused: {isPaused}");
+        Debug.Log($"  - Is Boss Room: {isBossRoom}");
+        Debug.Log($"  - Total Spawned: {totalSpawned}");
+        Debug.Log($"  - All Spawned: {allEnemiesSpawned}");
+        Debug.Log($"  - Spawn Amount: {CurrentSpawnAmount}");
+        Debug.Log($"  - Spawn Interval: {CurrentSpawnInterval}");
+        Debug.Log($"  - Active Enemies: {activeEnemies.Count}");
+        Debug.Log($"  - Spawn Points: {(spawnPoints != null ? spawnPoints.Length : 0)}");
+        Debug.Log($"  - Enemy Prefabs: {(enemyPrefabs != null ? enemyPrefabs.Count : 0)}");
     }
 
+    // ========================
+    // GAME STATE HANDLING
+    // ========================
+    public void OnGameReset()
+    {
+        if (!isInitialized) return;
+
+        ClearAllEnemies();
+        ResetState();
+        PrepareForNewRoom();
+        Debug.Log("[EnemySpawnManager] Game reset complete.");
+    }
+
+    // ========================
+    // UNITY EDITOR HELPERS
+    // ========================
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        // Validate spawn settings in editor
+        if (spawnRadius < 0) spawnRadius = 0;
+        if (maxEnemies < 1) maxEnemies = 1;
+    }
+#endif
 }
