@@ -24,7 +24,11 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
 
     private readonly List<Slow> activeSlows = new();
 
-    private void OnEnable() => GameManager.Instance?.RegisterPausable(this);
+    private void OnEnable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.RegisterPausable(this);
+    }
     private void OnDisable() => GameManager.Instance?.UnregisterPausable(this);
 
 

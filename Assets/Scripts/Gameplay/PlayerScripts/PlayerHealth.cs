@@ -98,7 +98,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable, IInvulnerable
     }
     private void UpdateHealthBar()
     {
-        if (healthBar != null)
+        if (healthBar != null && stats.currentMaxHealth > 0)
         {
             healthBar.SetValueWithoutNotify(stats.currentHealth / stats.currentMaxHealth);
         }
