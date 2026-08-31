@@ -288,7 +288,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         if (damageData.source != null &&
             damageData.source.TryGetComponent<TurretBehaviour>(out var turretBehaviour))
         {
-            TurretBlueprint blueprint = turretBehaviour.turretBlueprint;
+            TurretBlueprint blueprint = turretBehaviour.TurretBlueprint;
 
             if (blueprint != null)
             {

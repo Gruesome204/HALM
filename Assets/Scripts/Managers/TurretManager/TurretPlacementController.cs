@@ -363,7 +363,7 @@ public class TurretPlacementController : MonoBehaviour
 
         if (behaviour != null && stats != null)
         {
-            behaviour.turretBlueprint = currentSelectedBlueprint;
+            behaviour.SetTurretBlueprint(currentSelectedBlueprint);
 
             int level = TurretLevelManager.Instance.GetLevel(currentSelectedBlueprint.turretType);
 
@@ -492,8 +492,8 @@ public class TurretPlacementController : MonoBehaviour
         foreach (var turret in activeTurrets)
         {
             var behaviour = turret.GetComponentInChildren<TurretBehaviour>();
-            if (behaviour?.turretBlueprint != null)
-                total += behaviour.turretBlueprint.buildCapacityValue;
+            if (behaviour?.TurretBlueprint != null)
+                total += behaviour.TurretBlueprint.buildCapacityValue;
         }
 
         return total;

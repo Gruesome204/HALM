@@ -5,6 +5,7 @@ public class TurretLevelBehaviour : MonoBehaviour
     [Header("References")]
     public TurretBehaviour turretBehaviour;
     public TurretStats turretStats;
+
     private void OnEnable()
     {
         if (TurretGlobalModifierManager.Instance != null)
@@ -35,24 +36,20 @@ public class TurretLevelBehaviour : MonoBehaviour
         SyncWithCurrentLevel();
     }
 
-
-    private void OnDestroy()
-    {
-    }
-
     public void SyncWithCurrentLevel()
     {
-        if (turretBehaviour?.turretBlueprint == null || turretStats == null)
+        // Use the public property instead of direct field access
+        if (turretBehaviour?.TurretBlueprint == null || turretStats == null)
             return;
 
         int level = TurretLevelManager.Instance.GetLevel(
-            turretBehaviour.turretBlueprint.turretType
+            turretBehaviour.TurretBlueprint.turretType
         );
 
         TurretModifier upgrade =
             TurretUpgradeChoiceManager.Instance != null
                 ? TurretUpgradeChoiceManager.Instance.GetCombinedModifier(
-                    turretBehaviour.turretBlueprint.turretType)
+                    turretBehaviour.TurretBlueprint.turretType)
                 : null;
 
         TurretGlobalModifierManager global =
@@ -60,7 +57,7 @@ public class TurretLevelBehaviour : MonoBehaviour
 
         turretStats.RecalculateStats(
             turretBehaviour,
-            turretBehaviour.turretBlueprint,
+            turretBehaviour.TurretBlueprint,
             level,
             upgrade,
             global
@@ -69,13 +66,13 @@ public class TurretLevelBehaviour : MonoBehaviour
 
     public void ApplyUpgrades(int level)
     {
-        if (turretBehaviour?.turretBlueprint == null || turretStats == null)
+        if (turretBehaviour?.TurretBlueprint == null || turretStats == null)
             return;
 
         TurretModifier upgrade =
             TurretUpgradeChoiceManager.Instance != null
                 ? TurretUpgradeChoiceManager.Instance.GetCombinedModifier(
-                    turretBehaviour.turretBlueprint.turretType)
+                    turretBehaviour.TurretBlueprint.turretType)
                 : null;
 
         TurretGlobalModifierManager global =
@@ -83,7 +80,7 @@ public class TurretLevelBehaviour : MonoBehaviour
 
         turretStats.RecalculateStats(
             turretBehaviour,
-            turretBehaviour.turretBlueprint,
+            turretBehaviour.TurretBlueprint,
             level,
             upgrade,
             global

@@ -169,22 +169,22 @@ public class TurretGlobalModifierManager : MonoBehaviour
             var behaviour = turret.GetComponentInChildren<TurretBehaviour>();
             var stats = turret.GetComponentInChildren<TurretStats>();
 
-            if (behaviour == null || stats == null || behaviour.turretBlueprint == null)
+            if (behaviour == null || stats == null || behaviour.TurretBlueprint == null)
                 continue;
 
             int level = TurretLevelManager.Instance.GetLevel(
-                behaviour.turretBlueprint.turretType
+                behaviour.TurretBlueprint.turretType
             );
 
             var upgrade =
                 TurretUpgradeChoiceManager.Instance != null
                     ? TurretUpgradeChoiceManager.Instance.GetCombinedModifier(
-                        behaviour.turretBlueprint.turretType)
+                        behaviour.TurretBlueprint.turretType)
                     : null;
 
             stats.RecalculateStats(
                 behaviour,
-                behaviour.turretBlueprint,
+                behaviour.TurretBlueprint,
                 level,
                 upgrade,
                 this // global

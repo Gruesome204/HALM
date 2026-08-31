@@ -103,14 +103,14 @@ public class TurretLevelManager : MonoBehaviour
 
 
             var turretBehaviour = turret.GetComponentInChildren<TurretBehaviour>();
-            if (turretBehaviour == null || turretBehaviour.turretBlueprint == null)
+            if (turretBehaviour == null || turretBehaviour.TurretBlueprint == null)
                 continue;
-            if (turretBehaviour.turretBlueprint.turretType != type)
+            if (turretBehaviour.TurretBlueprint.turretType != type)
                 continue;
 
                 int level = GetLevel(type);
                 var stats = turret.GetComponentInChildren<TurretStats>();
-                if (stats == null || turretBehaviour == null || turretBehaviour.turretBlueprint == null)
+                if (stats == null || turretBehaviour == null || turretBehaviour.TurretBlueprint == null)
                     continue;
 
                 var upgrade =
@@ -120,7 +120,7 @@ public class TurretLevelManager : MonoBehaviour
 
                 stats.RecalculateStats(
                     turretBehaviour,
-                    turretBehaviour.turretBlueprint,
+                    turretBehaviour.TurretBlueprint,
                     level,
                     upgrade,
                     TurretGlobalModifierManager.Instance
