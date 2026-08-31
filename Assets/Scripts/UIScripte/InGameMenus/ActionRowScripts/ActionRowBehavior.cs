@@ -103,17 +103,25 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     {
         turretBtnList.Clear();
         turretButtonContainer.Clear();
-        var turretNumber = new int();
-        turretNumber = 1;
-        foreach (var turret in GameManager.Instance.gameDataSO.GetSelectedBlueprints())
+        var turretNumber = 1;
+
+        var blueprints = GameManager.Instance.gameDataSO.GetSelectedBlueprints();
+        Debug.Log($"[ActionRowBehavior] Starting FillActionRow with {blueprints.Count} blueprints");
+
+        foreach (var turret in blueprints)
         {
-            Debug.Log(GameManager.Instance.gameDataSO.GetSelectedBlueprints().Count);
+            Debug.Log($"[ActionRowBehavior] Creating element for turret #{turretNumber}: {turret.name}");
+
             AR_ElementBehavior aR_Element = new AR_ElementBehavior(actionRowElementAsset, turret, turretNumber);
             turretButtonContainer.Add(aR_Element.turretBorder);
             turretBtnList.Add(aR_Element);
 
+            Debug.Log($"[ActionRowBehavior] Added element for {turret.name}. Total in list: {turretBtnList.Count}");
+
             turretNumber++;
         }
+
+        Debug.Log($"[ActionRowBehavior] Finished. Total turretBtnList count: {turretBtnList.Count}");
     }
 
     void FillResourceRow()

@@ -107,11 +107,6 @@ public class TurretPlacementController : MonoBehaviour
             DrawRadiusCircle();
     }
 
-    private void Start()
-    {
-        SetupFromGameData(GameManager.Instance.gameDataSO);
-    }
-
     // ========================
     // SETUP
     // ========================
@@ -125,10 +120,19 @@ public class TurretPlacementController : MonoBehaviour
 
         var selectedBlueprints = gameData.GetSelectedBlueprints();
 
-        turretBlueprintList = new List<TurretBlueprint>(selectedBlueprints);
+        // Clear existing list and add all selected blueprints
+        turretBlueprintList.Clear();
 
-        // If no blueprints loaded, try fallback
-        if (turretBlueprintList.Count == 0)
+        if (selectedBlueprints != null && selectedBlueprints.Count > 0)
+        {
+            foreach (var blueprint in selectedBlueprints)
+            {
+                if (blueprint != null)
+                    turretBlueprintList.Add(blueprint);
+            }
+            Debug.Log($"[TurretPlacementController] Loaded {turretBlueprintList.Count} turret blueprints from GameData");
+        }
+        else
         {
             Debug.LogWarning("[TurretPlacementController] No blueprints selected in GameData, using default list");
         }

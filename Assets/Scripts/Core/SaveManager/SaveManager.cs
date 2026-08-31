@@ -51,6 +51,17 @@ public class SaveManager : MonoBehaviour, IGameSystem
     private void Update()
     {
         HandleAutosave();
+
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            DeleteSave();
+            Debug.Log("[SaveManager] Save deleted via debug key!");
+
+            // Reload the scene to reset everything
+            UnityEngine.SceneManagement.SceneManager.LoadScene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex
+            );
+        }
     }
 
     private void OnApplicationQuit()

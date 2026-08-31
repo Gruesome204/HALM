@@ -110,6 +110,16 @@ public class GameDataSO : ScriptableObject
     // Get all selected blueprints
     public List<TurretBlueprint> GetSelectedBlueprints()
     {
+        Debug.Log($"[GameDataSO] Returning {selectedBlueprints?.Count ?? 0} selected blueprints");
+
+        if (selectedBlueprints != null)
+        {
+            foreach (var bp in selectedBlueprints)
+            {
+                Debug.Log($"[GameDataSO] - {bp?.name ?? "NULL"}");
+            }
+        }
+
         return selectedBlueprints;
     }
 
