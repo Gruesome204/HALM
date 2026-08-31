@@ -22,12 +22,17 @@
         [Header("Line of Sight")]
         [SerializeField] private LayerMask obstacleLayer;
 
-        private TurretBlueprint.FiringPattern currentFiringPattern;
+        private FiringPattern currentFiringPattern;
         private bool salveInProgress;
         public int projectilesPerSalve; // Number of projectiles in a salve
         private float delayBetweenSalveProjectiles; // Delay between each projectile in a salve
+        private int burstShotsFired;
+        private bool burstInProgress;
+        private float sprayTimer;
+        private bool sprayActive;
+        private Coroutine sprayCoroutine;
 
-        private bool isPaused;
+    private bool isPaused;
 
         private TurretGlobalModifierManager global;
         private TurretUpgradeChoiceManager upgrades;
@@ -60,7 +65,7 @@
             if (turretBlueprint != null && currentProjectileType == null)
                 currentProjectileType = turretBlueprint.turretProjectileType;
 
-            currentFiringPattern = turretBlueprint?.firingPattern ?? TurretBlueprint.FiringPattern.SingleShot;
+            currentFiringPattern = turretBlueprint?.firingPattern ?? FiringPattern.SingleShot;
             delayBetweenSalveProjectiles = turretBlueprint?.delayBetweenSalveProjectiles ?? 0.1f;
 
             var health = GetComponent<TurretHealth>();
@@ -139,22 +144,52 @@
             return enemies;
         }
 
-        private void Fire()
+    private void Fire()
+    {
+        switch (currentFiringPattern)
         {
-            switch (currentFiringPattern)
-            {
-                case TurretBlueprint.FiringPattern.SingleShot:
-                    ShootProjectileAt(targetEnemy);
-                    ResetFiringCooldown();
-                    break;
+            case FiringPattern.SingleShot:
+                ShootProjectileAt(targetEnemy);
+                ResetFiringCooldown();
+                break;
 
-                case TurretBlueprint.FiringPattern.FireSalve:
-                    if (!salveInProgress)
-                        StartCoroutine(FireSalveWithCooldown());
-                    break;
-            }
+            case FiringPattern.FireSalve:
+                if (!salveInProgress)
+                    StartCoroutine(FireSalveWithCooldown());
+                break;
+
+            case FiringPattern.BurstFire:
+                if (!burstInProgress)
+                    StartCoroutine(FireBurstWithCooldown());
+                break;
+
+            case FiringPattern.ScatterShot:
+                FireScatterShot(targetEnemy);
+                ResetFiringCooldown();
+                break;
+
+            case FiringPattern.ChainLightning:
+                FireChainLightning(targetEnemy);
+                ResetFiringCooldown();
+                break;
+
+            case FiringPattern.HomingMissile:
+                FireHomingProjectile(targetEnemy);
+                ResetFiringCooldown();
+                break;
+
+            case FiringPattern.AOEShot:
+                FireAOEProjectile(targetEnemy);
+                ResetFiringCooldown();
+                break;
+
+            case FiringPattern.SprayShot:
+                if (sprayCoroutine == null)
+                    sprayCoroutine = StartCoroutine(FireSprayShot());
+                break;
         }
-        private bool HasLineOfSight(Transform target)
+    }
+    private bool HasLineOfSight(Transform target)
             {
                 if (target == null)
                     return false;
@@ -273,12 +308,273 @@
             ResetFiringCooldown(); // cooldown applied after full salve
             salveInProgress = false;
         }
-        public void SetFiringPattern(TurretBlueprint.FiringPattern pattern)
+        public void SetFiringPattern(FiringPattern pattern)
         {
             currentFiringPattern = pattern;
         }
 
-        void OnDrawGizmosSelected()
+    private IEnumerator FireBurstWithCooldown()
+    {
+        burstInProgress = true;
+        int shotsFired = 0;
+
+        while (shotsFired < turretBlueprint.burstCount)
+        {
+            while (isPaused)
+                yield return null;
+
+            // Find target for each burst shot
+            FindTarget();
+            if (targetEnemy != null && HasLineOfSight(targetEnemy))
+            {
+                ShootProjectileAt(targetEnemy);
+            }
+
+            shotsFired++;
+
+            if (shotsFired < turretBlueprint.burstCount)
+            {
+                float elapsed = 0f;
+                while (elapsed < turretBlueprint.burstDelay)
+                {
+                    if (!isPaused)
+                        elapsed += Time.deltaTime;
+                    yield return null;
+                }
+            }
+        }
+
+        ResetFiringCooldown();
+        burstInProgress = false;
+    }
+    // Scatter Shot
+    private void FireScatterShot(Transform target)
+    {
+        if (target == null || firePoint == null)
+            return;
+
+        int projectileCount = turretBlueprint.scatterCount;
+        float angleSpread = turretBlueprint.scatterAngle;
+
+        Vector2 baseDirection = (target.position - firePoint.position).normalized;
+        float baseAngle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
+
+        for (int i = 0; i < projectileCount; i++)
+        {
+            float angleOffset = UnityEngine.Random.Range(-angleSpread / 2, angleSpread / 2);
+            float angle = baseAngle + angleOffset;
+
+            Vector2 direction = new Vector2(
+                Mathf.Cos(angle * Mathf.Deg2Rad),
+                Mathf.Sin(angle * Mathf.Deg2Rad)
+            );
+
+            // Create projectile with direction
+            GameObject projectileObj = CreateProjectile(direction);
+            if (projectileObj != null)
+            {
+                // Apply scatter-specific modifications if needed
+                ProjectileBehaviour projectile = projectileObj.GetComponent<ProjectileBehaviour>();
+                // Optional: Reduce damage for scatter shots
+                // projectile.SetOwner(gameObject, stats.currentAttackDamage * 0.7f);
+            }
+        }
+    }
+
+    // Chain Lightning
+    private void FireChainLightning(Transform firstTarget)
+    {
+        if (firstTarget == null || firePoint == null)
+            return;
+
+        // Create first projectile
+        GameObject projectileObj = CreateProjectile(
+            (firstTarget.position - firePoint.position).normalized
+        );
+
+        if (projectileObj != null)
+        {
+            ProjectileBehaviour projectile = projectileObj.GetComponent<ProjectileBehaviour>();
+            if (projectile != null)
+            {
+                // Set chain properties
+                projectile.SetOwner(gameObject, stats.currentAttackDamage);
+                projectile.chainBounceCount = turretBlueprint.chainBounceCount;
+                projectile.chainBounceRange = turretBlueprint.chainBounceRange;
+
+                // Set target for chain
+                projectile.SetChainTarget(firstTarget);
+            }
+        }
+    }
+
+    // Homing Missile
+    private void FireHomingProjectile(Transform target)
+    {
+        if (target == null || firePoint == null)
+            return;
+
+        Vector2 initialDirection = (target.position - firePoint.position).normalized;
+        GameObject projectileObj = CreateProjectile(initialDirection);
+
+        if (projectileObj != null)
+        {
+            ProjectileBehaviour projectile = projectileObj.GetComponent<ProjectileBehaviour>();
+            if (projectile != null)
+            {
+                projectile.SetOwner(gameObject, stats.currentAttackDamage);
+                projectile.homingStrength = turretBlueprint.homingStrength;
+                projectile.SetHomingTarget(target);
+            }
+        }
+    }
+
+    // AOE Shot
+    private void FireAOEProjectile(Transform target)
+    {
+        if (target == null || firePoint == null)
+            return;
+
+        Vector2 direction = (target.position - firePoint.position).normalized;
+        GameObject projectileObj = CreateProjectile(direction);
+
+        if (projectileObj != null)
+        {
+            ProjectileBehaviour projectile = projectileObj.GetComponent<ProjectileBehaviour>();
+            if (projectile != null)
+            {
+                projectile.SetOwner(gameObject, stats.currentAttackDamage);
+                projectile.isAOE = true;
+                projectile.aoeRadius = turretBlueprint.aoeRadius;
+            }
+        }
+    }
+
+    // Spray Shot
+    private IEnumerator FireSprayShot()
+    {
+        sprayActive = true;
+        float fireInterval = 1f / turretBlueprint.sprayRate;
+
+        while (sprayActive)
+        {
+            while (isPaused)
+                yield return null;
+
+            // Get enemies in range
+            List<Transform> targets = GetEnemiesInRange();
+            if (targets.Count > 0)
+            {
+                // Pick closest enemy
+                Transform nearestTarget = GetNearestTarget(targets);
+                if (nearestTarget != null && HasLineOfSight(nearestTarget))
+                {
+                    // Fire with spray cone
+                    FireSprayShotAt(nearestTarget);
+                }
+            }
+
+            float elapsed = 0f;
+            while (elapsed < fireInterval)
+            {
+                if (!isPaused)
+                    elapsed += Time.deltaTime;
+                yield return null;
+            }
+        }
+    }
+
+    private void FireSprayShotAt(Transform target)
+    {
+        if (target == null || firePoint == null)
+            return;
+
+        Vector2 baseDirection = (target.position - firePoint.position).normalized;
+        float baseAngle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
+
+        // Random spread within spray cone
+        float angleOffset = UnityEngine.Random.Range(-turretBlueprint.sprayAngle / 2, turretBlueprint.sprayAngle / 2);
+        float angle = baseAngle + angleOffset;
+
+        Vector2 direction = new Vector2(
+            Mathf.Cos(angle * Mathf.Deg2Rad),
+            Mathf.Sin(angle * Mathf.Deg2Rad)
+        );
+
+        CreateProjectile(direction);
+    }
+
+    // Helper method to create projectile with direction
+    private GameObject CreateProjectile(Vector2 direction)
+    {
+        if (currentProjectileType == null || firePoint == null)
+            return null;
+
+        GameObject projectileObj = Instantiate(
+            currentProjectileType,
+            firePoint.position,
+            Quaternion.identity
+        );
+
+        var projectile = projectileObj.GetComponent<ProjectileBehaviour>();
+        var rb = projectileObj.GetComponent<Rigidbody2D>();
+
+        if (projectile == null || rb == null)
+        {
+            Debug.LogWarning("Projectile prefab is missing components.");
+            Destroy(projectileObj);
+            return null;
+        }
+
+        projectile.SetOwner(gameObject, stats.currentAttackDamage);
+        projectile.knockbackStrength = stats.currentKnockbackStrength;
+        projectile.knockbackDuration = stats.currentKnockbackDuration;
+        projectile.InitializePiercing(stats.currentProjectilePierce);
+
+        rb.linearVelocity = direction * stats.currentProjectileSpeed;
+
+        Destroy(projectileObj, 5f);
+
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayTowerShoot();
+
+        return projectileObj;
+    }
+
+    // Helper method to get nearest target
+    private Transform GetNearestTarget(List<Transform> targets)
+    {
+        if (targets == null || targets.Count == 0)
+            return null;
+
+        Transform nearest = null;
+        float shortestDistance = Mathf.Infinity;
+
+        foreach (Transform target in targets)
+        {
+            float distance = Vector2.Distance(transform.position, target.position);
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                nearest = target;
+            }
+        }
+
+        return nearest;
+    }
+
+    // Stop spray when pattern changes
+    public void StopSpray()
+    {
+        sprayActive = false;
+        if (sprayCoroutine != null)
+        {
+            StopCoroutine(sprayCoroutine);
+            sprayCoroutine = null;
+        }
+    }
+
+    void OnDrawGizmosSelected()
             {
                 Gizmos.color = Color.red;
                 if (stats != null)

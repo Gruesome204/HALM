@@ -174,7 +174,7 @@ public class TurretStats : MonoBehaviour
         {
             behaviour.SetFiringPattern(
                 currentProjectilesPerSalve > 1
-                    ? TurretBlueprint.FiringPattern.FireSalve
+                    ? FiringPattern.FireSalve
                     : blueprint.firingPattern
             );
         }

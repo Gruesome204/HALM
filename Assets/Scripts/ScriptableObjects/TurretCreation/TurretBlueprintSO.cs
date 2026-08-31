@@ -33,13 +33,6 @@ public class TurretBlueprint : ScriptableObject
     [Tooltip("Prefab instantiated when the turret is placed in the world.")]
     public GameObject turretProjectileType;
 
-    public enum FiringPattern
-    {
-        None,
-        SingleShot,
-        FireSalve
-    }
-
     [Tooltip("Shooting pattern of the turret.")]
     public FiringPattern firingPattern = FiringPattern.SingleShot;
 
@@ -48,6 +41,38 @@ public class TurretBlueprint : ScriptableObject
 
     [Tooltip("Delay between projectiles in a salve (only for FireSalve pattern).")]
     public float delayBetweenSalveProjectiles = 0.5f;
+
+    [Header("Burst Fire Settings")]
+    [Tooltip("Number of shots in a burst.")]
+    public int burstCount = 3;
+    [Tooltip("Delay between shots in a burst.")]
+    public float burstDelay = 0.1f;
+
+    [Header("Scatter Shot Settings")]
+    [Tooltip("Number of projectiles in scatter.")]
+    public int scatterCount = 5;
+    [Tooltip("Angle spread of scatter in degrees.")]
+    public float scatterAngle = 45f;
+
+    [Header("Chain Lightning Settings")]
+    [Tooltip("Number of enemies chain can bounce to.")]
+    public int chainBounceCount = 3;
+    [Tooltip("Range for chain bounces.")]
+    public float chainBounceRange = 5f;
+
+    [Header("Homing Missile Settings")]
+    [Tooltip("Homing strength (higher = tighter turns).")]
+    public float homingStrength = 2f;
+
+    [Header("AOE Shot Settings")]
+    [Tooltip("Radius of AOE explosion.")]
+    public float aoeRadius = 3f;
+
+    [Header("Spray Shot Settings")]
+    [Tooltip("Number of projectiles per second in spray.")]
+    public float sprayRate = 10f;
+    [Tooltip("Angle of spray cone in degrees.")]
+    public float sprayAngle = 30f;
 
     [Header("Stat Values")]
     [Tooltip("Base health of the turret.")]

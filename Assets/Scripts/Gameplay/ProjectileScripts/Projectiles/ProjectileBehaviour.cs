@@ -1,6 +1,6 @@
-
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class ProjectileBehaviour : MonoBehaviour
 {
@@ -17,22 +17,64 @@ public class ProjectileBehaviour : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask wallLayer;
 
+    [Header("Chain Lightning")]
+    public int chainBounceCount = 0;
+    public float chainBounceRange = 5f;
+    private Transform chainTarget;
+    private int currentBounces = 0;
+    private List<Transform> hitEnemies = new List<Transform>(); // Track hit enemies for chain
+
+    [Header("Homing")]
+    public float homingStrength = 2f;
+    private Transform homingTarget;
+    private bool isHoming = false;
+
+    [Header("AOE")]
+    public bool isAOE = false;
+    public float aoeRadius = 3f;
+    [SerializeField] private GameObject aoeEffectPrefab; // Optional: visual effect for AOE
+
+    // Add a flag to prevent multiple hits on same enemy
+    private HashSet<GameObject> hitEnemySet = new HashSet<GameObject>();
 
     public void InitializePiercing(int pierces)
     {
         remainingPierces = pierces;
     }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
+
     private void Update()
     {
-        if (rb.linearVelocity.sqrMagnitude > 0.01f)
+        // Handle homing behavior
+        if (isHoming && homingTarget != null)
         {
-            transform.up = rb.linearVelocity.normalized;
+            Vector2 directionToTarget = (homingTarget.position - transform.position).normalized;
+            Vector2 currentVelocity = rb.linearVelocity;
+
+            // Smoothly rotate towards target
+            Vector2 newVelocity = Vector2.Lerp(currentVelocity, directionToTarget * currentVelocity.magnitude, homingStrength * Time.deltaTime);
+            rb.linearVelocity = newVelocity;
+
+            // Rotate projectile to face movement direction
+            if (rb.linearVelocity.sqrMagnitude > 0.01f)
+            {
+                transform.up = rb.linearVelocity.normalized;
+            }
+        }
+        else
+        {
+            // Original rotation behavior
+            if (rb.linearVelocity.sqrMagnitude > 0.01f)
+            {
+                transform.up = rb.linearVelocity.normalized;
+            }
         }
     }
+
     public void SetOwner(GameObject turret, float damageAmount)
     {
         owner = turret;
@@ -44,12 +86,36 @@ public class ProjectileBehaviour : MonoBehaviour
         };
     }
 
+    // Chain Lightning Methods
+    public void SetChainTarget(Transform target)
+    {
+        chainTarget = target;
+        hitEnemies.Clear();
+        currentBounces = 0;
+        // Add the initial target to hit list
+        if (target != null)
+            hitEnemies.Add(target);
+    }
+
+    // Homing Methods
+    public void SetHomingTarget(Transform target)
+    {
+        homingTarget = target;
+        isHoming = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if hit a wall
         if (((1 << other.gameObject.layer) & wallLayer) != 0)
         {
-            Destroy(gameObject); // Projectile stops at wall
+            // If it's a chain lightning, we might want different behavior
+            if (chainBounceCount > 0)
+            {
+                // Chain lightning passes through walls (optional behavior)
+                // Or you can make it stop at walls - your choice
+            }
+            Destroy(gameObject);
             return;
         }
 
@@ -58,17 +124,34 @@ public class ProjectileBehaviour : MonoBehaviour
         if (other.gameObject == owner)
             return;
 
+        // Prevent double-hitting the same enemy (important for chain lightning)
+        if (hitEnemySet.Contains(other.gameObject))
+            return;
+
         // Try to get the IDamagable interface from the collided object
         IDamagable damagable = other.GetComponent<IDamagable>();
 
         if (damagable != null)
         {
+            // Add to hit set to prevent double hits
+            hitEnemySet.Add(other.gameObject);
+
+            // Calculate direction for knockback
             Rigidbody2D targetRb = other.GetComponent<Rigidbody2D>();
             if (targetRb != null)
             {
                 direction = (targetRb.transform.position - transform.position).normalized;
             }
 
+            // Handle AOE damage
+            if (isAOE)
+            {
+                DealAOEDamage(other.transform.position);
+                Destroy(gameObject);
+                return;
+            }
+
+            // Apply damage with knockback
             KnockbackData knockbackData = new KnockbackData
             {
                 knockbackStrength = knockbackStrength,
@@ -78,14 +161,187 @@ public class ProjectileBehaviour : MonoBehaviour
 
             damagable.TakeDamage(damageData, knockbackData);
 
-            // Reduce piercing hits remaining
+            // Chain Lightning Logic
+            if (chainBounceCount > 0 && currentBounces < chainBounceCount)
+            {
+                HandleChainLightning(other.transform);
+                // Don't destroy - let chain continue
+            }
+            else
+            {
+                // Handle piercing
                 remainingPierces--;
-
                 if (remainingPierces < 0)
                 {
                     Destroy(gameObject);
                 }
-            
+            }
+        }
+    }
+
+    private void HandleChainLightning(Transform currentTarget)
+    {
+        currentBounces++;
+
+        // Find nearest enemy in range that hasn't been hit yet
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(
+            currentTarget.position,
+            chainBounceRange,
+            enemyLayer
+        );
+
+        Transform nearestEnemy = null;
+        float shortestDistance = Mathf.Infinity;
+
+        foreach (Collider2D enemyCollider in enemiesInRange)
+        {
+            if (enemyCollider.gameObject == owner)
+                continue;
+
+            // Skip if already hit
+            if (hitEnemySet.Contains(enemyCollider.gameObject))
+                continue;
+
+            // Check line of sight for chain (optional)
+            // You might want to add line of sight check here
+
+            float distance = Vector2.Distance(currentTarget.position, enemyCollider.transform.position);
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                nearestEnemy = enemyCollider.transform;
+            }
+        }
+
+        if (nearestEnemy != null)
+        {
+            // Create chain visual effect (lightning bolt)
+            CreateChainVisual(currentTarget.position, nearestEnemy.position);
+
+            // Deal damage to the new target
+            IDamagable damagable = nearestEnemy.GetComponent<IDamagable>();
+            if (damagable != null)
+            {
+                // Optionally reduce damage for chain bounces
+                float chainDamage = damageData.amount * 0.8f; // 20% damage reduction per bounce
+                DamageData chainDamageData = new DamageData
+                {
+                    source = owner,
+                    amount = chainDamage,
+                    type = DamageData.DamageType.Physical
+                };
+
+                // Knockback for chain lightning (maybe reduced)
+                KnockbackData knockbackData = new KnockbackData
+                {
+                    knockbackStrength = knockbackStrength * 0.5f,
+                    knockbackDuration = knockbackDuration * 0.5f,
+                    direction = (nearestEnemy.position - currentTarget.position).normalized,
+                };
+
+                damagable.TakeDamage(chainDamageData, knockbackData);
+
+                // Mark as hit
+                hitEnemySet.Add(nearestEnemy.gameObject);
+
+                // Continue the chain if possible
+                if (currentBounces < chainBounceCount)
+                {
+                    HandleChainLightning(nearestEnemy);
+                }
+            }
+        }
+        else
+        {
+            // No more enemies to chain to, destroy projectile
+            Destroy(gameObject);
+        }
+    }
+
+    private void CreateChainVisual(Vector2 start, Vector2 end)
+    {
+        // You can implement a visual effect here
+        // For example, instantiate a line renderer or particle effect
+        // For now, we'll just draw a debug line
+        Debug.DrawLine(start, end, Color.cyan, 0.5f);
+
+        // Optional: Instantiate a lightning prefab
+        // GameObject lightningEffect = Instantiate(lightningPrefab, (start + end) / 2, Quaternion.identity);
+        // lightningEffect.GetComponent<LineRenderer>().SetPositions(new Vector3[] { start, end });
+    }
+
+    private void DealAOEDamage(Vector2 center)
+    {
+        // Create AOE visual effect
+        if (aoeEffectPrefab != null)
+        {
+            Instantiate(aoeEffectPrefab, center, Quaternion.identity);
+        }
+
+        // Find all enemies in AOE radius
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(
+            center,
+            aoeRadius,
+            enemyLayer
+        );
+
+        foreach (Collider2D enemyCollider in enemiesInRange)
+        {
+            if (enemyCollider.gameObject == owner)
+                continue;
+
+            IDamagable damagable = enemyCollider.GetComponent<IDamagable>();
+            if (damagable != null)
+            {
+                // Knockback away from center
+                Vector2 knockbackDirection = (enemyCollider.transform.position - (Vector3)center).normalized;
+
+                KnockbackData knockbackData = new KnockbackData
+                {
+                    knockbackStrength = knockbackStrength * 0.5f, // Reduced for AOE
+                    knockbackDuration = knockbackDuration * 0.5f,
+                    direction = knockbackDirection,
+                };
+
+                // You might want to reduce damage for enemies at the edge of AOE
+                float distance = Vector2.Distance(center, enemyCollider.transform.position);
+                float damageMultiplier = 1f - (distance / aoeRadius) * 0.5f; // 50% reduction at edge
+
+                DamageData aoeDamageData = new DamageData
+                {
+                    source = owner,
+                    amount = damageData.amount * damageMultiplier,
+                    type = DamageData.DamageType.Physical
+                };
+
+                damagable.TakeDamage(aoeDamageData, knockbackData);
+            }
+        }
+    }
+
+    // Called when projectile is destroyed
+    private void OnDestroy()
+    {
+        // If it's an AOE projectile and wasn't triggered, still deal AOE damage
+        if (isAOE && !hitEnemySet.Contains(owner) && !hitEnemySet.Contains(null))
+        {
+            // Only trigger if it was destroyed by hitting a wall or timeout
+            DealAOEDamage(transform.position);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (isAOE)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, aoeRadius);
+        }
+
+        if (chainBounceCount > 0)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, chainBounceRange);
         }
     }
 }
