@@ -123,7 +123,10 @@ public class GridManager : MonoBehaviour, IGameSystem
             }
         }
     }
-
+    public bool IsWalkable(Vector2Int pos)
+    {
+        return CanPlaceObject(pos, Vector2Int.one);
+    }
     // Show the grid at all times in the editor
     // For debugging: Draw grid lines in the editor
     private void OnDrawGizmos()

@@ -141,16 +141,67 @@ public class EnemyMovement : MonoBehaviour
         Vector2Int goal =
             GridManager.Instance.GetGridCoordinates(target.transform.position);
 
-        currentPath = GridPathfinding.Instance.FindPath(start, goal);
-        currentPath = SmoothPath(currentPath);
-        currentIndex = 0;
+        // If the goal is not walkable, find the nearest walkable cell
+        if (!GridManager.Instance.IsWalkable(goal))
+        {
+            goal = FindNearestWalkableCell(goal);
+        }
 
-       // Debug.Log($"Path length: {currentPath.Count}");
+        currentPath = GridPathfinding.Instance.FindPath(start, goal);
+
+        // Only smooth if the path is long enough
+        if (currentPath.Count > 3)
+        {
+            currentPath = SmoothPath(currentPath);
+        }
+        else
+        {
+            // For short paths, don't smooth (avoid cutting corners)
+            currentPath = new List<Vector2Int>(currentPath);
+        }
+
+        currentIndex = 0;
+    }
+
+    Vector2Int FindNearestWalkableCell(Vector2Int start)
+    {
+        // Simple BFS to find nearest walkable cell
+        Queue<Vector2Int> queue = new();
+        HashSet<Vector2Int> visited = new();
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        while (queue.Count > 0)
+        {
+            Vector2Int current = queue.Dequeue();
+            if (GridManager.Instance.IsWalkable(current))
+                return current;
+
+            foreach (var dir in new Vector2Int[] {
+            new(1,0), new(-1,0), new(0,1), new(0,-1),
+            new(1,1), new(1,-1), new(-1,1), new(-1,-1)
+        })
+            {
+                Vector2Int next = current + dir;
+                if (!visited.Contains(next) &&
+                    next.x >= 0 && next.y >= 0 &&
+                    next.x < GridManager.Instance.gridWidth &&
+                    next.y < GridManager.Instance.gridHeight)
+                {
+                    visited.Add(next);
+                    queue.Enqueue(next);
+                }
+            }
+        }
+        return start; // Fallback
     }
     public void FollowPath()
     {
         if (currentPath == null || currentPath.Count == 0)
+        {
+            rb.linearVelocity = Vector2.zero;
             return;
+        }
 
         if (currentIndex >= currentPath.Count)
         {
@@ -158,6 +209,7 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
+        // Reduce lookAheadSteps for more accurate following
         int targetIndex = Mathf.Min(currentIndex + lookAheadSteps, currentPath.Count - 1);
 
         Vector3 targetWorld =
@@ -166,19 +218,27 @@ public class EnemyMovement : MonoBehaviour
         Vector2 toTarget = (targetWorld - transform.position);
         float distance = toTarget.magnitude;
 
+        // If very close to destination, stop
+        if (distance < arriveDistance)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         Vector2 dir = toTarget.normalized;
 
-        float speedMultiplier = Mathf.Clamp01(distance / 0.5f);
-
+        // Slow down when approaching the next node
+        float speedMultiplier = Mathf.Clamp01(distance / slowDownDistance);
         Vector2 targetVelocity = dir * stats.currentMovementSpeed * speedMultiplier;
 
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.15f);
+        // More responsive movement
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, Time.fixedDeltaTime * acceleration);
 
-        // advance current index only when close to actual next node
+        // Advance to next node
         Vector3 nextNode =
             GridManager.Instance.GetWorldPosition(currentPath[currentIndex], Vector2Int.one);
 
-        if (Vector2.Distance(transform.position, nextNode) < 0.15f)
+        if (Vector2.Distance(transform.position, nextNode) < nodeReachDistance)
         {
             currentIndex++;
         }
@@ -220,9 +280,19 @@ public class EnemyMovement : MonoBehaviour
         Vector2 dir = (worldB - worldA).normalized;
         float dist = Vector2.Distance(worldA, worldB);
 
-        return !Physics2D.Raycast(worldA, dir, dist, obstacleLayer);
-    }
+        // Use a sphere cast or box cast to account for enemy size
+        float enemyRadius = 0.25f; // Adjust based on your enemy size
 
+        RaycastHit2D hit = Physics2D.CircleCast(
+            worldA + (Vector3)dir * 0.1f,
+            enemyRadius,
+            dir,
+            dist - 0.2f,
+            obstacleLayer
+        );
+
+        return hit.collider == null;
+    }
 
     //Stops the enemy completely
     public void Stop()
@@ -243,5 +313,18 @@ public class EnemyMovement : MonoBehaviour
     private void ResumeMovement()
     {
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+    private void OnDrawGizmos()
+    {
+        if (currentPath == null || currentPath.Count == 0) return;
+
+        Gizmos.color = Color.yellow;
+        for (int i = 0; i < currentPath.Count - 1; i++)
+        {
+            Vector3 a = GridManager.Instance.GetWorldPosition(currentPath[i], Vector2Int.one);
+            Vector3 b = GridManager.Instance.GetWorldPosition(currentPath[i + 1], Vector2Int.one);
+            Gizmos.DrawLine(a, b);
+            Gizmos.DrawWireSphere(a, 0.1f);
+        }
     }
 }

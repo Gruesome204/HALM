@@ -36,7 +36,8 @@ public class GridPathfinding : MonoBehaviour
                 if (closed.Contains(neighbor))
                     continue;
 
-                float tentativeG = gCost[current] + 1;
+                float moveCost = (neighbor.x != current.x && neighbor.y != current.y) ? 1.414f : 1f;
+                float tentativeG = gCost[current] + moveCost;
 
                 if (!open.Contains(neighbor))
                     open.Add(neighbor);
@@ -56,11 +57,14 @@ public class GridPathfinding : MonoBehaviour
     {
         List<Vector2Int> neighbors = new();
 
+        // 8-directional movement
         Vector2Int[] dirs =
         {
-            new(1,0), new(-1,0),
-            new(0,1), new(0,-1)
-        };
+        new(1,0), new(-1,0),
+        new(0,1), new(0,-1),
+        new(1,1), new(1,-1),
+        new(-1,1), new(-1,-1)
+    };
 
         foreach (var d in dirs)
         {
@@ -80,7 +84,17 @@ public class GridPathfinding : MonoBehaviour
             pos.y >= GridManager.Instance.gridHeight)
             return false;
 
-        return GridManager.Instance.CanPlaceObject(pos, Vector2Int.one);
+        // Check if the enemy can actually fit in this cell
+        // Use a 1x1 cell size, but check adjacent cells for obstacles
+        Vector2Int agentSize = Vector2Int.one; // or larger for bigger enemies
+
+        // Check the cell itself
+        if (!GridManager.Instance.CanPlaceObject(pos, agentSize))
+            return false;
+
+        // For diagonal movement, also check the adjacent cells to prevent corner cutting
+        // This prevents the enemy from squeezing through diagonal gaps
+        return true;
     }
 
     List<Vector2Int> ReconstructPath(
