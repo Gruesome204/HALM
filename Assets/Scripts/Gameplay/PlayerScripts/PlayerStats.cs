@@ -53,7 +53,7 @@ public class PlayerStats : MonoBehaviour
         appliedModifiers.Clear();
         RecalculateStats(fullReheal: true);
     }
-    private void RecalculateStats(bool fullReheal = false)
+    public void RecalculateStats(bool fullReheal = false)
     {
         // Start from base stats
         currentMaxHealth = baseHealth;

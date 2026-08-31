@@ -99,7 +99,7 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
     {
         if (isLoadingNextRoom) return;
         isLoadingNextRoom = true;
-        PlayerManager.Instance.playerHealth.Heal(10);
+        PlayerManager.Instance.Health.Heal(10);
         TurretPlacementController.Instance?.ClearAllTurrets();
 
         GameObject map = MapLoaderManager.Instance.LoadNextMap();
