@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviour, IGameSystem
 {
     public static GridManager Instance { get; private set; } // Singleton pattern
 
@@ -19,6 +19,17 @@ public class GridManager : MonoBehaviour
 
     private GameObject[,] gridOccupancy;
 
+
+    public int InitializePriority => 2;
+    public void Initialize()
+    {
+      
+    }
+
+    public void PostInitialize()
+    {
+  
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -163,4 +174,5 @@ public class GridManager : MonoBehaviour
             }
         }
     }
+
 }
