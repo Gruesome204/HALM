@@ -348,7 +348,7 @@ public class TurretPlacementController : MonoBehaviour
     }
 
     // ========================
-    // TURRET REGISTRATION (unchanged logic kept)
+    // TURRET REGISTRATION 
     // ========================
     private void RegisterPlacedTurret(GameObject turret, Vector2Int gridCoords)
     {
@@ -465,10 +465,6 @@ public class TurretPlacementController : MonoBehaviour
             radiusLineRenderer = null;
         }
     }
-
-    // ========================
-    // EXISTING METHODS (UNCHANGED BUT INCLUDED)
-    // ========================
     public bool IsBlueprintOnCooldown(TurretBlueprint blueprint)
     {
         if (!cooldownEndTimes.TryGetValue(blueprint, out float endTime))
