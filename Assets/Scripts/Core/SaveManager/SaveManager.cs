@@ -5,14 +5,12 @@ public class SaveManager : MonoBehaviour, IGameSystem
 {
     public static SaveManager Instance { get; private set; }
 
-
     [Header("Autosave")]
     [SerializeField] private float autosaveInterval = 60f;
 
     private float autosaveTimer;
 
     public bool IsSaveLoaded { get; private set; }
-
     public event Action OnSaveCompleted;
     public event Action OnLoadCompleted;
 
@@ -50,20 +48,6 @@ public class SaveManager : MonoBehaviour, IGameSystem
     }
 
     #region Unity Callbacks
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        LoadOrCreateSave();
-    }
 
     private void Update()
     {
