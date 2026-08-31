@@ -46,7 +46,7 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
         {
             root.Q<VisualElement>("mainContainer").AddToClassList("settingsMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
-            SaveManager.Instance.SaveGame();
+          //  SaveManager.Instance.SaveGame();
         }
     }
     #endregion
