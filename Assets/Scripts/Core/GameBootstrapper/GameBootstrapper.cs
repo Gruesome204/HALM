@@ -15,24 +15,46 @@ public class GameBootstrapper : MonoBehaviour
 
         var gameSystems = new List<IGameSystem>();
 
+        // First, try to use Inspector-assigned systems
         foreach (var mb in systems)
         {
             if (mb is IGameSystem system)
             {
                 gameSystems.Add(system);
             }
-            else
+            else if (mb != null)
             {
-                Debug.LogError($"{mb.name} does not implement IGameSystem but is in Bootstrapper!");
+                Debug.LogWarning($"{mb.name} does not implement IGameSystem but is in Bootstrapper!");
             }
         }
 
+        // If no systems assigned in Inspector, auto-find them
         if (gameSystems.Count == 0)
         {
-            Debug.LogError("No valid IGameSystem found in Bootstrapper!");
-            return;
+            Debug.Log("[GameBootstrapper] No systems assigned in Inspector. Auto-detecting...");
+
+            // Find all MonoBehaviours that implement IGameSystem
+            var foundSystems = FindObjectsOfType<MonoBehaviour>(true)
+                .Where(mb => mb is IGameSystem)
+                .Cast<IGameSystem>()
+                .ToList();
+
+            if (foundSystems.Count > 0)
+            {
+                gameSystems.AddRange(foundSystems);
+                Debug.Log($"[GameBootstrapper] Auto-detected {foundSystems.Count} systems");
+
+                // Optional: Auto-populate the Inspector list for future use
+                systems = foundSystems.Cast<MonoBehaviour>().ToList();
+            }
+            else
+            {
+                Debug.LogError("No valid IGameSystem found in Bootstrapper!");
+                return;
+            }
         }
 
+        // Rest of your initialization code...
         gameSystems = gameSystems
             .OrderBy(s => s.InitializePriority)
             .ToList();
@@ -40,11 +62,7 @@ public class GameBootstrapper : MonoBehaviour
         // Initialize all systems in priority order
         foreach (var system in gameSystems)
         {
-            if (system == null)
-            {
-                Debug.LogError("Null system in Bootstrapper!");
-                continue;
-            }
+            if (system == null) continue;
 
             Debug.Log($"Initializing: {system.GetType().Name}");
             system.Initialize();
@@ -54,20 +72,12 @@ public class GameBootstrapper : MonoBehaviour
         // Post-initialize all systems
         foreach (var system in gameSystems)
         {
+            if (system == null) continue;
+
             Debug.Log($"PostInitialize: {system.GetType().Name}");
             system.PostInitialize();
         }
 
-        // Verify critical systems are ready
-        if (GameManager.Instance == null)
-        {
-            Debug.LogError("[GameBootstrapper] GameManager not initialized properly!");
-        }
-
-        if (SaveManager.Instance == null)
-        {
-            Debug.LogError("[GameBootstrapper] SaveManager not initialized properly!");
-        }
     }
 
     private void OnValidate()

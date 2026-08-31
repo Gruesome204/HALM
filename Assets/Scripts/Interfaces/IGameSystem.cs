@@ -1,4 +1,3 @@
-// IGameSystem.cs
 public interface IGameSystem
 {
     int InitializePriority { get; } // Lower = earlier initialization
