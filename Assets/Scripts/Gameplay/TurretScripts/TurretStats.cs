@@ -118,19 +118,19 @@ public class TurretStats : MonoBehaviour
 
         // global multipliers
         float finalDamage =
-            damageWithUpgrade * (1f + (global?.globalDamageMultiplier ?? 0f));
+            damageWithUpgrade * (1f + (global?.GlobalDamageMultiplier ?? 0f));
 
         float finalShotsPerSecond =
-            shotsWithUpgrade * (1f + (global?.globalShotsPerSecondBonus ?? 0f));
+            shotsWithUpgrade * (1f + (global?.GlobalShotsPerSecondBonus ?? 0f));
 
         float finalProjectileSpeed =
-            speedWithUpgrade * (1f + (global?.globalProjectileSpeed ?? 0f));
+            speedWithUpgrade * (1f + (global?.GlobalProjectileSpeed ?? 0f));
 
         float finalRange =
-            rangeWithUpgrade * (1f + (global?.globalPlacementRadiusMultiplier ?? 0f));
+            rangeWithUpgrade * (1f + (global?.GlobalPlacementRadiusMultiplier ?? 0f));
 
         int finalProjectiles =
-            projectilesWithUpgrade + (global?.globalProjectilesPerSalve ?? 0);
+            projectilesWithUpgrade + (global?.GlobalProjectilesPerSalve ?? 0);
 
         return new TurretStatData
         {

@@ -560,7 +560,7 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
     {
         float baseCooldown = blueprint.placementCooldown;
         float multiplier = TurretGlobalModifierManager.Instance != null
-            ? 1f - TurretGlobalModifierManager.Instance.globalTurretPlacementCooldownMultiplier
+            ? 1f - TurretGlobalModifierManager.Instance.GlobalTurretPlacementCooldownMultiplier
             : 1f;
         return Mathf.Max(0.05f, baseCooldown * multiplier);
     }
