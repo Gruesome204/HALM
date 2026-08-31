@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapLoaderManager : MonoBehaviour, IGameSystem
 {
@@ -23,23 +24,13 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
     private GameObject currentMap;
     private bool isInitialized = false;
 
-    // Public fields for backward compatibility
-    [Header("Spawn Points (auto-detected)")]
-    public Transform playerSpawnPoint;
-    public Transform bossSpawnPoint;
-
-    [Header("Objects (auto-detected)")]
-    public List<GameObject> ExitBlockerObjects = new List<GameObject>();
-    public GameObject ExitTriggerObject;
-
     // Public Properties
     public GameObject CurrentMap => currentMap;
-    public Transform PlayerSpawnPoint => playerSpawnPoint;
-    public Transform BossSpawnPoint => bossSpawnPoint;
+    public Transform PlayerSpawnPoint { get; private set; }
+    public Transform BossSpawnPoint { get; private set; }
+    public List<GameObject> ExitBlockerObjects { get; private set; } = new List<GameObject>();
+    public GameObject ExitTriggerObject { get; private set; }
     public int InitializePriority => 4;
-    public bool IsInitialized => isInitialized;
-    public int MapCount => mapSequence.Count;
-    public int CurrentMapIndex => currentMapIndex;
 
     // Events
     public event Action<GameObject> OnMapLoaded;
@@ -53,11 +44,9 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
 
     private void Start()
     {
-        // Auto-initialize if not already done
         if (!isInitialized)
         {
-            Debug.LogWarning("MapLoaderManager auto-initializing in Start()");
-            Initialize();
+            Debug.LogError($"{name}: MapLoaderManager not properly initialized!");
         }
     }
 
@@ -70,13 +59,7 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
     #region IGameSystem Implementation
     public void Initialize()
     {
-        if (isInitialized)
-        {
-            Debug.Log("MapLoaderManager already initialized.");
-            return;
-        }
-
-        Debug.Log("MapLoaderManager Initializing...");
+        if (isInitialized) return;
 
         ValidateReferences();
         GenerateMapSequence();
@@ -87,9 +70,7 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
 
     public void PostInitialize()
     {
-        Debug.Log("MapLoaderManager Post-Initializing...");
-
-        if (currentMap == null && mapSequence.Count > 0)
+        if (currentMap == null)
         {
             LoadNextMap();
         }
@@ -142,10 +123,7 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         if (!isInitialized)
         {
             Debug.LogError("MapLoaderManager not initialized. Call Initialize() first.");
-            // Try to initialize automatically
-            Initialize();
-            if (!isInitialized)
-                return null;
+            return null;
         }
 
         currentMapIndex++;
@@ -166,12 +144,6 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         return LoadMapFromPrefab(prefab);
     }
 
-    public GameObject LoadFirstMap()
-    {
-        currentMapIndex = -1;
-        return LoadNextMap();
-    }
-
     public void LoadSpecificMap(int index)
     {
         if (index < 0 || index >= mapSequence.Count)
@@ -189,17 +161,6 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         GenerateMapSequence();
         currentMapIndex = -1;
         CleanupCurrentMap();
-    }
-
-    public bool HasMoreMaps()
-    {
-        return currentMapIndex + 1 < mapSequence.Count;
-    }
-
-    public bool IsBossMapLoaded()
-    {
-        return currentMap != null && bossMapPrefab != null &&
-               currentMap.name == bossMapPrefab.name;
     }
     #endregion
 
@@ -237,7 +198,7 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         SetPlayerPosition();
 
         OnMapLoaded?.Invoke(currentMap);
-        LogMessage($"Loaded map: {prefab.name} (Index: {currentMapIndex})");
+        LogMessage($"Loaded map: {prefab.name}");
 
         return currentMap;
     }
@@ -252,8 +213,8 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
 
         ExitBlockerObjects.Clear();
         ExitTriggerObject = null;
-        playerSpawnPoint = null;
-        bossSpawnPoint = null;
+        PlayerSpawnPoint = null;
+        BossSpawnPoint = null;
     }
 
     private void SetupMapComponents()
@@ -308,25 +269,17 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
 
         // Find Player Spawn Point
         Transform pSpawn = currentMap.transform.Find("PlayerSpawnPoint");
-        playerSpawnPoint = pSpawn;
+        PlayerSpawnPoint = pSpawn;
         if (pSpawn == null)
         {
             Debug.LogError($"PlayerSpawnPoint missing in {currentMap.name}!");
         }
-        else
-        {
-            LogMessage($"Player spawn point loaded at {playerSpawnPoint.position}");
-        }
 
         // Find Boss Spawn Point
-        bossSpawnPoint = currentMap.transform.Find("BossSpawnPoint");
-        if (bossSpawnPoint == null && EnemySpawnManager.Instance.isBossRoom)
+        BossSpawnPoint = currentMap.transform.Find("BossSpawnPoint");
+        if (BossSpawnPoint == null && EnemySpawnManager.Instance.isBossRoom)
         {
             Debug.LogWarning($"BossSpawnPoint missing in boss room: {currentMap.name}");
-        }
-        else if (bossSpawnPoint != null)
-        {
-            LogMessage($"Boss spawn point loaded at {bossSpawnPoint.position}");
         }
     }
 
@@ -340,13 +293,13 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
 
     private void SetPlayerPosition()
     {
-        if (playerSpawnPoint == null) return;
+        if (PlayerSpawnPoint == null) return;
 
         PlayerMovement player = FindAnyObjectByType<PlayerMovement>();
         if (player != null)
         {
-            player.transform.position = playerSpawnPoint.position;
-            LogMessage($"Player positioned at {playerSpawnPoint.position}");
+            player.transform.position = PlayerSpawnPoint.position;
+            LogMessage($"Player positioned at {PlayerSpawnPoint.position}");
         }
         else
         {

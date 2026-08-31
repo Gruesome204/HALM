@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretPlacementController : MonoBehaviour
+public class TurretPlacementController : MonoBehaviour, IGameSystem
 {
     public static TurretPlacementController Instance { get; private set; }
-
     public event Action OnTurretsChanged;
     public event Action<TurretBlueprint, bool> OnPlacementCooldownStateChanged;
 
@@ -83,6 +82,14 @@ public class TurretPlacementController : MonoBehaviour
     private List<TurretHealth> placedTurrets = new();
     private Dictionary<TurretBlueprint, float> cooldownEndTimes = new();
 
+
+    public int InitializePriority => 3;
+    public void Initialize()
+    {
+    }
+    public void PostInitialize()
+    {
+    }
     // ========================
     // UNITY
     // ========================

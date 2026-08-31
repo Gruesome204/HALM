@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretGlobalModifierManager : MonoBehaviour
+public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
 {
     public static TurretGlobalModifierManager Instance { get; private set; }
 
@@ -10,6 +10,14 @@ public class TurretGlobalModifierManager : MonoBehaviour
     // List of all currently applied modifiers
     private readonly List<BuildMasterModifier.Modifier> appliedModifiers = new List<BuildMasterModifier.Modifier>();
 
+
+    public int InitializePriority => 3;
+    public void Initialize()
+    {
+    }
+    public void PostInitialize()
+    {
+    }
     private void Awake()
     {
         if (Instance == null) Instance = this;
