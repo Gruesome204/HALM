@@ -111,8 +111,16 @@ public class TurretPlacementController : MonoBehaviour
     // ========================
     public void SetupFromGameData(GameDataSO gameData)
     {
+        if (gameData == null)
+        {
+            Debug.LogError("[TurretPlacementController] GameData is null!");
+            return;
+        }
+
         turretBlueprintList = new List<TurretBlueprint>(gameData.GetSelectedBlueprints());
         OnTurretsChanged?.Invoke();
+
+        Debug.Log($"[TurretPlacementController] Setup with {turretBlueprintList.Count} blueprints");
     }
 
     // ========================

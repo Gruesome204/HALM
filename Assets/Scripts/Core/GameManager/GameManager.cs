@@ -238,15 +238,38 @@ public class GameManager : MonoBehaviour, IGameSystem
 
     #region Load Game Routine
 
-        private System.Collections.IEnumerator LoadGameRoutine()
-        {
-            ChangeState(GameState.Loading);
+    private System.Collections.IEnumerator LoadGameRoutine()
+    {
+        ChangeState(GameState.Loading);
 
-        // Setup systems
+        GameDataSO gameDataToUse = null;
+
+        // Try to get save data first
         var saveData = SaveManager.Instance?.GetGameData();
+
         if (saveData != null)
         {
-            TurretPlacementController.Instance?.SetupFromGameData(saveData);
+            // Use the save data
+            gameDataToUse = saveData;
+            Debug.Log("[GameManager] Loaded from save data");
+        }
+        else if (defaultDataSO != null)
+        {
+            // Create a default GameDataSO from the defaults
+            gameDataToUse = GetDefaultGameData();
+            Debug.Log("[GameManager] No save found, using default data");
+        }
+        else
+        {
+            Debug.LogError("[GameManager] No save data and no default data available!");
+            ChangeState(GameState.GameOver);
+            yield break;
+        }
+
+        // Now pass the GameDataSO to TurretPlacementController
+        if (gameDataToUse != null)
+        {
+            TurretPlacementController.Instance?.SetupFromGameData(gameDataToUse);
         }
 
         MapLoaderManager.Instance?.GenerateMapSequence();
@@ -265,9 +288,26 @@ public class GameManager : MonoBehaviour, IGameSystem
             ChangeState(GameState.GameOver);
             yield break;
         }
-            MapProgressionManager.Instance.ResetProgression();
-            MapProgressionManager.Instance.LoadNextRoom();
-            ChangeState(GameState.Playing);
-         }
+
+        MapProgressionManager.Instance.ResetProgression();
+        MapProgressionManager.Instance.LoadNextRoom();
+        ChangeState(GameState.Playing);
+    }
+    private GameDataSO GetDefaultGameData()
+    {
+        if (defaultDataSO == null)
+        {
+            Debug.LogError("[GameManager] defaultDataSO is null!");
+            return null;
+        }
+
+        // Create a new GameDataSO instance
+        GameDataSO defaultGameData = ScriptableObject.CreateInstance<GameDataSO>();
+
+        // Reset it using your defaultDataSO
+        defaultGameData.ResetToDefaults(defaultDataSO);
+
+        return defaultGameData;
+    }
     #endregion
 }
