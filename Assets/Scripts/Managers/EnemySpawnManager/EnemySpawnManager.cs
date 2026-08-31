@@ -249,7 +249,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable
         }
 
         // Get spawn points
-        Transform bSpawn = MapLoaderManager.Instance.bossSpawnPoint;
+        Transform bSpawn = MapLoaderManager.Instance.BossSpawnPoint;
 
         GameObject boss = Instantiate(bossPrefab, bSpawn.position, Quaternion.identity);
 
