@@ -29,7 +29,6 @@ public class SaveManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        InitializeGameData();
         LoadOrCreateSave();
     }
 
@@ -41,6 +40,10 @@ public class SaveManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveGame();
+    }
+    private void Start()
+    {
+        InitializeGameData();
     }
 
     #endregion
@@ -98,10 +101,14 @@ public class SaveManager : MonoBehaviour
 
     public void CreateNewSave()
     {
+        if (GameManager.Instance.defaultDataSO == null)
+        {
+            Debug.LogError("[SaveManager] Cannot create new save - defaultDataSO is null!");
+            return;
+        }
+
         GameManager.Instance.gameDataSO.ResetToDefaults(GameManager.Instance.defaultDataSO);
-
         SaveGame();
-
         Debug.Log("[SaveManager] Created new save.");
     }
 
