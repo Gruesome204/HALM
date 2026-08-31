@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class SaveManager : MonoBehaviour
+public class SaveManager : MonoBehaviour, IGameSystem
 {
     public static SaveManager Instance { get; private set; }
 
@@ -15,6 +15,39 @@ public class SaveManager : MonoBehaviour
 
     public event Action OnSaveCompleted;
     public event Action OnLoadCompleted;
+
+    // IGameSystem implementation
+    public int InitializePriority => 10; // After GameManager
+
+    public void Initialize()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // Wait for GameManager to be ready
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("[SaveManager] GameManager not ready!");
+            return;
+        }
+
+        InitializeGameData();
+        LoadOrCreateSave();
+
+        Debug.Log("[SaveManager] Initialized");
+    }
+
+    public void PostInitialize()
+    {
+        // Additional setup if needed
+        Debug.Log("[SaveManager] Post-Initialized");
+    }
 
     #region Unity Callbacks
 

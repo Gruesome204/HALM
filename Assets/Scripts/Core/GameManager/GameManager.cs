@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IGameSystem
 {
     public static GameManager Instance { get; private set; }
 
@@ -27,6 +27,44 @@ public class GameManager : MonoBehaviour
     public event Action<GameState, GameState> OnGameStateChanged;
 
     [SerializeField] private readonly List<IPausable> pausables = new();
+
+
+    // IGameSystem implementation
+    public int InitializePriority => 0; // Highest priority for GameManager
+
+    public void Initialize()
+    {
+        // Critical initialization that must happen first
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        Debug.Log("[GameManager] Initialized");
+    }
+
+    public void PostInitialize()
+    {
+        // Additional setup after all systems are initialized
+        Scene activeScene = SceneManager.GetActiveScene();
+
+        if (activeScene.name == "GameScene")
+            StartCoroutine(LoadGameRoutine());
+        else if (activeScene.name == "HubScene")
+        {
+            ChangeState(GameState.HubMenu);
+        }
+        else
+        {
+            ChangeState(GameState.MainMenu);
+        }
+
+        Debug.Log("[GameManager] Post-Initialized");
+    }
 
     #region Unity Callbacks
 
