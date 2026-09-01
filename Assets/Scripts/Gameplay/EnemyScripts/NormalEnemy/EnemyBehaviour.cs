@@ -19,6 +19,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     [SerializeField] private float groupAggroRadius = 20f;
     [SerializeField] private float loseAggroMultiplier = 1.5f;
 
+
     private static GameObject cachedPlayer;
     public GameObject target;
     private bool isAggroed;

@@ -31,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float slowDownDistance = 0.3f;
     [SerializeField] private float arriveDistance = 0.08f;
 
-    // Variables for LOS tracking
+
     [SerializeField] private float detectionRange = 10f;
     [SerializeField] private float directMovementRange = 2f;
     [SerializeField] private float loseSightTimerMax = 3f;
