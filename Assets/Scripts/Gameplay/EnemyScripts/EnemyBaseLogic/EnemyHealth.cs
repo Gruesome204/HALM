@@ -52,11 +52,16 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
             return;
         }
 
+        // Initialize health BEFORE setting up UI
         stats.currentHealth = stats.maxHealth;
+        Debug.Log($"[EnemyHealth] {gameObject.name}: Health initialized: {stats.currentHealth}/{stats.maxHealth}");
+
         canvas = FindObjectOfType<Canvas>();
 
         // Get boss behaviour if it exists
         bossBehaviour = GetComponent<BossEnemyBehaviour>();
+
+        Debug.Log($"[EnemyHealth] {gameObject.name}: BossBehaviour found: {(bossBehaviour != null ? "Yes" : "No")}");
 
         SetupHealthUI();
     }
@@ -123,6 +128,9 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
     {
         canvas ??= FindObjectOfType<Canvas>();
 
+        Debug.Log($"[EnemyHealth] {gameObject.name}: Setting up health UI. BossBehaviour: {(bossBehaviour != null ? "Yes" : "No")}, BossBarPrefab: {(bossBarUIPrefab != null ? "Yes" : "No")}, Canvas: {(canvas != null ? "Yes" : "No")}");
+        Debug.Log($"[EnemyHealth] {gameObject.name}: Current health: {stats.currentHealth}, Max health: {stats.maxHealth}");
+
         if (healthBar != null)
         {
             healthBar.minValue = 0f;
@@ -133,34 +141,65 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
         // Setup boss bar if this is a boss
         if (bossBehaviour != null && bossBarUIPrefab != null && canvas != null)
         {
+            Debug.Log($"[EnemyHealth] {gameObject.name}: Conditions met for boss bar setup. Creating boss bar UI...");
             SetupBossBarUI();
+        }
+        else
+        {
+            if (bossBehaviour == null)
+                Debug.Log($"[EnemyHealth] {gameObject.name}: Skipping boss bar - No BossEnemyBehaviour found");
+            else if (bossBarUIPrefab == null)
+                Debug.Log($"[EnemyHealth] {gameObject.name}: Skipping boss bar - bossBarUIPrefab is null (assign in Inspector)");
+            else if (canvas == null)
+                Debug.Log($"[EnemyHealth] {gameObject.name}: Skipping boss bar - No Canvas found in scene");
         }
     }
 
     private void SetupBossBarUI()
     {
+        Debug.Log($"[EnemyHealth] {gameObject.name}: Entering SetupBossBarUI()");
+
         // Check if we have boss stats
         if (stats.baseStats is EnemyBaseBossStatsSO bossStats)
         {
+            Debug.Log($"[EnemyHealth] {gameObject.name}: Stats is EnemyBaseBossStatsSO - Name: {bossStats.bossBarName}");
+            Debug.Log($"[EnemyHealth] {gameObject.name}: Health values - Current: {stats.currentHealth}, Max: {stats.maxHealth}");
+
+            // Ensure health values are valid before setting up the bar
+            if (stats.maxHealth <= 0)
+            {
+                Debug.LogError($"[EnemyHealth] {gameObject.name}: maxHealth is {stats.maxHealth}! This will cause issues. Check EnemyStats initialization.");
+                return;
+            }
+
             // Instantiate boss bar UI
             currentBossBarUI = Instantiate(bossBarUIPrefab, canvas.transform);
+            Debug.Log($"[EnemyHealth] {gameObject.name}: BossBarUI instantiated");
 
             // Setup the boss bar with stats
             currentBossBarUI.SetupBossBar(bossStats);
+            Debug.Log($"[EnemyHealth] {gameObject.name}: SetupBossBar called");
 
             // Set the name from boss stats
             if (!string.IsNullOrEmpty(bossStats.bossBarName))
             {
+                Debug.Log($"[EnemyHealth] {gameObject.name}: Setting boss name to '{bossStats.bossBarName}'");
                 currentBossBarUI.SetBossName(bossStats.bossBarName);
+                Debug.Log($"[EnemyHealth] {gameObject.name}: Boss name set successfully!");
+            }
+            else
+            {
+                Debug.LogWarning($"[EnemyHealth] {gameObject.name}: bossStats.bossBarName is null or empty!");
             }
 
-            // Initial health update
+            // Initial health update with valid values
             float healthPercent = stats.currentHealth / stats.maxHealth;
+            Debug.Log($"[EnemyHealth] {gameObject.name}: Setting health: {stats.currentHealth}/{stats.maxHealth} ({healthPercent:P0})");
             currentBossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
         }
         else
         {
-            Debug.LogWarning($"{gameObject.name} has BossEnemyBehaviour but no EnemyBaseBossStatsSO assigned to stats.baseStats");
+            Debug.LogWarning($"[EnemyHealth] {gameObject.name}: Has BossEnemyBehaviour but stats.baseStats is not EnemyBaseBossStatsSO! Type: {stats.baseStats?.GetType().Name ?? "null"}");
         }
     }
 
@@ -211,7 +250,14 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
         // Update boss bar if it exists
         if (currentBossBarUI != null && stats != null)
         {
-            currentBossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
+            if (stats.maxHealth > 0)
+            {
+                currentBossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
+            }
+            else
+            {
+                Debug.LogWarning($"[EnemyHealth] {gameObject.name}: Cannot update boss bar - maxHealth is {stats.maxHealth}");
+            }
         }
     }
     #endregion

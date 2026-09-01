@@ -9,6 +9,7 @@ public class BossBarUI : MonoBehaviour
     [SerializeField] private Image bossPortraitImage;
     [SerializeField] private TextMeshProUGUI bossNameText;
     [SerializeField] private Slider healthSlider;
+    [SerializeField] private GameObject bossBarPanel;
 
     [Header("Phase UI")]
     [SerializeField] private TextMeshProUGUI phaseText;
@@ -32,10 +33,13 @@ public class BossBarUI : MonoBehaviour
 
     public void SetupBossBar(EnemyBaseBossStatsSO stats)
     {
+        Debug.Log($"[BossBarUI] SetupBossBar called for: {(stats != null ? stats.bossBarName : "null")}");
+
         bossStats = stats;
 
         if (stats == null)
         {
+            Debug.LogWarning("[BossBarUI] Stats is null - hiding boss bar");
             HideBossBar();
             return;
         }
@@ -49,12 +53,32 @@ public class BossBarUI : MonoBehaviour
         SetupEnrage();
 
         ShowBossBar();
+        Debug.Log($"[BossBarUI] Setup complete for: {stats.bossBarName}");
     }
 
     public void SetBossName(string name)
     {
-        if (bossNameText != null)
+        Debug.Log($"[BossBarUI] SetBossName called with: '{name}'");
+
+        if (bossNameText == null)
+        {
+            Debug.LogError("[BossBarUI] bossNameText is NULL! Check the Inspector assignment.");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(name))
+        {
+            Debug.LogWarning("[BossBarUI] Name is null or empty - setting default.");
+            bossNameText.text = "BOSS";
+        }
+        else
+        {
             bossNameText.text = name;
+            Debug.Log($"[BossBarUI] Name set to: '{bossNameText.text}'");
+        }
+
+        // Verify the text was actually set
+        Debug.Log($"[BossBarUI] Final name displayed: '{bossNameText.text}'");
     }
 
     private void SetBossPortrait(Sprite portrait)
@@ -147,6 +171,7 @@ public class BossBarUI : MonoBehaviour
 
     public void SetHealth(float currentHealth, float maxHealth)
     {
+        Debug.Log($"[BossBarUI] SetHealth called: {currentHealth}/{maxHealth}");
         this.maxHealth = maxHealth;
         UpdateHealthUI(currentHealth);
     }
@@ -159,10 +184,15 @@ public class BossBarUI : MonoBehaviour
 
     private void UpdateHealthUI(float currentHealth)
     {
-        if (healthSlider == null) return;
+        if (healthSlider == null)
+        {
+            Debug.LogWarning("[BossBarUI] healthSlider is null!");
+            return;
+        }
 
         float healthPercent = currentHealth / maxHealth;
         healthSlider.value = healthPercent;
+        Debug.Log($"[BossBarUI] Health updated: {currentHealth}/{maxHealth} = {healthPercent:P0}");
 
         if (bossStats?.isMultiStageBoss == true)
             CheckPhaseTransition(healthPercent);
@@ -250,6 +280,10 @@ public class BossBarUI : MonoBehaviour
 
     public void ShowBossBar()
     {
+        Debug.Log("[BossBarUI] ShowBossBar called");
+        if (bossBarPanel != null)
+            bossBarPanel.SetActive(true);
+
         if (bossStats != null && bossStats.enrageTimer > 0 && !isEnraged)
         {
             StopEnrageCoroutine();
@@ -259,6 +293,9 @@ public class BossBarUI : MonoBehaviour
 
     public void HideBossBar()
     {
+        Debug.Log("[BossBarUI] HideBossBar called");
+        if (bossBarPanel != null)
+            bossBarPanel.SetActive(false);
 
         StopEnrageCoroutine();
     }

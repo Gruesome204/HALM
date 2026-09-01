@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[DefaultExecutionOrder(-100)]
 public class EnemyStats : MonoBehaviour
 {
     [SerializeField] public EnemyBaseStats baseStats;
@@ -41,13 +41,33 @@ public class EnemyStats : MonoBehaviour
     public float speedScaleFactor;
     public float armorScaleFactor;
 
+    #region Unity Callbacks
+    private void Awake()
+    {
+        // Initialize stats when the component is created
+        Initialize();
+    }
+
+    private void OnEnable()
+    {
+        // Re-initialize if the object is re-enabled (after being disabled)
+        // But only if health is still 0 (to avoid resetting mid-combat)
+        if (maxHealth <= 0)
+        {
+            Initialize();
+        }
+    }
+    #endregion
+
     public void Initialize()
     {
         if (baseStats == null)
         {
-            Debug.LogWarning("No base stats assigned to EnemyStats");
+            Debug.LogWarning($"{gameObject.name}: No base stats assigned to EnemyStats");
             return;
         }
+
+        Debug.Log($"[EnemyStats] {gameObject.name}: Initializing stats...");
 
         // Level
         currentLevel = baseStats.baseLevel;
@@ -81,8 +101,9 @@ public class EnemyStats : MonoBehaviour
 
         // Experience
         currentExperienceYield = baseStats.experienceYield;
-    }
 
+        Debug.Log($"[EnemyStats] {gameObject.name}: Stats initialized - MaxHealth: {maxHealth}, Damage: {currentDamage}, Armor: {currentArmor}, Speed: {currentMovementSpeed}");
+    }
 
     private float GetLevelScaling(float factor)
     {
@@ -111,13 +132,11 @@ public class EnemyStats : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Min(currentHealth, maxHealth); // clamp to maxHealth
 
-        Debug.Log($"{name} healed {amount} HP. Current health: {currentHealth}");
+        Debug.Log($"{gameObject.name} healed {amount} HP. Current health: {currentHealth}");
 
         // Optional: update health bar if using UI
         var healthComponent = GetComponent<EnemyHealth>();
         if (healthComponent != null)
             healthComponent.UpdateHealthBar();
     }
-
-
 }

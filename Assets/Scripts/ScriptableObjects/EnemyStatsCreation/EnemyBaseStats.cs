@@ -17,16 +17,16 @@ public abstract class EnemyBaseStats : ScriptableObject
 
     [Header("Defensive Stats")]
     public float baseMaxHealth = 100f;
-    public float baseArmor;
+    public float baseArmor = 1;
     public float baseMagicResistance;
     public float baseKnockbackReduction;
 
     [Header("Offensive Stats")]
-    public float baseDamage;
-    public float baseAttackSpeed;
+    public float baseDamage = 1;
+    public float baseAttackSpeed = 1;
     public float baseCritChance;
     public float baseCritHitMultiplier;
-    public float baseAttackRange;
+    public float baseAttackRange = 1;
 
     [Header("Knockback Stats")]
     public float baseKnockbackForce;
@@ -44,10 +44,10 @@ public abstract class EnemyBaseStats : ScriptableObject
     public ResourceDropper.ResourceDrop[] resourceDrops;
 
     [Header("Scaling Factors")]
-    public float baseHealthScaleFactor;
-    public float baseDamageScaleFactor;
-    public float baseSpeedScaleFactor;
-    public float baseArmorScaleFactor;
+    public float baseHealthScaleFactor = 0.1f;
+    public float baseDamageScaleFactor = 0.1f;
+    public float baseSpeedScaleFactor = 0.1f;
+    public float baseArmorScaleFactor = 0.1f;
 
     // Shared utility methods can go here
     public virtual float GetScaledHealth(int level)
