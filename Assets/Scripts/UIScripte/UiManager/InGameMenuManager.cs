@@ -22,12 +22,11 @@ public class InGameMenuManager : MonoBehaviour
             menu.SetActive(true);
         }
         CloseAllMenus();
+        OpenOrCloseOneMenu("ActionRowDoc", true);
 
-        // Only open ActionRowDoc if we're in a gameplay scene
+        //Suscribing to the Events that trigger a Menu opneing
         if (SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "HubScene")
         {
-            OpenOrCloseOneMenu("ActionRowDoc", true);
-
             //TurretLevelManager.Instance.OnMilestoneReached += OpenTurretUpgradeChoice;
             PlayerManager.Instance.OnPlayerDeath += GameOver;
             EnemySpawnManager.Instance.OnBossDefeated += GameWon;
