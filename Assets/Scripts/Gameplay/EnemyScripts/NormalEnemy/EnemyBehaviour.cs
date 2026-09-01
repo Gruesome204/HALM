@@ -16,8 +16,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     [SerializeField] private float turretAggroDuration = 5f;
     #endregion
 
-    #region Protected Fields (Changed from private to protected)
-    // Components - now accessible to derived classes
+    #region Protected Fields 
     protected EnemyStats stats;
     protected EnemyHealth health;
     protected EnemyMovement movement;
@@ -42,8 +41,6 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     #region Public Properties
     public GameObject target { get; protected set; }
-
-    // Add public properties for components that derived classes might need
     public EnemyStats Stats => stats;
     public EnemyHealth Health => health;
     public EnemyMovement Movement => movement;
