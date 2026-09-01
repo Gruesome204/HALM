@@ -57,7 +57,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         abilityBehaviour.SetAggressionMultiplier(1.5f);
         var spider = GetComponent<EnemyStats>();
         spider.Heal(200f); // heals 50 HP instantly
-        health.UpdatePhaseName($"{stats.baseStats.baseName} – Phase 2");
     }
 
     private void OnPhase3()
@@ -65,7 +64,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         abilityBehaviour.SetAggressionMultiplier(2f);
         var spider = GetComponent<EnemyStats>();
         spider.Heal(200f);
-        health.UpdatePhaseName($"{stats.baseStats.baseName} – Phase 3");
     }
 
     private void ChangeBossColor(Color newColor)

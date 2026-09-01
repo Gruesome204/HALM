@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4be238d9b295624192c160bdbfda97a, type: 3}
-  m_Name: SpiderBoss
+  m_Script: {fileID: 11500000, guid: 8f4abf94fe873df45836cdfe86a6d2e9, type: 3}
+  m_Name: SpiderBossStats
   m_EditorClassIdentifier: 
   baseName: '[Spider Queen]'
   baseDescription: Der Grund warum Mitchel kein Testing betreiben wird.
   enemyType: 1
-  baseLevel: 25
+  baseLevel: 20
   baseMovementSpeed: 4
   baseMaxHealth: 500
   baseArmor: 5
@@ -28,34 +28,24 @@ MonoBehaviour:
   baseAttackRange: 1
   baseKnockbackForce: 0
   baseKnockbackDuration: 0
-  baseDetectionRange: 13
+  baseDetectionRange: 12
   pursueRange: 5
   experienceYield: 200
-  goldYield: 0
-  resourceDrops:
-  - resourceType: 0
-    minAmount: 100
-    maxAmount: 200
-    dropChance: 0
-  - resourceType: 1
-    minAmount: 20
-    maxAmount: 40
-    dropChance: 0
-  - resourceType: 2
-    minAmount: 10
-    maxAmount: 20
-    dropChance: 0
-  - resourceType: 3
-    minAmount: 5
-    maxAmount: 15
-    dropChance: 0
+  goldYield: 400
+  resourceDrops: []
   baseHealthScaleFactor: 0.2
   baseDamageScaleFactor: 0.1
   baseSpeedScaleFactor: 0
   baseArmorScaleFactor: 0.1
-  bossBarName: Spider
+  bossBarName: '[Spider Queen]'
   bossBarColor: {r: 1, g: 0, b: 0, a: 1}
   bossPortrait: {fileID: 0}
-  bossBarHeight: 2
+  bossBarHeight: 20
   isMultiStageBoss: 0
   numberOfPhases: 1
+  enrageTimer: 10
+  enrageDamageMultiplier: 1.5
+  phaseThresholds:
+  - 0.5
+  exclusiveLootTable: []
+  guaranteedDropRate: 1

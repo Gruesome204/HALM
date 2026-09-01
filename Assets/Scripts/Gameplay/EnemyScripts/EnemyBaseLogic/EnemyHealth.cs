@@ -14,7 +14,6 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
     [Header("UI")]
     [SerializeField] private Slider healthBar;
     [SerializeField] private BossBarUI bossBarUIPrefab;
-    [SerializeField] private BossBarUI bossBarUIInstance;
 
     [Header("Damage Flash")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -26,6 +25,8 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
     private Canvas canvas;
     private MaterialPropertyBlock mpb;
     private Coroutine flashRoutine;
+    private BossBarUI currentBossBarUI;
+    private BossEnemyBehaviour bossBehaviour;
     #endregion
 
     #region Public Properties
@@ -53,6 +54,10 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 
         stats.currentHealth = stats.maxHealth;
         canvas = FindObjectOfType<Canvas>();
+
+        // Get boss behaviour if it exists
+        bossBehaviour = GetComponent<BossEnemyBehaviour>();
+
         SetupHealthUI();
     }
     #endregion
@@ -79,8 +84,6 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
     public void Die(DamageData damageData)
     {
         OnDeath?.Invoke(this, damageData);
-        if (bossBarUIInstance != null)
-            Destroy(bossBarUIInstance.gameObject);
     }
 
     public void OnDamageTaken(float amount) { }
@@ -103,26 +106,13 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
         Debug.Log($"{gameObject.name} was parried and took {counterDamage} damage!");
     }
 
-    public void UpdatePhaseName(string phaseName)
-    {
-        if (bossBarUIInstance != null)
-            bossBarUIInstance.SetBossName(phaseName);
-    }
-
     public void UpdateHealthBar()
     {
         if (stats == null || stats.maxHealth <= 0) return;
 
-        float healthNormalized = stats.currentHealth / stats.maxHealth;
-
-        if (bossBarUIInstance != null)
-        {
-            bossBarUIInstance.SetHealth(stats.currentHealth);
-            if (!string.IsNullOrEmpty(stats.baseStats.baseName))
-                bossBarUIInstance.SetBossName(stats.baseStats.baseName);
-        }
         else if (healthBar != null)
         {
+            float healthNormalized = stats.currentHealth / stats.maxHealth;
             healthBar.SetValueWithoutNotify(healthNormalized);
         }
     }
@@ -133,24 +123,44 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
     {
         canvas ??= FindObjectOfType<Canvas>();
 
-        if (stats.baseStats.enemyType == EnemyType.Boss)
-        {
-            bossBarUIInstance ??= GetComponentInChildren<BossBarUI>();
-
-            if (bossBarUIInstance == null && bossBarUIPrefab != null)
-                bossBarUIInstance = Instantiate(bossBarUIPrefab, canvas.transform);
-
-            if (bossBarUIInstance != null)
-                bossBarUIInstance.SetupBossBar(stats.baseStats);
-            else
-                Debug.LogWarning($"{name} has no BossBarUI assigned or found!");
-        }
-
         if (healthBar != null)
         {
             healthBar.minValue = 0f;
             healthBar.maxValue = 1f;
             healthBar.value = 1f;
+        }
+
+        // Setup boss bar if this is a boss
+        if (bossBehaviour != null && bossBarUIPrefab != null && canvas != null)
+        {
+            SetupBossBarUI();
+        }
+    }
+
+    private void SetupBossBarUI()
+    {
+        // Check if we have boss stats
+        if (stats.baseStats is EnemyBaseBossStatsSO bossStats)
+        {
+            // Instantiate boss bar UI
+            currentBossBarUI = Instantiate(bossBarUIPrefab, canvas.transform);
+
+            // Setup the boss bar with stats
+            currentBossBarUI.SetupBossBar(bossStats);
+
+            // Set the name from boss stats
+            if (!string.IsNullOrEmpty(bossStats.bossBarName))
+            {
+                currentBossBarUI.SetBossName(bossStats.bossBarName);
+            }
+
+            // Initial health update
+            float healthPercent = stats.currentHealth / stats.maxHealth;
+            currentBossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject.name} has BossEnemyBehaviour but no EnemyBaseBossStatsSO assigned to stats.baseStats");
         }
     }
 
@@ -192,10 +202,17 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 
     private void UpdateHealthUI()
     {
-        if (bossBarUIInstance != null)
-            bossBarUIInstance.SetHealth(stats.currentHealth);
-        else if (healthBar != null)
-            healthBar.SetValueWithoutNotify(stats.currentHealth / stats.maxHealth);
+        if (healthBar != null)
+        {
+            float healthNormalized = stats.currentHealth / stats.maxHealth;
+            healthBar.SetValueWithoutNotify(healthNormalized);
+        }
+
+        // Update boss bar if it exists
+        if (currentBossBarUI != null && stats != null)
+        {
+            currentBossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
+        }
     }
     #endregion
 }
