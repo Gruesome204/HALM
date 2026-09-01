@@ -27,6 +27,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
     private Coroutine flashRoutine;
     private BossBarUI currentBossBarUI;
     private BossEnemyBehaviour bossBehaviour;
+    private bool isBossBarSetup = false;
     #endregion
 
     #region Public Properties
@@ -48,22 +49,32 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 
         if (stats == null || stats.baseStats == null)
         {
-            Debug.LogError($"{gameObject.name} has no stats assigned!");
+            Debug.LogError($"[EnemyHealth] {gameObject.name} has no stats assigned!");
             return;
         }
 
-        // Initialize health BEFORE setting up UI
+        // Initialize health
         stats.currentHealth = stats.maxHealth;
         Debug.Log($"[EnemyHealth] {gameObject.name}: Health initialized: {stats.currentHealth}/{stats.maxHealth}");
 
         canvas = FindObjectOfType<Canvas>();
-
-        // Get boss behaviour if it exists
         bossBehaviour = GetComponent<BossEnemyBehaviour>();
 
         Debug.Log($"[EnemyHealth] {gameObject.name}: BossBehaviour found: {(bossBehaviour != null ? "Yes" : "No")}");
+        Debug.Log($"[EnemyHealth] {gameObject.name}: BossBarPrefab assigned: {(bossBarUIPrefab != null ? "Yes" : "No")}");
+        Debug.Log($"[EnemyHealth] {gameObject.name}: Stats type: {stats.baseStats?.GetType().Name ?? "null"}");
 
         SetupHealthUI();
+    }
+
+    private void Start()
+    {
+        // Try setting up boss bar again in Start() if it failed in Awake()
+        if (!isBossBarSetup && bossBehaviour != null && bossBarUIPrefab != null)
+        {
+            Debug.Log($"[EnemyHealth] {gameObject.name}: Retrying boss bar setup in Start()");
+            SetupBossBarUI();
+        }
     }
     #endregion
 
@@ -88,6 +99,11 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
 
     public void Die(DamageData damageData)
     {
+        // Hide boss bar on death
+        if (currentBossBarUI != null)
+        {
+            currentBossBarUI.HideBossBar();
+        }
         OnDeath?.Invoke(this, damageData);
     }
 
@@ -146,63 +162,87 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
         }
         else
         {
-            if (bossBehaviour == null)
-                Debug.Log($"[EnemyHealth] {gameObject.name}: Skipping boss bar - No BossEnemyBehaviour found");
-            else if (bossBarUIPrefab == null)
-                Debug.Log($"[EnemyHealth] {gameObject.name}: Skipping boss bar - bossBarUIPrefab is null (assign in Inspector)");
-            else if (canvas == null)
-                Debug.Log($"[EnemyHealth] {gameObject.name}: Skipping boss bar - No Canvas found in scene");
+            Debug.Log($"[EnemyHealth] {gameObject.name}: Skipping boss bar - BossBehaviour: {(bossBehaviour != null ? "Yes" : "No")}, BossBarPrefab: {(bossBarUIPrefab != null ? "Yes" : "No")}, Canvas: {(canvas != null ? "Yes" : "No")}");
         }
     }
 
     private void SetupBossBarUI()
     {
+        if (isBossBarSetup)
+        {
+            Debug.Log($"[EnemyHealth] {gameObject.name}: Boss bar already set up, skipping");
+            return;
+        }
+
         Debug.Log($"[EnemyHealth] {gameObject.name}: Entering SetupBossBarUI()");
 
-        // Check if we have boss stats
         if (stats.baseStats is EnemyBaseBossStatsSO bossStats)
         {
-            Debug.Log($"[EnemyHealth] {gameObject.name}: Stats is EnemyBaseBossStatsSO - Name: {bossStats.bossBarName}");
-            Debug.Log($"[EnemyHealth] {gameObject.name}: Health values - Current: {stats.currentHealth}, Max: {stats.maxHealth}");
-
-            // Ensure health values are valid before setting up the bar
-            if (stats.maxHealth <= 0)
+            // Find the main UI Canvas
+            Canvas mainCanvas = FindMainUICanvas();
+            if (mainCanvas == null)
             {
-                Debug.LogError($"[EnemyHealth] {gameObject.name}: maxHealth is {stats.maxHealth}! This will cause issues. Check EnemyStats initialization.");
+                Debug.LogError("[EnemyHealth] No ScreenSpace Canvas found in scene!");
                 return;
             }
 
-            // Instantiate boss bar UI
-            currentBossBarUI = Instantiate(bossBarUIPrefab, canvas.transform);
-            Debug.Log($"[EnemyHealth] {gameObject.name}: BossBarUI instantiated");
+            Debug.Log($"[EnemyHealth] {gameObject.name}: Found Canvas: {mainCanvas.name} (RenderMode: {mainCanvas.renderMode})");
 
-            // Setup the boss bar with stats
-            currentBossBarUI.SetupBossBar(bossStats);
-            Debug.Log($"[EnemyHealth] {gameObject.name}: SetupBossBar called");
-
-            // Set the name from boss stats
-            if (!string.IsNullOrEmpty(bossStats.bossBarName))
+            try
             {
-                Debug.Log($"[EnemyHealth] {gameObject.name}: Setting boss name to '{bossStats.bossBarName}'");
+                // Instantiate boss bar UI on the canvas
+                currentBossBarUI = Instantiate(bossBarUIPrefab, mainCanvas.transform);
+                Debug.Log($"[EnemyHealth] {gameObject.name}: BossBarUI instantiated successfully!");
+
+                // Position at top of screen
+                RectTransform rectTransform = currentBossBarUI.GetComponent<RectTransform>();
+                if (rectTransform != null)
+                {
+                    rectTransform.anchorMin = new Vector2(0.5f, 1f);
+                    rectTransform.anchorMax = new Vector2(0.5f, 1f);
+                    rectTransform.pivot = new Vector2(0.5f, 1f);
+                    rectTransform.anchoredPosition = new Vector2(0f, -50f);
+                    rectTransform.sizeDelta = new Vector2(600f, 80f);
+                    Debug.Log($"[EnemyHealth] {gameObject.name}: Positioned boss bar at top of screen");
+                }
+
+                // Ensure the boss bar is active
+                currentBossBarUI.gameObject.SetActive(true);
+
+                // Setup the boss bar with stats
+                currentBossBarUI.SetupBossBar(bossStats);
                 currentBossBarUI.SetBossName(bossStats.bossBarName);
-                Debug.Log($"[EnemyHealth] {gameObject.name}: Boss name set successfully!");
-            }
-            else
-            {
-                Debug.LogWarning($"[EnemyHealth] {gameObject.name}: bossStats.bossBarName is null or empty!");
-            }
+                currentBossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
+                currentBossBarUI.ShowBossBar();
 
-            // Initial health update with valid values
-            float healthPercent = stats.currentHealth / stats.maxHealth;
-            Debug.Log($"[EnemyHealth] {gameObject.name}: Setting health: {stats.currentHealth}/{stats.maxHealth} ({healthPercent:P0})");
-            currentBossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
+                isBossBarSetup = true;
+                Debug.Log($"[EnemyHealth] {gameObject.name}: Boss bar setup COMPLETE!");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[EnemyHealth] {gameObject.name}: Exception during boss bar setup: {e.Message}\n{e.StackTrace}");
+            }
         }
         else
         {
-            Debug.LogWarning($"[EnemyHealth] {gameObject.name}: Has BossEnemyBehaviour but stats.baseStats is not EnemyBaseBossStatsSO! Type: {stats.baseStats?.GetType().Name ?? "null"}");
+            Debug.LogWarning($"[EnemyHealth] {gameObject.name}: Stats is not EnemyBaseBossStatsSO! Type: {stats.baseStats?.GetType().Name ?? "null"}");
         }
     }
 
+    private Canvas FindMainUICanvas()
+    {
+        Canvas[] canvases = FindObjectsOfType<Canvas>();
+        foreach (Canvas c in canvases)
+        {
+            // Find a ScreenSpace canvas (not WorldSpace)
+            if (c.renderMode == RenderMode.ScreenSpaceOverlay ||
+                c.renderMode == RenderMode.ScreenSpaceCamera)
+            {
+                return c;
+            }
+        }
+        return null;
+    }
     private float CalculateTakenDamage(DamageData data)
     {
         float dmg = data.amount;

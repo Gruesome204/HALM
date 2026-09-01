@@ -9,7 +9,6 @@ public class BossBarUI : MonoBehaviour
     [SerializeField] private Image bossPortraitImage;
     [SerializeField] private TextMeshProUGUI bossNameText;
     [SerializeField] private Slider healthSlider;
-    [SerializeField] private GameObject bossBarPanel;
 
     [Header("Phase UI")]
     [SerializeField] private TextMeshProUGUI phaseText;
@@ -52,6 +51,21 @@ public class BossBarUI : MonoBehaviour
         SetupPhaseUI();
         SetupEnrage();
 
+        // Ensure the GameObject is active
+        gameObject.SetActive(true);
+        Debug.Log($"[BossBarUI] GameObject active: {gameObject.activeSelf}");
+
+        // Check Canvas
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas != null)
+        {
+            Debug.Log($"[BossBarUI] Canvas found: {canvas.name}, Render Mode: {canvas.renderMode}");
+        }
+        else
+        {
+            Debug.LogError("[BossBarUI] No Canvas found in parent hierarchy!");
+        }
+
         ShowBossBar();
         Debug.Log($"[BossBarUI] Setup complete for: {stats.bossBarName}");
     }
@@ -77,7 +91,6 @@ public class BossBarUI : MonoBehaviour
             Debug.Log($"[BossBarUI] Name set to: '{bossNameText.text}'");
         }
 
-        // Verify the text was actually set
         Debug.Log($"[BossBarUI] Final name displayed: '{bossNameText.text}'");
     }
 
@@ -171,7 +184,6 @@ public class BossBarUI : MonoBehaviour
 
     public void SetHealth(float currentHealth, float maxHealth)
     {
-        Debug.Log($"[BossBarUI] SetHealth called: {currentHealth}/{maxHealth}");
         this.maxHealth = maxHealth;
         UpdateHealthUI(currentHealth);
     }
@@ -192,7 +204,6 @@ public class BossBarUI : MonoBehaviour
 
         float healthPercent = currentHealth / maxHealth;
         healthSlider.value = healthPercent;
-        Debug.Log($"[BossBarUI] Health updated: {currentHealth}/{maxHealth} = {healthPercent:P0}");
 
         if (bossStats?.isMultiStageBoss == true)
             CheckPhaseTransition(healthPercent);
@@ -281,8 +292,7 @@ public class BossBarUI : MonoBehaviour
     public void ShowBossBar()
     {
         Debug.Log("[BossBarUI] ShowBossBar called");
-        if (bossBarPanel != null)
-            bossBarPanel.SetActive(true);
+        gameObject.SetActive(true);
 
         if (bossStats != null && bossStats.enrageTimer > 0 && !isEnraged)
         {
@@ -294,9 +304,7 @@ public class BossBarUI : MonoBehaviour
     public void HideBossBar()
     {
         Debug.Log("[BossBarUI] HideBossBar called");
-        if (bossBarPanel != null)
-            bossBarPanel.SetActive(false);
-
+        gameObject.SetActive(false);
         StopEnrageCoroutine();
     }
 

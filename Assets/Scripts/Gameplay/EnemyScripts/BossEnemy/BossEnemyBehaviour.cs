@@ -23,6 +23,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
             health.OnDamaged -= HandleDamaged;
     }
 
+
     protected override void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
         base.HandleDamaged(damageData, knockbackData);
