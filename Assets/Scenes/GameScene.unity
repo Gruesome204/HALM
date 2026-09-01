@@ -908,7 +908,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 0}
+  playerBehaviour: {fileID: 0}
   playerStats: {fileID: 0}
+  playerMovement: {fileID: 0}
+  playerGameObject: {fileID: 0}
 --- !u!1 &462102098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,6 +1616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLevel: 15
   xpGrowthMultiplier: 3
+  baseXPToNextLevel: 100
 --- !u!1 &747619961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,6 +1854,9 @@ MonoBehaviour:
   enemyLevelIncreasePerMap: 1
   autoProgress: 0
   roomClearedWaitingForPlayer: 0
+  enableDebug: 0
+  forceNextRoomKey: 110
+  forceClearRoomKey: 99
 --- !u!1 &935072170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,10 +1977,7 @@ MonoBehaviour:
   - {fileID: 5872725842470093268, guid: a02a971409da10d45903c95f016f2063, type: 3}
   bossMapPrefab: {fileID: 5872725842470093268, guid: 7f53b94edef1c1e4ab383266d0d5bb6a, type: 3}
   mapParent: {fileID: 855785565}
-  playerSpawnPoint: {fileID: 0}
-  bossSpawnPoint: {fileID: 0}
-  ExitBlockerObjects: []
-  ExitTriggerObject: {fileID: 0}
+  logDebugMessages: 1
 --- !u!1 &1141308297
 GameObject:
   m_ObjectHideFlags: 0
@@ -3191,17 +3195,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2135666360}
-  - component: {fileID: 2135666363}
   - component: {fileID: 2135666362}
+  - component: {fileID: 2135666368}
+  - component: {fileID: 2135666373}
+  - component: {fileID: 2135666365}
+  - component: {fileID: 2135666363}
   - component: {fileID: 2135666364}
   - component: {fileID: 2135666366}
-  - component: {fileID: 2135666365}
-  - component: {fileID: 2135666368}
   - component: {fileID: 2135666369}
   - component: {fileID: 2135666370}
   - component: {fileID: 2135666371}
   - component: {fileID: 2135666372}
-  - component: {fileID: 2135666373}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
