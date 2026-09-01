@@ -171,6 +171,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             }
         }
     }
+    public bool IsAggroedByTurret()
+    {
+        return aggroedByTurret;
+    }
 
     private void SetAggro(GameObject newTarget)
     {
@@ -200,8 +204,26 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     private void CheckLoseAggro()
     {
-        if (!isAggroed || target == null || aggroedByTurret) return;
+        if (!isAggroed || target == null) return;
 
+        // If aggroed by turret, use turret aggro duration instead of distance
+        if (aggroedByTurret)
+        {
+            // Turret aggro has a time limit
+            if (turretAggroTimer <= 0f)
+            {
+                aggroedByTurret = false;
+                // Check if player is still in range
+                float distanceToPlayer = Vector2.Distance(transform.position, target.transform.position);
+                if (distanceToPlayer > stats.currentDetectionRange * loseAggroMultiplier)
+                {
+                    ClearAggro();
+                }
+            }
+            return;
+        }
+
+        // Regular player aggro distance check
         float loseDistance = stats.currentDetectionRange * loseAggroMultiplier;
         float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
 
@@ -273,11 +295,21 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         {
             aggroedByTurret = true;
             turretAggroTimer = turretAggroDuration;
+
+            // Force aggro on player even if out of range
+            SetAggro(cachedPlayer);
+
+            // Force movement to chase player even if not in range
+            movement.isAggroed = true;
+            movement.ForceAggroOnPlayer(cachedPlayer);
+
+            AlertNearbyEnemies();
+            return;
         }
 
-        SetAggro(target);
+        // Regular damage from player or other sources
+        SetAggro(cachedPlayer);
         AlertNearbyEnemies();
-        
     }
 
     private void HandleDeath(EnemyHealth enemyHealth, DamageData damageData)
@@ -373,6 +405,11 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         nextAttackTime = Time.time;
         nextAbilityTime = Time.time;
         GetComponent<Animator>().enabled = true;
+
+        if (aggroedByTurret && turretAggroTimer <= 0)
+        {
+            aggroedByTurret = false;
+        }
     }
     #endregion
 }

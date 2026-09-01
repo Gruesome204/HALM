@@ -81,7 +81,19 @@ public class EnemyMovement : MonoBehaviour
             Debug.LogWarning($"{name}: Player not found in scene!");
         }
     }
+    public void ForceAggroOnPlayer(GameObject playerTarget)
+    {
+        if (playerTarget == null) return;
 
+        target = playerTarget;
+        isAggroed = true;
+        hasSeenPlayer = true;
+        lastKnownPlayerPosition = playerTarget.transform.position;
+        loseSightTimer = 0f; // Reset the timer so we don't lose aggro
+
+        // Force a path update immediately
+        GeneratePathToPosition(lastKnownPlayerPosition);
+    }
     public void SetPaused(bool paused)
     {
         isPaused = paused;
@@ -117,7 +129,6 @@ public class EnemyMovement : MonoBehaviour
             isAggroed = true;
             lastKnownPlayerPosition = target.transform.position;
             loseSightTimer = 0f;
-
             GeneratePath();
         }
         else if (hasSeenPlayer && isAggroed)
@@ -127,6 +138,30 @@ public class EnemyMovement : MonoBehaviour
 
             if (loseSightTimer >= loseSightTimerMax)
             {
+                // Check if we were aggroed by a turret - if so, keep chasing
+                EnemyBehaviour behaviour = GetComponent<EnemyBehaviour>();
+                if (behaviour != null && behaviour.IsAggroedByTurret())
+                {
+                    // Keep chasing the last known position even if timer expired
+                    // But if we reach the last known position, stop and wait
+                    float distToLastKnown = Vector2.Distance(transform.position, lastKnownPlayerPosition);
+
+                    if (distToLastKnown < arriveDistance)
+                    {
+                        // Reached last known position, stop and wait
+                        currentPath.Clear();
+                        rb.linearVelocity = Vector2.zero;
+                        enemyAnimator?.SetMoveSpeed(0f);
+                        // Don't clear aggro, wait for turret aggro timer to expire
+                    }
+                    else
+                    {
+                        // Continue moving to last known position
+                        GeneratePathToPosition(lastKnownPlayerPosition);
+                    }
+                    return;
+                }
+
                 // Lost the player for too long - give up chase
                 hasSeenPlayer = false;
                 isAggroed = false;
@@ -165,7 +200,6 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
-
     public void GeneratePathToPosition(Vector2 targetPosition)
     {
         if (GridManager.Instance == null || GridPathfinding.Instance == null)
