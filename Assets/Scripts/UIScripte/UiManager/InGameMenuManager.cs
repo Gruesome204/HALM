@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InGameMenuManager : MonoBehaviour, IGameSystem
+public class InGameMenuManager : MonoBehaviour
 {
     public static InGameMenuManager Instance{ get; private set; }
     void Awake() => Instance = this;
@@ -13,17 +13,6 @@ public class InGameMenuManager : MonoBehaviour, IGameSystem
     public List<GameObject> openMenus = new List<GameObject>();
 
     public event Action<BuildMasterModifier, bool> OnBuildmasterModifierChanged;
-
-    public int InitializePriority => 1;
-
-    public void Initialize()
-    {
-        Debug.Log("[InGameMenuManager] Initialized");
-    }
-
-    public void PostInitialize()
-    {
-    }
 
     void Start()
     {
