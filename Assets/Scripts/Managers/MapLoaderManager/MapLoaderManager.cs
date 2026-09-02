@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MapLoaderManager : MonoBehaviour, IGameSystem
 {
-    // Singleton
+
     public static MapLoaderManager Instance { get; private set; }
 
     [Header("Map Prefabs")]
@@ -21,9 +21,6 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
     [Header("Testing")]
     [SerializeField] private bool useTestRoom = false;
     [SerializeField] private GameObject testRoomPrefab;
-    [SerializeField] private bool loadTestRoomOnStart = true;
-    [SerializeField] private bool testRoomIsBossRoom = false;
-    [SerializeField] private GameObject testBossPrefab;
 
     // State
     private List<GameObject> mapSequence = new List<GameObject>();
@@ -90,7 +87,7 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
     {
         if (currentMap == null)
         {
-            if (useTestRoom && testRoomPrefab != null && loadTestRoomOnStart)
+            if (useTestRoom && testRoomPrefab != null)
             {
                 LoadTestRoom();
             }
@@ -237,12 +234,6 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         // Load the map
         GameObject loadedMap = LoadMapFromPrefab(testRoomPrefab);
 
-        // If this is a boss room, spawn the boss using EnemySpawnManager
-        if (testRoomIsBossRoom && loadedMap != null)
-        {
-            SpawnTestBoss();
-        }
-
         return loadedMap;
     }
 
@@ -290,113 +281,11 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
     }
 
     /// <summary>
-    /// Set test room as boss room and assign boss prefab
-    /// </summary>
-    public void SetTestRoomAsBossRoom(bool isBossRoom, GameObject bossPrefab = null)
-    {
-        testRoomIsBossRoom = isBossRoom;
-        if (bossPrefab != null)
-        {
-            testBossPrefab = bossPrefab;
-        }
-
-        LogMessage($"Test room boss mode: {(isBossRoom ? "Enabled" : "Disabled")}");
-
-        if (useTestRoom && isTestRoomLoaded)
-        {
-            // Reload the test room to apply changes
-            LoadTestRoom();
-        }
-    }
-
-    /// <summary>
     /// Check if currently in test room mode
     /// </summary>
     public bool IsInTestRoomMode()
     {
         return IsUsingTestRoom && isTestRoomLoaded;
-    }
-
-    /// <summary>
-    /// Check if test room is a boss room
-    /// </summary>
-    public bool IsTestRoomBossRoom()
-    {
-        return testRoomIsBossRoom;
-    }
-    #endregion
-
-    #region Boss Spawning
-    /// <summary>
-    /// Spawn the test boss using EnemySpawnManager
-    /// </summary>
-    private void SpawnTestBoss()
-    {
-        if (!testRoomIsBossRoom)
-        {
-            LogMessage("Test room is not configured as a boss room.");
-            return;
-        }
-
-        if (testBossPrefab == null)
-        {
-            Debug.LogError("Test boss prefab is not assigned! Cannot spawn boss in test room.");
-            return;
-        }
-
-        // Use EnemySpawnManager to spawn the boss
-        EnemySpawnManager spawnManager = EnemySpawnManager.Instance;
-        if (spawnManager == null)
-        {
-            Debug.LogError("EnemySpawnManager instance not found! Cannot spawn boss.");
-            return;
-        }
-
-        // Verify Boss Spawn Point exists
-        if (BossSpawnPoint == null)
-        {
-            Debug.LogError("No BossSpawnPoint found in test room! Cannot spawn boss.");
-            return;
-        }
-
-        // Use the EnemySpawnManager's spawn boss method
-        spawnManager.SpawnBoss(testBossPrefab);
-
-        // Update the boss room flag in EnemySpawnManager
-        spawnManager.isBossRoom = true;
-
-        LogMessage($"Test boss spawned successfully at {BossSpawnPoint.position}");
-    }
-
-    /// <summary>
-    /// Manually spawn/despawn test boss
-    /// </summary>
-    public void SpawnTestBossManually()
-    {
-        if (!useTestRoom || !isTestRoomLoaded)
-        {
-            Debug.LogWarning("Cannot spawn test boss - not in test room mode!");
-            return;
-        }
-
-        if (!testRoomIsBossRoom)
-        {
-            Debug.LogWarning("Test room is not set as a boss room!");
-            return;
-        }
-
-        SpawnTestBoss();
-    }
-
-    public void DespawnTestBossManually()
-    {
-        EnemySpawnManager spawnManager = EnemySpawnManager.Instance;
-        if (spawnManager != null)
-        {
-            spawnManager.ClearAllEnemies();
-            spawnManager.isBossRoom = false;
-            LogMessage("Test boss despawned.");
-        }
     }
     #endregion
 
@@ -470,42 +359,24 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         MapEnemySetup setup = currentMap.GetComponent<MapEnemySetup>();
         if (setup != null)
         {
-            // For test rooms, we might want to override the boss room setting
-            if (useTestRoom && testRoomPrefab != null)
-            {
-                // Test room settings override
-                EnemySpawnManager.Instance.isBossRoom = testRoomIsBossRoom;
+            // Always use the setup from the map - it knows if it's a boss room
+            EnemySpawnManager.Instance.isBossRoom = setup.isBossRoom;
 
-                // Don't clear enemy prefabs for test rooms if we're spawning a boss
-                if (testRoomIsBossRoom)
-                {
-                    // Keep existing enemy prefabs or set to empty for boss room
-                    if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
-                    {
-                        EnemySpawnManager.Instance.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs);
-                    }
-                    else
-                    {
-                        EnemySpawnManager.Instance.enemyPrefabs = new List<GameObject>();
-                    }
-                }
-                else
-                {
-                    // Normal test room - use setup's enemy prefabs
-                    if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
-                    {
-                        EnemySpawnManager.Instance.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs);
-                    }
-                }
-            }
-            else
+            if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
             {
-                // Normal map loading
-                EnemySpawnManager.Instance.isBossRoom = setup.isBossRoom;
-                if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
-                {
-                    EnemySpawnManager.Instance.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs);
-                }
+                EnemySpawnManager.Instance.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs);
+            }
+
+            // If this is a boss room, spawn the boss using the setup's boss prefab
+            if (setup.isBossRoom && setup.bossPrefab != null)
+            {
+                // We'll spawn the boss after AssignSpawnPoints is called
+                // Store the boss prefab to spawn later
+                pendingBossPrefab = setup.bossPrefab;
+            }
+            else if (setup.isBossRoom && setup.bossPrefab == null)
+            {
+                Debug.LogError($"Boss room {currentMap.name} has no bossPrefab assigned in MapEnemySetup!");
             }
         }
         else
@@ -513,6 +384,9 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
             Debug.LogWarning($"No MapEnemySetup found on {currentMap.name}");
         }
     }
+
+    // Pending boss prefab to spawn after spawn points are assigned
+    private GameObject pendingBossPrefab = null;
     #endregion
 
     #region Spawn Point Management
@@ -548,10 +422,44 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
 
         // Find Boss Spawn Point
         BossSpawnPoint = currentMap.transform.Find("BossSpawnPoint");
-        if (BossSpawnPoint == null && (EnemySpawnManager.Instance.isBossRoom || testRoomIsBossRoom))
+        if (BossSpawnPoint == null && EnemySpawnManager.Instance.isBossRoom)
         {
             Debug.LogWarning($"BossSpawnPoint missing in boss room: {currentMap.name}");
         }
+
+        // Now that spawn points are assigned, spawn the boss if we have a pending one
+        if (pendingBossPrefab != null && BossSpawnPoint != null)
+        {
+            SpawnBossFromSetup(pendingBossPrefab);
+            pendingBossPrefab = null;
+        }
+        else if (pendingBossPrefab != null && BossSpawnPoint == null)
+        {
+            Debug.LogError($"Cannot spawn boss - BossSpawnPoint not found in {currentMap.name}");
+            pendingBossPrefab = null;
+        }
+    }
+
+    private void SpawnBossFromSetup(GameObject bossPrefab)
+    {
+        EnemySpawnManager spawnManager = EnemySpawnManager.Instance;
+        if (spawnManager == null)
+        {
+            Debug.LogError("EnemySpawnManager instance not found! Cannot spawn boss.");
+            return;
+        }
+
+        // Verify Boss Spawn Point exists
+        if (BossSpawnPoint == null)
+        {
+            Debug.LogError($"No BossSpawnPoint found in {currentMap.name}! Cannot spawn boss.");
+            return;
+        }
+
+        // Use the EnemySpawnManager's spawn boss method
+        spawnManager.SpawnBoss(bossPrefab);
+
+        LogMessage($"Boss spawned from MapEnemySetup at {BossSpawnPoint.position}");
     }
 
     private void ConfigureEnemySpawner()
@@ -635,11 +543,6 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         if (useTestRoom && testRoomPrefab == null)
         {
             Debug.LogError("Test room mode enabled but testRoomPrefab is not assigned!");
-        }
-
-        if (testRoomIsBossRoom && testBossPrefab == null)
-        {
-            Debug.LogError("Test room is set as boss room but testBossPrefab is not assigned!");
         }
     }
 
