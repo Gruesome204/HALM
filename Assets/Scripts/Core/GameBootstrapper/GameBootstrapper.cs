@@ -44,7 +44,7 @@ public class GameBootstrapper : MonoBehaviour
                 gameSystems.AddRange(foundSystems);
                 Debug.Log($"[GameBootstrapper] Auto-detected {foundSystems.Count} systems");
 
-                // Optional: Auto-populate the Inspector list for future use
+                //Auto-populate the Inspector list for future use
                 systems = foundSystems.Cast<MonoBehaviour>().ToList();
             }
             else
@@ -54,7 +54,7 @@ public class GameBootstrapper : MonoBehaviour
             }
         }
 
-        // Rest of your initialization code...
+        // Sort by InitializePriority (lower = earlier)
         gameSystems = gameSystems
             .OrderBy(s => s.InitializePriority)
             .ToList();
@@ -66,7 +66,6 @@ public class GameBootstrapper : MonoBehaviour
 
             Debug.Log($"Initializing: {system.GetType().Name}");
             system.Initialize();
-            initializedSystems.Add(system);
         }
 
         // Post-initialize all systems
@@ -77,7 +76,7 @@ public class GameBootstrapper : MonoBehaviour
             Debug.Log($"PostInitialize: {system.GetType().Name}");
             system.PostInitialize();
         }
-
+        initializedSystems = gameSystems.ToList();
     }
 
     private void OnValidate()
