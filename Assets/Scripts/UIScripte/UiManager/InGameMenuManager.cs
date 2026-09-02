@@ -17,7 +17,8 @@ public class InGameMenuManager : MonoBehaviour, IGameSystem
     public int InitializePriority => 1;
 
     public void Initialize()
-    {    
+    {
+        Debug.Log("[InGameMenuManager] Initialized");
     }
 
     public void PostInitialize()

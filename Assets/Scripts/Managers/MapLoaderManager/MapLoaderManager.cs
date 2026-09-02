@@ -80,7 +80,7 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
 
         isInitialized = true;
 
-        LogMessage("MapLoaderManager initialized successfully.");
+        LogMessage("[MapLoaderManager] Initialized");
     }
 
     public void PostInitialize()
