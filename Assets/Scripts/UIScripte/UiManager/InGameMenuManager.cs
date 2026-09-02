@@ -9,7 +9,7 @@ public class InGameMenuManager : MonoBehaviour, IGameSystem
     public static InGameMenuManager Instance{ get; private set; }
     void Awake() => Instance = this;
 
-    public List<GameObject> allMenusInThisScene = new List<GameObject>();
+    public List<GameObject> allMenuesInThisScene = new List<GameObject>();
     public List<GameObject> openMenus = new List<GameObject>();
 
     public event Action<BuildMasterModifier, bool> OnBuildmasterModifierChanged;
@@ -28,7 +28,7 @@ public class InGameMenuManager : MonoBehaviour, IGameSystem
     void Start()
     {
         // Ensuring that all menues are active and closed
-        foreach (var menu in allMenusInThisScene)
+        foreach (var menu in allMenuesInThisScene)
         {
             menu.SetActive(true);
         }
@@ -96,7 +96,7 @@ public class InGameMenuManager : MonoBehaviour, IGameSystem
     //Does what it says on the Label, this closes all registered Menus
     public void CloseAllMenus()
     {
-        foreach (var menu in allMenusInThisScene)
+        foreach (var menu in allMenuesInThisScene)
         {
             IMenu _menu = menu.GetComponent<IMenu>();
             if (_menu != null)
@@ -110,7 +110,7 @@ public class InGameMenuManager : MonoBehaviour, IGameSystem
     //The Menu has to be registered for this to work, and mind the spelling
     public void OpenOrCloseOneMenu(string menuToOpen, Boolean openMenu)
     {
-        foreach (var menu in allMenusInThisScene)
+        foreach (var menu in allMenuesInThisScene)
         {
             if (menuToOpen == menu.name)
             {
@@ -133,7 +133,7 @@ public class InGameMenuManager : MonoBehaviour, IGameSystem
     //Checking for a specific Menu, either if it's open or if is even exists
     public Boolean CheckForAMenu(string menu)
     {
-        foreach (var _menu in allMenusInThisScene)
+        foreach (var _menu in allMenuesInThisScene)
         {
             if (menu == _menu.name)
             {
