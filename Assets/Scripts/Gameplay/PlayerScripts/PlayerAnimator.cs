@@ -12,7 +12,7 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int MoveX = Animator.StringToHash("MoveX");
     private static readonly int MoveY = Animator.StringToHash("MoveY");
     private static readonly int MoveSpeedParam = Animator.StringToHash("MoveSpeed");
-    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
+   // private static readonly int IsDashing = Animator.StringToHash("IsDashing");
     private static readonly int Death = Animator.StringToHash("Death");
 
     private PlayerMovement movement;
@@ -44,13 +44,14 @@ public class PlayerAnimator : MonoBehaviour
 
         // Update facing direction
         Vector2 facing = movement.FacingDirection;
-        animator.SetFloat(MoveX, facing.x);
-        animator.SetFloat(MoveY, facing.y);
+        // animator.SetFloat(MoveX, facing.x);
+        // animator.SetFloat(MoveY, facing.y);
 
         // Set MoveSpeedParam as a simple on/off
         animator.SetFloat(MoveSpeedParam, isMoving ? 1f : 0f);
+
         // Dashing still works as usual
-        animator.SetBool(IsDashing, movement.IsDashing);
+       // animator.SetBool(IsDashing, movement.IsDashing);
     }
 
 
