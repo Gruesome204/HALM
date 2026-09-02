@@ -12,7 +12,10 @@ public enum AbilityTargetType
         SingleTarget,
         AreaOfEffect,
         Direction,
-        Target
+        Target,
+        GroundPlacement,
+        Projectile,
+        Cone,
 }
 
 public enum AbilityCategory

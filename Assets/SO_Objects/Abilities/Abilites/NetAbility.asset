@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   category: 0
   cooldown: 5
-  targetType: 1
+  targetType: 5
   targetSelection: 1
   range: 8
   priority: 0

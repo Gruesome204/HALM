@@ -7,11 +7,11 @@ public class SpawnNetEffect : AbilityEffect
     [Tooltip("Prefab of the net/trap to spawn.")]
     [SerializeField] private GameObject netPrefab;
 
-    [Tooltip("How long the net lasts in seconds before despawning.")]
-    [SerializeField][Min(0.1f)] private float duration = 5f;
+    [Tooltip("How long the net exists in seconds before despawning.")]
+    [SerializeField][Min(0.1f)] private float netLifetime = 5f;  
 
-    [Tooltip("Radius of the net effect area.")]
-    [SerializeField][Min(0.1f)] private float radius = 1f;
+    [Tooltip("Radius of the net's effective area.")]
+    [SerializeField][Min(0.1f)] private float trapRadius = 1f; 
 
     [Header("Slow Settings")]
     [Range(0f, 1f)]
@@ -91,8 +91,7 @@ public class SpawnNetEffect : AbilityEffect
         GameObject net = Instantiate(netPrefab, position, rotation);
 
         // Scale net to match radius
-        net.transform.localScale = new Vector3(radius, 1f, radius);
-
+        net.transform.localScale = new Vector3(trapRadius, 1f, trapRadius);
         // Set parent to null to avoid being destroyed with user
         net.transform.SetParent(null);
 
@@ -107,7 +106,7 @@ public class SpawnNetEffect : AbilityEffect
             trap = net.AddComponent<NetTrap>();
         }
 
-        trap.Initialize(slowMultiplier, slowDuration, radius);
+        trap.Initialize(slowMultiplier, slowDuration, trapRadius);
     }
 
     private void HandleVisualFeedback(GameObject net, GameObject user, GameObject target)
@@ -122,7 +121,7 @@ public class SpawnNetEffect : AbilityEffect
     private void ScheduleNetDestruction(GameObject net)
     {
         // Destroy after duration, but also add a safety check
-        Destroy(net, duration);
+        Destroy(net, netLifetime);
     }
 
     // Editor validation
@@ -130,8 +129,8 @@ public class SpawnNetEffect : AbilityEffect
     private void OnValidate()
     {
         // Ensure radius has a minimum value
-        if (radius < 0.1f) radius = 0.1f;
-        if (duration < 0.1f) duration = 0.1f;
+        if (trapRadius < 0.1f) trapRadius = 0.1f;
+        if (netLifetime < 0.1f) netLifetime = 0.1f;
         if (slowDuration < 0.1f) slowDuration = 0.1f;
 
         // Clamp slow multiplier
