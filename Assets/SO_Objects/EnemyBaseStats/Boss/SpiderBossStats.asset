@@ -41,7 +41,7 @@ MonoBehaviour:
   bossBarColor: {r: 1, g: 0, b: 0, a: 1}
   bossPortrait: {fileID: 0}
   bossBarHeight: 20
-  isMultiStageBoss: 0
+  isMultiStageBoss: 1
   numberOfPhases: 1
   enrageTimer: 10
   enrageDamageMultiplier: 1.5
