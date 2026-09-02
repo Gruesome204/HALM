@@ -8,9 +8,11 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     [Header("Boss UI")]
     [SerializeField] private BossBarUI bossBarUI;
-    [SerializeField] private EnemyStats stats;
+    [SerializeField] private EnemyBaseBossStatsSO bossStats;
+
     public BossPhase CurrentPhase { get; private set; } = BossPhase.Phase1;
-    private bool isInitialized = false; 
+    private float currentAggressionMultiplier = 1f;
+    private bool isInitialized = false; // ✅ Track initialization
 
     protected override void Awake()
     {
@@ -19,9 +21,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
         if (bossBarUI == null)
             bossBarUI = FindObjectOfType<BossBarUI>();
-
-        if (stats == null)
-            stats = FindObjectOfType<EnemyStats>();
     }
 
     private void Start()
@@ -93,7 +92,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
             return;
         }
 
-        if (stats == null)
+        if (bossStats == null)
         {
             Debug.LogError("[BossEnemyBehaviour] BossStats not assigned!");
             return;
@@ -111,7 +110,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
             return;
         }
 
-        bossBarUI.SetupBossBar(stats.baseBossStats);
+        bossBarUI.SetupBossBar(bossStats);
         bossBarUI.SetHealth(health.CurrentHealth, health.MaxHealth);
         bossBarUI.ShowBossBar();
     }
