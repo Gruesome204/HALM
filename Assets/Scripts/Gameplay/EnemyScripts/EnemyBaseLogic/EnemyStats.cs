@@ -1,10 +1,10 @@
 using UnityEngine;
+using static EnemyBaseBossStatsSO;
 
 [DefaultExecutionOrder(-100)]
 public class EnemyStats : MonoBehaviour
 {
     [SerializeField] public EnemyBaseStats baseStats;
-    [SerializeField] public EnemyBaseBossStatsSO baseBossStats;
 
     [Header("Level")]
     public int currentLevel = 1;
@@ -18,7 +18,7 @@ public class EnemyStats : MonoBehaviour
 
     [Header("Current Stats - Defensive")]
     public float maxHealth;
-    public float currentHealth; // Still store it, but only EnemyHealth modifies it
+    public float currentHealth;
     public float currentArmor;
     public float currentMagicResistance;
     public float currentKnockbackReduction;
@@ -43,15 +43,20 @@ public class EnemyStats : MonoBehaviour
     public float speedScaleFactor;
     public float armorScaleFactor;
 
+    // Boss-specific properties (lazily cached)
+    private EnemyBaseBossStatsSO _bossStats;
+    public EnemyBaseBossStatsSO BossStats => _bossStats;
+
     #region Unity Callbacks
     private void Awake()
     {
+        // Cache boss stats if this is a boss
+        _bossStats = baseStats as EnemyBaseBossStatsSO;
         Initialize();
     }
 
     private void OnEnable()
     {
-        // Only re-initialize if we haven't been set up yet
         if (maxHealth <= 0)
         {
             Initialize();
@@ -78,9 +83,11 @@ public class EnemyStats : MonoBehaviour
         speedScaleFactor = baseStats.baseSpeedScaleFactor;
         armorScaleFactor = baseStats.baseArmorScaleFactor;
 
-        // Defensive Stats - Only calculate max health, don't set current health
-        maxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
-        // currentHealth will be set by EnemyHealth
+        // Use the base stats' methods for scaling (which handle boss overrides)
+        maxHealth = baseStats.GetScaledHealth(currentLevel);
+        currentDamage = baseStats.GetScaledDamage(currentLevel);
+
+        // Current health will be set by EnemyHealth
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
         currentMagicResistance = baseStats.baseMagicResistance;
         currentKnockbackReduction = Mathf.Clamp01(baseStats.baseKnockbackReduction);
@@ -88,7 +95,6 @@ public class EnemyStats : MonoBehaviour
         currentKnockbackDuration = baseStats.baseKnockbackDuration;
 
         // Offensive Stats
-        currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
         currentAttackSpeed = baseStats.baseAttackSpeed;
         currentCritChance = baseStats.baseCritChance;
         currentCritMultiplier = baseStats.baseCritHitMultiplier;
@@ -114,15 +120,50 @@ public class EnemyStats : MonoBehaviour
     {
         currentLevel = Mathf.Max(1, level);
 
-        // Update max stats
-        maxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
+        // Update stats using the proper scaling methods
+        maxHealth = baseStats.GetScaledHealth(currentLevel);
+        currentDamage = baseStats.GetScaledDamage(currentLevel);
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
-        currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
         currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
 
-        // Clamp current health to new max (let EnemyHealth handle this)
+        // Clamp current health to new max
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
     }
 
+    // Helper method to check if this is a boss
+    public bool IsBoss()
+    {
+        return _bossStats != null;
+    }
+
+    // Helper method to get boss-specific properties
+    public EnemyBaseBossStatsSO GetBossStats()
+    {
+        return _bossStats;
+    }
+
+    // Boss-specific methods
+    public PhaseConfig GetPhaseForHealth(float healthPercent)
+    {
+        if (_bossStats == null || !_bossStats.isMultiStageBoss)
+            return null;
+
+        foreach (var phase in _bossStats.phases)
+        {
+            if (healthPercent <= phase.healthThreshold)
+                return phase;
+        }
+        return null;
+    }
+
+    public float GetEnrageDamageMultiplier()
+    {
+        if (_bossStats == null)
+            return 1f;
+
+        // Check if enrage timer has elapsed (you'll need to track this separately)
+        // For now, return the multiplier
+        return _bossStats.enrageDamageMultiplier;
+    }
 }

@@ -111,7 +111,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
             return;
         }
 
-        bossBarUI.SetupBossBar(stats.baseBossStats);
+       // bossBarUI.SetupBossBar(stats.baseStats);
         bossBarUI.SetHealth(health.CurrentHealth, health.MaxHealth);
         bossBarUI.ShowBossBar();
     }

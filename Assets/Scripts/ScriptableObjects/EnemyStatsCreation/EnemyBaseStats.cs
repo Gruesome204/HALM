@@ -49,7 +49,7 @@ public abstract class EnemyBaseStats : ScriptableObject
     public float baseSpeedScaleFactor = 0.1f;
     public float baseArmorScaleFactor = 0.1f;
 
-    // Shared utility methods can go here
+    // Virtual methods that can be overridden
     public virtual float GetScaledHealth(int level)
     {
         return baseMaxHealth + (level - 1) * baseHealthScaleFactor;
