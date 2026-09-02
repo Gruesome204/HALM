@@ -204,7 +204,7 @@ MonoBehaviour:
   phase2HealthThreshold: 0.7
   phase3HealthThreshold: 0.2
   bossBarUI: {fileID: 0}
-  bossStats: {fileID: 11400000, guid: 087604fc6d13863478160132a3e1832b, type: 2}
+  stats: {fileID: 0}
 --- !u!114 &3393257043857848876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats: {fileID: 11400000, guid: 087604fc6d13863478160132a3e1832b, type: 2}
+  baseBossStats: {fileID: 11400000, guid: 087604fc6d13863478160132a3e1832b, type: 2}
   currentLevel: 1
   currentDamage: 0
   currentAttackSpeed: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     [SerializeField] public EnemyBaseStats baseStats;
+    [SerializeField] public EnemyBaseBossStatsSO baseBossStats;
 
     [Header("Level")]
     public int currentLevel = 1;
