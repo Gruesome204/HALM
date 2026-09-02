@@ -524,7 +524,7 @@ public class PlayerManager : MonoBehaviour, IGameSystem
     // ========================
     // STATS MANAGEMENT
     // ========================
-    public void ApplyModifierToPlayer(BuildMasterModifier.Modifier modifier)
+    public void ApplyModifierToPlayer(BuildMasterModifier.BuildMasterOption modifier)
     {
         if (!isInitialized)
         {
@@ -542,7 +542,7 @@ public class PlayerManager : MonoBehaviour, IGameSystem
         Debug.Log($"[PlayerManager] Applied modifier to player: {modifier.name}");
     }
 
-    public void RemoveModifierFromPlayer(BuildMasterModifier.Modifier modifier)
+    public void RemoveModifierFromPlayer(BuildMasterModifier.BuildMasterOption modifier)
     {
         if (!isInitialized)
         {

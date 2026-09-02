@@ -23,7 +23,7 @@ public class PlayerStats : MonoBehaviour
     /// <summary>
     /// All currently applied modifiers.
     /// </summary>
-    private List<BuildMasterModifier.Modifier> appliedModifiers = new List<BuildMasterModifier.Modifier>();
+    private List<BuildMasterModifier.BuildMasterOption> appliedModifiers = new List<BuildMasterModifier.BuildMasterOption>();
 
     public void Initialize()
     {
@@ -32,13 +32,13 @@ public class PlayerStats : MonoBehaviour
         RecalculateStats(fullReheal: true);
     }
 
-    public void AddModifier(BuildMasterModifier.Modifier modifier)
+    public void AddModifier(BuildMasterModifier.BuildMasterOption modifier)
     {
         appliedModifiers.Add(modifier);
         RecalculateStats(fullReheal: true);
     }
 
-    public void RemoveModifier(BuildMasterModifier.Modifier modifier)
+    public void RemoveModifier(BuildMasterModifier.BuildMasterOption modifier)
     {
         appliedModifiers.Remove(modifier);
         RecalculateStats();
@@ -83,7 +83,7 @@ public class PlayerStats : MonoBehaviour
     /// <summary>
     /// Returns a read-only list for UI or debugging.
     /// </summary>
-    public IReadOnlyList<BuildMasterModifier.Modifier> GetAppliedModifiers()
+    public IReadOnlyList<BuildMasterModifier.BuildMasterOption> GetAppliedModifiers()
     {
         return appliedModifiers.AsReadOnly();
     }

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 
@@ -8,10 +6,10 @@ public class BuildMasterModifier : ScriptableObject
 {
 
     [Tooltip("List of modifier options the player can choose from.")]
-    public Modifier options;
+    public BuildMasterOption options;
 
     [System.Serializable]
-    public class Modifier
+    public class BuildMasterOption
     {
         public string name;
         [TextArea] public string description;

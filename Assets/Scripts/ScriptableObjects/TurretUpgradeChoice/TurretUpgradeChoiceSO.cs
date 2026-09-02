@@ -1,7 +1,5 @@
     using UnityEngine;
     using System.Collections.Generic;
-    using UnityEditor;
-    using System;
 
     [CreateAssetMenu(fileName = "TurretUpgradeChoice", menuName = "Game/Turret/Upgrade Choice")]
     public class TurretUpgradeChoiceSO : ScriptableObject

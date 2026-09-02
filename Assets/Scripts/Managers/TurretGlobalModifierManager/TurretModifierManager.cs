@@ -8,7 +8,7 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
     public event System.Action OnModifiersChanged;
 
     // List of all currently applied modifiers
-    private readonly List<BuildMasterModifier.Modifier> appliedModifiers = new List<BuildMasterModifier.Modifier>();
+    private readonly List<BuildMasterModifier.BuildMasterOption> appliedModifiers = new List<BuildMasterModifier.BuildMasterOption>();
     private bool isInitialized = false;
     private bool isSubscribedToEvents = false;
 
@@ -185,7 +185,7 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
                 continue;
             }
 
-            var runtimeModifier = new BuildMasterModifier.Modifier
+            var runtimeModifier = new BuildMasterModifier.BuildMasterOption
             {
                 name = modifierSO.options.name,
                 description = modifierSO.options.description,
@@ -210,7 +210,7 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
     // ========================
     private void AddDamageModifier()
     {
-        var mod = new BuildMasterModifier.Modifier
+        var mod = new BuildMasterModifier.BuildMasterOption
         {
             name = "Damage +100%",
             description = "Doubles turret damage",
@@ -248,7 +248,7 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
     // ========================
     // APPLY / REMOVE MODIFIERS
     // ========================
-    public void AddModifier(BuildMasterModifier.Modifier modifier)
+    public void AddModifier(BuildMasterModifier.BuildMasterOption modifier)
     {
         if (!isInitialized)
         {
@@ -267,7 +267,7 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
         RecalculateGlobalModifiers();
     }
 
-    public void RemoveModifier(BuildMasterModifier.Modifier modifier)
+    public void RemoveModifier(BuildMasterModifier.BuildMasterOption modifier)
     {
         if (!isInitialized)
         {
@@ -458,7 +458,7 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
     // ========================
     // PUBLIC METHODS
     // ========================
-    public IReadOnlyList<BuildMasterModifier.Modifier> GetAppliedModifiers()
+    public IReadOnlyList<BuildMasterModifier.BuildMasterOption> GetAppliedModifiers()
     {
         return appliedModifiers.AsReadOnly();
     }
