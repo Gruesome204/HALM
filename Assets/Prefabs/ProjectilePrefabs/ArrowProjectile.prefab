@@ -302,9 +302,18 @@ MonoBehaviour:
   knockbackDuration: 0
   direction: {x: 0, y: 0}
   remainingPierces: 0
-  enemyLayer:
+  targetLayer:
     serializedVersion: 2
     m_Bits: 256
   wallLayer:
     serializedVersion: 2
     m_Bits: 1024
+  chainBounceCount: 0
+  chainBounceRange: 5
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  homingStrength: 2
+  isAOE: 0
+  aoeRadius: 3
+  aoeEffectPrefab: {fileID: 0}
