@@ -42,20 +42,10 @@ MonoBehaviour:
   bossPortrait: {fileID: 0}
   bossBarHeight: 20
   isMultiStageBoss: 1
-  phases:
-  - healthThreshold: 0.5
-    phaseName: Second
-    phaseDescription: 
-    phaseColor: {r: 0, g: 0, b: 0, a: 0}
-    phaseIcon: {fileID: 0}
-    aggressionMultiplier: 0
-    damageMultiplier: 0
-    speedMultiplier: 0
-    healOnEnter: 0
-    unlockedAbilities: []
-    phaseEntryEffects: []
-    phaseAnnouncement: 
+  numberOfPhases: 1
   enrageTimer: 10
   enrageDamageMultiplier: 1.5
+  phaseThresholds:
+  - 0.5
   exclusiveLootTable: []
   guaranteedDropRate: 1

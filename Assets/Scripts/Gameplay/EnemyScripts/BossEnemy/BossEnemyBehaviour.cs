@@ -11,12 +11,12 @@ public class BossEnemyBehaviour : EnemyBehaviour
     [SerializeField] private EnemyBaseBossStatsSO bossStats;
 
     public BossPhase CurrentPhase { get; private set; } = BossPhase.Phase1;
-    private float currentAggressionMultiplier = 1f;
-    private bool isInitialized = false; // ✅ Track initialization
 
     protected override void Awake()
     {
+        // Auto-detect components if not assigned
         AutoDetectComponents();
+
         base.Awake();
 
         if (bossBarUI == null)
@@ -26,28 +26,14 @@ public class BossEnemyBehaviour : EnemyBehaviour
     private void Start()
     {
         SetupBossBar();
-        isInitialized = true; // ✅ Mark as initialized
-
-        // If using new SO system, override thresholds
-        if (bossStats != null && bossStats.isMultiStageBoss && bossStats.phases.Length > 0)
-        {
-            // Update thresholds from SO
-            if (bossStats.phases.Length >= 2)
-            {
-                phase2HealthThreshold = bossStats.phases[1].healthThreshold;
-
-                if (bossStats.phases.Length >= 3)
-                    phase3HealthThreshold = bossStats.phases[2].healthThreshold;
-            }
-        }
-
-        // ✅ Force initial phase to Phase 1
-        CurrentPhase = BossPhase.Phase1;
-        Debug.Log($"{name} initialized with {CurrentPhase} at full health ({health?.CurrentHealth}/{health?.MaxHealth})");
     }
 
+    /// <summary>
+    /// Automatically detects and assigns required components if they're not set in the Inspector
+    /// </summary>
     private void AutoDetectComponents()
     {
+        // Auto-detect stats if not assigned
         if (stats == null)
         {
             stats = GetComponent<EnemyStats>();
@@ -55,6 +41,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
                 Debug.LogError($"[BossEnemyBehaviour] {gameObject.name}: No EnemyStats component found!");
         }
 
+        // Auto-detect health if not assigned
         if (health == null)
         {
             health = GetComponent<EnemyHealth>();
@@ -62,6 +49,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
                 Debug.LogError($"[BossEnemyBehaviour] {gameObject.name}: No EnemyHealth component found!");
         }
 
+        // Auto-detect movement if not assigned
         if (movement == null)
         {
             movement = GetComponent<EnemyMovement>();
@@ -69,6 +57,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
                 Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyMovement component found!");
         }
 
+        // Auto-detect ability behaviour if not assigned
         if (abilityBehaviour == null)
         {
             abilityBehaviour = GetComponent<EnemyAbilityBehaviour>();
@@ -76,6 +65,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
                 Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyAbilityBehaviour component found!");
         }
 
+        // Auto-detect knockback if not assigned
         if (knockback == null)
         {
             knockback = GetComponent<EnemyKnockback>();
@@ -83,6 +73,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
                 Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyKnockback component found!");
         }
 
+        // Auto-detect attack if not assigned
         if (attack == null)
         {
             attack = GetComponent<EnemyAttack>();
@@ -90,6 +81,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
                 Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyAttack component found!");
         }
 
+        // Auto-detect enemy animator if not assigned
         if (enemyAnimator == null)
         {
             enemyAnimator = GetComponent<EnemyAnimator>();
@@ -154,19 +146,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     protected override void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
-        // ✅ Skip phase check if not initialized
-        if (!isInitialized) return;
-
-        // Apply phase damage multiplier
-        if (bossStats != null && bossStats.isMultiStageBoss)
-        {
-            var phaseConfig = bossStats.GetPhase((int)CurrentPhase - 1);
-            if (phaseConfig != null && damageData.amount > 0)
-            {
-                damageData.amount *= phaseConfig.damageMultiplier;
-            }
-        }
-
         base.HandleDamaged(damageData, knockbackData);
         UpdatePhase();
     }
@@ -178,9 +157,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     private void HandleHealthChanged(float currentHealth, float maxHealth)
     {
-        // ✅ Skip phase check if not initialized
-        if (!isInitialized) return;
-
         if (bossBarUI != null)
             bossBarUI.SetHealth(currentHealth, maxHealth);
 
@@ -189,50 +165,10 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     private void UpdatePhase()
     {
-        // ✅ Don't check phases if not initialized
-        if (!isInitialized)
-        {
-            Debug.Log("Skipping phase check - not initialized yet");
-            return;
-        }
-
-        if (stats == null || health == null)
-        {
-            Debug.LogWarning("Stats or Health is null, cannot update phase");
-            return;
-        }
+        if (stats == null || health == null) return;
 
         float hpPercent = health.CurrentHealth / health.MaxHealth;
-        Debug.Log($"UpdatePhase called - HP: {hpPercent:P0}, Current Phase: {CurrentPhase}");
 
-        // ✅ Don't trigger phase if at full health and already in Phase 1
-        if (hpPercent >= 0.99f && CurrentPhase == BossPhase.Phase1)
-        {
-            Debug.Log("Boss at full health, staying in Phase 1");
-            return;
-        }
-
-        // If using new SO system, check all phases
-        if (bossStats != null && bossStats.isMultiStageBoss && bossStats.phases.Length > 0)
-        {
-            int newPhaseIndex = bossStats.GetPhaseForHealthPercent(hpPercent, CurrentPhase);
-            BossPhase newPhase = (BossPhase)newPhaseIndex;
-
-            // ✅ Only enter phase if it's different from current
-            if (newPhase != CurrentPhase)
-            {
-                Debug.Log($"Phase change detected: {CurrentPhase} -> {newPhase} (HP: {hpPercent:P0})");
-                EnterPhase(newPhase);
-            }
-            else
-            {
-                Debug.Log($"Staying in {CurrentPhase} (HP: {hpPercent:P0})");
-            }
-
-            return;
-        }
-
-        // Fallback: Legacy phase system
         if (hpPercent <= phase3HealthThreshold && CurrentPhase != BossPhase.Phase3)
             EnterPhase(BossPhase.Phase3);
         else if (hpPercent <= phase2HealthThreshold && CurrentPhase == BossPhase.Phase1)
@@ -241,22 +177,8 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     private void EnterPhase(BossPhase newPhase)
     {
-        // ✅ Don't enter phase if already in it
-        if (CurrentPhase == newPhase)
-        {
-            Debug.Log($"Already in {newPhase}, skipping entry");
-            return;
-        }
-
-        // ✅ Don't enter Phase 1 (it's the default)
-        if (newPhase == BossPhase.Phase1)
-        {
-            Debug.Log("Cannot enter Phase 1 - this is the default phase");
-            return;
-        }
-
         CurrentPhase = newPhase;
-        Debug.Log($"<color=cyan>★★★ {name} entered {newPhase} ★★★</color>");
+        Debug.Log($"{name} entered {newPhase}");
 
         if (bossBarUI != null && bossStats != null)
         {
@@ -264,90 +186,14 @@ public class BossEnemyBehaviour : EnemyBehaviour
             bossBarUI.ForcePhaseChange(phaseIndex);
         }
 
-        // Apply phase effects
-        var phaseEffects = bossStats?.GetPhase((int)newPhase - 1);
-        if (phaseEffects != null)
+        switch (newPhase)
         {
-            ApplyPhaseEffects(phaseEffects);
-
-            // Show announcement if any
-            if (!string.IsNullOrEmpty(phaseEffects.phaseAnnouncement))
-            {
-                Debug.Log($"<color=red>⚠️ Boss Announcement:</color> {phaseEffects.phaseAnnouncement}");
-            }
-        }
-        else
-        {
-            // Fallback to legacy phase logic
-            switch (newPhase)
-            {
-                case BossPhase.Phase2:
-                    OnPhase2();
-                    break;
-                case BossPhase.Phase3:
-                    OnPhase3();
-                    break;
-            }
-        }
-    }
-
-    private void ApplyPhaseEffects(PhaseConfig phaseConfig)
-    {
-        Debug.Log($"<color=yellow>Applying Phase {CurrentPhase} Effects:</color> " +
-                  $"Aggression: {phaseConfig.aggressionMultiplier}, " +
-                  $"Damage: {phaseConfig.damageMultiplier}, " +
-                  $"Speed: {phaseConfig.speedMultiplier}, " +
-                  $"Heal: {phaseConfig.healOnEnter}");
-
-        // Apply aggression multiplier
-        if (abilityBehaviour != null)
-            abilityBehaviour.SetAggressionMultiplier(phaseConfig.aggressionMultiplier);
-
-        // Apply speed multiplier
-        if (movement != null)
-        {
-            Debug.Log($"Speed multiplier {phaseConfig.speedMultiplier} would be applied to movement");
-        }
-
-        // Apply damage multiplier (handled in HandleDamaged)
-        currentAggressionMultiplier = phaseConfig.aggressionMultiplier;
-
-        // Heal the boss
-        if (health != null)
-        {
-            if (phaseConfig.healOnEnter > 0)
-            {
-                float healAmount = phaseConfig.healOnEnter;
-                health.Heal(healAmount);
-                Debug.Log($"<color=green>❤️ Boss healed for {healAmount} HP! Current HP: {health.CurrentHealth}/{health.MaxHealth}</color>");
-            }
-            else
-            {
-                Debug.Log($"No heal configured for this phase (healOnEnter = {phaseConfig.healOnEnter})");
-            }
-        }
-        else
-        {
-            Debug.LogError("Health component is null! Cannot heal boss.");
-        }
-
-        // Spawn entry effects
-        if (phaseConfig.phaseEntryEffects != null && phaseConfig.phaseEntryEffects.Length > 0)
-        {
-            foreach (var effect in phaseConfig.phaseEntryEffects)
-            {
-                if (effect != null)
-                    Instantiate(effect, transform.position, Quaternion.identity);
-            }
-        }
-
-        // Unlock new abilities
-        if (abilityBehaviour != null && phaseConfig.unlockedAbilities != null && phaseConfig.unlockedAbilities.Length > 0)
-        {
-            foreach (var ability in phaseConfig.unlockedAbilities)
-            {
-                Debug.Log($"Would unlock ability: {ability.abilityName}");
-            }
+            case BossPhase.Phase2:
+                OnPhase2();
+                break;
+            case BossPhase.Phase3:
+                OnPhase3();
+                break;
         }
     }
 
@@ -357,10 +203,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
             abilityBehaviour.SetAggressionMultiplier(1.5f);
 
         if (health != null)
-        {
             health.Heal(200f);
-            Debug.Log($"<color=green>❤️ Legacy Phase 2: Boss healed for 200 HP! Current HP: {health.CurrentHealth}/{health.MaxHealth}</color>");
-        }
     }
 
     private void OnPhase3()
@@ -369,19 +212,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
             abilityBehaviour.SetAggressionMultiplier(2f);
 
         if (health != null)
-        {
             health.Heal(200f);
-            Debug.Log($"<color=green>❤️ Legacy Phase 3: Boss healed for 200 HP! Current HP: {health.CurrentHealth}/{health.MaxHealth}</color>");
-        }
-    }
-
-    // Public method to manually test healing
-    public void TestHeal(float amount)
-    {
-        if (health != null)
-        {
-            health.Heal(amount);
-            Debug.Log($"<color=green>Test Heal: {amount} HP applied. Current HP: {health.CurrentHealth}/{health.MaxHealth}</color>");
-        }
     }
 }
