@@ -96,8 +96,6 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
             return;
         }
 
-        Debug.Log("[TurretPlacementController] Initializing...");
-
         // Find required dependencies
         if (playerTransform == null)
         {
@@ -141,7 +139,7 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
         placementRadius = defaultPlacementRadius;
 
         isInitialized = true;
-        Debug.Log("[TurretPlacementController] Initialized successfully.");
+        Debug.Log("[TurretPlacementController] Initialized");
     }
 
     public void PostInitialize()

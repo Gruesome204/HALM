@@ -1,8 +1,10 @@
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : MonoBehaviour, IGameSystem
 {
     public static SoundManager Instance { get; private set; }
+
+    public int InitializePriority => 5;
 
     private AudioSource audioSource;
 
@@ -22,7 +24,15 @@ public class SoundManager : MonoBehaviour
     public AudioClip roomClearedSound;
 
     // Add more clips here as needed
+    public void Initialize()
+    {
+        Debug.Log("[SoundManager] Initialized");
+    }
 
+    public void PostInitialize()
+    {
+
+    }
     private void Awake()
     {
         // Singleton pattern
@@ -77,4 +87,5 @@ public class SoundManager : MonoBehaviour
 
     //Enemies Defeated
     public void PlayRoomCleared() => PlaySFX(roomClearedSound);
+
 }

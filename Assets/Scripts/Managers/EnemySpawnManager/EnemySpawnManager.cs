@@ -80,8 +80,6 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             return;
         }
 
-        Debug.Log("[EnemySpawnManager] Initializing...");
-
         // Validate dependencies
         ValidateDependencies();
 
@@ -92,7 +90,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         CleanupStaleEnemies();
 
         isInitialized = true;
-        Debug.Log("[EnemySpawnManager] Initialized successfully.");
+        Debug.Log("[EnemySpawnManager] Initialized");
     }
 
     public void PostInitialize()

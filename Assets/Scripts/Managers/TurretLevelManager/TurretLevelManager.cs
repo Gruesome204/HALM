@@ -59,8 +59,6 @@ public class TurretLevelManager : MonoBehaviour, IGameSystem
             return;
         }
 
-        Debug.Log("[TurretLevelManager] Initializing...");
-
         // Validate dependencies
         if (TurretUpgradeChoiceManager.Instance == null)
         {
@@ -81,7 +79,7 @@ public class TurretLevelManager : MonoBehaviour, IGameSystem
         InitializeTurretProgress();
 
         isInitialized = true;
-        Debug.Log($"[TurretLevelManager] Initialized successfully with {turretProgressDict.Count} turret types.");
+        Debug.Log($"[TurretLevelManager] Initialized. {turretProgressDict.Count} turret types.");
     }
 
     public void PostInitialize()

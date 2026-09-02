@@ -44,7 +44,7 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
         appliedModifiers.Clear();
 
         isInitialized = true;
-        Debug.Log("[TurretGlobalModifierManager] Initialized successfully.");
+        Debug.Log("[TurretGlobalModifierManager] Initialized");
     }
 
     public void PostInitialize()

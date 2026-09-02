@@ -17,6 +17,7 @@ public class TurretUpgradeChoiceManager : MonoBehaviour, IGameSystem
     public int InitializePriority => 3;
     public void Initialize()
     {
+        Debug.Log("[TurretUpgradeChoiceManager] Initialized");
     }
     public void PostInitialize()
     {
