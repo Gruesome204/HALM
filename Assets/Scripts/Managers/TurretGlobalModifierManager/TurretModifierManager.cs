@@ -197,8 +197,8 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
             appliedModifiers.Add(runtimeModifier);
 
             Debug.Log($"[TurretGlobalModifierManager] Loaded modifier: {runtimeModifier.name}, " +
-                      $"Damage: +{runtimeModifier.additionalStats.turretDamageMultiplier * 100}%, " +
-                      $"Health: +{runtimeModifier.additionalStats.turretHealthMultiplier * 100}%");
+                      $"Damage: +{runtimeModifier.additionalStats.turretDamageBonus * 100}%, " +
+                      $"Health: +{runtimeModifier.additionalStats.turretDamageBonus * 100}%");
         }
 
         Debug.Log($"[TurretGlobalModifierManager] Loaded {appliedModifiers.Count} modifiers from GameData.");
@@ -216,7 +216,7 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
             description = "Doubles turret damage",
             additionalStats = new BuildMasterModifier.Stats
             {
-                turretDamageMultiplier = 5.0f
+                turretDamageBonus = 5.0f
             }
         };
         AddModifier(mod);
@@ -339,14 +339,14 @@ public class TurretGlobalModifierManager : MonoBehaviour, IGameSystem
         // Add all modifiers
         foreach (var mod in appliedModifiers)
         {
-            globalTurretPlacementCooldownMultiplier += mod.additionalStats.turretPlacementCooldownMultiplier;
-            globalHealthMultiplier += mod.additionalStats.turretHealthMultiplier;
-            globalDamageMultiplier += mod.additionalStats.turretDamageMultiplier;
+            globalTurretPlacementCooldownMultiplier += mod.additionalStats.turretPlacementCooldownBonus;
+            globalHealthMultiplier += mod.additionalStats.turretHealthBonus;
+            globalDamageMultiplier += mod.additionalStats.turretDamageBonus;
             globalShotsPerSecondBonus += mod.additionalStats.shotsPerSecondBonus;
-            globalProjectileSpeed += mod.additionalStats.turretProjectileSpeed;
-            globalProjectilesPerSalve += mod.additionalStats.turretProjectilesPerSalve;
+            globalProjectileSpeed += mod.additionalStats.turretProjectileSpeedBonus;
+            globalProjectilesPerSalve += mod.additionalStats.turretProjectilesPerSalveBonus;
             globalMaxTurretCapacityBonus += mod.additionalStats.turretMaxCapacityBonus;
-            globalPlacementRadiusMultiplier += mod.additionalStats.turretPlacementRadiusMultiplier;
+            globalPlacementRadiusMultiplier += mod.additionalStats.turretPlacementRadiusBonus;
         }
 
         // Apply to existing turrets

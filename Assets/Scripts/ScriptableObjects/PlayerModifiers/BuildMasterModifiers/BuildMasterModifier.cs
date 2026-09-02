@@ -25,54 +25,51 @@ public class BuildMasterModifier : ScriptableObject
     [System.Serializable]
     public struct Stats
     {
-        // Player stats
+        [Header("Player Stats")]
         public float health;
         public float maxHealth;
         public float armor;
         public float movementSpeed;
 
+
         [Header("Turret Global Stats")]
+        [Tooltip("Percentage bonus to turret placement cooldown speed (0.1 = 10% faster)")]
+        public float turretPlacementCooldownBonus; 
 
-        [Tooltip("Multiplier applied to turret placement cooldown. 0 = no change, 0.1 = 10% faster.")]
-        public float turretPlacementCooldownMultiplier;
+        [Tooltip("Percentage bonus to turret health (0.1 = +10%)")]
+        public float turretHealthBonus;
 
-        [Tooltip("Multiplier applied to turret health. 0 = no change, 0.1 = +10% HP.")]
-        public float turretHealthMultiplier;
+        [Tooltip("Percentage bonus to turret damage (0.2 = +20%)")]
+        public float turretDamageBonus;
 
-        [Tooltip("Multiplier applied to turret damage. 0 = no change, 0.2 = +20% damage.")]
-        public float turretDamageMultiplier;
-
-        [Tooltip("Additive bonus to shots per second for all turrets.")]
+        [Tooltip("Additive bonus to shots per second")]
         public float shotsPerSecondBonus;
 
-        [Tooltip("Additive bonus to number of projectiles per salve.")]
-        public int turretProjectilesPerSalve;
+        [Tooltip("Additive bonus to projectiles per salve")]
+        public int turretProjectilesPerSalveBonus; 
 
-        [Tooltip("Multiplier applied to projectile speed. 0 = no change, 0.1 = +10% speed.")]
-        public float turretProjectileSpeed;
+        [Tooltip("Percentage bonus to projectile speed (0.1 = +10%)")]
+        public float turretProjectileSpeedBonus;
 
-        [Tooltip("Additive bonus to maximum turret capacity.")]
+        [Tooltip("Additive bonus to max turret capacity")]
         public int turretMaxCapacityBonus;
 
-        [Tooltip("Multiplier applied to turret placement radius. 0 = no change, 0.2 = +20% radius.")]
-        public float turretPlacementRadiusMultiplier;
+        [Tooltip("Percentage bonus to placement radius (0.2 = +20%)")]
+        public float turretPlacementRadiusBonus;
 
-        public void SetDefaults()
+        public void ResetToDefault()
         {
-            // percentage-style → 0 = no change
-            turretPlacementCooldownMultiplier = 0f;
-            turretHealthMultiplier = 0f;
-            turretDamageMultiplier = 0f;
-            turretProjectileSpeed = 0f;
-            turretPlacementRadiusMultiplier = 0f;
+            // Percentage bonuses default to 0
+            turretPlacementCooldownBonus = 0f;
+            turretHealthBonus = 0f;
+            turretDamageBonus = 0f;
+            turretProjectileSpeedBonus = 0f;
+            turretPlacementRadiusBonus = 0f;
 
-            // additive stats
+            // Additive bonuses default to 0
             shotsPerSecondBonus = 0f;
-            turretProjectilesPerSalve = 0;
+            turretProjectilesPerSalveBonus = 0;
             turretMaxCapacityBonus = 0;
         }
     }
-
-
-
 }

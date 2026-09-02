@@ -80,7 +80,7 @@ public class TurretUpgradeMenuBehavior : MonoBehaviour, IMenu
                 null, // or pass the parent SO if needed
                 option
             );
-            Debug.Log($"Adding option: {option.name}, ID: {option.optionId}");
+            Debug.Log($"Adding option: {option.displayName}, ID: {option.optionId}");
             turretUpgradeChoices.Add(element.border);
         }
     }

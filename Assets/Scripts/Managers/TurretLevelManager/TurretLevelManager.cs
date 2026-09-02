@@ -298,7 +298,7 @@ public class TurretLevelManager : MonoBehaviour, IGameSystem
             {
                 if (option?.modifier != null)
                 {
-                    Debug.Log($"  - {option.name}: Damage x{option.modifier.damageMultiplier} | " +
+                    Debug.Log($"  - {option.displayName}: Damage x{option.modifier.damageMultiplier} | " +
                               $"FireRate x{option.modifier.shotsPerSecondBonus} | " +
                               $"Range +{option.modifier.rangeBonus}");
                 }

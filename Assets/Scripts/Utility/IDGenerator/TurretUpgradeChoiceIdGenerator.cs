@@ -28,7 +28,7 @@ public static class TurretUpgradeChoiceIdGenerator
                     option.optionId = Guid.NewGuid().ToString();
                     totalGenerated++;
                     dirty = true;
-                    Debug.Log($"Generated ID for option '{option.name}' in '{choiceSO.name}'");
+                    Debug.Log($"Generated ID for option '{option.displayName}' in '{choiceSO.name}'");
                 }
             }
 
