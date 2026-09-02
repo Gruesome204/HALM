@@ -53,10 +53,6 @@ public class AbilityBlueprint : ScriptableObject
     [Range(0f, 1f)]
     public float maxTargetHealthPercent = 1f;
 
-    [Header("Resource Cost")]
-    public float energyCost = 0f;
-    public float manaCost = 0f;
-
     [Header("Visuals & Audio (Optional)")]
     public GameObject visualEffectPrefab;
     public AudioClip soundEffect;

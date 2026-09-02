@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
 {
@@ -7,10 +8,14 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
     public GameObject target;
     private float maxAbilityRange;
     private bool isPaused;
-    private float abilityTimer = 0f; // deltaTime-based timer
+    private float abilityTimer = 0f;
     [SerializeField] private float abilityCheckInterval = 1f;
 
     private float aggressionMultiplier = 1f;
+    private List<GameObject> nearbyEnemies = new List<GameObject>();
+
+    // Layer mask for enemies (players)
+    private const int PLAYER_LAYER = 1 << 9; // Assuming Layer 9 is "Player"
 
     private void Start()
     {
@@ -38,14 +43,30 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
         if (abilityTimer < abilityCheckInterval)
             return;
 
+        // Scan for nearby enemies (players)
+        ScanForEnemies();
+
         if (target == null)
-            return;
+        {
+            // Try to find a new target
+            target = FindBestTarget();
+            if (target == null)
+                return;
+        }
 
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > maxAbilityRange)
+
+        // Check if target is out of range for non-AoE abilities
+        bool hasNonAOEAbility = abilities.Any(a => a.targetType != AbilityTargetType.AreaOfEffect &&
+                                                   a.targetType != AbilityTargetType.Cone &&
+                                                   a.targetType != AbilityTargetType.GroundPlacement &&
+                                                   a.targetType != AbilityTargetType.Direction);
+
+        if (distance > maxAbilityRange && hasNonAOEAbility)
         {
-            target = null;
-            return;
+            target = FindBestTarget();
+            if (target == null)
+                return;
         }
 
         var runtimeList = AbilityManager.Instance.GetAbilities(gameObject);
@@ -61,6 +82,14 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
             var ab = runtimeList[i];
             if (ab != null && ab.CanUse(gameObject, target))
             {
+                // For AoE abilities, check if there are enough targets
+                if (ab.ability.aoeShape != AoEShape.None)
+                {
+                    var targets = ab.GetTargetsInAoE(gameObject, target);
+                    if (targets.Count < 1)
+                        continue;
+                }
+
                 if (ab.ability.priority > maxPriority)
                 {
                     selectedAbility = ab;
@@ -78,17 +107,67 @@ public class EnemyAbilityBehaviour : MonoBehaviour, IPausable
         {
             abilityTimer = 0f;
             Debug.Log($"{name} used ability: {selectedAbility.ability.abilityName}");
+
+            // If AoE, log how many targets were hit
+            if (selectedAbility.ability.aoeShape != AoEShape.None)
+            {
+                var targetsHit = selectedAbility.GetTargetsInAoE(gameObject, target);
+                Debug.Log($"{name} hit {targetsHit.Count} targets with AoE");
+            }
         }
-        else
+    }
+
+    private void ScanForEnemies()
+    {
+        nearbyEnemies.Clear();
+
+        // Only detect objects on the Player layer
+        Collider[] colliders = Physics.OverlapSphere(transform.position, maxAbilityRange, PLAYER_LAYER);
+
+        foreach (var collider in colliders)
         {
-            Debug.Log($"{name} tried to use ability but failed (cooldown or invalid target).");
+            if (collider.gameObject != gameObject)
+            {
+                if (collider.GetComponent<IDamagable>() != null)
+                {
+                    nearbyEnemies.Add(collider.gameObject);
+                }
+            }
         }
+    }
+
+    private GameObject FindBestTarget()
+    {
+        if (nearbyEnemies.Count == 0)
+            return null;
+
+        // Try to find target based on all abilities' target selection preferences
+        var bestTarget = nearbyEnemies.OrderByDescending(t =>
+        {
+            float score = 0f;
+            foreach (var ability in abilities)
+            {
+                if (ability.targetType == AbilityTargetType.Self || ability.targetSelection == TargetSelection.Self)
+                    continue;
+
+                // Check if ability can be used
+                var runtime = AbilityManager.Instance.GetAbilityRuntime(gameObject, ability);
+                if (runtime != null && runtime.CanUse(gameObject, t))
+                {
+                    score += ability.priority;
+                }
+            }
+            return score;
+        }).FirstOrDefault();
+
+        return bestTarget;
     }
 
     public void SetTarget(GameObject newTarget)
     {
         target = newTarget;
     }
+
     public void SetAggressionMultiplier(float value)
     {
         aggressionMultiplier = value;
