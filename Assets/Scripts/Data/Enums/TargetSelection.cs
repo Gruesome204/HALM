@@ -1,0 +1,1 @@
+public enum TargetSelection { Self, ClosestEnemy, LowestHPEnemy, RandomEnemy }

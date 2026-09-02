@@ -1,5 +1,4 @@
 using UnityEngine;
-public enum TargetSelection { Self, ClosestEnemy, LowestHPEnemy, RandomEnemy }
 
 [CreateAssetMenu(menuName = "Game/Abilities/New AbilityBlueprint")]
 public class AbilityBlueprint : ScriptableObject
@@ -10,15 +9,18 @@ public class AbilityBlueprint : ScriptableObject
     [TextArea(2, 6)]
     public string description;
     public AbilityCategory category = AbilityCategory.Offensive;
-        [Tooltip("Cooldown time in seconds before the ability can be used again.")]
+
+    [Tooltip("Cooldown time in seconds before the ability can be used again.")]
     [Range(0.1f, 60f)]
     public float cooldown = 1f;
 
     [Header("Targeting")]
     [Tooltip("Defines how this ability selects its target.")]
     public AbilityTargetType targetType = AbilityTargetType.SingleTarget;
+
     [Tooltip("Defines which target is selected when multiple are in range.")]
     public TargetSelection targetSelection = TargetSelection.ClosestEnemy;
+
     [Tooltip("Range within which the ability can be used.")]
     [Range(0.5f, 50f)]
     public float range = 1f;
@@ -29,12 +31,12 @@ public class AbilityBlueprint : ScriptableObject
 
     [Header("Area of Effect (Optional)")]
     public AoEShape aoeShape = AoEShape.None;
+
     [Tooltip("Radius of AoE effect if applicable.")]
     public float aoeRadius = 1f;
     [Tooltip("Angle for cone AoE.")]
     [Range(0, 180)]
     public float aoeAngle = 90f;
-
 
 
     [Header("Effects")]
