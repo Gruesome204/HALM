@@ -14,7 +14,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
     public int remainingPierces;
 
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask targetLayer;
     [SerializeField] private LayerMask wallLayer;
 
     [Header("Chain Lightning")]
@@ -105,6 +105,40 @@ public class ProjectileBehaviour : MonoBehaviour
         isHoming = true;
     }
 
+    public void SetLayerMasks(LayerMask target, LayerMask wall, LayerMask obstacle)
+    {
+        targetLayer = target;
+        wallLayer = wall;
+        obstacleLayer = obstacle;
+    }
+
+    public void SetAOE(GameObject effectPrefab)
+    {
+        aoeEffectPrefab = effectPrefab;
+    }
+
+    public void SetPiercing(int pierces)
+    {
+        remainingPierces = pierces;
+    }
+
+    public void SetKnockback(float strength, float duration)
+    {
+        knockbackStrength = strength;
+        knockbackDuration = duration;
+    }
+
+    public void SetChainLightning(int bounceCount, float bounceRange)
+    {
+        chainBounceCount = bounceCount;
+        chainBounceRange = bounceRange;
+    }
+
+    public void SetHoming(float strength, Transform target)
+    {
+        homingStrength = strength;
+        SetHomingTarget(target);
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if hit a wall
@@ -115,7 +149,7 @@ public class ProjectileBehaviour : MonoBehaviour
             return;
         }
 
-        if (((1 << other.gameObject.layer) & enemyLayer) == 0)
+        if (((1 << other.gameObject.layer) & targetLayer) == 0)
             return;
         if (other.gameObject == owner)
             return;
@@ -183,7 +217,7 @@ public class ProjectileBehaviour : MonoBehaviour
         Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(
             currentTarget.position,
             chainBounceRange,
-            enemyLayer
+            targetLayer
         );
 
         Transform nearestEnemy = null;
@@ -307,7 +341,7 @@ public class ProjectileBehaviour : MonoBehaviour
         Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(
             center,
             aoeRadius,
-            enemyLayer
+            targetLayer
         );
 
         foreach (Collider2D enemyCollider in enemiesInRange)
