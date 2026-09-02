@@ -3,8 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New EnemyStats", menuName = "Game/Enemy/New EnemyStats")]
 public class EnemyBaseStatsSO : EnemyBaseStats
 {
-    // All properties inherited from EnemyBaseStats
-    // No additional properties needed for normal enemies
 
     [Header("Normal Enemy Specific")]
     [Tooltip("Additional properties for normal enemies can go here")]
