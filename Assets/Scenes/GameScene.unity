@@ -1705,6 +1705,11 @@ MonoBehaviour:
   bossMapPrefab: {fileID: 5872725842470093268, guid: 7f53b94edef1c1e4ab383266d0d5bb6a, type: 3}
   mapParent: {fileID: 855785565}
   logDebugMessages: 1
+  useTestRoom: 0
+  testRoomPrefab: {fileID: 5872725842470093268, guid: 7f53b94edef1c1e4ab383266d0d5bb6a, type: 3}
+  loadTestRoomOnStart: 0
+  testRoomIsBossRoom: 1
+  testBossPrefab: {fileID: 3645313828594104337, guid: 2975beda649ac7c468f4fdf98da00c4d, type: 3}
 --- !u!1 &1141308297
 GameObject:
   m_ObjectHideFlags: 0
