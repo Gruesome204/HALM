@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class BossEnemyBehaviour : EnemyBehaviour
 {
-    [Header("Boss Phases")]
-    [SerializeField] private float phase2HealthThreshold = 0.5f;
-    [SerializeField] private float phase3HealthThreshold = 0.3f;
-
     [Header("Boss UI")]
     [SerializeField] private BossBarUI bossBarUI;
     [SerializeField] private EnemyStats stats;
-    public BossPhase CurrentPhase { get; private set; } = BossPhase.Phase1;
-    private bool isInitialized = false; 
+
+    private bool isInitialized = false;
+    private bool bossPhaseChanged = false;
 
     protected override void Awake()
     {
@@ -21,16 +18,23 @@ public class BossEnemyBehaviour : EnemyBehaviour
             bossBarUI = FindObjectOfType<BossBarUI>();
 
         if (stats == null)
-            stats = FindObjectOfType<EnemyStats>();
+            stats = GetComponent<EnemyStats>();
     }
 
     private void Start()
     {
         SetupBossBar();
-        isInitialized = true; 
+        isInitialized = true;
 
-        CurrentPhase = BossPhase.Phase1;
-        Debug.Log($"{name} initialized with {CurrentPhase} at full health ({health?.CurrentHealth}/{health?.MaxHealth})");
+        // Initialize boss phase
+        if (stats != null && stats.IsBoss() && stats.BossStats.isMultiStageBoss)
+        {
+            float healthPercent = health != null ? health.CurrentHealth / health.MaxHealth : 1f;
+            stats.TryUpdatePhase(healthPercent);
+            UpdateBossPhaseUI();
+        }
+
+        Debug.Log($"{name} initialized at phase {stats?.CurrentPhaseIndex}");
     }
 
     private void AutoDetectComponents()
@@ -93,15 +97,9 @@ public class BossEnemyBehaviour : EnemyBehaviour
             return;
         }
 
-        if (stats == null)
+        if (stats == null || !stats.IsBoss())
         {
-            Debug.LogError("[BossEnemyBehaviour] BossStats not assigned!");
-            return;
-        }
-
-        if (stats == null)
-        {
-            Debug.LogError("[BossEnemyBehaviour] EnemyStats not found!");
+            Debug.LogError("[BossEnemyBehaviour] Boss stats not found!");
             return;
         }
 
@@ -111,9 +109,16 @@ public class BossEnemyBehaviour : EnemyBehaviour
             return;
         }
 
-       // bossBarUI.SetupBossBar(stats.baseStats);
+        // Setup boss bar with boss stats
+        bossBarUI.SetupBossBar(stats.BossStats);
         bossBarUI.SetHealth(health.CurrentHealth, health.MaxHealth);
         bossBarUI.ShowBossBar();
+
+        // Update phase UI if multi-stage
+        if (stats.BossStats.isMultiStageBoss && stats.CurrentPhaseIndex >= 0)
+        {
+            bossBarUI.ForcePhaseChange(stats.CurrentPhaseIndex);
+        }
     }
 
     private void OnEnable()
@@ -139,20 +144,108 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     protected override void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
-
         if (!isInitialized) return;
+
+        // Apply enrage damage multiplier if applicable
+        if (stats != null && stats.IsBoss())
+        {
+            // Check if enrage timer is active (you'll need to track this)
+            // For now, just apply the multiplier if enrageTimer > 0
+            if (stats.BossStats.enrageTimer > 0)
+            {
+                damageData.amount *= stats.GetBossEnrageMultiplier();
+            }
+        }
 
         base.HandleDamaged(damageData, knockbackData);
     }
 
-
     private void HandleHealthChanged(float currentHealth, float maxHealth)
     {
-
         if (!isInitialized) return;
 
+        // Update boss bar
         if (bossBarUI != null)
             bossBarUI.SetHealth(currentHealth, maxHealth);
 
+        // Check for phase changes
+        if (stats != null && stats.IsBoss() && stats.BossStats.isMultiStageBoss)
+        {
+            float healthPercent = currentHealth / maxHealth;
+
+            if (stats.TryUpdatePhase(healthPercent))
+            {
+                // Phase changed!
+                var phase = stats.GetCurrentPhase();
+                if (phase != null)
+                {
+                    Debug.Log($"[Boss] Phase changed to: {phase.phaseName}");
+
+                    // Apply phase effects
+                    stats.ApplyPhaseEffects(phase);
+
+                    // Update UI
+                    UpdateBossPhaseUI();
+
+                    // Heal boss on phase entry if configured
+                    if (phase.healOnEnter > 0 && health != null)
+                    {
+                        health.Heal(phase.healOnEnter);
+                    }
+
+                    // Trigger phase entry effects
+                    if (phase.phaseEntryEffects != null)
+                    {
+                        foreach (var effect in phase.phaseEntryEffects)
+                        {
+                            if (effect != null)
+                                Instantiate(effect, transform.position, Quaternion.identity);
+                        }
+                    }
+
+                    // Show phase announcement
+                    if (!string.IsNullOrEmpty(phase.phaseAnnouncement))
+                    {
+                        // Show announcement in UI (you'll need to implement this)
+                        Debug.Log($"<color=red>BOSS ANNOUNCEMENT:</color> {phase.phaseAnnouncement}");
+                    }
+
+                    // Unlock new abilities
+                    if (phase.unlockedAbilities != null && abilityBehaviour != null)
+                    {
+                        foreach (var ability in phase.unlockedAbilities)
+                        {
+                            // Unlock ability (you'll need to implement this)
+                            Debug.Log($"[Boss] Unlocked ability: {ability.abilityName}");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void UpdateBossPhaseUI()
+    {
+        if (bossBarUI != null && stats != null && stats.IsBoss())
+        {
+            bossBarUI.ForcePhaseChange(stats.CurrentPhaseIndex);
+        }
+    }
+
+    // Public method to manually force a phase change (for testing or events)
+    public void ForcePhaseChange(int phaseIndex)
+    {
+        if (stats != null && stats.IsBoss() && stats.BossStats.isMultiStageBoss)
+        {
+            stats.CurrentPhaseIndex = phaseIndex;
+            UpdateBossPhaseUI();
+
+            var phase = stats.GetCurrentPhase();
+            if (phase != null)
+            {
+                stats.ApplyPhaseEffects(phase);
+                Debug.Log($"[Boss] Forced phase change to: {phase.phaseName}");
+            }
+        }
     }
 }

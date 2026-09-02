@@ -31,7 +31,7 @@ public class BossBarUI : MonoBehaviour
         // Set up phase info if multi-stage
         if (bossStats.isMultiStageBoss && bossStats.phases != null && bossStats.phases.Length > 0)
         {
-            UpdatePhaseUI(0); // Start at phase 1
+            UpdatePhaseUI(0);
         }
     }
 
@@ -66,20 +66,18 @@ public class BossBarUI : MonoBehaviour
         if (currentBossStats == null || !currentBossStats.isMultiStageBoss)
             return;
 
-        if (currentBossStats.phases != null && phaseIndex < currentBossStats.phases.Length)
+        if (currentBossStats.phases != null && phaseIndex >= 0 && phaseIndex < currentBossStats.phases.Length)
         {
             var phase = currentBossStats.phases[phaseIndex];
 
             if (bossPhaseText != null)
                 bossPhaseText.text = phase.phaseName;
 
-            // Optionally update color
             if (bossBarBackground != null)
                 bossBarBackground.color = phase.phaseColor;
         }
     }
 
-    // Legacy compatibility method - remove if not needed
     public void UpdateBossBar(float currentHealth, float maxHealth, int phaseIndex)
     {
         SetHealth(currentHealth, maxHealth);
