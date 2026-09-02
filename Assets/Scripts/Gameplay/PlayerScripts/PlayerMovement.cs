@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour, IPausable, IDashable
@@ -58,19 +57,14 @@ public class PlayerMovement : MonoBehaviour, IPausable, IDashable
     }
 
 
-    /// <summary>
     /// Apply a slow for a specific duration.
     /// multiplier = 0.5f → half speed, duration in seconds
-    /// </summary>
     public void ApplySlow(float multiplier, float duration)
     {
         if (multiplier <= 0f || duration <= 0f) return;
         activeSlows.Add(new Slow(multiplier, duration));
     }
 
-    /// <summary>
-    /// Clears all active slows (optional)
-    /// </summary>
     public void ClearSlows() => activeSlows.Clear();
 
 

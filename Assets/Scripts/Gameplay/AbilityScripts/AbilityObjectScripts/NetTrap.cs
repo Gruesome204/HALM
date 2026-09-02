@@ -67,7 +67,7 @@ public class NetTrap : MonoBehaviour
 
     private bool TryApplySlow(GameObject target)
     {
-        // Check for PlayerMovement component (your existing script)
+        // Check for PlayerMovement component
         PlayerMovement playerMovement = target.GetComponent<PlayerMovement>();
         if (playerMovement != null)
         {
@@ -75,7 +75,7 @@ public class NetTrap : MonoBehaviour
             return true;
         }
 
-        // Fallback: Check for PlayerMovement on parent (if it's a child object)
+        // Fallback: Check for PlayerMovement on parent
         PlayerMovement parentMovement = target.GetComponentInParent<PlayerMovement>();
         if (parentMovement != null)
         {
@@ -89,19 +89,14 @@ public class NetTrap : MonoBehaviour
 
     private void RemoveSlow(GameObject target)
     {
-        // Note: Your PlayerMovement doesn't have a "RemoveSlow" method for individual slows
-        // The slows are handled by your existing system which automatically expires them
-        // If you want to manually remove a specific slow, you'd need to add that functionality
-
         // For now, we'll just note that the player left the net
         Debug.Log($"Player {target.name} left the net area");
 
-        // Optional: If you want to immediately remove ALL slows when leaving the net
-        // PlayerMovement playerMovement = target.GetComponent<PlayerMovement>();
-        // if (playerMovement != null)
-        // {
-        //     playerMovement.ClearSlows(); // This would clear ALL slows immediately
-        // }
+        PlayerMovement playerMovement = target.GetComponent<PlayerMovement>();
+        if (playerMovement != null)
+        {
+            playerMovement.ClearSlows(); // This would clear ALL slows immediately
+        }
     }
 
     public void Deactivate()
@@ -110,10 +105,10 @@ public class NetTrap : MonoBehaviour
         // Optionally clear slows from all affected targets when net is destroyed
         foreach (var target in affectedTargets)
         {
+            PlayerMovement playerMovement = target.GetComponent<PlayerMovement>();
             if (target != null)
             {
-                // Don't remove slows here to allow them to expire naturally
-                // Or call ClearSlows() if you want immediate removal
+                playerMovement.ClearSlows();
             }
         }
         affectedTargets.Clear();
