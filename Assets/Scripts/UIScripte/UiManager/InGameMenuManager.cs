@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InGameMenuManager : MonoBehaviour
+public class InGameMenuManager : MonoBehaviour, IGameSystem
 {
     public static InGameMenuManager Instance{ get; private set; }
     void Awake() => Instance = this;
@@ -13,6 +13,16 @@ public class InGameMenuManager : MonoBehaviour
     public List<GameObject> openMenus = new List<GameObject>();
 
     public event Action<BuildMasterModifier, bool> OnBuildmasterModifierChanged;
+
+    public int InitializePriority => 1;
+
+    public void Initialize()
+    {    
+    }
+
+    public void PostInitialize()
+    {
+    }
 
     void Start()
     {
@@ -162,4 +172,5 @@ public class InGameMenuManager : MonoBehaviour
         CloseAllMenus();
         OpenOrCloseOneMenu("GameWonDoc", true);
     }
+
 }
