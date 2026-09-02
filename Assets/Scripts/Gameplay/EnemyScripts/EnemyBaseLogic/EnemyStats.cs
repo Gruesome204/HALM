@@ -124,5 +124,4 @@ public class EnemyStats : MonoBehaviour
             currentHealth = maxHealth;
     }
 
-    // REMOVED: Heal() method - moved to EnemyHealth
 }

@@ -37,49 +37,6 @@ public class EnemyBaseBossStatsSO : EnemyBaseStats
         return baseMaxHealth + (level - 1) * baseHealthScaleFactor * 1.5f;
     }
 
-    // Get phase by index
-    public PhaseConfig GetPhase(int index)
-    {
-        if (index >= 0 && index < phases.Length)
-            return phases[index];
-        return null;
-    }
-
-    // Get the phase that corresponds to a health percentage
-    // Get the phase that corresponds to a health percentage
-    public int GetPhaseForHealthPercent(float healthPercent)
-    {
-        if (!isMultiStageBoss || phases.Length == 0)
-            return 1;
-
-        // Start from Phase 1 and go up
-        // Phase 1 is the default (no threshold check needed)
-        int phase = 1;
-
-        for (int i = 0; i < phases.Length; i++)
-        {
-            // If health is below this threshold, we've entered the next phase
-            if (healthPercent <= phases[i].healthThreshold)
-            {
-                phase = i + 2; // +2 because: i=0 = Phase 2, i=1 = Phase 3, etc.
-            }
-            else
-            {
-                // If health is above this threshold, stop checking
-                // (we've found the correct phase)
-                break;
-            }
-        }
-
-        return phase;
-    }
-
-    public float GetPhaseHealthThreshold(int phaseIndex)
-    {
-        if (phaseIndex - 1 < phases.Length && phaseIndex >= 1)
-            return phases[phaseIndex - 1].healthThreshold;
-        return 0f;
-    }
 }
 
 [System.Serializable]
