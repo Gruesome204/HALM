@@ -202,8 +202,17 @@ public class BossBarUI : MonoBehaviour
             return;
         }
 
-        float healthPercent = currentHealth / maxHealth;
+        // Make sure maxHealth is set
+        if (maxHealth <= 0)
+        {
+            Debug.LogWarning($"[BossBarUI] maxHealth is {maxHealth}, cannot calculate percentage");
+            return;
+        }
+
+        float healthPercent = Mathf.Clamp01(currentHealth / maxHealth);
         healthSlider.value = healthPercent;
+
+        Debug.Log($"[BossBarUI] Health updated: {currentHealth}/{maxHealth} = {healthPercent:P0}");
 
         if (bossStats?.isMultiStageBoss == true)
             CheckPhaseTransition(healthPercent);
