@@ -2009,7 +2009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e819c7b32f84f234487e425e49c07175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allMenusInThisScene: []
+  allMenuesInThisScene: []
   openMenus: []
 --- !u!1 &1542782589
 GameObject:
