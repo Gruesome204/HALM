@@ -77,7 +77,7 @@ public class PlayerManager : MonoBehaviour, IGameSystem
         spawnPosition = Vector3.zero;
 
         isInitialized = true;
-        Debug.Log("[PlayerManager] Initialized");
+        Debug.Log("[PlayerManager] Initialized successfully.");
     }
 
     public void PostInitialize()

@@ -21,7 +21,6 @@ public class GridManager : MonoBehaviour, IGameSystem
     public int InitializePriority => 2;
     public void Initialize()
     {
-        Debug.Log("[GridManager] Initialized");
     }
     public void PostInitialize()
     {

@@ -11,7 +11,6 @@ public class AbilityManager : MonoBehaviour, IGameSystem
 
     public void Initialize()
     {
-        Debug.Log("[AbilityManager] Initialized");
     }
 
     public void PostInitialize()

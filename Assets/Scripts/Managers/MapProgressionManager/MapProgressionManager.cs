@@ -30,7 +30,7 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
     public int InitializePriority => 4;
     public void Initialize()
     {
-        Debug.Log("[MapProgressionManager] Initialized");
+      
     }
 
     public void PostInitialize()

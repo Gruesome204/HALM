@@ -1,19 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridPathfinding : MonoBehaviour, IGameSystem
+public class GridPathfinding : MonoBehaviour
 {
     public static GridPathfinding Instance;
 
-    public int InitializePriority => 2;
-    public void Initialize()
-    {
-        Debug.Log("[GridPathfinding] Initialized");
-    }
-
-    public void PostInitialize()
-    {
-    }
     private void Awake()
     {
         Instance = this;
@@ -145,5 +136,4 @@ public class GridPathfinding : MonoBehaviour, IGameSystem
 
         return best;
     }
-
 }
