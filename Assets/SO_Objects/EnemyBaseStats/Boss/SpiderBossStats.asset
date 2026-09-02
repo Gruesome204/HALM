@@ -16,7 +16,7 @@ MonoBehaviour:
   baseDescription: Der Grund warum Mitchel kein Testing betreiben wird.
   enemyType: 1
   baseLevel: 20
-  baseMovementSpeed: 4
+  baseMovementSpeed: 6
   baseMaxHealth: 500
   baseArmor: 5
   baseMagicResistance: 0
