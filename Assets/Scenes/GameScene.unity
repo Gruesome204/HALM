@@ -533,9 +533,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellSize: 1
-  gridWidth: 100
-  gridHeight: 100
-  originPosition: {x: -25, y: -25, z: 0}
+  gridWidth: 80
+  gridHeight: 80
+  originPosition: {x: -40, y: -40, z: 0}
   gridZPosition: 0
   groundLayer:
     serializedVersion: 2
