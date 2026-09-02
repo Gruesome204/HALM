@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 3.0100098}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9051525077471210875
 CanvasRenderer:
@@ -504,9 +504,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c7129f6edcd144fa42eb56f1d846a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthSlider: {fileID: 6696069379500600860}
-  bossNameText: {fileID: 8459130000345273009}
   bossPortraitImage: {fileID: 0}
+  bossNameText: {fileID: 8459130000345273009}
+  healthSlider: {fileID: 6696069379500600860}
+  phaseText: {fileID: 0}
+  phaseIndicatorImage: {fileID: 0}
+  phaseColors:
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  enrageIndicator: {fileID: 0}
+  enrageFillImage: {fileID: 0}
+  enrageTimerText: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  enrageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &7751874240049465809
 MonoBehaviour:
   m_ObjectHideFlags: 0

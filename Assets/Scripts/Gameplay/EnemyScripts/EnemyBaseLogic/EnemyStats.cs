@@ -1,4 +1,5 @@
 using UnityEngine;
+
 [DefaultExecutionOrder(-100)]
 public class EnemyStats : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class EnemyStats : MonoBehaviour
 
     [Header("Current Stats - Defensive")]
     public float maxHealth;
-    public float currentHealth;
+    public float currentHealth; // Still store it, but only EnemyHealth modifies it
     public float currentArmor;
     public float currentMagicResistance;
     public float currentKnockbackReduction;
@@ -44,14 +45,12 @@ public class EnemyStats : MonoBehaviour
     #region Unity Callbacks
     private void Awake()
     {
-        // Initialize stats when the component is created
         Initialize();
     }
 
     private void OnEnable()
     {
-        // Re-initialize if the object is re-enabled (after being disabled)
-        // But only if health is still 0 (to avoid resetting mid-combat)
+        // Only re-initialize if we haven't been set up yet
         if (maxHealth <= 0)
         {
             Initialize();
@@ -78,18 +77,18 @@ public class EnemyStats : MonoBehaviour
         speedScaleFactor = baseStats.baseSpeedScaleFactor;
         armorScaleFactor = baseStats.baseArmorScaleFactor;
 
-        // Defensive Stats
+        // Defensive Stats - Only calculate max health, don't set current health
         maxHealth = baseStats.baseMaxHealth * GetLevelScaling(healthScaleFactor);
-        currentHealth = maxHealth;
+        // currentHealth will be set by EnemyHealth
         currentArmor = baseStats.baseArmor * GetLevelScaling(armorScaleFactor);
-        currentMagicResistance = baseStats.baseMagicResistance; // optional: scale if needed
+        currentMagicResistance = baseStats.baseMagicResistance;
         currentKnockbackReduction = Mathf.Clamp01(baseStats.baseKnockbackReduction);
         currentKnockbackForce = baseStats.baseKnockbackForce;
         currentKnockbackDuration = baseStats.baseKnockbackDuration;
 
         // Offensive Stats
         currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
-        currentAttackSpeed = baseStats.baseAttackSpeed; // could scale with level if desired
+        currentAttackSpeed = baseStats.baseAttackSpeed;
         currentCritChance = baseStats.baseCritChance;
         currentCritMultiplier = baseStats.baseCritHitMultiplier;
         currentAttackRange = baseStats.baseAttackRange;
@@ -107,8 +106,7 @@ public class EnemyStats : MonoBehaviour
 
     private float GetLevelScaling(float factor)
     {
-        float result = ((currentLevel - 1) * factor) + 1;
-        return result;
+        return ((currentLevel - 1) * factor) + 1;
     }
 
     public void SetLevel(int level)
@@ -121,22 +119,10 @@ public class EnemyStats : MonoBehaviour
         currentDamage = baseStats.baseDamage * GetLevelScaling(damageScaleFactor);
         currentMovementSpeed = baseStats.baseMovementSpeed * GetLevelScaling(speedScaleFactor);
 
-        // Optional: keep currentHealth relative to new max
-        currentHealth = Mathf.Min(currentHealth, maxHealth);
+        // Clamp current health to new max (let EnemyHealth handle this)
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
     }
 
-    public void Heal(float amount)
-    {
-        if (currentHealth <= 0) return; // dead enemies can't be healed
-
-        currentHealth += amount;
-        currentHealth = Mathf.Min(currentHealth, maxHealth); // clamp to maxHealth
-
-        Debug.Log($"{gameObject.name} healed {amount} HP. Current health: {currentHealth}");
-
-        // Optional: update health bar if using UI
-        var healthComponent = GetComponent<EnemyHealth>();
-        if (healthComponent != null)
-            healthComponent.UpdateHealthBar();
-    }
+    // REMOVED: Heal() method - moved to EnemyHealth
 }

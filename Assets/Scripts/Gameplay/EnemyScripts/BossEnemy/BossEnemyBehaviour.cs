@@ -7,16 +7,18 @@ public class BossEnemyBehaviour : EnemyBehaviour
     [SerializeField] private float phase3HealthThreshold = 0.3f;
 
     [Header("Boss UI")]
-    [SerializeField] private BossBarUI bossBarUI; // Drag your BossBarUI prefab here
-    [SerializeField] private EnemyBaseBossStatsSO bossStats; // Assign in Inspector
+    [SerializeField] private BossBarUI bossBarUI;
+    [SerializeField] private EnemyBaseBossStatsSO bossStats;
 
     public BossPhase CurrentPhase { get; private set; } = BossPhase.Phase1;
 
-    protected void Awake()
+    protected override void Awake()
     {
+        // Auto-detect components if not assigned
+        AutoDetectComponents();
+
         base.Awake();
 
-        // Find boss bar if not assigned
         if (bossBarUI == null)
             bossBarUI = FindObjectOfType<BossBarUI>();
     }
@@ -24,6 +26,68 @@ public class BossEnemyBehaviour : EnemyBehaviour
     private void Start()
     {
         SetupBossBar();
+    }
+
+    /// <summary>
+    /// Automatically detects and assigns required components if they're not set in the Inspector
+    /// </summary>
+    private void AutoDetectComponents()
+    {
+        // Auto-detect stats if not assigned
+        if (stats == null)
+        {
+            stats = GetComponent<EnemyStats>();
+            if (stats == null)
+                Debug.LogError($"[BossEnemyBehaviour] {gameObject.name}: No EnemyStats component found!");
+        }
+
+        // Auto-detect health if not assigned
+        if (health == null)
+        {
+            health = GetComponent<EnemyHealth>();
+            if (health == null)
+                Debug.LogError($"[BossEnemyBehaviour] {gameObject.name}: No EnemyHealth component found!");
+        }
+
+        // Auto-detect movement if not assigned
+        if (movement == null)
+        {
+            movement = GetComponent<EnemyMovement>();
+            if (movement == null)
+                Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyMovement component found!");
+        }
+
+        // Auto-detect ability behaviour if not assigned
+        if (abilityBehaviour == null)
+        {
+            abilityBehaviour = GetComponent<EnemyAbilityBehaviour>();
+            if (abilityBehaviour == null)
+                Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyAbilityBehaviour component found!");
+        }
+
+        // Auto-detect knockback if not assigned
+        if (knockback == null)
+        {
+            knockback = GetComponent<EnemyKnockback>();
+            if (knockback == null)
+                Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyKnockback component found!");
+        }
+
+        // Auto-detect attack if not assigned
+        if (attack == null)
+        {
+            attack = GetComponent<EnemyAttack>();
+            if (attack == null)
+                Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyAttack component found!");
+        }
+
+        // Auto-detect enemy animator if not assigned
+        if (enemyAnimator == null)
+        {
+            enemyAnimator = GetComponent<EnemyAnimator>();
+            if (enemyAnimator == null)
+                Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: No EnemyAnimator component found!");
+        }
     }
 
     private void SetupBossBar()
@@ -40,15 +104,20 @@ public class BossEnemyBehaviour : EnemyBehaviour
             return;
         }
 
-        // Setup the boss bar
+        if (stats == null)
+        {
+            Debug.LogError("[BossEnemyBehaviour] EnemyStats not found!");
+            return;
+        }
+
+        if (health == null)
+        {
+            Debug.LogError("[BossEnemyBehaviour] EnemyHealth not found!");
+            return;
+        }
+
         bossBarUI.SetupBossBar(bossStats);
-
-        // Set initial health
-        float maxHealth = stats.maxHealth;
-        float currentHealth = stats.currentHealth;
-        bossBarUI.SetHealth(currentHealth, maxHealth);
-
-        // Show the bar
+        bossBarUI.SetHealth(health.CurrentHealth, health.MaxHealth);
         bossBarUI.ShowBossBar();
     }
 
@@ -57,7 +126,8 @@ public class BossEnemyBehaviour : EnemyBehaviour
         if (health != null)
         {
             health.OnDamaged += HandleDamaged;
-            health.OnHealed += HandleHealed; // Add this event
+            health.OnHealed += HandleHealed;
+            health.OnHealthChanged += HandleHealthChanged;
         }
     }
 
@@ -67,9 +137,9 @@ public class BossEnemyBehaviour : EnemyBehaviour
         {
             health.OnDamaged -= HandleDamaged;
             health.OnHealed -= HandleHealed;
+            health.OnHealthChanged -= HandleHealthChanged;
         }
 
-        // Hide boss bar when boss dies/disabled
         if (bossBarUI != null)
             bossBarUI.HideBossBar();
     }
@@ -77,25 +147,32 @@ public class BossEnemyBehaviour : EnemyBehaviour
     protected override void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
         base.HandleDamaged(damageData, knockbackData);
-
-        float hpPercent = stats.currentHealth / stats.maxHealth;
-
-        // Update boss bar
-        if (bossBarUI != null)
-            bossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
-
-        // Phase transitions
-        if (hpPercent <= phase3HealthThreshold && CurrentPhase != BossPhase.Phase3)
-            EnterPhase(BossPhase.Phase3);
-        else if (hpPercent <= phase2HealthThreshold && CurrentPhase == BossPhase.Phase1)
-            EnterPhase(BossPhase.Phase2);
+        UpdatePhase();
     }
 
     private void HandleHealed(float healAmount)
     {
-        // Update boss bar when healed
+        // Boss bar updates via HandleHealthChanged event
+    }
+
+    private void HandleHealthChanged(float currentHealth, float maxHealth)
+    {
         if (bossBarUI != null)
-            bossBarUI.SetHealth(stats.currentHealth, stats.maxHealth);
+            bossBarUI.SetHealth(currentHealth, maxHealth);
+
+        UpdatePhase();
+    }
+
+    private void UpdatePhase()
+    {
+        if (stats == null || health == null) return;
+
+        float hpPercent = health.CurrentHealth / health.MaxHealth;
+
+        if (hpPercent <= phase3HealthThreshold && CurrentPhase != BossPhase.Phase3)
+            EnterPhase(BossPhase.Phase3);
+        else if (hpPercent <= phase2HealthThreshold && CurrentPhase == BossPhase.Phase1)
+            EnterPhase(BossPhase.Phase2);
     }
 
     private void EnterPhase(BossPhase newPhase)
@@ -103,7 +180,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         CurrentPhase = newPhase;
         Debug.Log($"{name} entered {newPhase}");
 
-        // Update boss bar phase
         if (bossBarUI != null && bossStats != null)
         {
             int phaseIndex = (int)newPhase - 1;
@@ -123,22 +199,19 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     private void OnPhase2()
     {
-        abilityBehaviour.SetAggressionMultiplier(1.5f);
-        var spider = GetComponent<EnemyStats>();
-        spider.Heal(200f);
+        if (abilityBehaviour != null)
+            abilityBehaviour.SetAggressionMultiplier(1.5f);
+
+        if (health != null)
+            health.Heal(200f);
     }
 
     private void OnPhase3()
     {
-        abilityBehaviour.SetAggressionMultiplier(2f);
-        var spider = GetComponent<EnemyStats>();
-        spider.Heal(200f);
-    }
+        if (abilityBehaviour != null)
+            abilityBehaviour.SetAggressionMultiplier(2f);
 
-    private void ChangeBossColor(Color newColor)
-    {
-        var sprite = GetComponent<SpriteRenderer>();
-        if (sprite != null)
-            sprite.color = newColor;
+        if (health != null)
+            health.Heal(200f);
     }
 }

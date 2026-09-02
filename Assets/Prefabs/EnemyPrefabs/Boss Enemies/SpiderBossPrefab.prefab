@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 7883716132835968374}
   - component: {fileID: 7015037455521178482}
   - component: {fileID: 4759108557151856435}
-  - component: {fileID: 2323439724470229143}
   - component: {fileID: 3393257043857848876}
+  - component: {fileID: -7401574711982481332}
   - component: {fileID: 2922399955341994198}
   - component: {fileID: 643710246349556837}
   - component: {fileID: 8457025901324541034}
@@ -203,7 +203,27 @@ MonoBehaviour:
   turretAggroDuration: 5
   phase2HealthThreshold: 0.7
   phase3HealthThreshold: 0.2
---- !u!114 &2323439724470229143
+  bossBarUI: {fileID: 0}
+  bossStats: {fileID: 11400000, guid: 087604fc6d13863478160132a3e1832b, type: 2}
+--- !u!114 &3393257043857848876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645313828594104337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac598652674b42040bca541d3de1303d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: -7401574711982481332}
+  movement: {fileID: 0}
+  healthBar: {fileID: 0}
+  spriteRenderer: {fileID: 250192274628413378}
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
+--- !u!114 &-7401574711982481332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,7 +249,7 @@ MonoBehaviour:
   currentKnockbackReduction: 0
   currentKnockbackForce: 0
   currentKnockbackDuration: 0
-  isKnockbackImmune: 1
+  isKnockbackImmune: 0
   currentMovementSpeed: 0
   currentDetectionRange: 0
   currentVisionRange: 0
@@ -240,25 +260,6 @@ MonoBehaviour:
   damageScaleFactor: 0
   speedScaleFactor: 0
   armorScaleFactor: 0
---- !u!114 &3393257043857848876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3645313828594104337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac598652674b42040bca541d3de1303d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 2323439724470229143}
-  movement: {fileID: 0}
-  healthBar: {fileID: 0}
-  bossBarUIPrefab: {fileID: 1941822919334614460}
-  spriteRenderer: {fileID: 250192274628413378}
-  damageColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.1
 --- !u!114 &2922399955341994198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1ad1b6d5e584147a958693d00b9287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 2323439724470229143}
+  stats: {fileID: 0}
   health: {fileID: 0}
   knockbackForce: 10
   knockbackDuration: 0.5
@@ -288,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342e9317690cce140924112eda674539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 2323439724470229143}
+  stats: {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -472,17 +473,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
---- !u!114 &1941822919334614460 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5207994755549078086, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
-  m_PrefabInstance: {fileID: 5959456424944695290}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1c7129f6edcd144fa42eb56f1d846a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1947751206014347959 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5310856038406004045, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
