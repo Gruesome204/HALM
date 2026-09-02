@@ -27,7 +27,7 @@ MonoBehaviour:
   effects:
   - {fileID: 11400000, guid: 66356ad51d433d04c93f5b9474a4f847, type: 2}
   effectDelay: 0
-  effectDuration: 1
+  effectDuration: 2
   minUserHealthPercent: 0
   maxTargetHealthPercent: 1
   energyCost: 0

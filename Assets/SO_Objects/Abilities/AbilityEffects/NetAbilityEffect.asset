@@ -15,5 +15,10 @@ MonoBehaviour:
   netPrefab: {fileID: 8883776714824667679, guid: 29828085a2b504241b91837ae7a16438, type: 3}
   duration: 2
   radius: 2
-  slowMultiplier: 0.5
+  slowMultiplier: 0.384
   slowDuration: 0.5
+  spawnYOffset: 0.1
+  faceUser: 0
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
