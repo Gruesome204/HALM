@@ -731,7 +731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &684246705
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1482,9 +1482,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDataSO: {fileID: 11400000, guid: f70ecd18288732c4eb7aae950c5e4af4, type: 2}
-  defaultData: {fileID: 11400000, guid: c2f632fe28f34df4f88d5db9362b386c, type: 2}
+  defaultDataSO: {fileID: 0}
   playTimeSeconds: 0
-  autosaveInterval: 60
 --- !u!1 &1494710915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,7 +1651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1698885614
 SpriteRenderer:
   m_ObjectHideFlags: 0

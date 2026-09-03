@@ -30,7 +30,6 @@ public class HubInteractable : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log($"Interacted with {interactionName}");
         OnInteractedEvent?.Invoke(interactionName);
 
         if (interactionName == "DungeonEntrance" && InGameMenuManager.Instance.CheckForAnOpenMenu("one") == false)
