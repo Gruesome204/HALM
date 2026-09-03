@@ -187,6 +187,8 @@ public class GameDataSO : ScriptableObject
     {
         if (amount <= 0) return; // ignore non-positive amounts
         SetResourceAmount(type, GetResourceAmount(type) - amount);
+        var _amount = -amount;
+        OnResourceChanged?.Invoke(type, _amount);
     }
 
     public void AddResource(ResourceType type, int amount)

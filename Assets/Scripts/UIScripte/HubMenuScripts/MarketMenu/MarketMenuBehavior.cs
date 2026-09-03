@@ -55,7 +55,6 @@ public class MarketMenuBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").AddToClassList("turretChoiceMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
             Clear();
-           // SaveManager.Instance.SaveGame();
         }
     }
     void OnEnable()

@@ -7,8 +7,6 @@ using UnityEngine.UIElements;
 
 public class ActionRowBehavior : MonoBehaviour, IMenu
 {
-    [SerializeField] GameDataSO gameDataSO;
-
     private VisualElement turretButtonContainer;
     private VisualElement resourceContainer;
     private VisualElement towerLimitContainer;
@@ -23,10 +21,6 @@ public class ActionRowBehavior : MonoBehaviour, IMenu
     private List<AR_ElementBehavior> turretBtnList = new List<AR_ElementBehavior>();
     private List<AR_TowerLimitElementBehavior> towerLimitElementList = new List<AR_TowerLimitElementBehavior>();
 
-    private void Awake()
-    {
-        gameDataSO = GameManager.Instance.gameDataSO;
-    }
 
     public void OpenOrClose(Boolean open)
     {

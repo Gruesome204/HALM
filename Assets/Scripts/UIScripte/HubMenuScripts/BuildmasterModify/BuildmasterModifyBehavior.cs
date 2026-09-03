@@ -52,9 +52,9 @@ public class BuildmasterModifyBehavior : MonoBehaviour, IMenu
             root.Q<VisualElement>("mainContainer").AddToClassList("turretChoiceMenuSlideOut");
             InGameMenuManager.Instance.openMenus.Remove(this.gameObject);
             ClearMenu();
-            //SaveManager.Instance.SaveGame();
         }
     }
+
 
     void OnEnable()
     {

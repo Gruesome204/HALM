@@ -53,20 +53,24 @@ public class SettingsMenuBehavior : MonoBehaviour, IMenu
 
     private void OnEnable()
     {
-       StartCoroutine(WaitForSaveLoad());
-    }
-    private IEnumerator WaitForSaveLoad()
-    {
-        // Wait until GameManager has loaded the save
-        yield return new WaitUntil(() => SaveManager.Instance != null && SaveManager.Instance.IsSaveLoaded);
-        {
-            gameDataSO = GameManager.Instance.gameDataSO;
-            ConnectUI();
-            ApplySavedSettings();
-            RegisterSliderCallbacks();
+        //StartCoroutine(WaitForSaveLoad());
+        ConnectUI();
+        ApplySavedSettings();
+        RegisterSliderCallbacks();
 
-        }
     }
+    //private IEnumerator WaitForSaveLoad()
+    //{
+    //    // Wait until GameManager has loaded the save
+    //    yield return new WaitUntil(() => SaveManager.Instance != null && SaveManager.Instance.IsSaveLoaded);
+    //    {
+    //        gameDataSO = GameManager.Instance.gameDataSO;
+    //        ConnectUI();
+    //        ApplySavedSettings();
+    //        RegisterSliderCallbacks();
+
+    //    }
+    //}
 
     #region UI Setup
     private void ConnectUI()

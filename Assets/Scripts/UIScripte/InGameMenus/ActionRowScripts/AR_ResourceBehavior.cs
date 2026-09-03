@@ -48,7 +48,14 @@ public class AR_ResourceBehavior
     public void CreateAddRessourceElement(VisualTreeAsset asset, int addedAmount)
     {
         TemplateContainer addElement = asset.Instantiate();
-        addElement.Q<Label>("addedNumber").text = $"+{addedAmount}";
+        if (addedAmount > 0)
+        {
+            addElement.Q<Label>("addedNumber").text = $"+{addedAmount}";
+        }
+        else
+        {
+            addElement.Q<Label>("addedNumber").text = $"{addedAmount}";
+        }
         addElement.Q<VisualElement>("icon").AddToClassList($"{representedRessource}Icon");
 
         addContainer.Add(addElement);
