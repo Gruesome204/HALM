@@ -67,7 +67,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
         stats.currentHealth = stats.maxHealth;
         isInitialized = true;
 
-        Debug.Log($"[EnemyHealth] {gameObject.name}: Health: {stats.currentHealth}/{stats.maxHealth}");
+       // Debug.Log($"[EnemyHealth] {gameObject.name}: Health: {stats.currentHealth}/{stats.maxHealth}");
 
         SetupHealthUI();
         OnHealthChanged?.Invoke(stats.currentHealth, stats.maxHealth);

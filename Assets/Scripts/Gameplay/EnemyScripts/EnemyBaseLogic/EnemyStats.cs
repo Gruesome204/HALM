@@ -66,7 +66,7 @@ public class EnemyStats : MonoBehaviour
             return;
         }
 
-        Debug.Log($"[EnemyStats] {gameObject.name}: Initializing stats...");
+        //Debug.Log($"[EnemyStats] {gameObject.name}: Initializing stats...");
 
         // Level
         currentLevel = baseStats.baseLevel;
@@ -101,7 +101,7 @@ public class EnemyStats : MonoBehaviour
         // Experience
         currentExperienceYield = baseStats.experienceYield;
 
-        Debug.Log($"[EnemyStats] {gameObject.name}: Stats initialized - MaxHealth: {maxHealth}, Damage: {currentDamage}, Armor: {currentArmor}, Speed: {currentMovementSpeed}");
+        // Debug.Log($"[EnemyStats] {gameObject.name}: Stats initialized - MaxHealth: {maxHealth}, Damage: {currentDamage}, Armor: {currentArmor}, Speed: {currentMovementSpeed}");
     }
 
     private float GetLevelScaling(float factor)
