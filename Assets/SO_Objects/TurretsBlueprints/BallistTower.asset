@@ -39,7 +39,7 @@ MonoBehaviour:
   baseProjectileSpeed: 8
   baseProjectilePierceCount: 3
   baseAttackRange: 20
-  baseKnockbackStrength: 1.5
+  baseKnockbackStrength: 1
   baseKnockbackDuration: 0.7
   baseHealthGrowthFactor: 0.1
   baseDamageGrowthFactor: 0
