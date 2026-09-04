@@ -19,10 +19,20 @@ MonoBehaviour:
   turretType: 4
   previewPrefab: {fileID: 4876508236310212866, guid: 588dc90f6f0cfb3469907ce6df0f11ce, type: 3}
   turretPrefab: {fileID: 5526581838746632432, guid: 492eb4217452d824cb11a54237893393, type: 3}
-  turretProjectileType: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}
+  turretProjectile: {fileID: 1105617221716185795, guid: be69084f34cea5a45b302be6fc91076f, type: 3}
   firingPattern: 1
   projectilesPerSalve: 1
   delayBetweenSalveProjectiles: 0.5
+  burstCount: 3
+  burstDelay: 0.1
+  scatterCount: 5
+  scatterAngle: 45
+  chainBounceCount: 3
+  chainBounceRange: 5
+  homingStrength: 2
+  aoeRadius: 3
+  sprayRate: 10
+  sprayAngle: 30
   baseHealth: 250
   baseAttackDamage: 30
   baseShotsPerSecond: 0.5
