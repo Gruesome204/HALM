@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "New BossStats", menuName = "Game/Enemy/New BossStats")]
 public class EnemyBaseBossStatsSO : EnemyBaseStats
@@ -11,7 +12,7 @@ public class EnemyBaseBossStatsSO : EnemyBaseStats
 
     [Header("Boss Phases")]
     public bool isMultiStageBoss = false;
-    public int numberOfPhases = 1;
+    public BossPhaseConfig[] phaseConfigs = new BossPhaseConfig[0];
 
     [Header("Boss Specific")]
     [Tooltip("Time before boss enrages and becomes more powerful")]
@@ -19,9 +20,6 @@ public class EnemyBaseBossStatsSO : EnemyBaseStats
 
     [Tooltip("Additional damage multiplier when enraged")]
     public float enrageDamageMultiplier = 1.5f;
-
-    [Tooltip("Health threshold for phase transitions (0-1)")]
-    public float[] phaseThresholds = new float[0]; // e.g., 0.75f, 0.5f, 0.25f
 
     [Header("Boss Loot")]
     public GameObject[] exclusiveLootTable;
@@ -39,10 +37,107 @@ public class EnemyBaseBossStatsSO : EnemyBaseStats
         return baseMaxHealth + (level - 1) * baseHealthScaleFactor * 1.5f;
     }
 
+    public BossPhaseConfig GetPhaseConfig(int phaseIndex)
+    {
+        if (phaseIndex >= 0 && phaseIndex < phaseConfigs.Length)
+            return phaseConfigs[phaseIndex];
+        return null;
+    }
+
     public float GetPhaseHealthThreshold(int phaseIndex)
     {
-        if (phaseIndex < phaseThresholds.Length)
-            return phaseThresholds[phaseIndex];
-        return 0f;
+        var config = GetPhaseConfig(phaseIndex);
+        return config != null ? config.healthThreshold : 0f;
+    }
+
+    public bool TryGetPhaseAtHealthPercent(float healthPercent, out int phaseIndex)
+    {
+        phaseIndex = -1;
+
+        if (!isMultiStageBoss || phaseConfigs.Length == 0)
+            return false;
+
+        // Find the highest phase threshold that the health is below
+        for (int i = phaseConfigs.Length - 1; i >= 0; i--)
+        {
+            if (healthPercent <= phaseConfigs[i].healthThreshold)
+            {
+                phaseIndex = i;
+                return true;
+            }
+        }
+
+        // If health is above all thresholds, we're in phase 0
+        phaseIndex = 0;
+        return true;
+    }
+}
+
+[Serializable]
+public class BossPhaseConfig
+{
+    [Header("Phase Identification")]
+    [Tooltip("Display name for this phase")]
+    public string phaseName = "Phase 1";
+
+    [Tooltip("Health threshold to trigger this phase (0-1)")]
+    [Range(0f, 1f)]
+    public float healthThreshold = 0.75f;
+
+    [Header("Phase Effects")]
+    [Tooltip("Amount of health to heal when entering this phase")]
+    public float healAmount = 0f;
+
+    [Tooltip("Aggression multiplier for this phase (1 = normal)")]
+    [Range(0.5f, 3f)]
+    public float aggressionMultiplier = 1f;
+
+    [Tooltip("Damage multiplier for this phase (1 = normal)")]
+    [Range(0.5f, 3f)]
+    public float damageMultiplier = 1f;
+
+    [Tooltip("Movement speed multiplier for this phase (1 = normal)")]
+    [Range(0.5f, 2f)]
+    public float speedMultiplier = 1f;
+
+    [Header("Phase Abilities")]
+    [Tooltip("New abilities unlocked in this phase")]
+    public AbilityBlueprint[] unlockedAbilities;
+
+    [Tooltip("Abilities that are disabled in this phase")]
+    public AbilityBlueprint[] disabledAbilities;
+
+    [Header("Phase Visuals")]
+    [Tooltip("Color tint for the boss during this phase")]
+    public Color phaseColor = Color.white;
+
+    [Tooltip("Particle system to spawn when entering phase")]
+    public GameObject phaseTransitionEffect;
+
+    [Header("Phase Behaviors")]
+    [Tooltip("Should the boss become invulnerable during transition?")]
+    public bool invulnerableDuringTransition = false;
+
+    [Tooltip("Duration of invulnerability in seconds")]
+    public float invulnerabilityDuration = 1f;
+
+    [Tooltip("Should the boss play a specific animation?")]
+    public string phaseTransitionAnimation = "PhaseTransition";
+
+    [Header("Phase Events")]
+    [Tooltip("Delay before applying phase effects")]
+    public float effectDelay = 0.5f;
+
+    [Tooltip("Should the boss enter a different attack pattern?")]
+    public AttackPattern attackPattern = AttackPattern.Default;
+
+    public enum AttackPattern
+    {
+        Default,
+        Aggressive,
+        Defensive,
+        Ranged,
+        Melee,
+        Mixed
     }
 }

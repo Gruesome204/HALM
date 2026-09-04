@@ -2,14 +2,9 @@ using UnityEngine;
 
 public class BossEnemyBehaviour : EnemyBehaviour
 {
-    [Header("Boss Phases")]
-    [SerializeField] private float phase2HealthThreshold = 0.5f;
-    [SerializeField] private float phase3HealthThreshold = 0.3f;
 
     [Header("Boss UI")]
     [SerializeField] private BossBarUI bossBarUI;
-    [SerializeField] private EnemyBaseBossStatsSO bossStats;
-
     public BossPhase CurrentPhase { get; private set; } = BossPhase.Phase1;
 
     protected override void Awake()
@@ -98,12 +93,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
             return;
         }
 
-        if (bossStats == null)
-        {
-            Debug.LogError("[BossEnemyBehaviour] BossStats not assigned!");
-            return;
-        }
-
         if (stats == null)
         {
             Debug.LogError("[BossEnemyBehaviour] EnemyStats not found!");
@@ -113,6 +102,14 @@ public class BossEnemyBehaviour : EnemyBehaviour
         if (health == null)
         {
             Debug.LogError("[BossEnemyBehaviour] EnemyHealth not found!");
+            return;
+        }
+
+        // Get the boss stats from the EnemyStats component
+        EnemyBaseBossStatsSO bossStats = stats.baseStats as EnemyBaseBossStatsSO;
+        if (bossStats == null)
+        {
+            Debug.LogError($"[BossEnemyBehaviour] {gameObject.name}: EnemyStats.baseStats is not a BossStats ScriptableObject!");
             return;
         }
 
@@ -169,49 +166,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
         float hpPercent = health.CurrentHealth / health.MaxHealth;
 
-        if (hpPercent <= phase3HealthThreshold && CurrentPhase != BossPhase.Phase3)
-            EnterPhase(BossPhase.Phase3);
-        else if (hpPercent <= phase2HealthThreshold && CurrentPhase == BossPhase.Phase1)
-            EnterPhase(BossPhase.Phase2);
     }
 
-    private void EnterPhase(BossPhase newPhase)
-    {
-        CurrentPhase = newPhase;
-        Debug.Log($"{name} entered {newPhase}");
-
-        if (bossBarUI != null && bossStats != null)
-        {
-            int phaseIndex = (int)newPhase - 1;
-            bossBarUI.ForcePhaseChange(phaseIndex);
-        }
-
-        switch (newPhase)
-        {
-            case BossPhase.Phase2:
-                OnPhase2();
-                break;
-            case BossPhase.Phase3:
-                OnPhase3();
-                break;
-        }
-    }
-
-    private void OnPhase2()
-    {
-        if (abilityBehaviour != null)
-            abilityBehaviour.SetAggressionMultiplier(1.5f);
-
-        if (health != null)
-            health.Heal(200f);
-    }
-
-    private void OnPhase3()
-    {
-        if (abilityBehaviour != null)
-            abilityBehaviour.SetAggressionMultiplier(2f);
-
-        if (health != null)
-            health.Heal(200f);
-    }
 }

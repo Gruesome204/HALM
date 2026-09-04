@@ -118,13 +118,15 @@ public class BossBarUI : MonoBehaviour
     {
         if (bossStats == null) return;
 
-        bool isMultiPhase = bossStats.isMultiStageBoss && bossStats.numberOfPhases > 1;
+        // Get the number of phases from the phaseConfigs array
+        int numberOfPhases = bossStats.phaseConfigs?.Length ?? 0;
+        bool isMultiPhase = bossStats.isMultiStageBoss && numberOfPhases > 1;
 
         if (phaseText != null)
         {
             phaseText.gameObject.SetActive(isMultiPhase);
             if (isMultiPhase)
-                phaseText.text = $"Phase {currentPhase + 1}/{bossStats.numberOfPhases}";
+                phaseText.text = $"Phase {currentPhase + 1}/{numberOfPhases}";
         }
 
         if (phaseIndicatorImage != null && phaseColors.Length > 0)
@@ -136,16 +138,19 @@ public class BossBarUI : MonoBehaviour
 
     private void CheckPhaseTransition(float healthPercent)
     {
-        if (bossStats?.phaseThresholds == null || bossStats.phaseThresholds.Length == 0)
+        if (bossStats?.phaseConfigs == null || bossStats.phaseConfigs.Length == 0)
             return;
 
-        for (int i = bossStats.phaseThresholds.Length - 1; i >= 0; i--)
+        // Check from highest threshold to lowest
+        for (int i = bossStats.phaseConfigs.Length - 1; i >= 0; i--)
         {
-            if (healthPercent <= bossStats.phaseThresholds[i] && i != currentPhase)
+            float threshold = bossStats.phaseConfigs[i].healthThreshold;
+            if (healthPercent <= threshold && i != currentPhase)
             {
                 currentPhase = i;
                 SetupPhaseUI();
 
+                // Update health bar color for the new phase
                 if (phaseColors.Length > 0 && healthSlider?.fillRect != null)
                 {
                     Image fillImage = healthSlider.fillRect.GetComponent<Image>();
@@ -164,7 +169,8 @@ public class BossBarUI : MonoBehaviour
     {
         if (bossStats == null || !bossStats.isMultiStageBoss) return;
 
-        currentPhase = Mathf.Clamp(phaseIndex, 0, bossStats.numberOfPhases - 1);
+        int numberOfPhases = bossStats.phaseConfigs?.Length ?? 0;
+        currentPhase = Mathf.Clamp(phaseIndex, 0, numberOfPhases - 1);
         SetupPhaseUI();
 
         if (phaseColors.Length > 0 && healthSlider?.fillRect != null)
