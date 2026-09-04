@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BossEnemyBehaviour : EnemyBehaviour
+public class BossEnemyBehaviour : EnemyBehaviour, IPausable
 {
 
     [Header("Boss UI")]
@@ -33,6 +33,9 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     private void Start()
     {
+        // Call base Start to register with GameManager and EnemySpawnManager
+        base.Start();
+
         SetupBossBar();
         CacheBossStats();
         InitializePhaseSystem();

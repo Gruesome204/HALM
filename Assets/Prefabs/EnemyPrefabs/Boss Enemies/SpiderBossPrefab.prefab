@@ -201,10 +201,7 @@ MonoBehaviour:
   abilityCheckInterval: 1
   stopBuffer: 0.2
   turretAggroDuration: 5
-  phase2HealthThreshold: 0.7
-  phase3HealthThreshold: 0.2
   bossBarUI: {fileID: 0}
-  bossStats: {fileID: 11400000, guid: 087604fc6d13863478160132a3e1832b, type: 2}
 --- !u!114 &3393257043857848876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,6 +459,10 @@ PrefabInstance:
     - target: {fileID: 5310856038406004045, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6678833626851804514, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 9203545354338518443, guid: dfbf0fb0d5e3f4644b6af0a76e6afdb4, type: 3}
       propertyPath: m_Name

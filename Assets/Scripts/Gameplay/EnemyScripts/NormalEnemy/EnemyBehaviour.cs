@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 public class EnemyBehaviour : MonoBehaviour, IPausable
 {
@@ -57,7 +58,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         health.OnDamaged += HandleDamaged;
     }
 
-    private void Start()
+    public virtual void Start()
     {
         GameManager.Instance?.RegisterPausable(this);
         EnemySpawnManager.Instance?.RegisterEnemy(gameObject);
