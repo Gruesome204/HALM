@@ -369,19 +369,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             score += distanceBonus * 50f;
         }
 
-        if (IsTargetAttackingMe(target))
-            score += 30f;
-
         if (target == cachedPlayer && isAggroed)
             score += 20f;
 
         return score;
-    }
-
-    private bool IsTargetAttackingMe(GameObject target)
-    {
- 
-        return false;
     }
 
     private GameObject GetPlayerTarget()
