@@ -307,8 +307,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
         // Initialize projectile
         projectile.SetOwner(gameObject, stats.currentAttackDamage);
-        projectile.knockbackStrength = stats.currentKnockbackStrength;
-        projectile.knockbackDuration = stats.currentKnockbackDuration;
+        projectile.SetKnockback(stats.currentKnockbackStrength, stats.currentKnockbackDuration);
         projectile.InitializePiercing(stats.currentProjectilePierce);
 
         rb.linearVelocity = direction * stats.currentProjectileSpeed;
@@ -453,8 +452,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
             if (projectile != null)
             {
                 projectile.SetOwner(gameObject, stats.currentAttackDamage);
-                projectile.chainBounceCount = turretBlueprint.chainBounceCount;
-                projectile.chainBounceRange = turretBlueprint.chainBounceRange;
+                projectile.SetChainLightning(turretBlueprint.chainBounceCount, turretBlueprint.chainBounceRange);
                 projectile.SetChainTarget(firstTarget);
             }
         }
@@ -471,8 +469,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
             if (projectile != null)
             {
                 projectile.SetOwner(gameObject, stats.currentAttackDamage);
-                projectile.homingStrength = turretBlueprint.homingStrength;
-                projectile.SetHomingTarget(target);
+                projectile.SetHoming(turretBlueprint.homingStrength, target);
             }
         }
     }
@@ -488,8 +485,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
             if (projectile != null)
             {
                 projectile.SetOwner(gameObject, stats.currentAttackDamage);
-                projectile.isAOE = true;
-                projectile.aoeRadius = turretBlueprint.aoeRadius;
+                projectile.SetAOE(null, turretBlueprint.aoeRadius);
             }
         }
     }

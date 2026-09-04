@@ -7,33 +7,40 @@ public class ProjectileBehaviour : MonoBehaviour
     private DamageData damageData;
     private GameObject owner; // The turret that fired this projectile
 
-    public float knockbackStrength;
-    public float knockbackDuration;
-    public Vector2 direction;
+    private float knockbackStrength;
+    private float knockbackDuration;
+    private Vector2 direction;
     private Rigidbody2D rb;
 
-    public int remainingPierces;
+    private int remainingPierces;
 
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private LayerMask wallLayer;
 
-    public bool isHoming;
-    public Transform homingTarget;
-    public float homingStrength;
-    public Transform chainTarget;
-    public List<Transform> hitEnemies = new List<Transform>();
-    public int currentBounces;
-    public int chainBounceCount;
-    public float chainBounceRange;
-    public LayerMask obstacleLayer;
+    private bool isHoming;
+    private Transform homingTarget;
+    private float homingStrength;
+    private Transform chainTarget;
+    private List<Transform> hitEnemies = new List<Transform>();
+    private int currentBounces;
+    private int chainBounceCount;
+    private float chainBounceRange;
+    private LayerMask obstacleLayer;
 
-    public bool isAOE;
-    public float aoeRadius;
-    public GameObject aoeEffectPrefab;
-
+    private bool isAOE;
+    private float aoeRadius;
+    private GameObject aoeEffectPrefab;
 
     // Add a flag to prevent multiple hits on same enemy
     private HashSet<GameObject> hitEnemySet = new HashSet<GameObject>();
+
+    // Public properties for external access (read-only)
+    public bool IsHoming => isHoming;
+    public bool IsAOE => isAOE;
+    public float AOERadius => aoeRadius;
+    public int ChainBounceCount => chainBounceCount;
+    public float ChainBounceRange => chainBounceRange;
+    public float HomingStrength => homingStrength;
 
     public void InitializePiercing(int pierces)
     {
@@ -109,9 +116,11 @@ public class ProjectileBehaviour : MonoBehaviour
         obstacleLayer = obstacle;
     }
 
-    public void SetAOE(GameObject effectPrefab)
+    public void SetAOE(GameObject effectPrefab, float radius)
     {
         aoeEffectPrefab = effectPrefab;
+        aoeRadius = radius;
+        isAOE = true;
     }
 
     public void SetPiercing(int pierces)
@@ -136,6 +145,36 @@ public class ProjectileBehaviour : MonoBehaviour
         homingStrength = strength;
         SetHomingTarget(target);
     }
+
+    // Method to initialize all projectile properties from TurretBlueprint
+    public void InitializeFromBlueprint(TurretBlueprint blueprint, Transform target = null)
+    {
+        // Set pierce
+        SetPiercing(blueprint.baseProjectilePierceCount);
+
+        // Set knockback
+        SetKnockback(blueprint.baseKnockbackStrength, blueprint.baseKnockbackDuration);
+
+        // Set chain lightning
+        if (blueprint.chainBounceCount > 0)
+        {
+            SetChainLightning(blueprint.chainBounceCount, blueprint.chainBounceRange);
+        }
+
+        // Set homing
+        if (blueprint.homingStrength > 0 && target != null)
+        {
+            SetHoming(blueprint.homingStrength, target);
+        }
+
+        // Set AOE
+        if (blueprint.aoeRadius > 0)
+        {
+            isAOE = true;
+            aoeRadius = blueprint.aoeRadius;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if hit a wall

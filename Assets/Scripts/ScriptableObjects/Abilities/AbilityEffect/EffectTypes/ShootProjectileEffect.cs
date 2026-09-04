@@ -133,9 +133,7 @@ public class ShootProjectileEffect : AbilityEffect
         // Set AOE
         if (isAOE)
         {
-            projectile.isAOE = true;
-            projectile.aoeRadius = aoeRadius;
-            projectile.SetAOE(aoeEffectPrefab);
+            projectile.SetAOE(null, aoeRadius);
         }
 
         Debug.Log($"Projectile fired from {user.name} targeting {(target != null ? target.name : "none")}");
