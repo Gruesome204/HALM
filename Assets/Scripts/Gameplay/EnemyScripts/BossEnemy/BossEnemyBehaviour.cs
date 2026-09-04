@@ -12,6 +12,11 @@ public class BossEnemyBehaviour : EnemyBehaviour
     private BossPhaseConfig currentPhaseConfig;
     private int currentPhaseIndex = -1;
 
+    // Add a flag to prevent recursive phase updates
+    private bool isUpdatingPhase = false;
+    // Track the last applied phase to prevent re-entering the same phase
+    private int lastAppliedPhaseIndex = -1;
+
     protected override void Awake()
     {
         // Auto-detect components if not assigned
@@ -177,16 +182,13 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     protected override void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
-        // Apply phase damage multiplier before base handling
-        if (currentPhaseConfig != null && attack != null)
-        {
-            // The damage is already calculated, but we can modify incoming damage
-            // This assumes the attack component handles damage calculation
-            // You might want to modify the damageData here if needed
-        }
-
         base.HandleDamaged(damageData, knockbackData);
-        UpdatePhase();
+        // Call UpdatePhase after the base damage is applied
+        // But only if we're not already in the middle of a phase update
+        if (!isUpdatingPhase)
+        {
+            UpdatePhase();
+        }
     }
 
     private void HandleHealed(float healAmount)
@@ -199,12 +201,29 @@ public class BossEnemyBehaviour : EnemyBehaviour
         if (bossBarUI != null)
             bossBarUI.SetHealth(currentHealth, maxHealth);
 
-        UpdatePhase();
+        // Don't update phase from health changed if we're already in the middle of a phase update
+        // This prevents loops when phases heal the boss
+        if (!isUpdatingPhase)
+        {
+            UpdatePhase();
+        }
     }
 
     private void UpdatePhase()
     {
-        if (stats == null || health == null || bossStats == null) return;
+        // Prevent recursive phase updates
+        if (isUpdatingPhase)
+        {
+            Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: Attempted recursive phase update, blocked.");
+            return;
+        }
+
+        if (stats == null || health == null || bossStats == null)
+            return;
+
+        // Don't process phase updates if the boss is dead
+        if (!health.IsAlive())
+            return;
 
         float hpPercent = health.CurrentHealth / health.MaxHealth;
 
@@ -217,7 +236,23 @@ public class BossEnemyBehaviour : EnemyBehaviour
                 // Only update if the phase has changed
                 if (newPhaseIndex != currentPhaseIndex)
                 {
-                    ApplyPhase(newPhaseIndex);
+                    // Store the new phase index to prevent re-entering the same phase
+                    // but only if it's different from the last applied phase
+                    if (newPhaseIndex != lastAppliedPhaseIndex)
+                    {
+                        ApplyPhase(newPhaseIndex);
+                    }
+                    else
+                    {
+                        // We're trying to re-enter a phase we already applied
+                        // This can happen with healing - let's check if the heal pushed us back a phase
+                        Debug.Log($"[BossEnemyBehaviour] {gameObject.name}: Health changed but phase {newPhaseIndex} already applied. Checking if we need to revert...");
+
+                        // If we're in a phase that's already been applied but we have more health than the threshold,
+                        // we might need to stay in the current phase or handle it gracefully.
+                        // We'll keep the current phase.
+                        return;
+                    }
                 }
             }
         }
@@ -228,38 +263,66 @@ public class BossEnemyBehaviour : EnemyBehaviour
     /// </summary>
     private void ApplyPhase(int phaseIndex)
     {
+        // Prevent re-entering the same phase
+        if (phaseIndex == lastAppliedPhaseIndex && phaseIndex == currentPhaseIndex)
+        {
+            Debug.Log($"[BossEnemyBehaviour] {gameObject.name}: Phase {phaseIndex} already applied, skipping.");
+            return;
+        }
+
+        // Prevent recursive phase application
+        if (isUpdatingPhase)
+        {
+            Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: Recursive phase application detected, blocking.");
+            return;
+        }
+
         if (bossStats == null || phaseIndex < 0 || phaseIndex >= bossStats.phaseConfigs.Length)
         {
-            Debug.LogWarning($"[BossEnemyBehaviour] Invalid phase index: {phaseIndex}");
+            Debug.LogWarning($"[BossEnemyBehaviour] {gameObject.name}: Invalid phase index: {phaseIndex}");
             return;
         }
 
         BossPhaseConfig newConfig = bossStats.phaseConfigs[phaseIndex];
         if (newConfig == null) return;
 
-        // Store the current phase config
-        currentPhaseConfig = newConfig;
-        currentPhaseIndex = phaseIndex;
+        // Set the flag to prevent recursive updates during phase application
+        isUpdatingPhase = true;
 
-        // Update the phase enum (for compatibility)
-        CurrentPhase = (BossPhase)Mathf.Min(phaseIndex + 1, (int)BossPhase.Phase3);
-
-        Debug.Log($"[BossEnemyBehaviour] {gameObject.name} entering phase {phaseIndex + 1}: {newConfig.phaseName}");
-
-        // Apply phase effects with delay if specified
-        if (newConfig.effectDelay > 0)
+        try
         {
-            Invoke(nameof(ApplyPhaseEffects), newConfig.effectDelay);
+            // Store the current phase config
+            currentPhaseConfig = newConfig;
+            currentPhaseIndex = phaseIndex;
+
+            // Track the last applied phase to prevent re-entry
+            lastAppliedPhaseIndex = phaseIndex;
+
+            // Update the phase enum (for compatibility)
+            CurrentPhase = (BossPhase)Mathf.Min(phaseIndex + 1, (int)BossPhase.Phase3);
+
+            Debug.Log($"[BossEnemyBehaviour] {gameObject.name} entering phase {phaseIndex + 1}: {newConfig.phaseName}");
+
+            // Apply phase effects with delay if specified
+            if (newConfig.effectDelay > 0)
+            {
+                Invoke(nameof(ApplyPhaseEffects), newConfig.effectDelay);
+            }
+            else
+            {
+                ApplyPhaseEffects();
+            }
+
+            // Show phase change in UI if available
+            if (bossBarUI != null)
+            {
+                bossBarUI.ShowPhaseChange(newConfig.phaseName, newConfig.healthThreshold);
+            }
         }
-        else
+        finally
         {
-            ApplyPhaseEffects();
-        }
-
-        // Show phase change in UI if available
-        if (bossBarUI != null)
-        {
-            bossBarUI.ShowPhaseChange(newConfig.phaseName, newConfig.healthThreshold);
+            // Always clear the flag after phase application, even if an exception occurs
+            isUpdatingPhase = false;
         }
     }
 
@@ -271,25 +334,28 @@ public class BossEnemyBehaviour : EnemyBehaviour
         if (currentPhaseConfig == null) return;
 
         // Apply heal if specified
-        if (currentPhaseConfig.healAmount > 0 && health != null)
+        if (currentPhaseConfig.healAmount > 0 && health != null && health.IsAlive())
         {
+            // Store current health to check if we need to re-evaluate phases
+            float currentHealthPercent = health.CurrentHealth / health.MaxHealth;
+
+            // Apply the heal
             health.Heal(currentPhaseConfig.healAmount);
+
             Debug.Log($"[BossEnemyBehaviour] Phase heal applied: {currentPhaseConfig.healAmount}");
-        }
 
-        // Apply aggression multiplier (affects attack speed, cooldowns, etc.)
-        if (attack != null)
-        {
-            // Assuming EnemyAttack has a way to modify attack speed
-            // You might need to implement this based on your system
-            // attack.SetAttackSpeedMultiplier(currentPhaseConfig.aggressionMultiplier);
-        }
+            // After healing, check if the heal caused us to go above the phase threshold
+            // If so, we should NOT transition to a lower phase (we stay in the current phase)
+            float newHealthPercent = health.CurrentHealth / health.MaxHealth;
 
-        // Apply damage multiplier
-        if (attack != null)
-        {
-            // You might have a method to set damage multiplier on attack component
-            // attack.SetDamageMultiplier(currentPhaseConfig.damageMultiplier);
+            // Check if we're now above the threshold for our current phase
+            // (This prevents the boss from entering a lower phase after a heal)
+            float currentPhaseThreshold = currentPhaseConfig.healthThreshold;
+            if (newHealthPercent > currentPhaseThreshold)
+            {
+                Debug.Log($"[BossEnemyBehaviour] {gameObject.name}: Heal pushed health above phase threshold ({newHealthPercent:F2} > {currentPhaseThreshold:F2}). Staying in current phase.");
+                // We'll stay in the current phase
+            }
         }
 
         // Apply speed multiplier

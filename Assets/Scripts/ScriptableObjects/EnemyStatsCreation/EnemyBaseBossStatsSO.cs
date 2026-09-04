@@ -90,14 +90,6 @@ public class BossPhaseConfig
     [Tooltip("Amount of health to heal when entering this phase")]
     public float healAmount = 0f;
 
-    [Tooltip("Aggression multiplier for this phase (1 = normal)")]
-    [Range(0.5f, 3f)]
-    public float aggressionMultiplier = 1f;
-
-    [Tooltip("Damage multiplier for this phase (1 = normal)")]
-    [Range(0.5f, 3f)]
-    public float damageMultiplier = 1f;
-
     [Tooltip("Movement speed multiplier for this phase (1 = normal)")]
     [Range(0.5f, 2f)]
     public float speedMultiplier = 1f;
