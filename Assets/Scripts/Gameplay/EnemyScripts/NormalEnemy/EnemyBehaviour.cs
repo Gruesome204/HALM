@@ -65,7 +65,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         targetingSettings ??= new EnemyTargetingSettings();
     }
 
-    protected virtual void Start()  // Changed from private to protected virtual
+    protected virtual void Start()  
     {
         GameManager.Instance?.RegisterPausable(this);
         EnemySpawnManager.Instance?.RegisterEnemy(gameObject);
@@ -77,7 +77,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             CacheTurrets();
     }
 
-    protected virtual void OnDisable()  // Changed from private to protected virtual
+    protected virtual void OnDisable()  
     {
         GameManager.Instance?.UnregisterPausable(this);
     }
@@ -380,7 +380,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     private bool IsTargetAttackingMe(GameObject target)
     {
-        // TODO: Implement logic to check if target is attacking this enemy
+ 
         return false;
     }
 
@@ -524,10 +524,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         foreach (var drop in drops)
         {
-            var roll = UnityEngine.Random.Range(0f, 1f);  // Fixed: Fully qualified Random
+            var roll = UnityEngine.Random.Range(0f, 1f);  
             if (roll > drop.dropChance) continue;
 
-            var amount = UnityEngine.Random.Range(drop.minAmount, drop.maxAmount + 1);  // Fixed: Fully qualified Random
+            var amount = UnityEngine.Random.Range(drop.minAmount, drop.maxAmount + 1);  
             if (amount > 0)
             {
                 GameManager.Instance.gameDataSO.AddResource(drop.resourceType, amount);
