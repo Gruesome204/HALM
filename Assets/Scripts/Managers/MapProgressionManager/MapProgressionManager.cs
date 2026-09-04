@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MapProgressionManager : MonoBehaviour, IGameSystem
@@ -123,16 +124,32 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
             if (setup.bossPrefab == null)
             {
                 Debug.LogError("[Progression] Boss room has no boss prefab!");
+                isLoadingNextRoom = false;
                 return;
             }
 
+            // Make sure normal enemies won't spawn
+            spawner.isBossRoom = true;
+
+            // Subscribe to boss defeat
             spawner.OnBossDefeated += OnRoomCleared;
+
+            // Spawn the boss
             spawner.SpawnBoss(setup.bossPrefab);
+
+            Debug.Log("[Progression] Boss room loaded - boss spawned");
         }
         else
         {
-            // Subscribe to normal room completion
+            // Normal room - spawn regular enemies
+            spawner.isBossRoom = false;
             spawner.OnAllEnemiesDefeated += OnRoomCleared;
+
+            // The spawner will automatically start spawning enemies in its Update() method
+            // Reset the spawner to ensure it starts fresh
+            spawner.ResetSpawner();
+
+            Debug.Log($"[Progression] Normal room loaded - will spawn {spawner.CurrentSpawnAmount} enemies");
         }
 
         CurrentEnemyLevel += enemyLevelIncreasePerMap;

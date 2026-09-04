@@ -367,16 +367,9 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
                 EnemySpawnManager.Instance.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs);
             }
 
-            // If this is a boss room, spawn the boss using the setup's boss prefab
-            if (setup.isBossRoom && setup.bossPrefab != null)
+            if (setup.isBossRoom)
             {
-                // We'll spawn the boss after AssignSpawnPoints is called
-                // Store the boss prefab to spawn later
-                pendingBossPrefab = setup.bossPrefab;
-            }
-            else if (setup.isBossRoom && setup.bossPrefab == null)
-            {
-                Debug.LogError($"Boss room {currentMap.name} has no bossPrefab assigned in MapEnemySetup!");
+                LogMessage($"Boss room detected: {currentMap.name}. Boss will be spawned by MapProgressionManager.");
             }
         }
         else
@@ -385,8 +378,6 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         }
     }
 
-    // Pending boss prefab to spawn after spawn points are assigned
-    private GameObject pendingBossPrefab = null;
     #endregion
 
     #region Spawn Point Management
@@ -426,42 +417,7 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         {
             Debug.LogWarning($"BossSpawnPoint missing in boss room: {currentMap.name}");
         }
-
-        // Now that spawn points are assigned, spawn the boss if we have a pending one
-        if (pendingBossPrefab != null && BossSpawnPoint != null)
-        {
-            SpawnBossFromSetup(pendingBossPrefab);
-            pendingBossPrefab = null;
-        }
-        else if (pendingBossPrefab != null && BossSpawnPoint == null)
-        {
-            Debug.LogError($"Cannot spawn boss - BossSpawnPoint not found in {currentMap.name}");
-            pendingBossPrefab = null;
-        }
     }
-
-    private void SpawnBossFromSetup(GameObject bossPrefab)
-    {
-        EnemySpawnManager spawnManager = EnemySpawnManager.Instance;
-        if (spawnManager == null)
-        {
-            Debug.LogError("EnemySpawnManager instance not found! Cannot spawn boss.");
-            return;
-        }
-
-        // Verify Boss Spawn Point exists
-        if (BossSpawnPoint == null)
-        {
-            Debug.LogError($"No BossSpawnPoint found in {currentMap.name}! Cannot spawn boss.");
-            return;
-        }
-
-        // Use the EnemySpawnManager's spawn boss method
-        spawnManager.SpawnBoss(bossPrefab);
-
-        LogMessage($"Boss spawned from MapEnemySetup at {BossSpawnPoint.position}");
-    }
-
     private void ConfigureEnemySpawner()
     {
         EnemySpawnManager spawner = EnemySpawnManager.Instance;
