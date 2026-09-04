@@ -149,10 +149,6 @@ public class GameManager : MonoBehaviour, IGameSystem
 
         if (Input.GetKeyDown(KeyCode.R))
             ResetGame();
-
-        // Add more debug shortcuts
-        if (Input.GetKeyDown(KeyCode.P))
-            TogglePause();
 #endif
     }
 

@@ -357,7 +357,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
             health.Heal(currentPhaseConfig.healAmount);
 
             Debug.Log($"[BossEnemyBehaviour] Phase heal applied: {currentPhaseConfig.healAmount}");
-e)
             float newHealthPercent = health.CurrentHealth / health.MaxHealth;
 
             float currentPhaseThreshold = currentPhaseConfig.healthThreshold;
