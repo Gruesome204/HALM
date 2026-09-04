@@ -393,20 +393,32 @@ public class BossBarUI : MonoBehaviour
         StopEnrageCoroutine();
     }
 
+    /// <summary>
+    /// Updates the boss name for a specific phase
+    /// </summary>
+    /// <param name="phaseName">The name of the current phase</param>
+    /// <param name="customBossName">Optional custom boss name for the phase</param>
     public void UpdateBossNameForPhase(string phaseName, string customBossName = null)
     {
         if (bossNameText == null || bossStats == null)
             return;
 
+        // If custom name is provided, use it
         if (!string.IsNullOrEmpty(customBossName))
         {
-            // Use custom name from phase config
             bossNameText.text = customBossName;
+            return;
+        }
+
+        // If phase name is provided and not empty, show boss name with phase
+        if (!string.IsNullOrEmpty(phaseName))
+        {
+            bossNameText.text = $"{bossStats.bossBarName}\n({phaseName})";
         }
         else
         {
-            // Use default format with phase name
-            bossNameText.text = $"{bossStats.bossBarName} ({phaseName})";
+            // If no phase name, just show the boss name
+            bossNameText.text = bossStats.bossBarName;
         }
     }
 

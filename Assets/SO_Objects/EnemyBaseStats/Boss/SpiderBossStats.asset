@@ -52,7 +52,7 @@ MonoBehaviour:
     speedMultiplier: 1
     effectDelay: 0
   - phaseName: Second Stage
-    healthThreshold: 0.5
+    healthThreshold: 0.7
     phaseBossName: 
     healAmount: 500
     aggressionMultiplier: 0.5
