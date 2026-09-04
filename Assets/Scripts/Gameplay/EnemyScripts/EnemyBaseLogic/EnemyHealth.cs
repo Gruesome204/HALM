@@ -86,7 +86,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IParryable
         UpdateHealthUI();
         OnHealthChanged?.Invoke(stats.currentHealth, stats.maxHealth);
 
-        Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage. Health: {stats.currentHealth}/{stats.maxHealth}");
+        //Debug.Log($"{gameObject.name} took {damage} {damageData.type} damage. Health: {stats.currentHealth}/{stats.maxHealth}");
 
         if (stats.currentHealth <= 0)
             Die(damageData);
