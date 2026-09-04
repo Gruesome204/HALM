@@ -29,6 +29,11 @@ public class BossBarUI : MonoBehaviour
     private Coroutine enrageCoroutine;
     private Coroutine phaseTransitionCoroutine;
 
+    // NEW: Track the previous phase to detect actual phase changes
+    private int previousPhase = -1;
+    // NEW: Track the current phase name to avoid unnecessary updates
+    private string currentPhaseName = "";
+
     #region Setup
 
     public void SetupBossBar(EnemyBaseBossStatsSO stats)
@@ -49,6 +54,8 @@ public class BossBarUI : MonoBehaviour
         SetHealthBarColor(stats.bossBarColor);
 
         currentPhase = 0;
+        previousPhase = -1; // NEW: Initialize previous phase
+        currentPhaseName = ""; // NEW: Initialize phase name
         SetupPhaseUI();
         SetupEnrage();
 
@@ -136,13 +143,18 @@ public class BossBarUI : MonoBehaviour
             phaseIndicatorImage.color = phaseColors[index];
         }
 
-        // NEW: Update boss name for initial phase if multi-phase
+        // MODIFIED: Only update boss name if this is an actual phase change
         if (isMultiPhase && bossStats.phaseConfigs != null && currentPhase < bossStats.phaseConfigs.Length)
         {
             var phaseConfig = bossStats.phaseConfigs[currentPhase];
             if (phaseConfig != null)
             {
-                UpdateBossNameForPhase(phaseConfig.phaseName);
+                // Only update if phase actually changed
+                if (currentPhase != previousPhase)
+                {
+                    UpdateBossNameForPhase(phaseConfig.phaseName);
+                    previousPhase = currentPhase;
+                }
             }
         }
     }
@@ -158,17 +170,24 @@ public class BossBarUI : MonoBehaviour
             float threshold = bossStats.phaseConfigs[i].healthThreshold;
             if (healthPercent <= threshold && i != currentPhase)
             {
-                currentPhase = i;
-                SetupPhaseUI();
+                // MODIFIED: Store the new phase before changing
+                int newPhase = i;
 
-                // Update health bar color for the new phase
-                if (phaseColors.Length > 0 && healthSlider?.fillRect != null)
+                // Only proceed if this is actually a new phase
+                if (newPhase != currentPhase)
                 {
-                    Image fillImage = healthSlider.fillRect.GetComponent<Image>();
-                    if (fillImage != null)
+                    currentPhase = newPhase;
+                    SetupPhaseUI();
+
+                    // Update health bar color for the new phase
+                    if (phaseColors.Length > 0 && healthSlider?.fillRect != null)
                     {
-                        int index = Mathf.Min(currentPhase, phaseColors.Length - 1);
-                        fillImage.color = phaseColors[index];
+                        Image fillImage = healthSlider.fillRect.GetComponent<Image>();
+                        if (fillImage != null)
+                        {
+                            int index = Mathf.Min(currentPhase, phaseColors.Length - 1);
+                            fillImage.color = phaseColors[index];
+                        }
                     }
                 }
                 break;
@@ -181,16 +200,22 @@ public class BossBarUI : MonoBehaviour
         if (bossStats == null || !bossStats.isMultiStageBoss) return;
 
         int numberOfPhases = bossStats.phaseConfigs?.Length ?? 0;
-        currentPhase = Mathf.Clamp(phaseIndex, 0, numberOfPhases - 1);
-        SetupPhaseUI();
+        int newPhase = Mathf.Clamp(phaseIndex, 0, numberOfPhases - 1);
 
-        if (phaseColors.Length > 0 && healthSlider?.fillRect != null)
+        // MODIFIED: Only update if phase actually changes
+        if (newPhase != currentPhase)
         {
-            Image fillImage = healthSlider.fillRect.GetComponent<Image>();
-            if (fillImage != null)
+            currentPhase = newPhase;
+            SetupPhaseUI();
+
+            if (phaseColors.Length > 0 && healthSlider?.fillRect != null)
             {
-                int index = Mathf.Min(currentPhase, phaseColors.Length - 1);
-                fillImage.color = phaseColors[index];
+                Image fillImage = healthSlider.fillRect.GetComponent<Image>();
+                if (fillImage != null)
+                {
+                    int index = Mathf.Min(currentPhase, phaseColors.Length - 1);
+                    fillImage.color = phaseColors[index];
+                }
             }
         }
     }
@@ -200,12 +225,17 @@ public class BossBarUI : MonoBehaviour
     /// </summary>
     public void ShowPhaseChange(string phaseName, float healthThreshold)
     {
-        // Update phase info with the new name
-        SetPhaseInfo(phaseName, healthThreshold);
+        // MODIFIED: Only update if the phase name has actually changed
+        if (!string.IsNullOrEmpty(phaseName) && phaseName != currentPhaseName)
+        {
+            // Update phase info with the new name
+            SetPhaseInfo(phaseName, healthThreshold);
+            currentPhaseName = phaseName;
 
-        // Optionally, you can add visual effects for phase change
-        // For example, a flash effect or animation
-        // StartCoroutine(PhaseChangeAnimation());
+            // Optionally, you can add visual effects for phase change
+            // For example, a flash effect or animation
+            StartCoroutine(PhaseChangeAnimation());
+        }
     }
 
     private IEnumerator PhaseChangeAnimation()
@@ -226,6 +256,9 @@ public class BossBarUI : MonoBehaviour
     /// </summary>
     public void SetPhaseInfo(string phaseName, float healthThreshold)
     {
+        // MODIFIED: Store the new phase name
+        currentPhaseName = phaseName;
+
         // Update the phase text if it exists
         if (phaseText != null)
         {
@@ -251,6 +284,7 @@ public class BossBarUI : MonoBehaviour
             }
         }
 
+        // MODIFIED: Only update boss name if phase name has changed
         UpdateBossNameForPhase(phaseName);
     }
 
@@ -403,10 +437,15 @@ public class BossBarUI : MonoBehaviour
         if (bossNameText == null || bossStats == null)
             return;
 
+        // MODIFIED: Only update if the phase name has changed
+        if (string.IsNullOrEmpty(phaseName) || phaseName == currentPhaseName)
+            return;
+
         // If custom name is provided, use it
         if (!string.IsNullOrEmpty(customBossName))
         {
             bossNameText.text = customBossName;
+            currentPhaseName = phaseName;
             return;
         }
 
@@ -414,6 +453,7 @@ public class BossBarUI : MonoBehaviour
         if (!string.IsNullOrEmpty(phaseName))
         {
             bossNameText.text = $"{bossStats.bossBarName}\n({phaseName})";
+            currentPhaseName = phaseName;
         }
         else
         {
@@ -428,6 +468,7 @@ public class BossBarUI : MonoBehaviour
             return;
 
         bossNameText.text = bossStats.bossBarName;
+        currentPhaseName = "";
     }
 
     #endregion
