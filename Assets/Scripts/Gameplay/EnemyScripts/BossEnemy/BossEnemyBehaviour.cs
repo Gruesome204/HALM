@@ -38,16 +38,12 @@ public class BossEnemyBehaviour : EnemyBehaviour
         InitializePhaseSystem();
     }
 
-    /// <summary>
-    /// Caches the boss stats for faster access
-    /// </summary>
     private void CacheBossStats()
     {
         if (stats != null && stats.baseStats is EnemyBaseBossStatsSO)
         {
             bossStats = stats.baseStats as EnemyBaseBossStatsSO;
 
-            // NEW: Initialize the entered phases array
             if (bossStats != null && bossStats.isMultiStageBoss && bossStats.phaseConfigs.Length > 0)
             {
                 enteredPhases = new bool[bossStats.phaseConfigs.Length];
@@ -55,9 +51,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         }
     }
 
-    /// <summary>
-    /// Initializes the phase system and applies initial phase
-    /// </summary>
     private void InitializePhaseSystem()
     {
         if (bossStats == null || !bossStats.isMultiStageBoss || bossStats.phaseConfigs.Length == 0)
@@ -71,9 +64,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         ApplyPhase(0);
     }
 
-    /// <summary>
-    /// Automatically detects and assigns required components if they're not set in the Inspector
-    /// </summary>
     private void AutoDetectComponents()
     {
         // Auto-detect stats if not assigned
@@ -192,8 +182,7 @@ public class BossEnemyBehaviour : EnemyBehaviour
     protected override void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
         base.HandleDamaged(damageData, knockbackData);
-        // Call UpdatePhase after the base damage is applied
-        // But only if we're not already in the middle of a phase update
+
         if (!isUpdatingPhase)
         {
             UpdatePhase();
@@ -210,8 +199,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         if (bossBarUI != null)
             bossBarUI.SetHealth(currentHealth, maxHealth);
 
-        // Don't update phase from health changed if we're already in the middle of a phase update
-        // This prevents loops when phases heal the boss
         if (!isUpdatingPhase)
         {
             UpdatePhase();
@@ -239,7 +226,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         // Check if we should transition to a new phase
         if (bossStats.isMultiStageBoss && bossStats.phaseConfigs.Length > 0)
         {
-            // MODIFIED: Find the next unentered phase based on health threshold
             int newPhaseIndex = GetNextUnenteredPhaseIndex(hpPercent);
 
             if (newPhaseIndex >= 0 && newPhaseIndex != currentPhaseIndex)
@@ -257,34 +243,27 @@ public class BossEnemyBehaviour : EnemyBehaviour
         }
     }
 
-    // NEW: Helper method to find the next unentered phase based on health
     private int GetNextUnenteredPhaseIndex(float healthPercent)
     {
         if (enteredPhases == null || bossStats == null)
             return -1;
 
-        // We want to find the highest phase (furthest along) that we haven't entered yet
-        // that should be entered based on current health
         int targetPhase = -1;
 
         for (int i = 0; i < bossStats.phaseConfigs.Length; i++)
         {
             float threshold = bossStats.phaseConfigs[i].healthThreshold;
 
-            // If health is at or below this phase's threshold, this phase should be active
-            // But only if we haven't entered it yet
+
             if (healthPercent <= threshold && !enteredPhases[i])
             {
                 targetPhase = i;
-                // Continue to find the highest (furthest) phase we qualify for
-                // This ensures we skip to the latest phase we should be in
             }
         }
 
         return targetPhase;
     }
 
-    // NEW: Helper method to check if a phase has been entered
     private bool IsPhaseEntered(int phaseIndex)
     {
         if (enteredPhases == null || phaseIndex < 0 || phaseIndex >= enteredPhases.Length)
@@ -292,9 +271,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         return enteredPhases[phaseIndex];
     }
 
-    /// <summary>
-    /// Applies the specified phase configuration
-    /// </summary>
     private void ApplyPhase(int phaseIndex)
     {
         // Prevent re-entering the same phase
@@ -304,7 +280,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
             return;
         }
 
-        // NEW: Prevent entering a phase that's already been entered
         if (IsPhaseEntered(phaseIndex))
         {
             Debug.Log($"[BossEnemyBehaviour] {gameObject.name}: Phase {phaseIndex} has already been entered, cannot enter again.");
@@ -332,7 +307,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
         try
         {
-            // NEW: Mark this phase as entered
             enteredPhases[phaseIndex] = true;
 
             // Store the current phase config
@@ -342,7 +316,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
             // Track the last applied phase to prevent re-entry
             lastAppliedPhaseIndex = phaseIndex;
 
-            // Update the phase enum (for compatibility)
             CurrentPhase = (BossPhase)Mathf.Min(phaseIndex + 1, (int)BossPhase.Phase3);
 
             Debug.Log($"[BossEnemyBehaviour] {gameObject.name} entering phase {phaseIndex + 1}: {newConfig.phaseName}");
@@ -370,9 +343,6 @@ public class BossEnemyBehaviour : EnemyBehaviour
         }
     }
 
-    /// <summary>
-    /// Applies the actual phase effects
-    /// </summary>
     private void ApplyPhaseEffects()
     {
         if (currentPhaseConfig == null) return;
@@ -387,18 +357,13 @@ public class BossEnemyBehaviour : EnemyBehaviour
             health.Heal(currentPhaseConfig.healAmount);
 
             Debug.Log($"[BossEnemyBehaviour] Phase heal applied: {currentPhaseConfig.healAmount}");
-
-            // After healing, check if the heal caused us to go above the phase threshold
-            // If so, we should NOT transition to a lower phase (we stay in the current phase)
+e)
             float newHealthPercent = health.CurrentHealth / health.MaxHealth;
 
-            // Check if we're now above the threshold for our current phase
-            // (This prevents the boss from entering a lower phase after a heal)
             float currentPhaseThreshold = currentPhaseConfig.healthThreshold;
             if (newHealthPercent > currentPhaseThreshold)
             {
                 Debug.Log($"[BossEnemyBehaviour] {gameObject.name}: Heal pushed health above phase threshold ({newHealthPercent:F2} > {currentPhaseThreshold:F2}). Staying in current phase.");
-                // We'll stay in the current phase
             }
         }
 
@@ -415,33 +380,21 @@ public class BossEnemyBehaviour : EnemyBehaviour
         }
     }
 
-    /// <summary>
-    /// Gets the current phase configuration
-    /// </summary>
     public BossPhaseConfig GetCurrentPhaseConfig()
     {
         return currentPhaseConfig;
     }
 
-    /// <summary>
-    /// Gets the current phase index (0-based)
-    /// </summary>
     public int GetCurrentPhaseIndex()
     {
         return currentPhaseIndex;
     }
 
-    /// <summary>
-    /// Checks if the boss is in the specified phase
-    /// </summary>
     public bool IsInPhase(int phaseIndex)
     {
         return currentPhaseIndex == phaseIndex;
     }
 
-    /// <summary>
-    /// Gets the health percentage threshold for the next phase
-    /// </summary>
     public float GetNextPhaseThreshold()
     {
         if (bossStats == null || currentPhaseIndex < 0 || currentPhaseIndex >= bossStats.phaseConfigs.Length - 1)
@@ -450,19 +403,15 @@ public class BossEnemyBehaviour : EnemyBehaviour
         return bossStats.phaseConfigs[currentPhaseIndex + 1].healthThreshold;
     }
 
-    // NEW: Public method to check if a phase has been entered
     public bool HasPhaseBeenEntered(int phaseIndex)
     {
         return IsPhaseEntered(phaseIndex);
     }
-
-    // NEW: Public method to get all entered phases
     public bool[] GetEnteredPhases()
     {
         return enteredPhases;
     }
 
-    // NEW: Optional method to reset phase tracking (useful for testing)
     public void ResetPhaseTracking()
     {
         if (enteredPhases != null)
