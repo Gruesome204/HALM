@@ -17,23 +17,20 @@ public class ProjectileBehaviour : MonoBehaviour
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private LayerMask wallLayer;
 
-    [Header("Chain Lightning")]
-    public int chainBounceCount = 0;
-    public float chainBounceRange = 5f;
-    private Transform chainTarget;
-    private int currentBounces = 0;
-    private List<Transform> hitEnemies = new List<Transform>(); // Track hit enemies for chain
-    [SerializeField] private LayerMask obstacleLayer; // Layer for obstacles that block chain
+    public bool isHoming;
+    public Transform homingTarget;
+    public float homingStrength;
+    public Transform chainTarget;
+    public List<Transform> hitEnemies = new List<Transform>();
+    public int currentBounces;
+    public int chainBounceCount;
+    public float chainBounceRange;
+    public LayerMask obstacleLayer;
 
-    [Header("Homing")]
-    public float homingStrength = 2f;
-    private Transform homingTarget;
-    private bool isHoming = false;
+    public bool isAOE;
+    public float aoeRadius;
+    public GameObject aoeEffectPrefab;
 
-    [Header("AOE")]
-    public bool isAOE = false;
-    public float aoeRadius = 3f;
-    [SerializeField] private GameObject aoeEffectPrefab; // Optional: visual effect for AOE
 
     // Add a flag to prevent multiple hits on same enemy
     private HashSet<GameObject> hitEnemySet = new HashSet<GameObject>();

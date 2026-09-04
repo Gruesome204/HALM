@@ -31,7 +31,7 @@ public class TurretBlueprint : ScriptableObject
     public GameObject turretPrefab;
 
     [Tooltip("Prefab instantiated when the turret is placed in the world.")]
-    public GameObject turretProjectileType;
+    public GameObject turretProjectile;
 
     [Tooltip("Shooting pattern of the turret.")]
     public FiringPattern firingPattern = FiringPattern.SingleShot;

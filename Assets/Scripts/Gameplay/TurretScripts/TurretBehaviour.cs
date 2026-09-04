@@ -8,7 +8,7 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     #region Serialized Fields
     [Header("References")]
     [SerializeField] private TurretBlueprint turretBlueprint;
-    [SerializeField] private GameObject currentProjectileType;
+    [SerializeField] private GameObject currentProjectile;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject healthBarPrefab;
 
@@ -101,9 +101,9 @@ public class TurretBehaviour : MonoBehaviour, IPausable
 
     private void InitializeProjectileType()
     {
-        if (turretBlueprint != null && currentProjectileType == null)
+        if (turretBlueprint != null && currentProjectile == null)
         {
-            currentProjectileType = turretBlueprint.turretProjectileType;
+            currentProjectile = turretBlueprint.turretProjectile;
         }
     }
 
@@ -287,11 +287,11 @@ public class TurretBehaviour : MonoBehaviour, IPausable
     #region Projectile Creation
     private GameObject CreateProjectile(Vector2 direction)
     {
-        if (currentProjectileType == null || firePoint == null)
+        if (currentProjectile == null || firePoint == null)
             return null;
 
         GameObject projectileObj = Instantiate(
-            currentProjectileType,
+            currentProjectile,
             firePoint.position,
             Quaternion.identity);
 
