@@ -22,11 +22,17 @@ public class BossBarUI : MonoBehaviour
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color enrageColor = Color.red;
 
+    [Header("Phase Transition")]
+    [SerializeField] private GameObject phaseTransitionPanel;
+    [SerializeField] private TextMeshProUGUI phaseTransitionText;
+    [SerializeField] private float phaseTransitionDuration = 2f;
+
     private EnemyBaseBossStatsSO bossStats;
     private float maxHealth;
     private int currentPhase;
     private bool isEnraged;
     private Coroutine enrageCoroutine;
+    private Coroutine phaseTransitionCoroutine;
 
     #region Setup
 
@@ -174,6 +180,78 @@ public class BossBarUI : MonoBehaviour
         SetupPhaseUI();
 
         if (phaseColors.Length > 0 && healthSlider?.fillRect != null)
+        {
+            Image fillImage = healthSlider.fillRect.GetComponent<Image>();
+            if (fillImage != null)
+            {
+                int index = Mathf.Min(currentPhase, phaseColors.Length - 1);
+                fillImage.color = phaseColors[index];
+            }
+        }
+    }
+
+    /// <summary>
+    /// Shows a phase change notification in the UI
+    /// </summary>
+    public void ShowPhaseChange(string phaseName, float healthThreshold)
+    {
+        if (phaseTransitionPanel == null || phaseTransitionText == null)
+        {
+            Debug.LogWarning("[BossBarUI] Phase transition UI elements not assigned");
+            return;
+        }
+
+        // Stop any ongoing phase transition coroutine
+        if (phaseTransitionCoroutine != null)
+        {
+            StopCoroutine(phaseTransitionCoroutine);
+            phaseTransitionCoroutine = null;
+        }
+
+        // Start the phase transition animation
+        phaseTransitionCoroutine = StartCoroutine(ShowPhaseTransitionRoutine(phaseName, healthThreshold));
+    }
+
+    private IEnumerator ShowPhaseTransitionRoutine(string phaseName, float healthThreshold)
+    {
+        // Set the phase text
+        phaseTransitionText.text = $"PHASE {currentPhase + 1}: {phaseName.ToUpper()}";
+
+        // Show the panel
+        if (phaseTransitionPanel != null)
+            phaseTransitionPanel.SetActive(true);
+
+        // Wait for the duration
+        yield return new WaitForSeconds(phaseTransitionDuration);
+
+        // Hide the panel
+        if (phaseTransitionPanel != null)
+            phaseTransitionPanel.SetActive(false);
+
+        phaseTransitionCoroutine = null;
+    }
+
+    /// <summary>
+    /// Sets the current phase information in the UI
+    /// </summary>
+    public void SetPhaseInfo(string phaseName, float healthThreshold)
+    {
+        // Update the phase text if it exists
+        if (phaseText != null)
+        {
+            int numberOfPhases = bossStats?.phaseConfigs?.Length ?? 0;
+            phaseText.text = $"Phase {currentPhase + 1}: {phaseName}";
+        }
+
+        // Update the phase indicator color
+        if (phaseIndicatorImage != null && phaseColors.Length > 0)
+        {
+            int index = Mathf.Min(currentPhase, phaseColors.Length - 1);
+            phaseIndicatorImage.color = phaseColors[index];
+        }
+
+        // Update the health bar color based on the phase
+        if (healthSlider?.fillRect != null && phaseColors.Length > 0)
         {
             Image fillImage = healthSlider.fillRect.GetComponent<Image>();
             if (fillImage != null)

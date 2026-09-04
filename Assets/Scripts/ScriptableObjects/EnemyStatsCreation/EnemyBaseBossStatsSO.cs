@@ -100,10 +100,6 @@ public class BossPhaseConfig
     [Range(0.5f, 2f)]
     public float speedMultiplier = 1f;
 
-    [Header("Phase Abilities")]
-    [Tooltip("New abilities unlocked in this phase")]
-    public AbilityBlueprint[] unlockedAbilities;
-
     [Header("Phase Events")]
     [Tooltip("Delay before applying phase effects")]
     public float effectDelay = 0.5f;

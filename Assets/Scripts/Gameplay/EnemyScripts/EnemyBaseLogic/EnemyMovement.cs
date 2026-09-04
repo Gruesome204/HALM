@@ -48,12 +48,20 @@ public class EnemyMovement : MonoBehaviour
     private bool hasSeenPlayer = false;
     private float loseSightTimer = 0f;
     private Vector2 lastKnownPlayerPosition;
+
+    // Speed multiplier for phase changes
+    private float speedMultiplier = 1f;
     #endregion
 
     #region Public Properties
     public GameObject target { get; set; }
     public bool isAggroed { get; set; } = false;
     public EnemyKnockback knockbackComponent => knockback;
+    public float SpeedMultiplier
+    {
+        get => speedMultiplier;
+        set => speedMultiplier = Mathf.Max(0.1f, value); // Prevent zero or negative speeds
+    }
     #endregion
 
     #region Unity Callbacks
@@ -120,6 +128,16 @@ public class EnemyMovement : MonoBehaviour
         else ResumeMovement();
     }
 
+    /// <summary>
+    /// Sets the speed multiplier for the enemy movement
+    /// </summary>
+    /// <param name="multiplier">Multiplier value (0.5 = half speed, 2 = double speed)</param>
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        speedMultiplier = Mathf.Max(0.1f, multiplier);
+        Debug.Log($"[EnemyMovement] Speed multiplier set to: {speedMultiplier}");
+    }
+
     public void GeneratePathToPosition(Vector2 targetPosition)
     {
         if (!IsPathfindingAvailable()) return;
@@ -178,8 +196,10 @@ public class EnemyMovement : MonoBehaviour
         }
 
         Vector2 dir = toTarget.normalized;
-        float speedMultiplier = Mathf.Clamp01(distance / slowDownDistance);
-        Vector2 targetVelocity = dir * stats.currentMovementSpeed * speedMultiplier;
+        float speedMultiplierValue = Mathf.Clamp01(distance / slowDownDistance);
+        // Apply the speed multiplier to the movement speed
+        float currentSpeed = stats.currentMovementSpeed * speedMultiplier;
+        Vector2 targetVelocity = dir * currentSpeed * speedMultiplierValue;
 
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, Time.fixedDeltaTime * acceleration);
         enemyAnimator?.SetMoveSpeed(rb.linearVelocity.magnitude);
@@ -200,7 +220,9 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        rb.linearVelocity = dir * stats.currentMovementSpeed;
+        // Apply the speed multiplier to the movement speed
+        float currentSpeed = stats.currentMovementSpeed * speedMultiplier;
+        rb.linearVelocity = dir * currentSpeed;
         enemyAnimator?.SetMoveSpeed(rb.linearVelocity.magnitude);
     }
 
@@ -219,6 +241,7 @@ public class EnemyMovement : MonoBehaviour
         currentPath.Clear();
         rb.linearVelocity = Vector2.zero;
         enemyAnimator?.SetMoveSpeed(0f);
+        speedMultiplier = 1f; // Reset speed multiplier
     }
 
     public List<Vector2Int> SmoothPath(List<Vector2Int> path)
@@ -402,7 +425,9 @@ public class EnemyMovement : MonoBehaviour
             Vector2 dir = (lastKnownPlayerPosition - (Vector2)transform.position).normalized;
             if (!IsWallInFront(dir))
             {
-                rb.linearVelocity = dir * stats.currentMovementSpeed;
+                // Apply the speed multiplier to the movement speed
+                float currentSpeed = stats.currentMovementSpeed * speedMultiplier;
+                rb.linearVelocity = dir * currentSpeed;
                 enemyAnimator?.SetMoveSpeed(rb.linearVelocity.magnitude);
             }
             else

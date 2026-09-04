@@ -7,6 +7,11 @@ public class BossEnemyBehaviour : EnemyBehaviour
     [SerializeField] private BossBarUI bossBarUI;
     public BossPhase CurrentPhase { get; private set; } = BossPhase.Phase1;
 
+    // Cache the boss stats for easier access
+    private EnemyBaseBossStatsSO bossStats;
+    private BossPhaseConfig currentPhaseConfig;
+    private int currentPhaseIndex = -1;
+
     protected override void Awake()
     {
         // Auto-detect components if not assigned
@@ -21,6 +26,35 @@ public class BossEnemyBehaviour : EnemyBehaviour
     private void Start()
     {
         SetupBossBar();
+        CacheBossStats();
+        InitializePhaseSystem();
+    }
+
+    /// <summary>
+    /// Caches the boss stats for faster access
+    /// </summary>
+    private void CacheBossStats()
+    {
+        if (stats != null && stats.baseStats is EnemyBaseBossStatsSO)
+        {
+            bossStats = stats.baseStats as EnemyBaseBossStatsSO;
+        }
+    }
+
+    /// <summary>
+    /// Initializes the phase system and applies initial phase
+    /// </summary>
+    private void InitializePhaseSystem()
+    {
+        if (bossStats == null || !bossStats.isMultiStageBoss || bossStats.phaseConfigs.Length == 0)
+        {
+            // If no phases configured, use default phase 1
+            CurrentPhase = BossPhase.Phase1;
+            return;
+        }
+
+        // Start with phase 0 (first phase)
+        ApplyPhase(0);
     }
 
     /// <summary>
@@ -143,6 +177,14 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     protected override void HandleDamaged(DamageData damageData, KnockbackData knockbackData)
     {
+        // Apply phase damage multiplier before base handling
+        if (currentPhaseConfig != null && attack != null)
+        {
+            // The damage is already calculated, but we can modify incoming damage
+            // This assumes the attack component handles damage calculation
+            // You might want to modify the damageData here if needed
+        }
+
         base.HandleDamaged(damageData, knockbackData);
         UpdatePhase();
     }
@@ -162,10 +204,139 @@ public class BossEnemyBehaviour : EnemyBehaviour
 
     private void UpdatePhase()
     {
-        if (stats == null || health == null) return;
+        if (stats == null || health == null || bossStats == null) return;
 
         float hpPercent = health.CurrentHealth / health.MaxHealth;
 
+        // Check if we should transition to a new phase
+        if (bossStats.isMultiStageBoss && bossStats.phaseConfigs.Length > 0)
+        {
+            int newPhaseIndex;
+            if (bossStats.TryGetPhaseAtHealthPercent(hpPercent, out newPhaseIndex))
+            {
+                // Only update if the phase has changed
+                if (newPhaseIndex != currentPhaseIndex)
+                {
+                    ApplyPhase(newPhaseIndex);
+                }
+            }
+        }
     }
 
+    /// <summary>
+    /// Applies the specified phase configuration
+    /// </summary>
+    private void ApplyPhase(int phaseIndex)
+    {
+        if (bossStats == null || phaseIndex < 0 || phaseIndex >= bossStats.phaseConfigs.Length)
+        {
+            Debug.LogWarning($"[BossEnemyBehaviour] Invalid phase index: {phaseIndex}");
+            return;
+        }
+
+        BossPhaseConfig newConfig = bossStats.phaseConfigs[phaseIndex];
+        if (newConfig == null) return;
+
+        // Store the current phase config
+        currentPhaseConfig = newConfig;
+        currentPhaseIndex = phaseIndex;
+
+        // Update the phase enum (for compatibility)
+        CurrentPhase = (BossPhase)Mathf.Min(phaseIndex + 1, (int)BossPhase.Phase3);
+
+        Debug.Log($"[BossEnemyBehaviour] {gameObject.name} entering phase {phaseIndex + 1}: {newConfig.phaseName}");
+
+        // Apply phase effects with delay if specified
+        if (newConfig.effectDelay > 0)
+        {
+            Invoke(nameof(ApplyPhaseEffects), newConfig.effectDelay);
+        }
+        else
+        {
+            ApplyPhaseEffects();
+        }
+
+        // Show phase change in UI if available
+        if (bossBarUI != null)
+        {
+            bossBarUI.ShowPhaseChange(newConfig.phaseName, newConfig.healthThreshold);
+        }
+    }
+
+    /// <summary>
+    /// Applies the actual phase effects
+    /// </summary>
+    private void ApplyPhaseEffects()
+    {
+        if (currentPhaseConfig == null) return;
+
+        // Apply heal if specified
+        if (currentPhaseConfig.healAmount > 0 && health != null)
+        {
+            health.Heal(currentPhaseConfig.healAmount);
+            Debug.Log($"[BossEnemyBehaviour] Phase heal applied: {currentPhaseConfig.healAmount}");
+        }
+
+        // Apply aggression multiplier (affects attack speed, cooldowns, etc.)
+        if (attack != null)
+        {
+            // Assuming EnemyAttack has a way to modify attack speed
+            // You might need to implement this based on your system
+            // attack.SetAttackSpeedMultiplier(currentPhaseConfig.aggressionMultiplier);
+        }
+
+        // Apply damage multiplier
+        if (attack != null)
+        {
+            // You might have a method to set damage multiplier on attack component
+            // attack.SetDamageMultiplier(currentPhaseConfig.damageMultiplier);
+        }
+
+        // Apply speed multiplier
+        if (movement != null)
+        {
+            movement.SetSpeedMultiplier(currentPhaseConfig.speedMultiplier);
+        }
+
+        // Update UI elements with phase info
+        if (bossBarUI != null)
+        {
+            bossBarUI.SetPhaseInfo(currentPhaseConfig.phaseName, currentPhaseConfig.healthThreshold);
+        }
+    }
+
+    /// <summary>
+    /// Gets the current phase configuration
+    /// </summary>
+    public BossPhaseConfig GetCurrentPhaseConfig()
+    {
+        return currentPhaseConfig;
+    }
+
+    /// <summary>
+    /// Gets the current phase index (0-based)
+    /// </summary>
+    public int GetCurrentPhaseIndex()
+    {
+        return currentPhaseIndex;
+    }
+
+    /// <summary>
+    /// Checks if the boss is in the specified phase
+    /// </summary>
+    public bool IsInPhase(int phaseIndex)
+    {
+        return currentPhaseIndex == phaseIndex;
+    }
+
+    /// <summary>
+    /// Gets the health percentage threshold for the next phase
+    /// </summary>
+    public float GetNextPhaseThreshold()
+    {
+        if (bossStats == null || currentPhaseIndex < 0 || currentPhaseIndex >= bossStats.phaseConfigs.Length - 1)
+            return 0f;
+
+        return bossStats.phaseConfigs[currentPhaseIndex + 1].healthThreshold;
+    }
 }
