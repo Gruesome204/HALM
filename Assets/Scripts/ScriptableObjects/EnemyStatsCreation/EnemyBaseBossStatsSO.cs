@@ -104,40 +104,8 @@ public class BossPhaseConfig
     [Tooltip("New abilities unlocked in this phase")]
     public AbilityBlueprint[] unlockedAbilities;
 
-    [Tooltip("Abilities that are disabled in this phase")]
-    public AbilityBlueprint[] disabledAbilities;
-
-    [Header("Phase Visuals")]
-    [Tooltip("Color tint for the boss during this phase")]
-    public Color phaseColor = Color.white;
-
-    [Tooltip("Particle system to spawn when entering phase")]
-    public GameObject phaseTransitionEffect;
-
-    [Header("Phase Behaviors")]
-    [Tooltip("Should the boss become invulnerable during transition?")]
-    public bool invulnerableDuringTransition = false;
-
-    [Tooltip("Duration of invulnerability in seconds")]
-    public float invulnerabilityDuration = 1f;
-
-    [Tooltip("Should the boss play a specific animation?")]
-    public string phaseTransitionAnimation = "PhaseTransition";
-
     [Header("Phase Events")]
     [Tooltip("Delay before applying phase effects")]
     public float effectDelay = 0.5f;
 
-    [Tooltip("Should the boss enter a different attack pattern?")]
-    public AttackPattern attackPattern = AttackPattern.Default;
-
-    public enum AttackPattern
-    {
-        Default,
-        Aggressive,
-        Defensive,
-        Ranged,
-        Melee,
-        Mixed
-    }
 }
