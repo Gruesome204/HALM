@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
@@ -15,6 +16,9 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
     [Header("Turret Aggro")]
     [SerializeField] private float turretAggroDuration = 5f;
+
+    [Header("Targeting Settings")]
+    [SerializeField] private EnemyTargetingSettings targetingSettings = new EnemyTargetingSettings();
     #endregion
 
     #region Protected Fields 
@@ -38,6 +42,11 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     // Combat Timing
     protected float nextAttackTime = 0.5f;
     protected float nextAbilityTime;
+
+    protected float nextTargetSwitchTime;
+    protected GameObject currentTurretTarget;
+    protected List<GameObject> cachedTurrets = new List<GameObject>();
+    protected float turretSearchCooldown;
     #endregion
 
     #region Public Properties
@@ -56,6 +65,11 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         health.OnDeath += HandleDeath;
         health.OnDamaged += HandleDamaged;
+
+        // Initialize targeting settings if null
+        if (targetingSettings == null)
+            targetingSettings = new EnemyTargetingSettings();
+
     }
 
     public virtual void Start()
@@ -65,6 +79,10 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         if (GameManager.Instance == null)
             Debug.LogWarning("GameManager not ready yet, EnemyBehaviour won't receive pause events");
+
+        // Cache turrets if targeting is enabled
+        if (targetingSettings.targetTurrets)
+            CacheTurrets();
     }
 
     private void OnDisable()
@@ -78,6 +96,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
 
         UpdateTurretAggroTimer();
         CheckProximityAggro();
+        FindBestTarget();
 
         if (target == null) return;
 
@@ -91,20 +110,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     #region Public Methods
     public GameObject AcquirePlayerTarget()
     {
-        if (target == null || !target.activeInHierarchy)
-        {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                target = player;
-                cachedPlayer = player;
-            }
-            else
-            {
-                Debug.LogWarning($"{name}: Player not found in scene!");
-            }
-        }
-        return target;
+        return GetPlayerTarget();
     }
 
     public bool IsAggroedByTurret() => aggroedByTurret;
@@ -126,6 +132,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         movement.Stop();
         movement.isAggroed = false;
         abilityBehaviour?.SetTarget(null);
+        currentTurretTarget = null;
     }
 
     public void OnPause()
@@ -183,13 +190,15 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
     #region Protected Methods - Targeting & Aggro
     protected virtual void CheckProximityAggro()
     {
-        AcquirePlayerTarget();
-        if (target == null) return;
+        if (targetingSettings == null || !targetingSettings.targetPlayer) return;
 
-        float distance = Vector2.Distance(transform.position, target.transform.position);
+        GameObject player = GetPlayerTarget();
+        if (player == null) return;
+
+        float distance = Vector2.Distance(transform.position, player.transform.position);
 
         if (!isAggroed && (distance <= stats.currentDetectionRange || aggroedByTurret))
-            SetAggro(target);
+            SetAggro(player);
 
         if (isAggroed)
             AlertNearbyEnemies();
@@ -233,6 +242,170 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
             ClearAggro();
     }
     #endregion
+
+    protected virtual void CacheTurrets()
+    {
+        cachedTurrets.Clear();
+
+        // Find all turrets in the scene
+        TurretBehaviour[] turrets = FindObjectsOfType<TurretBehaviour>();
+        foreach (var turret in turrets)
+        {
+            if (turret != null && turret.gameObject.activeInHierarchy)
+            {
+                cachedTurrets.Add(turret.gameObject);
+            }
+        }
+
+        Debug.Log($"Cached {cachedTurrets.Count} turrets for targeting");
+    }
+
+    protected virtual void FindBestTarget()
+    {
+        if (targetingSettings == null) return;
+
+        // If we're aggroed by a turret, prioritize that target
+        if (aggroedByTurret && currentTurretTarget != null && currentTurretTarget.activeInHierarchy)
+        {
+            SetAggro(currentTurretTarget);
+            return;
+        }
+
+        // Don't switch targets too frequently
+        if (targetingSettings.switchTargets && Time.time < nextTargetSwitchTime)
+            return;
+
+        List<GameObject> potentialTargets = new List<GameObject>();
+        Dictionary<GameObject, float> targetScores = new Dictionary<GameObject, float>();
+
+        // Add player as potential target
+        if (targetingSettings.targetPlayer)
+        {
+            GameObject player = GetPlayerTarget();
+            if (player != null && player.activeInHierarchy)
+            {
+                float distance = Vector2.Distance(transform.position, player.transform.position);
+                if (distance <= stats.currentDetectionRange)
+                {
+                    potentialTargets.Add(player);
+                    targetScores[player] = CalculateTargetScore(player, targetingSettings.playerPriority);
+                }
+            }
+        }
+
+        // Add turrets as potential targets
+        if (targetingSettings.targetTurrets)
+        {
+            // Update cached turrets periodically
+            turretSearchCooldown -= Time.deltaTime;
+            if (turretSearchCooldown <= 0)
+            {
+                CacheTurrets();
+                turretSearchCooldown = 5f;
+            }
+
+            foreach (var turretObj in cachedTurrets)
+            {
+                if (turretObj == null || !turretObj.activeInHierarchy) continue;
+
+                float distance = Vector2.Distance(transform.position, turretObj.transform.position);
+                if (distance > targetingSettings.turretTargetingRange) continue;
+
+                // Check if turret meets additional criteria
+                if (!IsValidTurretTarget(turretObj)) continue;
+
+                potentialTargets.Add(turretObj);
+                targetScores[turretObj] = CalculateTargetScore(turretObj, targetingSettings.turretPriority);
+            }
+        }
+
+        // No valid targets found
+        if (potentialTargets.Count == 0)
+        {
+            if (target != null && target.CompareTag("Player"))
+            {
+                // Keep current target if it's the player
+                return;
+            }
+            ClearAggro();
+            return;
+        }
+
+        // Find best target based on score
+        GameObject bestTarget = potentialTargets
+            .OrderByDescending(t => targetScores[t])
+            .FirstOrDefault();
+
+        if (bestTarget != null && bestTarget != target)
+        {
+            SetAggro(bestTarget);
+            nextTargetSwitchTime = Time.time + targetingSettings.targetSwitchCooldown;
+        }
+    }
+
+    protected virtual float CalculateTargetScore(GameObject target, int basePriority)
+    {
+        float score = basePriority * 100f;
+
+        // Closer targets get higher priority (if enabled)
+        if (targetingSettings.prioritizeClosestTarget)
+        {
+            float distance = Vector2.Distance(transform.position, target.transform.position);
+            float maxDistance = Mathf.Max(stats.currentDetectionRange, targetingSettings.turretTargetingRange);
+            float distanceBonus = 1f - (distance / maxDistance);
+            score += distanceBonus * 50f;
+        }
+
+        // Check if target is currently attacking this enemy
+        if (IsTargetAttackingMe(target))
+        {
+            score += 30f; // Bonus for targets attacking us
+        }
+
+        // Bonus for targets already aggroed on us
+        if (target == cachedPlayer && isAggroed)
+        {
+            score += 20f;
+        }
+
+        return score;
+    }
+
+    protected virtual bool IsValidTurretTarget(GameObject turretObj)
+    {
+        if (turretObj == null) return false;
+
+        // Check layer mask
+        if (((1 << turretObj.layer) & targetingSettings.turretLayerMask) == 0)
+            return false;
+
+        // Check if turret is active
+        if (targetingSettings.targetOnlyActiveTurrets && !turretObj.activeInHierarchy)
+            return false;
+
+        // Check if turret is alive
+        var health = turretObj.GetComponent<EnemyHealth>();
+        if (health != null && health.CurrentHealth <= 0)
+            return false;
+
+        return true;
+    }
+
+    protected virtual bool IsTargetAttackingMe(GameObject target)
+    {
+        // Implement logic to check if target is attacking this enemy
+        // This could check if the target has recent damage source = this gameObject
+        return false; // Placeholder
+    }
+
+    protected virtual GameObject GetPlayerTarget()
+    {
+        if (cachedPlayer == null || !cachedPlayer.activeInHierarchy)
+        {
+            cachedPlayer = GameObject.FindGameObjectWithTag("Player");
+        }
+        return cachedPlayer;
+    }
 
     #region Protected Methods - Movement
     protected virtual void HandleMovementTarget(GameObject target)
@@ -328,6 +501,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         aggroedByTurret = true;
         turretAggroTimer = turretAggroDuration;
 
+
         SetAggro(cachedPlayer);
         movement.isAggroed = true;
         movement.ForceAggroOnPlayer(cachedPlayer);
@@ -380,4 +554,25 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
         }
     }
     #endregion
+
+    [System.Serializable]
+    public class EnemyTargetingSettings
+    {
+        [Header("Target Priority")]
+        public bool targetPlayer = true;
+        public bool targetTurrets = false;
+        public float turretTargetingRange = 30f;
+        public int turretPriority = 1; // Higher = more priority
+        public int playerPriority = 2;
+
+        [Header("Target Switching")]
+        public bool switchTargets = true;
+        public float targetSwitchCooldown = 2f;
+        public bool prioritizeClosestTarget = true;
+
+        [Header("Turret Filters")]
+        public LayerMask turretLayerMask = -1;
+        public bool targetOnlyActiveTurrets = true;
+        public bool targetOnlyTurretsWithAmmo = false;
+    }
 }

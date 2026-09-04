@@ -213,6 +213,20 @@ MonoBehaviour:
   abilityCheckInterval: 1
   stopBuffer: 0.2
   turretAggroDuration: 5
+  targetingSettings:
+    targetPlayer: 1
+    targetTurrets: 1
+    turretTargetingRange: 30
+    turretPriority: 1
+    playerPriority: 2
+    switchTargets: 1
+    targetSwitchCooldown: 2
+    prioritizeClosestTarget: 1
+    turretLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    targetOnlyActiveTurrets: 1
+    targetOnlyTurretsWithAmmo: 0
 --- !u!58 &7883716132835968374
 CircleCollider2D:
   m_ObjectHideFlags: 0

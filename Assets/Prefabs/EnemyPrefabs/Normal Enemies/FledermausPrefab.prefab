@@ -273,9 +273,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupAggroRadius: 30
   loseAggroMultiplier: 1.3
-  target: {fileID: 0}
   abilityCheckInterval: 1
   stopBuffer: 0.2
+  turretAggroDuration: 5
+  targetingSettings:
+    targetPlayer: 1
+    targetTurrets: 1
+    turretTargetingRange: 30
+    turretPriority: 1
+    playerPriority: 2
+    switchTargets: 1
+    targetSwitchCooldown: 2
+    prioritizeClosestTarget: 1
+    turretLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    targetOnlyActiveTurrets: 1
+    targetOnlyTurretsWithAmmo: 0
 --- !u!114 &3393257043857848876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,8 +305,6 @@ MonoBehaviour:
   stats: {fileID: 2323439724470229143}
   movement: {fileID: 0}
   healthBar: {fileID: 5537807661464177235}
-  bossBarUIPrefab: {fileID: 0}
-  bossBarUIInstance: {fileID: 0}
   spriteRenderer: {fileID: 250192274628413378}
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
@@ -326,22 +338,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 2323439724470229143}
-  knockback: {fileID: 0}
-  isAggroed: 0
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1024
-  wallCheckDistance: 0.5
-  nodeReachDistance: 0.1
-  pathUpdateRate: 1
-  lookAheadSteps: 2
   acceleration: 10
   slowDownDistance: 0.4
   arriveDistance: 0.08
+  pathUpdateRate: 1
+  nodeReachDistance: 0.1
+  lookAheadSteps: 2
+  wallCheckDistance: 0.5
   detectionRange: 10
   directMovementRange: 2
   loseSightTimerMax: 3
-  target: {fileID: 0}
   showDebugGizmos: 1
   showPathGizmos: 1
   showDetectionRangeGizmo: 0
