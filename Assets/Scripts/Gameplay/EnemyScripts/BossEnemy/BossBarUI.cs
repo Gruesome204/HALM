@@ -195,11 +195,6 @@ public class BossBarUI : MonoBehaviour
     /// </summary>
     public void ShowPhaseChange(string phaseName, float healthThreshold)
     {
-        if (phaseTransitionPanel == null || phaseTransitionText == null)
-        {
-            Debug.LogWarning("[BossBarUI] Phase transition UI elements not assigned");
-            return;
-        }
 
         // Stop any ongoing phase transition coroutine
         if (phaseTransitionCoroutine != null)
