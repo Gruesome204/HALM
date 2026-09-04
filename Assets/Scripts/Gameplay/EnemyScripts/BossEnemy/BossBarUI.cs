@@ -22,11 +22,6 @@ public class BossBarUI : MonoBehaviour
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color enrageColor = Color.red;
 
-    [Header("Phase Transition")]
-    [SerializeField] private GameObject phaseTransitionPanel;
-    [SerializeField] private TextMeshProUGUI phaseTransitionText;
-    [SerializeField] private float phaseTransitionDuration = 2f;
-
     private EnemyBaseBossStatsSO bossStats;
     private float maxHealth;
     private int currentPhase;
@@ -140,6 +135,16 @@ public class BossBarUI : MonoBehaviour
             int index = Mathf.Min(currentPhase, phaseColors.Length - 1);
             phaseIndicatorImage.color = phaseColors[index];
         }
+
+        // NEW: Update boss name for initial phase if multi-phase
+        if (isMultiPhase && bossStats.phaseConfigs != null && currentPhase < bossStats.phaseConfigs.Length)
+        {
+            var phaseConfig = bossStats.phaseConfigs[currentPhase];
+            if (phaseConfig != null)
+            {
+                UpdateBossNameForPhase(phaseConfig.phaseName);
+            }
+        }
     }
 
     private void CheckPhaseTransition(float healthPercent)
@@ -191,40 +196,30 @@ public class BossBarUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Shows a phase change notification in the UI
+    /// Shows a phase change notification in the UI and updates the boss name
     /// </summary>
     public void ShowPhaseChange(string phaseName, float healthThreshold)
     {
+        // Update phase info with the new name
+        SetPhaseInfo(phaseName, healthThreshold);
 
-        // Stop any ongoing phase transition coroutine
-        if (phaseTransitionCoroutine != null)
-        {
-            StopCoroutine(phaseTransitionCoroutine);
-            phaseTransitionCoroutine = null;
-        }
-
-        // Start the phase transition animation
-        phaseTransitionCoroutine = StartCoroutine(ShowPhaseTransitionRoutine(phaseName, healthThreshold));
+        // Optionally, you can add visual effects for phase change
+        // For example, a flash effect or animation
+        // StartCoroutine(PhaseChangeAnimation());
     }
 
-    private IEnumerator ShowPhaseTransitionRoutine(string phaseName, float healthThreshold)
+    private IEnumerator PhaseChangeAnimation()
     {
-        // Set the phase text
-        phaseTransitionText.text = $"PHASE {currentPhase + 1}: {phaseName.ToUpper()}";
-
-        // Show the panel
-        if (phaseTransitionPanel != null)
-            phaseTransitionPanel.SetActive(true);
-
-        // Wait for the duration
-        yield return new WaitForSeconds(phaseTransitionDuration);
-
-        // Hide the panel
-        if (phaseTransitionPanel != null)
-            phaseTransitionPanel.SetActive(false);
-
-        phaseTransitionCoroutine = null;
+        // Example: Flash the boss name text
+        if (bossNameText != null)
+        {
+            Color originalColor = bossNameText.color;
+            bossNameText.color = Color.yellow;
+            yield return new WaitForSeconds(0.3f);
+            bossNameText.color = originalColor;
+        }
     }
+
 
     /// <summary>
     /// Sets the current phase information in the UI
@@ -255,6 +250,8 @@ public class BossBarUI : MonoBehaviour
                 fillImage.color = phaseColors[index];
             }
         }
+
+        UpdateBossNameForPhase(phaseName);
     }
 
     #endregion
@@ -394,6 +391,31 @@ public class BossBarUI : MonoBehaviour
         Debug.Log("[BossBarUI] HideBossBar called");
         gameObject.SetActive(false);
         StopEnrageCoroutine();
+    }
+
+    public void UpdateBossNameForPhase(string phaseName, string customBossName = null)
+    {
+        if (bossNameText == null || bossStats == null)
+            return;
+
+        if (!string.IsNullOrEmpty(customBossName))
+        {
+            // Use custom name from phase config
+            bossNameText.text = customBossName;
+        }
+        else
+        {
+            // Use default format with phase name
+            bossNameText.text = $"{bossStats.bossBarName} ({phaseName})";
+        }
+    }
+
+    public void ResetBossName()
+    {
+        if (bossNameText == null || bossStats == null)
+            return;
+
+        bossNameText.text = bossStats.bossBarName;
     }
 
     #endregion

@@ -43,8 +43,9 @@ MonoBehaviour:
   bossBarHeight: 20
   isMultiStageBoss: 1
   phaseConfigs:
-  - phaseName: First Stage
+  - phaseName: 
     healthThreshold: 1
+    phaseBossName: 
     healAmount: 0
     aggressionMultiplier: 1
     damageMultiplier: 1
@@ -52,6 +53,7 @@ MonoBehaviour:
     effectDelay: 0
   - phaseName: Second Stage
     healthThreshold: 0.5
+    phaseBossName: 
     healAmount: 500
     aggressionMultiplier: 0.5
     damageMultiplier: 0.5

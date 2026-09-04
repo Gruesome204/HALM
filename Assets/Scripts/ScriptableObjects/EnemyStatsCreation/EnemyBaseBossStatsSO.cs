@@ -84,6 +84,8 @@ public class BossPhaseConfig
     [Range(0f, 1f)]
     public float healthThreshold = 0.75f;
 
+    public string phaseBossName;
+
     [Header("Phase Effects")]
     [Tooltip("Amount of health to heal when entering this phase")]
     public float healAmount = 0f;
