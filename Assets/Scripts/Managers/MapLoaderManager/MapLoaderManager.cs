@@ -243,9 +243,7 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         return loadedMap;
     }
 
-    /// <summary>
-    /// Toggle between test room mode and normal map mode
-    /// </summary>
+
     public void ToggleTestRoomMode(bool enable)
     {
         useTestRoom = enable;
@@ -266,9 +264,6 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         }
     }
 
-    /// <summary>
-    /// Set a different test room prefab at runtime
-    /// </summary>
     public void SetTestRoomPrefab(GameObject newTestRoom)
     {
         if (newTestRoom == null)

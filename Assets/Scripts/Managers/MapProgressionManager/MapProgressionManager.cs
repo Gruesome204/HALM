@@ -174,7 +174,6 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
         if (MapLoaderManager.Instance.IsUsingTestRoom)
         {
             Debug.Log("[Progression] Test room cleared!");
-            // Optionally handle test room completion differently
             return;
         }
 
