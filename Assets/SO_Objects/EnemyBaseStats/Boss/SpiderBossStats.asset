@@ -20,7 +20,7 @@ MonoBehaviour:
   baseMaxHealth: 500
   baseArmor: 5
   baseMagicResistance: 0
-  baseKnockbackReduction: 100
+  baseKnockbackReduction: 10
   baseDamage: 20
   baseAttackSpeed: 1
   baseCritChance: 0
@@ -47,12 +47,16 @@ MonoBehaviour:
     healthThreshold: 1
     phaseBossName: 
     healAmount: 0
+    aggressionMultiplier: 1
+    damageMultiplier: 1
     speedMultiplier: 1
     effectDelay: 0
   - phaseName: Second Stage
     healthThreshold: 0.7
     phaseBossName: 
     healAmount: 500
+    aggressionMultiplier: 1.1
+    damageMultiplier: 1.1
     speedMultiplier: 1.1
     effectDelay: 0
   enrageTimer: 10

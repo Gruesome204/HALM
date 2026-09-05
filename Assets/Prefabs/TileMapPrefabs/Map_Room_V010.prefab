@@ -7593,8 +7593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBossRoom: 1
-  enemyPrefabs:
-  - {fileID: 3645313828594104337, guid: 2975beda649ac7c468f4fdf98da00c4d, type: 3}
+  enemyPrefabs: []
   spawnAmount: 1
   spawnInterval: 1.2
   bossPrefab: {fileID: 3645313828594104337, guid: 2975beda649ac7c468f4fdf98da00c4d, type: 3}
