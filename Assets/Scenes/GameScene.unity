@@ -1580,7 +1580,7 @@ MonoBehaviour:
   enemyLevelIncreasePerMap: 1
   autoProgress: 0
   roomClearedWaitingForPlayer: 0
-  enableDebug: 0
+  enableDebug: 1
   forceNextRoomKey: 110
   forceClearRoomKey: 99
 --- !u!1 &935072170
@@ -1704,7 +1704,7 @@ MonoBehaviour:
   bossMapPrefab: {fileID: 5872725842470093268, guid: 7f53b94edef1c1e4ab383266d0d5bb6a, type: 3}
   mapParent: {fileID: 855785565}
   logDebugMessages: 1
-  useTestRoom: 0
+  useTestRoom: 1
   testRoomPrefab: {fileID: 5872725842470093268, guid: 7f53b94edef1c1e4ab383266d0d5bb6a, type: 3}
 --- !u!1 &1141308297
 GameObject:
