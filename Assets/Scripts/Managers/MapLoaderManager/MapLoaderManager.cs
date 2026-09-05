@@ -234,6 +234,12 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         // Load the map
         GameObject loadedMap = LoadMapFromPrefab(testRoomPrefab);
 
+        // Handle boss spawning if this is a boss room
+        if (loadedMap != null)
+        {
+            HandleTestRoomBossSpawning();
+        }
+
         return loadedMap;
     }
 
@@ -286,6 +292,49 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
     public bool IsInTestRoomMode()
     {
         return IsUsingTestRoom && isTestRoomLoaded;
+    }
+
+    private void HandleTestRoomBossSpawning()
+    {
+        if (currentMap == null) return;
+
+        MapEnemySetup setup = currentMap.GetComponent<MapEnemySetup>();
+        if (setup == null || !setup.isBossRoom) return;
+
+        if (setup.bossPrefab == null)
+        {
+            Debug.LogError("[TestRoom] Boss room has no boss prefab!");
+            return;
+        }
+
+        EnemySpawnManager spawner = EnemySpawnManager.Instance;
+        if (spawner == null)
+        {
+            Debug.LogError("[TestRoom] EnemySpawnManager not found!");
+            return;
+        }
+
+        // Set boss room flag
+        spawner.isBossRoom = true;
+
+        // Unsubscribe from old events
+        spawner.OnAllEnemiesDefeated -= OnBossDefeatedForTestRoom;
+        spawner.OnBossDefeated -= OnBossDefeatedForTestRoom;
+
+        // Subscribe to boss defeat
+        spawner.OnBossDefeated += OnBossDefeatedForTestRoom;
+
+        // Spawn the boss
+        spawner.SpawnBoss(setup.bossPrefab);
+
+        LogMessage($"[TestRoom] Boss spawned: {setup.bossPrefab.name}");
+    }
+
+    private void OnBossDefeatedForTestRoom()
+    {
+        LogMessage("[TestRoom] Boss defeated!");
+        // Unsubscribe to prevent duplicate calls
+        EnemySpawnManager.Instance.OnBossDefeated -= OnBossDefeatedForTestRoom;
     }
     #endregion
 

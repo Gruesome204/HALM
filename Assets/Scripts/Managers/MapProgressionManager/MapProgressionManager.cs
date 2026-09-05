@@ -110,6 +110,12 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
             return;
         }
 
+        if (MapLoaderManager.Instance.IsUsingTestRoom)
+        {
+            Debug.Log("[Progression] Test room loaded - skipping automatic enemy spawning");
+            isLoadingNextRoom = false;
+            return;
+        }
         EnemySpawnManager spawner = EnemySpawnManager.Instance;
         spawner.PrepareForNewRoom();
 
@@ -164,6 +170,14 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
 
         Debug.Log("[Progression] Room cleared!");
 
+        // For test rooms, we might want different behavior
+        if (MapLoaderManager.Instance.IsUsingTestRoom)
+        {
+            Debug.Log("[Progression] Test room cleared!");
+            // Optionally handle test room completion differently
+            return;
+        }
+
         if (autoProgress)
         {
             Debug.Log("[Progression] Auto-loading next room...");
@@ -209,5 +223,9 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
     public void ResetProgression()
     {
         CurrentEnemyLevel = baseEnemyLevel;
+    }
+    public bool IsTestRoomMode()
+    {
+        return MapLoaderManager.Instance != null && MapLoaderManager.Instance.IsUsingTestRoom;
     }
 }
