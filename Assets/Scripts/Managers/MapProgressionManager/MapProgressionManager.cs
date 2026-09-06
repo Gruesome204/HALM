@@ -28,7 +28,7 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
     [Tooltip("Key to press to force clear current room (only works if enableDebug is true)")]
     public KeyCode forceClearRoomKey = KeyCode.C;
 
-    public int InitializePriority => 4;
+    public int InitializePriority => 2;
     public void Initialize()
     {
       

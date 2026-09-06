@@ -318,6 +318,11 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             return;
         }
 
+        if (IsPositionBlocked(position))
+        {
+            Debug.Log("Position is blocked");
+        }
+
         // Pick random prefab
         GameObject chosenPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
 
@@ -327,14 +332,6 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             Debug.LogError("[EnemySpawnManager] Failed to instantiate enemyPrefab!");
             return;
         }
-
-        if (!CheckCircleClear(position, 3f)) // radius of 1.5 units
-        {
-            Debug.Log("Spawn position blocked, trying next point");
-            // Try next spawn point or return
-            return;
-        }
-
         // Apply enemy level scaling
         EnemyStats stats = spawnedEnemy.GetComponent<EnemyStats>();
         if (stats != null)
@@ -364,6 +361,21 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         totalSpawned++;
         RegisterEnemy(spawnedEnemy, transform);
     }
+    private bool IsPositionBlocked(Vector3 position)
+    {
+        Collider[] colliders = Physics.OverlapSphere(position, 0.5f);
+
+        if (colliders.Length > 0)
+        {
+            // Log what's blocking
+            foreach (var collider in colliders)
+            {
+                Debug.Log($"Blocking object at {position}: {collider.gameObject.name} (Layer: {collider.gameObject.layer})");
+            }
+            return true;
+        }
+        return false;
+    }
 
     private bool CheckCircleClear(Vector3 center, float radius)
     {
@@ -378,16 +390,6 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 
         // Check if there are any colliders in the area
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius, wallMask);
-
-        // Also check if any existing enemies are overlapping (optional)
-        // This prevents enemies from spawning on top of each other
-        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(center, radius, LayerMask.GetMask("Enemy"));
-        if (enemyColliders.Length > 0)
-        {
-            // Don't count the enemy we're about to spawn if it's already in the scene
-            // This is a safety check
-            return false;
-        }
 
         // If there are any walls in the area, position is invalid
         if (hitColliders.Length > 0)
