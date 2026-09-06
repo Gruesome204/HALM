@@ -292,22 +292,56 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
             Debug.LogWarning($"[EnemySpawnManager] No spawn points assigned on {name}, spawning at spawner position instead.");
-            SpawnAtPoint(transform.position);
+            Vector3 spawnPos = SnapToGround(transform.position);
+            if (IsPositionValidForSpawning(spawnPos))
+            {
+                SpawnAtPoint(spawnPos);
+            }
             return;
         }
 
-        // Ensure spawn point index is valid
-        if (spawnPointIndex >= spawnPoints.Length)
+        // Try multiple spawn points if the first one is blocked
+        int attempts = 0;
+        int maxAttempts = spawnPoints.Length * 2;
+        bool spawned = false;
+
+        while (attempts < maxAttempts && !spawned)
         {
-            spawnPointIndex = 0;
+            // Ensure spawn point index is valid
+            if (spawnPointIndex >= spawnPoints.Length)
+            {
+                spawnPointIndex = 0;
+            }
+
+            Transform chosenPoint = spawnPoints[spawnPointIndex];
+
+            // Snap position to ground first
+            Vector3 snappedPosition = SnapToGround(chosenPoint.position);
+
+            // Check if position is valid (on ground and not blocked by walls)
+            if (IsPositionValidForSpawning(snappedPosition))
+            {
+                SpawnAtPoint(snappedPosition);
+                spawned = true;
+            }
+            else
+            {
+                // Try next spawn point
+                spawnPointIndex = (spawnPointIndex + 1) % spawnPoints.Length;
+                attempts++;
+            }
         }
 
-        Transform chosenPoint = spawnPoints[spawnPointIndex];
-
-        // Increment for next spawn (round-robin)
-        spawnPointIndex = (spawnPointIndex + 1) % spawnPoints.Length;
-
-        SpawnAtPoint(chosenPoint.position);
+        // If no valid spawn point found after all attempts
+        if (!spawned)
+        {
+            Debug.LogWarning("[EnemySpawnManager] No valid spawn points found! Skipping spawn.");
+        }
+        else
+        {
+            // Increment for next spawn (round-robin)
+            spawnPointIndex = (spawnPointIndex + 1) % spawnPoints.Length;
+        }
     }
 
     private void SpawnAtPoint(Vector3 position)
@@ -318,9 +352,11 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             return;
         }
 
-        if (IsPositionBlocked(position))
+        // Double-check position is valid before spawning
+        if (!IsPositionValidForSpawning(position))
         {
-            Debug.Log("Position is blocked");
+            Debug.LogWarning($"[EnemySpawnManager] Position {position} is not valid for spawning!");
+            return;
         }
 
         // Pick random prefab
@@ -361,6 +397,335 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         totalSpawned++;
         RegisterEnemy(spawnedEnemy, transform);
     }
+
+    // ========================
+    // SPAWN POSITION VALIDATION
+    // ========================
+
+    /// <summary>
+    /// Checks if a position is valid for enemy spawning
+    /// - Must be on GroundLayer
+    /// - Must not be blocked by wall layer objects
+    /// </summary>
+    private bool IsPositionValidForSpawning(Vector3 position)
+    {
+        // Check if position is on ground layer
+        if (!IsOnGroundLayer(position))
+        {
+            Debug.Log($"[EnemySpawnManager] Position {position} is not on GroundLayer");
+            return false;
+        }
+
+        // Check if position is blocked by walls
+        if (IsPositionBlockedByWalls(position))
+        {
+            Debug.Log($"[EnemySpawnManager] Position {position} is blocked by walls");
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if the position is on the GroundLayer using multiple methods
+    /// </summary>
+    private bool IsOnGroundLayer(Vector3 position)
+    {
+        // Get the ground layer mask
+        LayerMask groundMask = GetGroundLayerMask();
+
+        // If no ground layer is configured, fall back to checking for any collider below
+        if (groundMask == 0)
+        {
+            Debug.LogWarning("[EnemySpawnManager] Ground layer not configured, using fallback detection.");
+            return IsPositionAboveGround(position);
+        }
+
+        // METHOD 1: Check if the position itself is on ground
+        if (Physics.CheckSphere(position, 0.3f, groundMask))
+        {
+            return true;
+        }
+
+        // METHOD 2: Raycast downward from slightly above
+        float checkDistance = 3f;
+        Vector3 origin = position + Vector3.up * 0.5f;
+        RaycastHit hit;
+
+        if (Physics.Raycast(origin, Vector3.down, out hit, checkDistance, groundMask))
+        {
+            // Check if the hit point is close enough to the original position
+            float distanceToGround = Mathf.Abs(position.y - hit.point.y);
+            if (distanceToGround < 0.5f)
+            {
+                return true;
+            }
+            Debug.Log($"[EnemySpawnManager] Ground found at {hit.point.y}, but position is at {position.y} (distance: {distanceToGround})");
+        }
+
+        // METHOD 3: Check if there's any collider below (useful for 2D games)
+        if (IsPositionAboveGround(position))
+        {
+            return true;
+        }
+
+        // METHOD 4: For 2D games, check using OverlapCircle
+        if (Is2DGame())
+        {
+            Collider2D[] groundColliders = Physics2D.OverlapCircleAll(position, 0.5f, groundMask);
+            if (groundColliders.Length > 0)
+            {
+                Debug.Log($"[EnemySpawnManager] Found 2D ground at position {position}");
+                return true;
+            }
+
+            // Also check with a raycast downward in 2D
+            Vector2 origin2D = new Vector2(position.x, position.y + 0.5f);
+            RaycastHit2D hit2D = Physics2D.Raycast(origin2D, Vector2.down, 3f, groundMask);
+            if (hit2D.collider != null)
+            {
+                float distanceToGround = Mathf.Abs(position.y - hit2D.point.y);
+                if (distanceToGround < 0.5f)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Checks if a position is blocked by wall layer objects
+    /// </summary>
+    private bool IsPositionBlockedByWalls(Vector3 position)
+    {
+        float checkRadius = 0.5f;
+
+        // Get wall layer mask
+        LayerMask wallMask = GetWallLayerMask();
+
+        if (wallMask == 0)
+        {
+            // If no wall layer is configured, return false (not blocked)
+            return false;
+        }
+
+        // Check if there are any wall colliders at this position
+        Collider[] colliders = Physics.OverlapSphere(position, checkRadius, wallMask);
+        bool isBlocked = colliders.Length > 0;
+
+        if (isBlocked)
+        {
+            // Log what's blocking for debugging
+            foreach (var collider in colliders)
+            {
+                Debug.Log($"[EnemySpawnManager] Position {position} blocked by: {collider.gameObject.name} (Layer: {collider.gameObject.layer})");
+            }
+        }
+
+        return isBlocked;
+    }
+
+    /// <summary>
+    /// Fallback method to check if a position is above any collider (not just ground)
+    /// </summary>
+    private bool IsPositionAboveGround(Vector3 position)
+    {
+        // Cast a ray downward and check if we hit anything
+        float checkDistance = 5f;
+        RaycastHit hit;
+
+        if (Physics.Raycast(position + Vector3.up * 0.1f, Vector3.down, out hit, checkDistance))
+        {
+            // If we hit something and it's below us, we're above ground
+            float distanceToGround = Mathf.Abs(position.y - hit.point.y);
+            if (distanceToGround < 0.5f)
+            {
+                Debug.Log($"[EnemySpawnManager] Fallback: Found ground below at {hit.point.y} (distance: {distanceToGround})");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Determines if we're in a 2D game by checking for a Camera2D or Physics2D usage
+    /// </summary>
+    private bool Is2DGame()
+    {
+        // Check if Camera.main is orthographic (common for 2D)
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null && mainCamera.orthographic)
+        {
+            return true;
+        }
+
+        // Check if there's a 2D collider in the scene
+        Collider2D[] colliders2D = GameObject.FindObjectsOfType<Collider2D>();
+        if (colliders2D.Length > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Gets the ground layer mask from GridManager or uses default
+    /// </summary>
+    private LayerMask GetGroundLayerMask()
+    {
+        // Try to get from GridManager
+        if (GridManager.Instance != null)
+        {
+            // Check for groundLayer field
+            var groundLayerField = typeof(GridManager).GetField("groundLayer");
+            if (groundLayerField != null)
+            {
+                LayerMask groundMask = (LayerMask)groundLayerField.GetValue(GridManager.Instance);
+                if (groundMask.value != 0)
+                {
+                    Debug.Log($"[EnemySpawnManager] Using groundLayer from GridManager: {groundMask.value}");
+                    return groundMask;
+                }
+            }
+
+            // Alternative: check for floorLayer
+            var floorLayerField = typeof(GridManager).GetField("floorLayer");
+            if (floorLayerField != null)
+            {
+                LayerMask floorMask = (LayerMask)floorLayerField.GetValue(GridManager.Instance);
+                if (floorMask.value != 0)
+                {
+                    Debug.Log($"[EnemySpawnManager] Using floorLayer from GridManager: {floorMask.value}");
+                    return floorMask;
+                }
+            }
+
+            // Check for groundLayer property
+            var groundLayerProp = typeof(GridManager).GetProperty("groundLayer");
+            if (groundLayerProp != null)
+            {
+                LayerMask groundMask = (LayerMask)groundLayerProp.GetValue(GridManager.Instance);
+                if (groundMask.value != 0)
+                {
+                    Debug.Log($"[EnemySpawnManager] Using groundLayer property from GridManager: {groundMask.value}");
+                    return groundMask;
+                }
+            }
+        }
+
+        // Try common layer names
+        string[] layerNames = { "Ground", "Floor", "Platform", "Terrain" };
+        foreach (string layerName in layerNames)
+        {
+            int layer = LayerMask.NameToLayer(layerName);
+            if (layer != -1)
+            {
+                Debug.Log($"[EnemySpawnManager] Found layer '{layerName}' with index {layer}");
+                return 1 << layer;
+            }
+        }
+
+        // If nothing works, try to find any collider below to determine ground
+        Debug.LogWarning("[EnemySpawnManager] Could not determine ground layer! Using fallback detection.");
+        return 0;
+    }
+
+    /// <summary>
+    /// Gets the wall layer mask
+    /// </summary>
+    private LayerMask GetWallLayerMask()
+    {
+        // Try to get wall layer from GridManager
+        if (GridManager.Instance != null)
+        {
+            // Check for wallLayer field
+            var wallLayerField = typeof(GridManager).GetField("wallLayer");
+            if (wallLayerField != null)
+            {
+                LayerMask wallMask = (LayerMask)wallLayerField.GetValue(GridManager.Instance);
+                if (wallMask.value != 0)
+                {
+                    Debug.Log($"[EnemySpawnManager] Using wallLayer from GridManager: {wallMask.value}");
+                    return wallMask;
+                }
+            }
+
+            // Check for obstacleLayer field
+            var obstacleLayerField = typeof(GridManager).GetField("obstacleLayer");
+            if (obstacleLayerField != null)
+            {
+                LayerMask obstacleMask = (LayerMask)obstacleLayerField.GetValue(GridManager.Instance);
+                if (obstacleMask.value != 0)
+                {
+                    Debug.Log($"[EnemySpawnManager] Using obstacleLayer from GridManager: {obstacleMask.value}");
+                    return obstacleMask;
+                }
+            }
+        }
+
+        // Try common layer names
+        string[] layerNames = { "Walls", "Wall", "Obstacles", "Obstacle", "Solid" };
+        foreach (string layerName in layerNames)
+        {
+            int layer = LayerMask.NameToLayer(layerName);
+            if (layer != -1)
+            {
+                Debug.Log($"[EnemySpawnManager] Found wall layer '{layerName}' with index {layer}");
+                return 1 << layer;
+            }
+        }
+
+        Debug.LogWarning("[EnemySpawnManager] Could not determine wall layer! Wall blocking checks disabled.");
+        return 0;
+    }
+
+    /// <summary>
+    /// Adjusts a position to snap to the ground level
+    /// </summary>
+    private Vector3 SnapToGround(Vector3 position)
+    {
+        // Get the ground layer mask
+        LayerMask groundMask = GetGroundLayerMask();
+        if (groundMask == 0)
+        {
+            return position; // Can't snap without ground layer
+        }
+
+        // Try to find ground below
+        float checkDistance = 5f;
+        RaycastHit hit;
+
+        if (Physics.Raycast(position + Vector3.up * 0.5f, Vector3.down, out hit, checkDistance, groundMask))
+        {
+            // Snap to ground level (add small offset to prevent z-fighting)
+            Vector3 snappedPos = position;
+            snappedPos.y = hit.point.y + 0.1f;
+            Debug.Log($"[EnemySpawnManager] Snapped position from {position} to {snappedPos}");
+            return snappedPos;
+        }
+
+        // Also try 2D if appropriate
+        if (Is2DGame())
+        {
+            Vector2 origin2D = new Vector2(position.x, position.y + 0.5f);
+            RaycastHit2D hit2D = Physics2D.Raycast(origin2D, Vector2.down, checkDistance, groundMask);
+            if (hit2D.collider != null)
+            {
+                Vector3 snappedPos = position;
+                snappedPos.y = hit2D.point.y + 0.1f;
+                Debug.Log($"[EnemySpawnManager] Snapped position (2D) from {position} to {snappedPos}");
+                return snappedPos;
+            }
+        }
+
+        return position;
+    }
+
+    // Keep the original IsPositionBlocked method for backward compatibility
     private bool IsPositionBlocked(Vector3 position)
     {
         Collider[] colliders = Physics.OverlapSphere(position, 0.5f);
@@ -377,6 +742,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         return false;
     }
 
+    // Keep the original CheckCircleClear method for backward compatibility
     private bool CheckCircleClear(Vector3 center, float radius)
     {
         // Check for any colliders in the area (walls, obstacles, etc.)
@@ -476,7 +842,17 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             return;
         }
 
-        GameObject boss = Instantiate(bossPrefab, bSpawn.position, Quaternion.identity);
+        // Snap boss spawn position to ground
+        Vector3 bossSpawnPos = SnapToGround(bSpawn.position);
+
+        // Validate boss spawn position
+        if (!IsPositionValidForSpawning(bossSpawnPos))
+        {
+            Debug.LogError($"[EnemySpawnManager] Boss spawn position {bossSpawnPos} is invalid!");
+            return;
+        }
+
+        GameObject boss = Instantiate(bossPrefab, bossSpawnPos, Quaternion.identity);
 
         // Optionally scale boss stats
         EnemyStats stats = boss.GetComponent<EnemyStats>();
