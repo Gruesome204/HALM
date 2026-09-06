@@ -216,7 +216,7 @@ MonoBehaviour:
   targetingSettings:
     targetPlayer: 1
     targetTurrets: 1
-    turretTargetingRange: 30
+    turretTargetingRange: 20
     turretPriority: 1
     playerPriority: 2
     switchTargets: 1
