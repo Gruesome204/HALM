@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour, IGameSystem
     // ========================
     // IGameSystem Implementation
     // ========================
-    public int InitializePriority => 3;
+    public int InitializePriority => 1;
 
     public void Initialize()
     {
