@@ -50,13 +50,13 @@ MonoBehaviour:
     speedMultiplier: 1
     effectDelay: 0
   - phaseName: Second Stage
-    healthThreshold: 0.7
+    healthThreshold: 0.5
     phaseBossName: 
     healAmount: 500
-    speedMultiplier: 1.1
+    speedMultiplier: 1.2
     effectDelay: 0
   enrageTimer: 10
-  isKnockbackImmune: 1
   enrageDamageMultiplier: 1.5
+  isKnockbackImmune: 1
   exclusiveLootTable: []
   guaranteedDropRate: 1
