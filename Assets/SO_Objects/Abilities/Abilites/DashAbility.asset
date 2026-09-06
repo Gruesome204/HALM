@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: Dash
   icon: {fileID: 0}
   description: 
-  category: 0
+  category: 5
   cooldown: 5
   targetType: 0
   targetSelection: 0
