@@ -11,12 +11,9 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     [HideInInspector]
     public List<GameObject> enemyPrefabs = new List<GameObject>(); // Multiple enemy types
 
-    [Header("Spawn Randomization")]
-    public float spawnRadius = 5f;
-
     [Header("Spawn Points")]
     public Transform[] spawnPoints;
-    public bool useRandomSpawnPoint = true;
+    public int spawnPointIndex = 0; // Which spawn point to use
 
     [Header("Boss Settings")]
     public bool isBossRoom = false; // new flag
@@ -243,6 +240,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         allEnemiesSpawned = false;
         isBossRoom = false;
         isPaused = false;
+        spawnPointIndex = 0;
     }
 
     private void CleanupStaleEnemies()
@@ -298,10 +296,16 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             return;
         }
 
-        // Choose which spawn point to use
-        Transform chosenPoint = useRandomSpawnPoint
-            ? spawnPoints[Random.Range(0, spawnPoints.Length)]
-            : spawnPoints[0];
+        // Ensure spawn point index is valid
+        if (spawnPointIndex >= spawnPoints.Length)
+        {
+            spawnPointIndex = 0;
+        }
+
+        Transform chosenPoint = spawnPoints[spawnPointIndex];
+
+        // Increment for next spawn (round-robin)
+        spawnPointIndex = (spawnPointIndex + 1) % spawnPoints.Length;
 
         SpawnAtPoint(chosenPoint.position);
     }
@@ -314,17 +318,20 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             return;
         }
 
-        // Pick random prefab FIRST
+        // Pick random prefab
         GameObject chosenPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
 
-        // Now pass the chosen prefab to GetValidSpawnPosition
-        Vector3 spawnPos = GetValidSpawnPosition(position, chosenPrefab);
-
-        GameObject spawnedEnemy = Instantiate(chosenPrefab, spawnPos, Quaternion.identity);
-
+        GameObject spawnedEnemy = Instantiate(chosenPrefab, position, Quaternion.identity);
         if (spawnedEnemy == null)
         {
             Debug.LogError("[EnemySpawnManager] Failed to instantiate enemyPrefab!");
+            return;
+        }
+
+        if (!CheckCircleClear(position, 3f)) // radius of 1.5 units
+        {
+            Debug.Log("Spawn position blocked, trying next point");
+            // Try next spawn point or return
             return;
         }
 
@@ -356,112 +363,6 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         // Track per-spawner
         totalSpawned++;
         RegisterEnemy(spawnedEnemy, transform);
-    }
-    private Vector3 GetValidSpawnPosition(Vector3 basePosition, GameObject enemyPrefab)
-    {
-        // Maximum attempts to find a valid position
-        const int maxAttempts = 30;
-        const float searchRadius = 4f; // How far to search from the base position
-
-        for (int attempt = 0; attempt < maxAttempts; attempt++)
-        {
-            // Generate random offset within the search radius
-            Vector2 randomOffset = Random.insideUnitCircle * searchRadius;
-            Vector3 testPosition = basePosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
-
-            // Check if this position is valid (walkable AND clear of walls)
-            if (IsValidSpawnPosition(testPosition, enemyPrefab))
-            {
-                return testPosition;
-            }
-        }
-
-        // If no valid position found, try with a smaller radius
-        for (int attempt = 0; attempt < maxAttempts; attempt++)
-        {
-            Vector2 randomOffset = Random.insideUnitCircle * (searchRadius / 2f);
-            Vector3 testPosition = basePosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
-
-            if (IsValidSpawnPosition(testPosition, enemyPrefab))
-            {
-                return testPosition;
-            }
-        }
-
-        // Last resort: try the base position with a slightly larger margin
-        if (IsValidSpawnPosition(basePosition, enemyPrefab))
-        {
-            return basePosition;
-        }
-
-        // If still no valid position, return the original position (with warning)
-        Debug.LogWarning($"[EnemySpawnManager] Could not find valid spawn position for {enemyPrefab.name} near {basePosition}");
-        return basePosition;
-    }
-
-    private bool IsValidSpawnPosition(Vector3 worldPosition, GameObject enemyPrefab)
-    {
-        // Check if GridManager exists
-        if (GridManager.Instance == null)
-        {
-            Debug.LogWarning("[EnemySpawnManager] GridManager.Instance is null, skipping grid validation.");
-            return true; // Allow spawn if no grid manager
-        }
-
-        // Convert world position to grid coordinates
-        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(worldPosition);
-
-        // Check if coordinates are within grid bounds
-        if (gridCoords.x < 0 || gridCoords.x >= GridManager.Instance.gridWidth ||
-            gridCoords.y < 0 || gridCoords.y >= GridManager.Instance.gridHeight)
-        {
-            return false; // Outside grid bounds
-        }
-
-        // Check if the cell is walkable
-        bool isWalkable = GridManager.Instance.IsWalkable(gridCoords);
-        if (!isWalkable)
-            return false;
-
-        // CRITICAL: Check for actual physics collisions with walls
-        if (!IsPositionClearOfWalls(worldPosition, enemyPrefab))
-            return false;
-
-        return true;
-    }
-
-    private bool IsPositionClearOfWalls(Vector3 position, GameObject enemyPrefab)
-    {
-        // Get the enemy's collider to check its size
-        Collider2D enemyCollider = enemyPrefab.GetComponent<Collider2D>();
-        if (enemyCollider == null)
-        {
-            // If no collider, just check a small area
-            return CheckCircleClear(position, 0.5f);
-        }
-
-        // Get the collider's size and check appropriate area
-        float checkRadius;
-        if (enemyCollider is CircleCollider2D circleCollider)
-        {
-            checkRadius = circleCollider.radius * 1.2f; // Add 20% margin
-        }
-        else if (enemyCollider is BoxCollider2D boxCollider)
-        {
-            // Use the larger dimension plus margin
-            checkRadius = Mathf.Max(boxCollider.size.x, boxCollider.size.y) / 2f * 1.2f;
-        }
-        else if (enemyCollider is CapsuleCollider2D capsuleCollider)
-        {
-            checkRadius = capsuleCollider.size.x / 2f * 1.2f;
-        }
-        else
-        {
-            // Default fallback
-            checkRadius = 0.75f;
-        }
-
-        return CheckCircleClear(position, checkRadius);
     }
 
     private bool CheckCircleClear(Vector3 center, float radius)
@@ -498,6 +399,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 
         return true;
     }
+
     // ========================
     // ENEMY REGISTRATION
     // ========================
@@ -636,6 +538,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         totalSpawned = 0;
         allEnemiesSpawned = false;
         spawnTimer = 0f;
+        spawnPointIndex = 0;
     }
 
     public void ClearAllEnemies()
@@ -700,6 +603,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         Debug.Log($"  - Active Enemies: {activeEnemies.Count}");
         Debug.Log($"  - Spawn Points: {(spawnPoints != null ? spawnPoints.Length : 0)}");
         Debug.Log($"  - Enemy Prefabs: {(enemyPrefabs != null ? enemyPrefabs.Count : 0)}");
+        Debug.Log($"  - Current Spawn Point Index: {spawnPointIndex}");
     }
 
     // ========================
@@ -722,8 +626,12 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     private void OnValidate()
     {
         // Validate spawn settings in editor
-        if (spawnRadius < 0) spawnRadius = 0;
         if (maxEnemies < 1) maxEnemies = 1;
+        if (spawnPointIndex < 0) spawnPointIndex = 0;
+        if (spawnPoints != null && spawnPointIndex >= spawnPoints.Length)
+        {
+            spawnPointIndex = spawnPoints.Length - 1;
+        }
     }
 #endif
 }
