@@ -216,10 +216,10 @@ MonoBehaviour:
   targetingSettings:
     targetPlayer: 1
     targetTurrets: 1
-    turretTargetingRange: 30
-    turretPriority: 1
-    playerPriority: 2
-    switchTargets: 1
+    turretTargetingRange: 50
+    turretPriority: 2
+    playerPriority: 1
+    switchTargets: 0
     targetSwitchCooldown: 2
     prioritizeClosestTarget: 1
     turretLayerMask:
