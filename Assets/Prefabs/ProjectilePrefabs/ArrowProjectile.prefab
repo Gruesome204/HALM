@@ -241,7 +241,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.35
 --- !u!114 &5390190469423124719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,22 +298,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24c24d78ff92d5459d25a13edd1de93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackStrength: 0
-  knockbackDuration: 0
-  direction: {x: 0, y: 0}
-  remainingPierces: 0
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
   wallLayer:
     serializedVersion: 2
     m_Bits: 1024
-  chainBounceCount: 0
-  chainBounceRange: 5
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  homingStrength: 2
-  isAOE: 0
-  aoeRadius: 3
-  aoeEffectPrefab: {fileID: 0}
