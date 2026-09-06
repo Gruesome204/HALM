@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseEnemyLevel: 1
-  enemyLevelIncreasePerMap: 1
+  enemyLevelIncreasePerMap: 2
   autoProgress: 0
   roomClearedWaitingForPlayer: 0
   enableDebug: 1

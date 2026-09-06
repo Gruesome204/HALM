@@ -41,13 +41,9 @@ MonoBehaviour:
     minAmount: 1
     maxAmount: 2
     dropChance: 0.3
-  baseHealthScaleFactor: 0.1
+  baseHealthScaleFactor: 0.2
   baseDamageScaleFactor: 0.1
   baseSpeedScaleFactor: 0
   baseArmorScaleFactor: 0.1
-  bossBarName: 
-  bossBarColor: {r: 1, g: 0, b: 0, a: 1}
-  bossPortrait: {fileID: 0}
-  bossBarHeight: 20
-  isMultiStageBoss: 0
-  numberOfPhases: 1
+  canFlee: 0
+  fleeThreshold: 0.2
