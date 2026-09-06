@@ -589,10 +589,10 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
             return;
 
         GameObject obj = new GameObject("PlacementRadiusCircle");
-        obj.transform.SetParent(playerTransform, false);
+        obj.transform.SetParent(null, true); // Root object, not parented to player
 
         radiusLineRenderer = obj.AddComponent<LineRenderer>();
-        radiusLineRenderer.useWorldSpace = false;
+        radiusLineRenderer.useWorldSpace = true; // World space - ignores parent scale
         radiusLineRenderer.loop = true;
         radiusLineRenderer.material = radiusLineMaterial;
         radiusLineRenderer.startWidth = radiusLineWidth;
@@ -605,22 +605,24 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
 
     public void DrawRadiusCircle()
     {
-        if (radiusLineRenderer == null) return;
+        if (radiusLineRenderer == null || playerTransform == null) return;
 
         float step = 2f * Mathf.PI / radiusSegments;
+        Vector3 playerPos = playerTransform.position;
 
         for (int i = 0; i <= radiusSegments; i++)
         {
             float angle = step * i;
             Vector3 pos = new Vector3(
-                Mathf.Cos(angle) * placementRadius,
-                Mathf.Sin(angle) * placementRadius,
+                playerPos.x + Mathf.Cos(angle) * placementRadius,
+                playerPos.y + Mathf.Sin(angle) * placementRadius,
                 0f
             );
 
             radiusLineRenderer.SetPosition(i, pos);
         }
     }
+
 
     private void HidePlacementRadius()
     {
