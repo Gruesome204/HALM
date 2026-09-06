@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   description: 
   category: 0
-  cooldown: 3
+  cooldown: 5
   targetType: 0
   targetSelection: 0
   range: 0.5
@@ -30,8 +30,6 @@ MonoBehaviour:
   effectDuration: 1
   minUserHealthPercent: 0
   maxTargetHealthPercent: 1
-  energyCost: 0
-  manaCost: 0
   visualEffectPrefab: {fileID: 0}
   soundEffect: {fileID: 0}
   highlightColor: {r: 1, g: 1, b: 1, a: 1}
