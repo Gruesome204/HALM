@@ -12,8 +12,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     public List<GameObject> enemyPrefabs = new List<GameObject>(); // Multiple enemy types
 
     [Header("Spawn Randomization")]
-    public float spawnRadius = 2f;
-    public bool randomizeSpawnPosition = true; 
+    public float spawnRadius = 5f;
 
     [Header("Spawn Points")]
     public Transform[] spawnPoints;
@@ -318,10 +317,8 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         // Pick random prefab FIRST
         GameObject chosenPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
 
-        // If randomizeSpawnPosition is false, use the exact spawn point
-        Vector3 spawnPos = randomizeSpawnPosition
-            ? GetValidSpawnPosition(position, chosenPrefab)
-            : position; // Use exact position
+        // Now pass the chosen prefab to GetValidSpawnPosition
+        Vector3 spawnPos = GetValidSpawnPosition(position, chosenPrefab);
 
         GameObject spawnedEnemy = Instantiate(chosenPrefab, spawnPos, Quaternion.identity);
 
