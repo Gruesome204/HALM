@@ -8,6 +8,10 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 {
     public static EnemySpawnManager Instance { get; private set; }
 
+    [Header("Layer Configuration")]
+    public LayerMask groundLayerMask;
+    public LayerMask wallLayerMask;
+
     [Header("Spawn Settings")]
     [HideInInspector]
     public List<GameObject> enemyPrefabs = new List<GameObject>(); // Multiple enemy types
@@ -406,13 +410,53 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     // SPAWN POSITION VALIDATION - FIXED FOR TILEMAPS
     // ========================
 
-    /// <summary>
-    /// Checks if a position is valid for enemy spawning
-    /// - Must be on GroundLayer
-    /// - Must not be blocked by wall layer objects
-    /// </summary>
+    private bool IsPositionOnWalkableTile(Vector3 position)
+    {
+        // First, check if we can find a Tilemap
+        Tilemap[] tilemaps = GameObject.FindObjectsOfType<Tilemap>();
+
+        foreach (Tilemap tilemap in tilemaps)
+        {
+            // Convert world position to cell position
+            Vector3Int cellPosition = tilemap.WorldToCell(position);
+
+            // Check if this cell has a tile
+            TileBase tile = tilemap.GetTile(cellPosition);
+            if (tile != null)
+            {
+                // Check if the tile has a collider (you might want to check tile properties)
+                // This assumes your ground tiles have colliders
+                TilemapCollider2D collider = tilemap.GetComponent<TilemapCollider2D>();
+                if (collider != null)
+                {
+                    // Check if there's actually a collider at this position
+                    Vector3 cellCenter = tilemap.GetCellCenterWorld(cellPosition);
+                    float halfCellSize = 0.25f; // Adjust based on your cell size
+
+                    Collider2D[] collidersAtPosition = Physics2D.OverlapCircleAll(cellCenter, halfCellSize);
+                    foreach (var col in collidersAtPosition)
+                    {
+                        if (col is TilemapCollider2D || col is CompositeCollider2D)
+                        {
+                            Debug.Log($"[EnemySpawnManager] Position {position} is on a walkable tile");
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
     private bool IsPositionValidForSpawning(Vector3 position)
     {
+        // First, check if position is on a walkable tile
+        if (!IsPositionOnWalkableTile(position))
+        {
+            Debug.Log($"[EnemySpawnManager] Position {position} is not on a walkable tile");
+            return false;
+        }
+
         // Check if position is on ground layer
         if (!IsOnGroundLayer(position))
         {
@@ -429,90 +473,50 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 
         return true;
     }
-
     /// <summary>
     /// Checks if the position is on the GroundLayer - SPECIALLY FOR TILEMAPS
     /// </summary>
     private bool IsOnGroundLayer(Vector3 position)
     {
-        // Get the ground layer mask
         LayerMask groundMask = GetGroundLayerMask();
 
-        // If no ground layer is configured, try to find it automatically
         if (groundMask == 0)
         {
-            Debug.LogWarning("[EnemySpawnManager] Ground layer not configured, attempting to find Tilemap ground.");
-            groundMask = FindTilemapGroundLayer();
-
-            if (groundMask == 0)
-            {
-                Debug.LogWarning("[EnemySpawnManager] Still no ground layer found, using fallback detection.");
-                return IsPositionAboveGround(position);
-            }
+            Debug.LogWarning("[EnemySpawnManager] No ground layer found!");
+            return false;
         }
 
-        // METHOD 1: Check 2D first (for Tilemaps)
-        if (Is2DGame() || HasTilemapCollider())
+        // Check if the position itself overlaps with ground colliders
+        Collider2D[] groundColliders = Physics2D.OverlapCircleAll(position, 0.2f, groundMask);
+        if (groundColliders.Length > 0)
         {
-            // Check if position overlaps with ground collider (2D)
-            Collider2D[] groundColliders = Physics2D.OverlapCircleAll(position, 0.3f, groundMask);
-            if (groundColliders.Length > 0)
+            // Check if any are TilemapCollider2D or CompositeCollider2D
+            foreach (var collider in groundColliders)
             {
-                // Check if any of these are TilemapCollider2D
-                foreach (var collider in groundColliders)
+                if (collider is TilemapCollider2D || collider is CompositeCollider2D)
                 {
-                    if (collider is TilemapCollider2D || collider is CompositeCollider2D)
-                    {
-                        Debug.Log($"[EnemySpawnManager] Position {position} is on Tilemap ground (2D)");
-                        return true;
-                    }
-                }
-                Debug.Log($"[EnemySpawnManager] Position {position} is on ground (2D)");
-                return true;
-            }
-
-            // Raycast downward in 2D
-            Vector2 origin2D = new Vector2(position.x, position.y + 1f);
-            RaycastHit2D hit2D = Physics2D.Raycast(origin2D, Vector2.down, 3f, groundMask);
-            if (hit2D.collider != null)
-            {
-                float distanceToGround = Mathf.Abs(position.y - hit2D.point.y);
-                if (distanceToGround < 0.5f)
-                {
-                    Debug.Log($"[EnemySpawnManager] Position {position} is above Tilemap ground (2D raycast)");
+                    Debug.Log($"[EnemySpawnManager] Position {position} is on Tilemap ground");
                     return true;
                 }
             }
-        }
-
-        // METHOD 2: Check 3D
-        // Check if the position itself is on ground
-        if (Physics.CheckSphere(position, 0.3f, groundMask))
-        {
+            Debug.Log($"[EnemySpawnManager] Position {position} is on ground layer");
             return true;
         }
 
-        // Raycast downward from slightly above
-        float checkDistance = 3f;
-        Vector3 origin = position + Vector3.up * 1f;
-        RaycastHit hit;
-
-        if (Physics.Raycast(origin, Vector3.down, out hit, checkDistance, groundMask))
+        // Raycast downward to check if position is above ground
+        Vector2 origin2D = new Vector2(position.x, position.y + 0.5f);
+        RaycastHit2D hit2D = Physics2D.Raycast(origin2D, Vector2.down, 2f, groundMask);
+        if (hit2D.collider != null)
         {
-            float distanceToGround = Mathf.Abs(position.y - hit.point.y);
+            float distanceToGround = Mathf.Abs(position.y - hit2D.point.y);
             if (distanceToGround < 0.5f)
             {
+                Debug.Log($"[EnemySpawnManager] Position {position} is above ground (distance: {distanceToGround})");
                 return true;
             }
-            Debug.Log($"[EnemySpawnManager] Ground found at {hit.point.y}, but position is at {position.y} (distance: {distanceToGround})");
         }
 
-        // METHOD 3: Check if there's any collider below (fallback)
-        if (IsPositionAboveGround(position))
-        {
-            return true;
-        }
-
+        Debug.Log($"[EnemySpawnManager] Position {position} is NOT on ground layer");
         return false;
     }
 
@@ -530,26 +534,37 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     /// </summary>
     private LayerMask FindTilemapGroundLayer()
     {
-        // Look for TilemapCollider2D components
+        // Look for Grid component first (parent of Tilemaps)
+        Grid[] grids = GameObject.FindObjectsOfType<Grid>();
+        foreach (Grid grid in grids)
+        {
+            // Check all children for Tilemap components
+            Tilemap[] tilemaps = grid.GetComponentsInChildren<Tilemap>();
+            foreach (Tilemap tilemap in tilemaps)
+            {
+                // Check if this tilemap has a collider
+                TilemapCollider2D collider = tilemap.GetComponent<TilemapCollider2D>();
+                if (collider != null)
+                {
+                    // Check if the tilemap is ground (you might want to check tile types too)
+                    int layer = tilemap.gameObject.layer;
+                    Debug.Log($"[EnemySpawnManager] Found Tilemap ground: {tilemap.name} on layer {layer} ({LayerMask.LayerToName(layer)})");
+                    return 1 << layer;
+                }
+            }
+        }
+
+        // Fallback: Look for TilemapCollider2D directly
         TilemapCollider2D[] tilemapColliders = GameObject.FindObjectsOfType<TilemapCollider2D>();
         if (tilemapColliders.Length > 0)
         {
             // Get the layer from the first Tilemap
             int layer = tilemapColliders[0].gameObject.layer;
-            Debug.Log($"[EnemySpawnManager] Found Tilemap on layer {layer} ({LayerMask.LayerToName(layer)})");
+            Debug.Log($"[EnemySpawnManager] Found TilemapCollider2D on layer {layer} ({LayerMask.LayerToName(layer)})");
             return 1 << layer;
         }
 
-        // Look for CompositeCollider2D (often used with Tilemaps)
-        CompositeCollider2D[] compositeColliders = GameObject.FindObjectsOfType<CompositeCollider2D>();
-        if (compositeColliders.Length > 0)
-        {
-            int layer = compositeColliders[0].gameObject.layer;
-            Debug.Log($"[EnemySpawnManager] Found CompositeCollider2D on layer {layer} ({LayerMask.LayerToName(layer)})");
-            return 1 << layer;
-        }
-
-        // Look for any ground-named objects
+        // Fallback: Look for ground-named objects
         GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
         foreach (GameObject obj in allObjects)
         {
@@ -674,7 +689,13 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     /// </summary>
     private LayerMask GetGroundLayerMask()
     {
-        // FIRST: Try to find Tilemap ground layers (most important for your case)
+        // FIRST: Use explicitly assigned ground layer
+        if (groundLayerMask.value != 0)
+        {
+            return groundLayerMask;
+        }
+
+        // SECOND: Try to find ground tilemap (skipping walls)
         LayerMask tilemapLayer = FindTilemapGroundLayer();
         if (tilemapLayer != 0)
         {
@@ -728,11 +749,14 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
     /// </summary>
     private LayerMask GetWallLayerMask()
     {
-        // FIRST: Look for Tilemap colliders that might be walls
+        if (wallLayerMask.value != 0)
+        {
+            return wallLayerMask;
+        }
+        // SECOND: Find wall tilemaps
         TilemapCollider2D[] tilemapColliders = GameObject.FindObjectsOfType<TilemapCollider2D>();
         foreach (var tilemapCollider in tilemapColliders)
         {
-            // If the Tilemap has "wall" in its name or is on a wall layer
             if (tilemapCollider.gameObject.name.ToLower().Contains("wall") ||
                 tilemapCollider.gameObject.layer == LayerMask.NameToLayer("Walls"))
             {
@@ -796,7 +820,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             {
                 Vector3 snappedPos = position;
                 snappedPos.y = hit2D.point.y + 0.1f;
-                Debug.Log($"[EnemySpawnManager] Snapped position (2D) from {position} to {snappedPos}");
+                //Debug.Log($"[EnemySpawnManager] Snapped position (2D) from {position} to {snappedPos}");
                 return snappedPos;
             }
         }
@@ -809,7 +833,7 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         {
             Vector3 snappedPos = position;
             snappedPos.y = hit.point.y + 0.1f;
-            Debug.Log($"[EnemySpawnManager] Snapped position (3D) from {position} to {snappedPos}");
+            //  Debug.Log($"[EnemySpawnManager] Snapped position (3D) from {position} to {snappedPos}");
             return snappedPos;
         }
 

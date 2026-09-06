@@ -1389,10 +1389,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47769b2c793f1314bb9ce22cad59ad5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   enemyPrefabs: []
-  spawnRadius: 1.5
   spawnPoints: []
-  useRandomSpawnPoint: 1
+  spawnPointIndex: -1
   isBossRoom: 0
   totalSpawned: 0
   isPaused: 0
