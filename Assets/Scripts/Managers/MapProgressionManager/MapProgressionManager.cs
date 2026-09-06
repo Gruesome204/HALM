@@ -117,6 +117,8 @@ public class MapProgressionManager : MonoBehaviour, IGameSystem
             return;
         }
         EnemySpawnManager spawner = EnemySpawnManager.Instance;
+
+        spawner.ResetSpawner();
         spawner.PrepareForNewRoom();
 
         MapEnemySetup setup = map.GetComponent<MapEnemySetup>();

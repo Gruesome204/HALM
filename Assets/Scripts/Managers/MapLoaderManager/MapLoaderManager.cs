@@ -403,17 +403,40 @@ public class MapLoaderManager : MonoBehaviour, IGameSystem
         MapEnemySetup setup = currentMap.GetComponent<MapEnemySetup>();
         if (setup != null)
         {
-            // Always use the setup from the map - it knows if it's a boss room
-            EnemySpawnManager.Instance.isBossRoom = setup.isBossRoom;
-
-            if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
+            // Only set isBossRoom if the map explicitly says it's a boss room
+            // Don't override if it's already set by MapProgressionManager
+            if (setup.isBossRoom)
             {
-                EnemySpawnManager.Instance.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs);
+                EnemySpawnManager.Instance.isBossRoom = true;
+
+                // Clear normal enemy prefabs for boss rooms to prevent accidental spawning
+                if (EnemySpawnManager.Instance.enemyPrefabs != null)
+                {
+                    EnemySpawnManager.Instance.enemyPrefabs.Clear();
+                }
+            }
+            else
+            {
+                // Only set to false if the spawner isn't already in boss room mode
+                // This prevents MapProgressionManager's setting from being overwritten
+                if (!EnemySpawnManager.Instance.isBossRoom)
+                {
+                    EnemySpawnManager.Instance.isBossRoom = false;
+                }
+
+                // Only set enemy prefabs for non-boss rooms
+                if (setup.enemyPrefabs != null && setup.enemyPrefabs.Count > 0)
+                {
+                    EnemySpawnManager.Instance.enemyPrefabs = new List<GameObject>(setup.enemyPrefabs);
+                }
             }
 
             if (setup.isBossRoom)
             {
                 LogMessage($"Boss room detected: {currentMap.name}. Boss will be spawned by MapProgressionManager.");
+
+                // Ensure the spawner is in boss mode and won't spawn normal enemies
+                EnemySpawnManager.Instance.ResetSpawner();
             }
         }
         else

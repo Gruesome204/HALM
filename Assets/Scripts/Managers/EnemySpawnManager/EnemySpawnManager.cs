@@ -161,14 +161,17 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
 
         // Don't spawn normal enemies in boss rooms
         if (isBossRoom)
+        {
+            // Still check if boss is defeated even in boss room
+            CheckIfAllEnemiesDefeated();
             return;
-
-        // Don't spawn if we've spawned all enemies
+        }
         if (allEnemiesSpawned)
         {
             CheckIfAllEnemiesDefeated();
             return;
         }
+
 
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= CurrentSpawnInterval)
