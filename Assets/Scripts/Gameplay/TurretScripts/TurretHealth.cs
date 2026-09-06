@@ -1,7 +1,7 @@
- using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using static DamageData;
+
 
 public class TurretHealth : MonoBehaviour, IDamagable
 {
