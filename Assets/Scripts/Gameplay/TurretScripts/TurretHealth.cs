@@ -48,10 +48,9 @@ public class TurretHealth : MonoBehaviour, IDamagable
     public void TakeDamage(DamageData damageData, KnockbackData knockbackData)
     {
 
-        Debug.Log($"Attack Damage Received = {damageData.amount}");
         if (IsInvulnerable || stats == null) return;
         stats.currentHealth -= damageData.amount;
-        //stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0, stats.currentMaxHealth);
+
         UpdateHealthBar();
 
         Debug.Log($"{gameObject.name} took {damageData.amount} {damageData.type} damage. Remaining HP: {stats.currentHealth}");
