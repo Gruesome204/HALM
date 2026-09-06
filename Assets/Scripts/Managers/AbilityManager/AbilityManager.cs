@@ -47,7 +47,15 @@ public class AbilityManager : MonoBehaviour, IGameSystem
             runtimeAbilities[user].Clear();
 
         foreach (var ability in abilities)
+        {
+            // Skip null abilities
+            if (ability == null)
+            {
+                Debug.LogWarning($"Null ability blueprint found when registering for {user.name}. Skipping.");
+                continue;
+            }
             runtimeAbilities[user].Add(new AbilityRuntime(ability));
+        }
     }
 
     public void Unregister(GameObject user)

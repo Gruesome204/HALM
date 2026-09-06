@@ -28,6 +28,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 51db6203dd40b4643a37cb11153cb637, type: 2}
   effectDelay: 0
   effectDuration: 1
+  maxCharges: 2
+  chargeRefillTime: 5
+  initialCharges: 2
+  useCooldown: 0.4
   minUserHealthPercent: 0
   maxTargetHealthPercent: 1
   visualEffectPrefab: {fileID: 0}

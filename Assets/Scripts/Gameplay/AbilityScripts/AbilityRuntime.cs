@@ -8,13 +8,32 @@ public class AbilityRuntime
     private float cooldownTimer = 0f;
     private bool isPaused = false;
 
+    // Charge system fields
+    private int currentCharges;
+    private float chargeRefillTimer = 0f;
+    private bool isRefilling = false;
+
+    // Use cooldown (prevents spamming charges)
+    private float useCooldownTimer = 0f;
+
     // Layer masks for enemy detection
     private const int ENEMY_LAYER = 1 << 8; // Assuming Layer 8 is "Enemy"
     private const int PLAYER_LAYER = 1 << 9; // Assuming Layer 9 is "Player"
 
+    // Public properties
+    public int CurrentCharges => currentCharges;
+    public int MaxCharges => ability.maxCharges;
+    public float ChargeRefillProgress => chargeRefillTimer / ability.chargeRefillTime;
+    public bool IsRefilling => isRefilling;
+    public bool IsOnUseCooldown => useCooldownTimer > 0f;
+
     public AbilityRuntime(AbilityBlueprint ability)
     {
         this.ability = ability;
+        this.currentCharges = ability.initialCharges;
+        this.chargeRefillTimer = 0f;
+        this.isRefilling = currentCharges < ability.maxCharges;
+        this.useCooldownTimer = 0f;
     }
 
     /// <summary>
@@ -23,6 +42,14 @@ public class AbilityRuntime
     public bool CanUse(GameObject user, GameObject target)
     {
         if (ability == null || cooldownTimer > 0f)
+            return false;
+
+        // Check if we have charges available
+        if (currentCharges <= 0)
+            return false;
+
+        // Check use cooldown (prevents spamming)
+        if (useCooldownTimer > 0f)
             return false;
 
         // Self-targeted abilities always allowed
@@ -198,8 +225,26 @@ public class AbilityRuntime
     /// </summary>
     public void Use(GameObject user, GameObject target)
     {
-        if (ability == null)
+        if (ability == null || currentCharges <= 0)
             return;
+
+        // Consume a charge
+        currentCharges--;
+
+        // Start use cooldown (prevents instant re-use)
+        useCooldownTimer = ability.useCooldown;
+
+        // Start refill timer if we still have charges to refill
+        if (currentCharges < ability.maxCharges)
+        {
+            isRefilling = true;
+            chargeRefillTimer = ability.chargeRefillTime;
+        }
+        else
+        {
+            isRefilling = false;
+            chargeRefillTimer = 0f;
+        }
 
         // For Self targeting, set target to user
         if (ability.targetSelection == TargetSelection.Self)
@@ -270,9 +315,6 @@ public class AbilityRuntime
             }
         }
 
-        // Start cooldown
-        cooldownTimer = ability.cooldown;
-
         // Play sound
         if (ability.soundEffect != null)
             AudioSource.PlayClipAtPoint(ability.soundEffect, user.transform.position);
@@ -301,8 +343,52 @@ public class AbilityRuntime
     public void Tick(float deltaTime)
     {
         if (isPaused) return;
+
+        // Handle cooldown (keep this for other abilities that might use it)
         if (cooldownTimer > 0f)
             cooldownTimer -= deltaTime;
+
+        // Handle use cooldown (prevents spamming)
+        if (useCooldownTimer > 0f)
+            useCooldownTimer -= deltaTime;
+
+        // Handle charge refill
+        if (isRefilling)
+        {
+            chargeRefillTimer -= deltaTime;
+            if (chargeRefillTimer <= 0f)
+            {
+                // Refill one charge
+                currentCharges = Mathf.Min(currentCharges + 1, ability.maxCharges);
+
+                // Check if we need to continue refilling
+                if (currentCharges < ability.maxCharges)
+                {
+                    chargeRefillTimer = ability.chargeRefillTime;
+                }
+                else
+                {
+                    isRefilling = false;
+                    chargeRefillTimer = 0f;
+                }
+            }
+        }
+    }
+
+    // Optional: Method to manually add charges (for powerups, etc.)
+    public void AddCharges(int amount)
+    {
+        currentCharges = Mathf.Min(currentCharges + amount, ability.maxCharges);
+        if (currentCharges >= ability.maxCharges)
+        {
+            isRefilling = false;
+            chargeRefillTimer = 0f;
+        }
+        else if (!isRefilling)
+        {
+            isRefilling = true;
+            chargeRefillTimer = ability.chargeRefillTime;
+        }
     }
 
     public void Pause() => isPaused = true;

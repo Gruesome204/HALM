@@ -44,6 +44,23 @@ public class AbilityBlueprint : ScriptableObject
     public float effectDelay = 0f;
     public float effectDuration = 1f;
 
+    [Header("Charge System")]
+    [Tooltip("Number of charges available for this ability")]
+    [Range(1, 5)]
+    public int maxCharges = 1;
+
+    [Tooltip("Time in seconds for each charge to refill")]
+    [Range(0.1f, 30f)]
+    public float chargeRefillTime = 3f;
+
+    [Tooltip("Initial charges when ability is first acquired")]
+    [Range(0, 5)]
+    public int initialCharges = 1;
+
+    [Tooltip("Cooldown between each use (prevents spamming charges)")]
+    [Range(0.05f, 2f)]
+    public float useCooldown = 0.3f;
+
     [Header("Activation Conditions")]
     [Tooltip("Minimum health % for the user to consider using this ability.")]
     [Range(0f, 1f)]
