@@ -464,6 +464,21 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
         if (IsBlueprintOnCooldown(currentSelectedBlueprint))
             return false;
 
+        if (playerTransform == null)
+        {
+            Debug.LogError("[TurretPlacementController] Player transform is null!");
+            return false;
+        }
+
+        float distance = Vector3.Distance(playerTransform.position, worldPos);
+        Debug.Log($"Distance to player: {distance}, Max radius: {placementRadius}");
+
+        if (distance > placementRadius)
+        {
+            Debug.Log($"Placement denied - too far from player ({distance} > {placementRadius})");
+            return false;
+        }
+
         return true;
     }
 
