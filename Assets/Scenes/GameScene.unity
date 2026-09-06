@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs: []
-  spawnRadius: 3
+  spawnRadius: 2
   spawnPoints: []
   useRandomSpawnPoint: 1
   isBossRoom: 0

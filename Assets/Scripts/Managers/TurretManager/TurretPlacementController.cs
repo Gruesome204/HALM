@@ -471,7 +471,7 @@ public class TurretPlacementController : MonoBehaviour, IGameSystem
         }
 
         float distance = Vector3.Distance(playerTransform.position, worldPos);
-        Debug.Log($"Distance to player: {distance}, Max radius: {placementRadius}");
+       // Debug.Log($"Distance to player: {distance}, Max radius: {placementRadius}");
 
         if (distance > placementRadius)
         {

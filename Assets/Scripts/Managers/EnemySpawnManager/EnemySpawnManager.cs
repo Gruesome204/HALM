@@ -314,11 +314,11 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
             return;
         }
 
-        Vector2 offset = Random.insideUnitCircle * spawnRadius;
-        Vector3 spawnPos = position + new Vector3(offset.x, offset.y, 0f);
-
-        // Pick random prefab
+        // Pick random prefab FIRST
         GameObject chosenPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+
+        // Now pass the chosen prefab to GetValidSpawnPosition
+        Vector3 spawnPos = GetValidSpawnPosition(position, chosenPrefab);
 
         GameObject spawnedEnemy = Instantiate(chosenPrefab, spawnPos, Quaternion.identity);
 
@@ -357,7 +357,147 @@ public class EnemySpawnManager : MonoBehaviour, IPausable, IGameSystem
         totalSpawned++;
         RegisterEnemy(spawnedEnemy, transform);
     }
+    private Vector3 GetValidSpawnPosition(Vector3 basePosition, GameObject enemyPrefab)
+    {
+        // Maximum attempts to find a valid position
+        const int maxAttempts = 30;
+        const float searchRadius = 4f; // How far to search from the base position
 
+        for (int attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            // Generate random offset within the search radius
+            Vector2 randomOffset = Random.insideUnitCircle * searchRadius;
+            Vector3 testPosition = basePosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
+
+            // Check if this position is valid (walkable AND clear of walls)
+            if (IsValidSpawnPosition(testPosition, enemyPrefab))
+            {
+                return testPosition;
+            }
+        }
+
+        // If no valid position found, try with a smaller radius
+        for (int attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            Vector2 randomOffset = Random.insideUnitCircle * (searchRadius / 2f);
+            Vector3 testPosition = basePosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
+
+            if (IsValidSpawnPosition(testPosition, enemyPrefab))
+            {
+                return testPosition;
+            }
+        }
+
+        // Last resort: try the base position with a slightly larger margin
+        if (IsValidSpawnPosition(basePosition, enemyPrefab))
+        {
+            return basePosition;
+        }
+
+        // If still no valid position, return the original position (with warning)
+        Debug.LogWarning($"[EnemySpawnManager] Could not find valid spawn position for {enemyPrefab.name} near {basePosition}");
+        return basePosition;
+    }
+
+    private bool IsValidSpawnPosition(Vector3 worldPosition, GameObject enemyPrefab)
+    {
+        // Check if GridManager exists
+        if (GridManager.Instance == null)
+        {
+            Debug.LogWarning("[EnemySpawnManager] GridManager.Instance is null, skipping grid validation.");
+            return true; // Allow spawn if no grid manager
+        }
+
+        // Convert world position to grid coordinates
+        Vector2Int gridCoords = GridManager.Instance.GetGridCoordinates(worldPosition);
+
+        // Check if coordinates are within grid bounds
+        if (gridCoords.x < 0 || gridCoords.x >= GridManager.Instance.gridWidth ||
+            gridCoords.y < 0 || gridCoords.y >= GridManager.Instance.gridHeight)
+        {
+            return false; // Outside grid bounds
+        }
+
+        // Check if the cell is walkable
+        bool isWalkable = GridManager.Instance.IsWalkable(gridCoords);
+        if (!isWalkable)
+            return false;
+
+        // CRITICAL: Check for actual physics collisions with walls
+        if (!IsPositionClearOfWalls(worldPosition, enemyPrefab))
+            return false;
+
+        return true;
+    }
+
+    private bool IsPositionClearOfWalls(Vector3 position, GameObject enemyPrefab)
+    {
+        // Get the enemy's collider to check its size
+        Collider2D enemyCollider = enemyPrefab.GetComponent<Collider2D>();
+        if (enemyCollider == null)
+        {
+            // If no collider, just check a small area
+            return CheckCircleClear(position, 0.5f);
+        }
+
+        // Get the collider's size and check appropriate area
+        float checkRadius;
+        if (enemyCollider is CircleCollider2D circleCollider)
+        {
+            checkRadius = circleCollider.radius * 1.2f; // Add 20% margin
+        }
+        else if (enemyCollider is BoxCollider2D boxCollider)
+        {
+            // Use the larger dimension plus margin
+            checkRadius = Mathf.Max(boxCollider.size.x, boxCollider.size.y) / 2f * 1.2f;
+        }
+        else if (enemyCollider is CapsuleCollider2D capsuleCollider)
+        {
+            checkRadius = capsuleCollider.size.x / 2f * 1.2f;
+        }
+        else
+        {
+            // Default fallback
+            checkRadius = 0.75f;
+        }
+
+        return CheckCircleClear(position, checkRadius);
+    }
+
+    private bool CheckCircleClear(Vector3 center, float radius)
+    {
+        // Check for any colliders in the area (walls, obstacles, etc.)
+        // You might want to use a specific layer mask for walls
+        LayerMask wallMask = LayerMask.GetMask("Walls"); // Adjust to your wall layer
+                                                         // Or use the ground layer from GridManager
+        if (GridManager.Instance != null && GridManager.Instance.groundLayer != 0)
+        {
+            wallMask = GridManager.Instance.groundLayer;
+        }
+
+        // Check if there are any colliders in the area
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius, wallMask);
+
+        // Also check if any existing enemies are overlapping (optional)
+        // This prevents enemies from spawning on top of each other
+        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(center, radius, LayerMask.GetMask("Enemy"));
+        if (enemyColliders.Length > 0)
+        {
+            // Don't count the enemy we're about to spawn if it's already in the scene
+            // This is a safety check
+            return false;
+        }
+
+        // If there are any walls in the area, position is invalid
+        if (hitColliders.Length > 0)
+        {
+            // Optional debug - uncomment if needed
+            // Debug.Log($"Position {center} is blocked by {hitColliders[0].gameObject.name}");
+            return false;
+        }
+
+        return true;
+    }
     // ========================
     // ENEMY REGISTRATION
     // ========================

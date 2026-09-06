@@ -244,7 +244,7 @@ public class EnemyBehaviour : MonoBehaviour, IPausable
                 cachedTurrets.Add(turret.gameObject);
         }
 
-        Debug.Log($"Cached {cachedTurrets.Count} turrets for targeting");
+      //  Debug.Log($"Cached {cachedTurrets.Count} turrets for targeting");
     }
 
     private bool IsValidTurretTarget(GameObject turretObj)
