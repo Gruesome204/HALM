@@ -20,10 +20,13 @@ public class EnemyBaseBossStatsSO : EnemyBaseStats
 
     [Tooltip("Additional damage multiplier when enraged")]
     public float enrageDamageMultiplier = 1.5f;
+    [Tooltip("Whether the boss is immune to knockback effects")]
+    public bool isKnockbackImmune = false;
 
     [Header("Boss Loot")]
     public GameObject[] exclusiveLootTable;
     public float guaranteedDropRate = 1f;
+
 
     private void OnEnable()
     {

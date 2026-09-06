@@ -443,7 +443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01346e348d18f8a49a08499c0146d695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretBlueprintList: []
+  turretBlueprintList:
+  - {fileID: 11400000, guid: 34fe172f4f747e548991d711cacf29af, type: 2}
+  - {fileID: 11400000, guid: d57e7534158189347baee79ed9fa3fc1, type: 2}
   currentSelectedBlueprint: {fileID: 0}
   groundLayer:
     serializedVersion: 2
@@ -2679,8 +2681,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.20874679, y: -0.21973133}
-  m_Size: {x: 4.23625, y: 8.570004}
+  m_Offset: {x: -0.24513423, y: -0.2925071}
+  m_Size: {x: 4.3090253, y: 8.424456}
   m_Direction: 0
 --- !u!114 &2135666369
 MonoBehaviour:

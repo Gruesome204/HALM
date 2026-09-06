@@ -201,6 +201,20 @@ MonoBehaviour:
   abilityCheckInterval: 1
   stopBuffer: 0.2
   turretAggroDuration: 5
+  targetingSettings:
+    targetPlayer: 1
+    targetTurrets: 0
+    turretTargetingRange: 30
+    turretPriority: 1
+    playerPriority: 2
+    switchTargets: 1
+    targetSwitchCooldown: 2
+    prioritizeClosestTarget: 1
+    turretLayerMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    targetOnlyActiveTurrets: 1
+    targetOnlyTurretsWithAmmo: 0
   bossBarUI: {fileID: 0}
 --- !u!114 &3393257043857848876
 MonoBehaviour:
@@ -246,7 +260,7 @@ MonoBehaviour:
   currentKnockbackReduction: 0
   currentKnockbackForce: 0
   currentKnockbackDuration: 0
-  isKnockbackImmune: 0
+  isKnockbackImmune: 1
   currentMovementSpeed: 0
   currentDetectionRange: 0
   currentVisionRange: 0
