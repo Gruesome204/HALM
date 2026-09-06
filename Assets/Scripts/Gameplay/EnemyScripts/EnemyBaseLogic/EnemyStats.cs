@@ -17,7 +17,7 @@ public class EnemyStats : MonoBehaviour
 
     [Header("Current Stats - Defensive")]
     public float maxHealth;
-    public float currentHealth; // Still store it, but only EnemyHealth modifies it
+    public float currentHealth; 
     public float currentArmor;
     public float currentMagicResistance;
     public float currentKnockbackReduction;
